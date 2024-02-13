@@ -19,7 +19,7 @@ require_once 'update-checker/update-checker.php';
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
 $myUpdateChecker = PucFactory::buildUpdateChecker(
-    'https://github.com/beaudigital/awesome-google-review/',
+    'https://github.com/beaushowcase/awesome-google-review/',
     __FILE__,
     'awesome-google-review'
 );
