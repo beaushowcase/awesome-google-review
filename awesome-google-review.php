@@ -46,11 +46,11 @@ function our_load_admin_style()
         wp_register_style('agr_style_css', plugins_url('/assets/css/style.css', __FILE__), [], $dynamic_version);
         wp_enqueue_style('agr_style_css');
 
-        wp_register_style('agr-toastr-mincss', plugins_url('/assets/css/toastr.min.css', __FILE__), [], $dynamic_version);
-        wp_enqueue_style('agr-toastr-mincss');
+        wp_register_style('agr-sweetalert2-mincss', plugins_url('/assets/css/sweetalert2.min.css', __FILE__), [], $dynamic_version);
+        wp_enqueue_style('agr-sweetalert2-mincss');
 
         // Enqueue Scripts with Dependencies
-        wp_enqueue_script('agr-toastr-minjs', plugins_url('/assets/js/toastr.min.js', __FILE__), ['jquery'], $dynamic_version, true);
+        wp_enqueue_script('agr-sweetalert2-minjs', plugins_url('/assets/js/sweetalert2.min.js', __FILE__), ['jquery'], $dynamic_version, true);
         wp_enqueue_script('agr-ajax-script', plugins_url('/assets/js/agr_ajax.js', __FILE__), ['jquery'], $dynamic_version, true);
 
         // Localize Script
@@ -103,7 +103,9 @@ function review_api_key_ajax_action_function()
     $nonce = sanitize_text_field($_POST['nonce']);
     $review_api_key = sanitize_text_field($_POST['review_api_key']);
     if (!empty($nonce) && wp_verify_nonce($nonce, 'review_api_key')) {
-        $response_api_data = invalidApiKey($review_api_key);        
+        $response_api_data = invalidApiKey($review_api_key);  
+        
+        // ptr($response_api_data);exit;
         if ($response_api_data['success'] === 1) {
             update_option('review_api_key', $review_api_key);
             update_option('review_api_key_status', 1);
@@ -131,35 +133,43 @@ function invalidApiKey($review_api_key)
         'data'    => array('api' => 0),
         'msg'     => array('')
     );
-    // $api_url = 'http://localhost:3000/api/free-google-reviews';
-    $api_url = 'https://api.spiderdunia.com:3001/api/free-google-reviews';
+    $api_url = 'http://localhost:3000/validateApiKey'; // Assuming your Express.js server is running locally on port 3000
+    // $api_url = 'https://api.spiderdunia.com:3001/api/free-google-reviews'; // Uncomment this line if the Express.js server is running on a different host/port
     $headers = array(
-        'Content-Type' => 'application/x-www-form-urlencoded',
-        'apikey' => $review_api_key,
+        'Content-Type' => 'application/json', // Update content type to JSON
     );
-    $response = wp_remote_post($api_url, array(
+    $query_params = array(
+        'api_key' => $review_api_key, // Pass the API key as a query parameter
+    );
+    $api_url = add_query_arg($query_params, $api_url); // Add the query parameter to the URL    
+
+    // Make a GET request to the Express.js endpoint
+    $response = wp_remote_get($api_url, array(
         'headers' => $headers,
         'timeout' => 20,
     ));
-    $body = wp_remote_retrieve_body($response);
-    $data = json_decode($body, true);
+
     if (is_wp_error($response)) {
         $api_response['data']['api'] = 0;
         $api_response['success'] = 0;
-        $api_response['msg'] = $response->errors['http_request_failed'][0];
+        $api_response['msg'] = $response->get_error_message();
     } else {
-        if (isset($data['api']) && $data['api'] == 0) {
-            $api_response['data']['api'] = 0;
-            $api_response['success'] = 0;
-            $api_response['msg'] = 'Invalid API key.';
-        } else {
+        $body = wp_remote_retrieve_body($response);
+        $data = json_decode($body, true);
+        if (isset($data['success']) && $data['success']) {
             $api_response['data']['api'] = 1;
             $api_response['success'] = 1;
             $api_response['msg'] = 'API key is valid';
+        } else {
+            $api_response['data']['api'] = 0;
+            $api_response['success'] = 0;
+            $api_response['msg'] = isset($data['error']) ? $data['error'] : 'Invalid API key.';
         }
     }
+
     return $api_response;
 }
+
 function ptr($str)
 {
     echo "<pre>";

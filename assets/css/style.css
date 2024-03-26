@@ -356,8 +356,7 @@ input:valid ~ label {
 
 /* button css */
 .twoToneCenter {
-  text-align: center;
-  margin: 1em 0;
+  text-align: center; 
 }
 .btn-process {
   display: inline-block;
@@ -425,4 +424,19 @@ input:valid ~ label {
     height: 15px;
     margin: -8px 5px 0 0;
   }
+}
+
+
+/* new css */
+.get-set-btn {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 1em;
+}
+.get-set-btn>.submit_btn_setget {
+  width: 100%;
+}
+.get-set-btn>.submit_btn_setget button {
+  width: 100%;
 }

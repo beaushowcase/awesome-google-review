@@ -103,7 +103,12 @@ function ApiKeySave(check) {
           correctSign.addClass("visible");
           cont.removeClass("hidden");
           if (check) {
-            toastr.success("", response.msg);            
+            // toastr.success("", response.msg); 
+            Swal.fire({
+              title: "Success",
+              text: response.msg,
+              icon: "success"
+            });           
             btnProcess.removeClass("spinning").html("Save");
             btnProcess.prop("disabled", false).val("Save");
             btnProcess_get_set.prop("disabled", false);
@@ -114,9 +119,12 @@ function ApiKeySave(check) {
         setTimeout(function () {
           wrongSign.addClass("visible");
           cont.addClass("hidden");
-
           if (check) {
-            toastr.error("", response.msg);
+            Swal.fire({
+              title: "Failed !",
+              text: response.msg,
+              icon: "error"
+            });           
             btnProcess.removeClass("spinning").html("Save");
             btnProcess.prop("disabled", false).val("Save");
             btnProcess_get_set.prop("disabled", false);
@@ -125,15 +133,24 @@ function ApiKeySave(check) {
       }
     },
     error: function (xhr, status, error) {
-      toastr.error("", "Something went wrong!");
+      Swal.fire({
+        title: "Failed !",
+        text: "Something went wrong!",
+        icon: "error"
+      });      
     },
     complete: function () {},
   });
 }
 
 $("#google_review_upload_form").submit(function (event) {
-  event.preventDefault();
-  GetAndSet();
+  event.preventDefault();  
+});
+
+// Assuming ".get" is the class of the button you want to trigger the form submission
+$("#google_review_upload_form button.get").click(function() {
+  GetAndSet(); // Call your function here
+  $("#google_review_upload_form").submit(); // Manually submit the form
 });
 
 function GetAndSet(check) {

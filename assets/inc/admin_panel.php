@@ -169,8 +169,16 @@ function our_google_reviews_callback() {
                         <span class="wrong-sign">×</span>
                     </div>
                 </div>
+                <div class="get-set-btn">
+                    <div class="submit_btn_setget twoToneCenter">
+                        <button type="submit" class="submit_btn get btn-process"><span class="label">GET</span></button>
+                    </div>
+                    <div class="submit_btn_setget twoToneCenter">
+                        <button type="submit" class="submit_btn set btn-process"><span class="label">SET</span></button>
+                    </div>
+                </div>
                 <div class="submit_btn_setget twoToneCenter">
-                    <button type="submit" class="submit_btn get_set btn-process"><span class="label">GET & SET</span></button>
+                    <button type="submit" class="submit_btn check btn-process"><span class="label">CHECK STATUS</span></button>
                 </div>
             </form>
         </div>
