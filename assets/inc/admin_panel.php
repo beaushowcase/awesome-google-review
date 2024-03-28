@@ -129,12 +129,8 @@ function our_google_reviews_callback() {
     $firm_name = get_option('firm_name');
     $review_api_key = get_option('review_api_key');
 ?>
-    <!-- Page Effects -->
-    <div class="confetti-land">
-        <?php for ($i = 0; $i < 100; $i++) : ?>
-            <div class="confetti"></div>
-        <?php endfor; ?>
-    </div>
+
+<div id="loader" class="lds-dual-ring hidden overlay"></div>
 
     <div class="seo-plugin-data-info container api_key_setting_form">
         <div class="inner-content-data">
@@ -163,23 +159,24 @@ function our_google_reviews_callback() {
                 <?php wp_nonce_field('get_set_trigger', 'get_set_trigger_nonce'); ?>
                 <div class="field_container">
                     <div class="input-field">
-                        <input type="text" id="firm_name" spellcheck="false" value="<?php echo esc_attr($firm_name ? $firm_name : ''); ?>">
+                        <input type="text" id="firm_name" required spellcheck="false" value="<?php echo esc_attr($firm_name ? $firm_name : ''); ?>">
                         <label>Firm Name</label>
                         <span class="correct-sign">✓</span>
                         <span class="wrong-sign">×</span>
                     </div>
                 </div>
-                <div class="get-set-btn">
+                <div class="submit_btn_setget twoToneCenter">
+                    <button type="submit" class="submit_btn check btn-process"><span class="label">CHECK STATUS</span></button>
+                </div>
+                <!-- <div class="get-set-btn">
                     <div class="submit_btn_setget twoToneCenter">
                         <button type="submit" class="submit_btn get btn-process"><span class="label">GET</span></button>
                     </div>
                     <div class="submit_btn_setget twoToneCenter">
                         <button type="submit" class="submit_btn set btn-process"><span class="label">SET</span></button>
                     </div>
-                </div>
-                <div class="submit_btn_setget twoToneCenter">
-                    <button type="submit" class="submit_btn check btn-process"><span class="label">CHECK STATUS</span></button>
-                </div>
+                </div> -->
+               
             </form>
         </div>
     </div>

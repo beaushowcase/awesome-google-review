@@ -126,6 +126,8 @@ function review_api_key_ajax_action_function()
     wp_die();
 }
 
+
+
 function invalidApiKey($review_api_key)
 {
     $api_response = array(
@@ -228,6 +230,22 @@ function get_reviews_data($firm_name, $review_api_key)
         }
     }
     return $api_response;
+}
+
+
+add_action('wp_ajax_check_firm_ajax_action', 'check_firm_ajax_action_function');
+add_action('wp_ajax_nopriv_check_firm_ajax_action', 'check_firm_ajax_action_function');
+
+function check_firm_ajax_action_function()
+{
+
+    $firm_name = sanitize_text_field($_POST['firm_name']);
+    $response['firm_name'] = $firm_name;
+    $response['success'] = 1;
+
+    wp_send_json($response);
+    wp_die();
+
 }
 
 add_action('wp_ajax_review_get_set_ajax_action', 'review_get_set_ajax_action_function');
