@@ -26,8 +26,61 @@ add_filter('plugin_action_links', 'add_settings_link', 10, 2);
 register_activation_hook(__FILE__, 'awesome_google_review_plugin_activate');
 
 function awesome_google_review_plugin_activate() {
-    add_agr_google_review_post_type();
+    add_agr_google_review_post_type();    
     flush_rewrite_rules();
+}
+
+// Function to create table
+function job_table() {
+    global $wpdb;
+
+    $table_name = $wpdb->prefix . 'jobdata';   
+    $table_name1 = $wpdb->prefix . 'jobapi'; 
+
+    // Check if the table exists already
+    if( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) != $table_name ) {
+
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $sql = "CREATE TABLE $table_name (
+            id mediumint(9) NOT NULL AUTO_INCREMENT,
+            api_key varchar(255) NOT NULL,
+            jobID bigint(20) NOT NULL,
+            jobID_json bigint(20) NOT NULL,
+            firm_name varchar(255) NOT NULL,
+            option_id bigint(20) NOT NULL,
+            created datetime NOT NULL,
+            PRIMARY KEY  (id)           
+        ) $charset_collate;";
+
+        // Include upgrade.php for dbDelta
+        require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        
+        // Create the table
+        maybe_create_table( $table_name, $sql );
+    }
+
+
+    // Check if the table exists already
+    if( $wpdb->get_var( "SHOW TABLES LIKE '$table_name1'" ) != $table_name1 ) {
+
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $sql = "CREATE TABLE $table_name1 (
+            id mediumint(9) NOT NULL AUTO_INCREMENT,
+            api_key varchar(255) NOT NULL,
+            review_api_key_status varchar(255) NOT NULL,
+            created datetime NOT NULL,
+            PRIMARY KEY  (id)           
+        ) $charset_collate;";
+
+        // Include upgrade.php for dbDelta
+        require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        
+        // Create the table
+        maybe_create_table( $table_name, $sql );
+        maybe_create_table( $table_name1, $sql );
+    }
 }
 
 // Hide post type on deactivation
@@ -84,6 +137,8 @@ function add_agr_google_review_post_type() {
     register_post_type('agr_google_review', $args);
 
     add_action('add_meta_boxes', 'add_agr_google_review_meta_box');
+
+    job_table();
 }
 
 function add_agr_google_review_meta_box() {
@@ -166,7 +221,7 @@ function our_google_reviews_callback() {
                     </div>
                 </div>
                 <div class="submit_btn_setget twoToneCenter">
-                    <button type="submit" class="submit_btn check btn-process"><span class="label">CHECK STATUS</span></button>
+                    <button type="submit" class="submit_btn job_start btn-process"><span class="label">JOB START</span></button>
                 </div>
                 <!-- <div class="get-set-btn">
                     <div class="submit_btn_setget twoToneCenter">

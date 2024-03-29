@@ -102,10 +102,10 @@ function review_api_key_ajax_action_function()
     );
     $nonce = sanitize_text_field($_POST['nonce']);
     $review_api_key = sanitize_text_field($_POST['review_api_key']);
+  
+    // $serialized_data = serialize($data);
     if (!empty($nonce) && wp_verify_nonce($nonce, 'review_api_key')) {
-        $response_api_data = invalidApiKey($review_api_key);  
-        
-        // ptr($response_api_data);exit;
+        $response_api_data = invalidApiKey($review_api_key);   
         if ($response_api_data['success'] === 1) {
             update_option('review_api_key', $review_api_key);
             update_option('review_api_key_status', 1);
@@ -233,19 +233,121 @@ function get_reviews_data($firm_name, $review_api_key)
 }
 
 
-add_action('wp_ajax_check_firm_ajax_action', 'check_firm_ajax_action_function');
-add_action('wp_ajax_nopriv_check_firm_ajax_action', 'check_firm_ajax_action_function');
+add_action('wp_ajax_job_start_ajax_action', 'job_start_ajax_action_function');
+add_action('wp_ajax_nopriv_job_start_ajax_action', 'job_start_ajax_action_function');
 
-function check_firm_ajax_action_function()
-{
+function job_start_ajax_action_function() {
 
-    $firm_name = sanitize_text_field($_POST['firm_name']);
-    $response['firm_name'] = $firm_name;
-    $response['success'] = 1;
+    global $wpdb;
+
+    $response = array(
+        'success' => 0,
+        'data'    => array('jobID' => ''),
+        'msg'     => ''
+    );
+
+    $nonce         = isset($_POST['nonce']) ? sanitize_text_field($_POST['nonce']) : '';
+    $review_api_key = isset($_POST['review_api_key']) ? sanitize_text_field($_POST['review_api_key']) : '';
+    $firm_name     = isset($_POST['firm_name']) ? sanitize_text_field($_POST['firm_name']) : '';
+
+    if (!empty($nonce) && wp_verify_nonce($nonce, 'get_set_trigger')) {
+        $response_api_data = job_start_at_api($review_api_key, $firm_name);
+
+        if ($response_api_data['success']) {
+            $jobID = $response_api_data['data']['jobID'];
+
+            // Retrieve option_id from wp_options based on review_api_key
+            $option_id = $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT option_id FROM {$wpdb->prefix}options WHERE option_value = %s",
+                    $review_api_key
+                )
+            );
+
+            if ($wpdb->last_error) {
+                $response['msg'] = "Database Error: " . $wpdb->last_error;
+            } else {
+                $existing_jobID = $wpdb->get_var(
+                    $wpdb->prepare(
+                        "SELECT jobID FROM {$wpdb->prefix}jobdata WHERE jobID = %s",
+                        $jobID
+                    )
+                );
+
+                $data = array('jobID' => $jobID, 'jobID_json' => 1, 'api_key' => $review_api_key, 'firm_name' => $firm_name, 'created'    => current_time('mysql'), 'option_id' => $option_id);
+
+                if ($existing_jobID !== null) {
+                    $where = array('jobID' => $jobID);
+                    $result = $wpdb->update($wpdb->prefix . 'jobdata', $data, $where, array('%d'), array('%s'));
+                } else {
+                    $result = $wpdb->insert($wpdb->prefix . 'jobdata', $data, array('%s', '%d'));
+                }
+
+                if ($result !== false) {
+                    $response['data']['jobID'] = $jobID;
+                    $response['success'] = 1;
+                    $response['msg'] = $response_api_data['msg'];
+                } else {
+                    $response['msg'] = "Database Error: Failed to insert/update job data.";
+                }
+            }
+        } else {
+            $response['msg'] = "API Error: " . $response_api_data['msg'];
+        }
+    } else {
+        $response['msg'] = 'Invalid nonce.';
+    }
 
     wp_send_json($response);
     wp_die();
+}
 
+
+
+
+
+function job_start_at_api($review_api_key,$firm_name)
+{
+    $api_response = array(
+        'success' => 0,
+        'data'    => array('jobID' => 0),
+        'msg'     => array('')
+    );
+    $api_url = 'http://localhost:3000/scrape';    
+    $headers = array(
+        'Content-Type' => 'application/json', // Update content type to JSON
+    );
+    $query_params = array(
+        'api_key' => $review_api_key,
+        'term' => $firm_name,
+    );
+    $api_url = add_query_arg($query_params, $api_url);
+
+    // Make a GET request to the Express.js endpoint
+    $response = wp_remote_get($api_url, array(
+        'headers' => $headers,
+        'timeout' => 20,
+    ));
+
+    if (is_wp_error($response)) {
+        $api_response['data']['jobID'] = 0;
+        $api_response['success'] = 0;
+        $api_response['msg'] = $response->get_error_message();
+    } else {
+        $body = wp_remote_retrieve_body($response);       
+        $data = json_decode($body, true);        
+        if (isset($data['success']) && $data['success']) {
+            $api_response['data']['jobID'] = $data['jobID'];
+            $api_response['success'] = 1;
+            $api_response['msg'] = $data['message'];
+        } else {
+            $api_response['data']['jobID'] = 0;
+            $api_response['success'] = 0;
+            $api_response['msg'] = isset($data['error']) ? $data['error'] : 'something went wrong !';
+        }
+    }
+
+    return $api_response;
 }
 
 add_action('wp_ajax_review_get_set_ajax_action', 'review_get_set_ajax_action_function');
