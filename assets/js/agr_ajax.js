@@ -26,8 +26,8 @@ $.fn.focusAtEnd = function () {
 };
 
 function getClientIP(callback) {
-  $.get("https://api.ipify.org?format=json", function(response) {
-      callback(response.ip);
+  $.get("https://api.ipify.org?format=json", function (response) {
+    callback(response.ip);
   });
 }
 
@@ -39,7 +39,7 @@ function initial_check() {
     url: ajax_object.ajax_url,
     dataType: "json",
     data: {
-      action: "initial_check",
+      action: "initial_check_api",
       nonce: nonce,
     },
     success: function (response) {
@@ -54,23 +54,17 @@ function initial_check() {
       const cont = $(".cont");
 
       if (response.success == 1) {
-        if (response.api_sign == 1) {
-          if (response.api_sign == 1) {
-            correctSign.addClass("visible");
-          }
-          if (response.business_sign == 1) {
-            correctSign_business.addClass("visible");
-          }
-          if (response.api_sign !== 0) {
-            cont.removeClass("hidden");
-          }
-          $("#firm_name").focus().focusAtEnd();
-        } else {
-          wrongSign.addClass("visible");
-          cont.addClass("hidden");
-          $("#firm_name").focus().focusAtEnd();
-        }
+        correctSign.addClass("visible");
+        // correctSign_business.addClass("visible");
+        cont.removeClass("hidden");
+        $("#firm_name").focus().focusAtEnd();
       }
+      else {
+        wrongSign.addClass("visible");
+        cont.addClass("hidden");
+        $("#firm_name").focus().focusAtEnd();
+      }
+
     },
     error: function () {
       toastr.error("", "Something went wrong!");
@@ -115,7 +109,7 @@ function ApiKeySave(check) {
           if (check) {
             // toastr.success("", response.msg); 
             $("#firm_name").focus();
-           
+
 
             Swal.fire({
               position: "top-end",
@@ -128,14 +122,14 @@ function ApiKeySave(check) {
             // btnProcess.removeClass("spinning").html("Save");
             // btnProcess.prop("disabled", false).val("Save");
             // btnProcess_get_set.prop("disabled", false);
-            
+
           }
 
         } else {
 
           wrongSign.addClass("visible");
           cont.addClass("hidden");
-          if (check) {          
+          if (check) {
             Swal.fire({
               position: "top-end",
               icon: "error",
@@ -155,7 +149,7 @@ function ApiKeySave(check) {
 
 
     },
-    error: function (xhr, status, error) {    
+    error: function (xhr, status, error) {
       Swal.fire({
         position: "top-end",
         icon: "error",
@@ -178,13 +172,44 @@ $("#google_review_upload_form").submit(function (event) {
 });
 
 // Assuming ".get" is the class of the button you want to trigger the form submission
-$("#google_review_upload_form button.job_start").click(function (event) {  
+$("#google_review_upload_form button.job_start").click(function (event) {
   check = true;
   job_start(check); // Call your function here
   $("#google_review_upload_form").submit(); // Manually submit the form
 });
 
-function job_start(check){
+
+function confirm_msg(msg, jobID) {
+  // Setting up SweetAlert2 configuration
+  let timerInterval;
+  Swal.fire({
+    title: jobID, // Displaying jobID as the title
+    html: msg, // Displaying message as HTML content
+    timer: 5000, // Setting a timer for 5 seconds
+    timerProgressBar: true, // Displaying progress bar for timer
+    didOpen: () => {
+      Swal.showLoading(); // Showing loading animation when dialog opens
+    },
+    willClose: () => {
+      clearInterval(timerInterval); // Clearing interval when dialog is about to close
+    }
+  }).then((result) => {
+    // Handling the result after the dialog is closed
+    if (result.dismiss === Swal.DismissReason.timer) {
+      // If the dialog was closed due to timer expiration
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Your job has been completed", // Success message
+        showConfirmButton: false,
+        timer: 2000
+      });
+    }
+  });
+}
+
+
+function job_start(check) {
   const firm_name = FirmNameInput.val();
   const nonce = $("#get_set_trigger_nonce").val();
 
@@ -198,7 +223,7 @@ function job_start(check){
     data: {
       action: "job_start_ajax_action",
       firm_name: firm_name,
-      review_api_key:ajax_object.review_api_key,
+      review_api_key: ajax_object.review_api_key,
       nonce: nonce,
     },
     success: function (response, status, error) {
@@ -212,25 +237,19 @@ function job_start(check){
         if (response.success === 1) {
           correctSign.addClass("visible");
           cont.removeClass("hidden");
-          if (check) {           
-            $("#firm_name").focus();
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: response.msg,              
-              showConfirmButton: false,
-              timer: 2000
-            });            
+          if (check) {
+            $("#firm_name").focus();            
+            confirm_msg(response.msg,response.data.jobID);
           }
 
         } else {
           wrongSign.addClass("visible");
           cont.addClass("hidden");
-          if (check) {          
+          if (check) {
             Swal.fire({
               position: "top-end",
               icon: "error",
-              title: response.msg,              
+              title: response.msg,
               showConfirmButton: false,
               timer: 2000
             });
@@ -239,11 +258,11 @@ function job_start(check){
         }
       }, 1000);
     },
-    error: function (xhr, status, error) {    
+    error: function (xhr, status, error) {
       Swal.fire({
         position: "top-end",
         icon: "error",
-        title: response.msg,        
+        title: response.msg,
         showConfirmButton: false,
         timer: 2000
       });

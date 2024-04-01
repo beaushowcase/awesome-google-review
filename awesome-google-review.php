@@ -54,7 +54,7 @@ function our_load_admin_style()
         wp_enqueue_script('agr-ajax-script', plugins_url('/assets/js/agr_ajax.js', __FILE__), ['jquery'], $dynamic_version, true);
 
         // Localize Script
-        wp_localize_script('agr-ajax-script', 'ajax_object', ['ajax_url' => admin_url('admin-ajax.php'), 'review_api_key' => get_option('review_api_key')]);
+        wp_localize_script('agr-ajax-script', 'ajax_object', ['ajax_url' => admin_url('admin-ajax.php'), 'review_api_key' => get_existing_api_key()]);
 
         // Enqueue Custom Script with Dependencies
         wp_register_script('agr_custom', plugins_url('/assets/js/custom.js', __FILE__), ['jquery'], $dynamic_version, true);
@@ -64,30 +64,101 @@ function our_load_admin_style()
 add_action('admin_enqueue_scripts', 'our_load_admin_style');
 // Enqueue = END
 
+
+function get_existing_firm_name(){
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'jobapi';
+    $table_name2 = $wpdb->prefix . 'jobdata';
+    $client_ip = $_SERVER['REMOTE_ADDR'];
+    
+    // Adjust the SQL query to join the tables and include the status check
+    $firm_name = $wpdb->get_var($wpdb->prepare("
+        SELECT j.firm_name
+        FROM $table_name2 AS j
+        INNER JOIN $table_name AS s ON j.review_api_key = s.review_api_key
+        WHERE j.client_ip = %s 
+        AND s.review_api_key_status = %d", 
+        $client_ip, 1)
+    );
+
+    return $firm_name;
+}
+
+
+function get_existing_api_key(){
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'jobapi';   
+    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $api_key = $wpdb->get_var($wpdb->prepare("SELECT review_api_key FROM $table_name WHERE client_ip = %s", $client_ip));
+    return $api_key;
+}
+
+function get_api_key_by_client_ip($client_ip){
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'jobapi';
+    $api_key = $wpdb->get_var($wpdb->prepare("SELECT review_api_key FROM $table_name WHERE client_ip = %s AND review_api_key_status = %d", $client_ip, 1));  
+    return $api_key;
+}
+
+function get_existing_api_key_data(){
+    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $api_key = get_api_key_by_client_ip($client_ip,$init);   
+    return $api_key;
+}
+
 // Include admin panel files.
 require_once AGR_PLUGIN_PATH . 'assets/inc/admin_panel.php';
 
+add_action('wp_ajax_initial_check_api', 'initial_check_api_function');
+add_action('wp_ajax_nopriv_initial_check_api', 'initial_check_api_function');
 
-add_action('wp_ajax_initial_check', 'initial_check_function');
-add_action('wp_ajax_nopriv_initial_check', 'initial_check_function');
-
-function initial_check_function()
+function initial_check_api_function()
 {
     $response = array(
         'success' => 0,       
-        'api_sign' => 0,       
-        'business_sign' => 0,       
+        'msg' => "",
     );
-    if (get_option('review_api_key_status') == 1) {        
-        $response['success'] = 1;
-        $response['api_sign'] = 1;
-    }   
-    if (get_option('business_valid') == 1) {        
-        $response['success'] = 1;
-        $response['business_sign'] = 1;
-    }   
+    if (get_existing_api_key_data()) {        
+        $response['success'] = 1; 
+        $response['msg'] = 'API verified !';       
+    }
     wp_send_json($response);
     wp_die();
+}
+
+
+function set_table_required($tname){
+    global $wpdb;
+    $table_name = $wpdb->prefix . $tname;
+    return $table_name;
+}
+
+function save_data_to_table($table_name, $data) {
+    global $wpdb;
+    if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+        return false;
+    }    
+
+    // Check if client_ip and client_mac are present in the data array
+    if (isset($data['client_ip'])) {        
+        $data['client_ip'] = sanitize_text_field($data['client_ip']);
+        
+    } else {        
+        $data['client_ip'] = null;      
+    }
+
+    $existing_api_key = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE client_ip = %s", $data['client_ip']), ARRAY_A);    
+    if ($existing_api_key) {      
+        $result = $wpdb->update(
+            $table_name,
+            $data,
+            array('client_ip' => $data['client_ip'])
+        );
+        return $result !== false;
+    } else {
+        $result = $wpdb->insert($table_name, $data);
+        return $result !== false;
+    }
 }
 
 add_action('wp_ajax_review_api_key_ajax_action', 'review_api_key_ajax_action_function');
@@ -99,22 +170,41 @@ function review_api_key_ajax_action_function()
         'success' => 0,
         'data'    => array('api' => ''),
         'msg'     => array('')
-    );
+    );   
+    
     $nonce = sanitize_text_field($_POST['nonce']);
-    $review_api_key = sanitize_text_field($_POST['review_api_key']);
+    $review_api_key = sanitize_text_field($_POST['review_api_key']);    
+
+    $table_name = set_table_required('jobapi');
+
+    $client_ip = $_SERVER['REMOTE_ADDR'];
   
     // $serialized_data = serialize($data);
     if (!empty($nonce) && wp_verify_nonce($nonce, 'review_api_key')) {
-        $response_api_data = invalidApiKey($review_api_key);   
+        $response_api_data = invalidApiKey($review_api_key);         
+       
         if ($response_api_data['success'] === 1) {
-            update_option('review_api_key', $review_api_key);
-            update_option('review_api_key_status', 1);
+            
+            $data = array(
+                'review_api_key' => $review_api_key,
+                'review_api_key_status' => 1,
+                'client_ip' => $client_ip,
+            );
+
+            $success = save_data_to_table($table_name, $data);
+
             $response['data']['api'] = $response_api_data['data']['api'];
             $response['success'] = $response_api_data['success'];
             $response['msg'] = $response_api_data['msg'];
         } else {
-            update_option('review_api_key', $review_api_key);
-            update_option('review_api_key_status', 0);
+
+            $data = array(
+                'review_api_key' => $review_api_key,
+                'review_api_key_status' => 0,
+                'client_ip' => $client_ip,
+            );
+            $success = save_data_to_table($table_name, $data);
+
             $response['data']['api'] = $response_api_data['data']['api'];
             $response['success'] = $response_api_data['success'];
             $response['msg'] = $response_api_data['msg'];
@@ -237,9 +327,7 @@ add_action('wp_ajax_job_start_ajax_action', 'job_start_ajax_action_function');
 add_action('wp_ajax_nopriv_job_start_ajax_action', 'job_start_ajax_action_function');
 
 function job_start_ajax_action_function() {
-
     global $wpdb;
-
     $response = array(
         'success' => 0,
         'data'    => array('jobID' => ''),
@@ -255,18 +343,15 @@ function job_start_ajax_action_function() {
 
         if ($response_api_data['success']) {
             $jobID = $response_api_data['data']['jobID'];
+            
+          
+            $table_name = $wpdb->prefix . 'jobapi';
+            $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));  
 
-            // Retrieve option_id from wp_options based on review_api_key
-            $option_id = $wpdb->get_var(
-                $wpdb->prepare(
-                    "SELECT option_id FROM {$wpdb->prefix}options WHERE option_value = %s",
-                    $review_api_key
-                )
-            );
 
-            if ($wpdb->last_error) {
+            if ($wpdb->last_error) {                
                 $response['msg'] = "Database Error: " . $wpdb->last_error;
-            } else {
+            } else {                
                 $existing_jobID = $wpdb->get_var(
                     $wpdb->prepare(
                         "SELECT jobID FROM {$wpdb->prefix}jobdata WHERE jobID = %s",
@@ -274,7 +359,8 @@ function job_start_ajax_action_function() {
                     )
                 );
 
-                $data = array('jobID' => $jobID, 'jobID_json' => 1, 'api_key' => $review_api_key, 'firm_name' => $firm_name, 'created'    => current_time('mysql'), 'option_id' => $option_id);
+                $data = array('jobID' => $jobID, 'jobID_json' => 1, 'review_api_key' => $review_api_key, 'firm_name' => $firm_name, 'client_ip' => $c_ip, 'created' => current_time('mysql'));
+               
 
                 if ($existing_jobID !== null) {
                     $where = array('jobID' => $jobID);
@@ -282,6 +368,7 @@ function job_start_ajax_action_function() {
                 } else {
                     $result = $wpdb->insert($wpdb->prefix . 'jobdata', $data, array('%s', '%d'));
                 }
+
 
                 if ($result !== false) {
                     $response['data']['jobID'] = $jobID;
@@ -307,7 +394,7 @@ function job_start_ajax_action_function() {
 
 
 function job_start_at_api($review_api_key,$firm_name)
-{
+{   
     $api_response = array(
         'success' => 0,
         'data'    => array('jobID' => 0),
@@ -321,7 +408,7 @@ function job_start_at_api($review_api_key,$firm_name)
         'api_key' => $review_api_key,
         'term' => $firm_name,
     );
-    $api_url = add_query_arg($query_params, $api_url);
+    $api_url = add_query_arg($query_params, $api_url);   
 
     // Make a GET request to the Express.js endpoint
     $response = wp_remote_get($api_url, array(

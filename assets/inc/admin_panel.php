@@ -44,14 +44,14 @@ function job_table() {
 
         $sql = "CREATE TABLE $table_name (
             id mediumint(9) NOT NULL AUTO_INCREMENT,
-            api_key varchar(255) NOT NULL,
+            review_api_key varchar(255) NOT NULL,
             jobID bigint(20) NOT NULL,
             jobID_json bigint(20) NOT NULL,
             firm_name varchar(255) NOT NULL,
-            option_id bigint(20) NOT NULL,
-            created datetime NOT NULL,
-            PRIMARY KEY  (id)           
-        ) $charset_collate;";
+            client_ip varchar(255) NOT NULL,
+            created datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id)
+            ) $charset_collate;";
 
         // Include upgrade.php for dbDelta
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -68,17 +68,16 @@ function job_table() {
 
         $sql = "CREATE TABLE $table_name1 (
             id mediumint(9) NOT NULL AUTO_INCREMENT,
-            api_key varchar(255) NOT NULL,
+            review_api_key varchar(255) NOT NULL,
             review_api_key_status varchar(255) NOT NULL,
-            created datetime NOT NULL,
+            client_ip varchar(255) NOT NULL,
+            created datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
             PRIMARY KEY  (id)           
         ) $charset_collate;";
 
         // Include upgrade.php for dbDelta
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
         
-        // Create the table
-        maybe_create_table( $table_name, $sql );
         maybe_create_table( $table_name1, $sql );
     }
 }
@@ -180,6 +179,7 @@ function render_agr_google_review_meta_box($post) {
 
 function shortcode_display() {}
 
+
 function our_google_reviews_callback() {
     $firm_name = get_option('firm_name');
     $review_api_key = get_option('review_api_key');
@@ -194,7 +194,7 @@ function our_google_reviews_callback() {
                 <?php wp_nonce_field('review_api_key', 'review_api_key_nonce'); ?>
                 <div class="field_container">
                     <div class="input-field">
-                        <input type="text" id="review_api_key" required spellcheck="false" value="<?php echo esc_attr($review_api_key ? $review_api_key : ''); ?>">
+                        <input type="text" id="review_api_key" required spellcheck="false" value="<?php echo get_existing_api_key(); ?>">
                         <label>API Key</label>
                         <span class="correct-sign">✓</span>
                         <span class="wrong-sign">×</span>
@@ -214,7 +214,7 @@ function our_google_reviews_callback() {
                 <?php wp_nonce_field('get_set_trigger', 'get_set_trigger_nonce'); ?>
                 <div class="field_container">
                     <div class="input-field">
-                        <input type="text" id="firm_name" required spellcheck="false" value="<?php echo esc_attr($firm_name ? $firm_name : ''); ?>">
+                        <input type="text" id="firm_name" required spellcheck="false" value="<?php echo esc_attr(get_existing_firm_name() ? get_existing_firm_name() : ''); ?>">
                         <label>Firm Name</label>
                         <span class="correct-sign">✓</span>
                         <span class="wrong-sign">×</span>
