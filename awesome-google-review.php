@@ -69,22 +69,23 @@ function get_existing_firm_name(){
     global $wpdb;
     $table_name = $wpdb->prefix . 'jobapi';
     $table_name2 = $wpdb->prefix . 'jobdata';
-    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $client_ip = $_SERVER['REMOTE_ADDR'];    
     
-    // Adjust the SQL query to join the tables and include the status check
-    $firm_name = $wpdb->get_var($wpdb->prepare("
+    $last_job_id = $wpdb->get_var($wpdb->prepare("
         SELECT j.firm_name
         FROM $table_name2 AS j
         INNER JOIN $table_name AS s ON j.review_api_key = s.review_api_key
         WHERE j.client_ip = %s 
-        AND s.review_api_key_status = %d", 
+        AND s.review_api_key_status = %d
+        ORDER BY j.jobID DESC
+        LIMIT 1", 
         $client_ip, 1)
     );
 
-    return $firm_name;
+    return $last_job_id;
 }
 
-
+// set at locatization
 function get_existing_api_key(){
     global $wpdb;
     $table_name = $wpdb->prefix . 'jobapi';   
@@ -93,6 +94,8 @@ function get_existing_api_key(){
     return $api_key;
 }
 
+
+// api check
 function get_api_key_by_client_ip($client_ip){
     global $wpdb;
     $table_name = $wpdb->prefix . 'jobapi';
@@ -102,8 +105,33 @@ function get_api_key_by_client_ip($client_ip){
 
 function get_existing_api_key_data(){
     $client_ip = $_SERVER['REMOTE_ADDR'];
-    $api_key = get_api_key_by_client_ip($client_ip,$init);   
+    $api_key = get_api_key_by_client_ip($client_ip);   
     return $api_key;
+}
+
+//business check
+function get_existing_business_data(){
+    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $last_firm_name = get_business_by_client_ip($client_ip);   
+    return $last_firm_name;
+}
+function get_business_by_client_ip($client_ip){
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'jobapi';
+    $table_name2 = $wpdb->prefix . 'jobdata';
+    
+    $last_firm_name = $wpdb->get_var($wpdb->prepare("
+        SELECT j.firm_name
+        FROM $table_name2 AS j
+        INNER JOIN $table_name AS s ON j.review_api_key = s.review_api_key
+        WHERE j.client_ip = %s 
+        AND s.review_api_key_status = %d
+        ORDER BY j.jobID DESC
+        LIMIT 1", 
+        $client_ip, 1)
+    );
+
+    return $last_firm_name;
 }
 
 // Include admin panel files.
@@ -115,12 +143,18 @@ add_action('wp_ajax_nopriv_initial_check_api', 'initial_check_api_function');
 function initial_check_api_function()
 {
     $response = array(
-        'success' => 0,       
-        'msg' => "",
+        'success_api' => 0,
+        'msg_api' => "",
+        'success_business' => 0,
+        'msg_business' => "",
     );
     if (get_existing_api_key_data()) {        
-        $response['success'] = 1; 
-        $response['msg'] = 'API verified !';       
+        $response['success_api'] = 1; 
+        $response['msg_api'] = 'API Verified !';       
+    }
+    if (get_existing_business_data()) {        
+        $response['success_business'] = 1; 
+        $response['msg_business'] = 'Business Verified !';       
     }
     wp_send_json($response);
     wp_die();

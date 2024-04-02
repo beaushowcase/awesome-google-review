@@ -210,6 +210,7 @@ function our_google_reviews_callback() {
     <div class="seo-plugin-data-info container google_review_upload_form cont hidden">
         <div class="inner-content-data">
             <h2 class="boxtitle ">Google Reviews Upload</h2>
+            
             <form id="google_review_upload_form" method="post" autocomplete="off">
                 <?php wp_nonce_field('get_set_trigger', 'get_set_trigger_nonce'); ?>
                 <div class="field_container">
@@ -222,7 +223,10 @@ function our_google_reviews_callback() {
                 </div>
                 <div class="submit_btn_setget twoToneCenter">
                     <button type="submit" class="submit_btn job_start btn-process"><span class="label">JOB START</span></button>
+                    <button type="submit" class="submit_btn check_start btn-process"><span class="label">CHECK</span></button>
                 </div>
+
+               
                 <!-- <div class="get-set-btn">
                     <div class="submit_btn_setget twoToneCenter">
                         <button type="submit" class="submit_btn get btn-process"><span class="label">GET</span></button>
@@ -235,6 +239,10 @@ function our_google_reviews_callback() {
             </form>
         </div>
     </div>
+
+   
+
+
 <?php
 }
 
