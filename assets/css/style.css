@@ -376,9 +376,24 @@ input:valid ~ label {
   font-weight: 700;
   box-shadow: 0 1px 0 #6E6E6E inset, 0px 1px 0 #3B3B3B;
   transition        : all .8s ease;
-  -webkit-transition: all .8s ease;
+  -webkit-transition: all .8s ease;  
 }
-.btn-process:hover {
+
+.btn-process:disabled {
+  background: linear-gradient(to bottom, #545454 0%, #474747 50%, #141414 51%, #1B1B1B 100%);
+  opacity: 0.6; 
+  filter: grayscale(100%); 
+  pointer-events: none;
+  cursor: not-allowed;
+  user-select: none;
+}
+
+/* .btn-process:hover{
+  pointer-events: none;
+  cursor: not-allowed;
+} */
+
+/* .btn-process:hover {
   box-shadow: 0 0 10px #080808 inset, 0px 1px 0 #3B3B3B;
   color: #F3F3F3;
 }
@@ -387,7 +402,7 @@ input:valid ~ label {
   color: white;
   background: #080808;
   background: linear-gradient(to bottom, #3B3B3B 0%, #2E2E2E 50%, #141414 51%, #080808 100%);
-}
+} */
 .btn-process.spinning {
   background-color: #212121;
   padding-right: 40px;
@@ -492,17 +507,15 @@ input:valid ~ label {
 
   .btn-process.disabled{
     pointer-events: none;
-    cursor: not-allowed;
-    width: 50%;
-    background:none;
-    color: #641313;
+    cursor: not-allowed;    
+    background:linear-gradient(to bottom, #545454 0%, #474747 0%, #141414 50%, #1B1B1B 0%);   
+    width: 50%; 
   }
 
-  .btn-process.disabledapi{
+  .btn-process.disableBUTTON{
     pointer-events: none;
     cursor: not-allowed;    
-    background:none;
-    color: #641313;
+    background:linear-gradient(to bottom, #545454 0%, #474747 0%, #141414 50%, #1B1B1B 0%);
   }
 
   /* .btn-process.disabled:hover{
@@ -535,3 +548,4 @@ input:valid ~ label {
   .check_start.visible{
     display: block;
   }
+  
