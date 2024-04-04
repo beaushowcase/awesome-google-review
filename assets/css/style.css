@@ -280,7 +280,7 @@ input:valid ~ label {
   background-color: #007bff;
   border: none;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease 0s;
+  /* transition: all 0.3s ease 0s; */
   cursor: pointer;
   outline: none;
   border-radius: 6px;
@@ -375,8 +375,8 @@ input:valid ~ label {
   /* transition: padding-right 0.3s ease; */
   font-weight: 700;
   box-shadow: 0 1px 0 #6E6E6E inset, 0px 1px 0 #3B3B3B;
-  transition        : all .8s ease;
-  -webkit-transition: all .8s ease;  
+  /* transition        : all .8s ease;
+  -webkit-transition: all .8s ease;   */
 }
 
 .btn-process:disabled {
@@ -522,7 +522,7 @@ input:valid ~ label {
     cursor: not-allowed;
     pointer-events: none;
   } */
-  .btn-PENDING {
+  /* .btn-PENDING {
     display: inline-block;
     border: 1px solid black;
     outline: none;
@@ -537,15 +537,96 @@ input:valid ~ label {
     transition: padding-right 0.3s ease;
     font-weight: 700;
     box-shadow: 0 1px 0 #6E6E6E inset, 0px 1px 0 #3B3B3B;
-  }
+  } */
 
   .check_start{
     display: none;
-    transition        : all .8s ease;
-    -webkit-transition: all .8s ease;
+    /* transition        : all .8s ease;
+    -webkit-transition: all .8s ease; */
   }
 
   .check_start.visible{
     display: block;
   }
   
+  .partition {
+    display: flex;
+}
+.right-box {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5), 0px 6px 20px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ddd;
+  /* background: #1c1c1c85; */
+  padding: 20px;
+  border-radius: 6px;
+  width: 500px;
+  margin: 50px;
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */    
+  transition: opacity 0.5s ease; /* Fade animation transition */
+}
+
+.display_total{
+  font-size: 26px;
+}
+
+.right-box .output{
+  color:green;
+}
+
+
+/* extra */
+/* .upload-btn {
+    display: inline-block;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #384137;
+    background-color: #94ED88;
+    text-align: center;
+    line-height: 60px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    outline: none;
+}
+
+.upload-btn:hover {
+    background-color: #76c257;
+}
+
+.upload-btn:active {
+    background-color: #94ED88;
+} */
+
+
+.right-box .boxtitle.display_total {
+  background: #ddd;
+  color: #2d2d2d;
+}
+
+/* DEMO-SPECIFIC STYLES */
+.typewriter .output.display {
+  color: green;
+  line-height: 1.5em;
+  font-size: 17px;
+  font-family: monospace;
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid orange; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  /* letter-spacing: .15em;  */
+  animation: 
+    typing 3.5s steps(30, end),
+    blink-caret .5s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange }
+}

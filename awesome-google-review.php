@@ -46,7 +46,8 @@ function our_load_admin_style()
         wp_register_style('agr_style_css', plugins_url('/assets/css/style.css', __FILE__), [], $dynamic_version);
         wp_enqueue_style('agr_style_css');
 
-        wp_register_style('agr-sweetalert2-mincss', plugins_url('/assets/css/sweetalert2.min.css', __FILE__), [], $dynamic_version);
+        // wp_register_style('agr-sweetalert2-mincss', plugins_url('/assets/css/sweetalert2.min.css', __FILE__), [], $dynamic_version);
+        wp_register_style('agr-sweetalert2-mincss', plugins_url('/assets/css/dark.css', __FILE__), [], $dynamic_version);
         wp_enqueue_style('agr-sweetalert2-mincss');
 
         // Enqueue Scripts with Dependencies

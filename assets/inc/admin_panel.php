@@ -186,63 +186,84 @@ function our_google_reviews_callback() {
 ?>
 
 <div id="loader" class="lds-dual-ring hidden overlay"></div>
-
-    <div class="seo-plugin-data-info container api_key_setting_form">
-        <div class="inner-content-data">
-            <h2 class="boxtitle ">API Key Setting</h2>
-            <form id="api_key_setting_form" method="post" autocomplete="off">
-                <?php wp_nonce_field('review_api_key', 'review_api_key_nonce'); ?>
-                <div class="field_container">
-                    <div class="input-field">
-                        <input type="text" id="review_api_key" required spellcheck="false" value="<?php echo get_existing_api_key(); ?>">
-                        <label>API Key</label>
-                        <span class="correct-sign">✓</span>
-                        <span class="wrong-sign">×</span>
+<div class="partition">
+    <div class="left-box">
+        <div class="seo-plugin-data-info container api_key_setting_form">
+            <div class="inner-content-data">
+                <h2 class="boxtitle ">API Key Setting</h2>
+                <form id="api_key_setting_form" method="post" autocomplete="off">
+                    <?php wp_nonce_field('review_api_key', 'review_api_key_nonce'); ?>
+                    <div class="field_container">
+                        <div class="input-field">
+                            <input type="text" id="review_api_key" required spellcheck="false" value="<?php echo get_existing_api_key(); ?>">
+                            <label>API Key</label>
+                            <span class="correct-sign">✓</span>
+                            <span class="wrong-sign">×</span>
+                        </div>
                     </div>
-                </div>
-                <div class="twoToneCenter">
-                    <button type="submit" class="submit_btn save btn-process">Save</button>
-                </div>
-            </form>
+                    <div class="twoToneCenter">
+                        <button type="submit" class="submit_btn save btn-process">Save</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
-
-    <div class="seo-plugin-data-info container google_review_upload_form cont hidden">
-        <div class="inner-content-data">
-            <h2 class="boxtitle ">Google Reviews Upload</h2>
-            
-            <form id="google_review_upload_form" method="post" autocomplete="off">
-                <?php wp_nonce_field('get_set_trigger', 'get_set_trigger_nonce'); ?>
-                <div class="field_container">
-                    <div class="input-field">
-                        <input type="text" id="firm_name" required spellcheck="false" value="<?php echo esc_attr(get_existing_firm_name() ? get_existing_firm_name() : ''); ?>">
-                        <label>Firm Name</label>
-                        <span class="correct-sign">✓</span>
-                        <span class="wrong-sign">×</span>
-                    </div>
-                </div>
-                <div class="submit_btn_setget twoToneCenter">
-                    <button type="submit" class="submit_btn job_start btn-process"><span class="label">JOB START</span></button>
-                    <button type="submit" class="submit_btn check_start btn-process"><span class="label">CHECK</span></button>
-                </div>
-
-               
-                <!-- <div class="get-set-btn">
-                    <div class="submit_btn_setget twoToneCenter">
-                        <button type="submit" class="submit_btn get btn-process"><span class="label">GET</span></button>
-                    </div>
-                    <div class="submit_btn_setget twoToneCenter">
-                        <button type="submit" class="submit_btn set btn-process"><span class="label">SET</span></button>
-                    </div>
-                </div> -->
-               
-            </form>
-        </div>
-    </div>
 
    
 
 
+        <div class="seo-plugin-data-info container google_review_upload_form cont hidden">
+            <div class="inner-content-data">
+                <h2 class="boxtitle ">Google Reviews Upload</h2>
+                
+                <form id="google_review_upload_form" method="post" autocomplete="off">
+                    <?php wp_nonce_field('get_set_trigger', 'get_set_trigger_nonce'); ?>
+                    <div class="field_container">
+                        <div class="input-field">
+                            <input type="text" id="firm_name" required spellcheck="false" value="<?php echo esc_attr(get_existing_firm_name() ? get_existing_firm_name() : ''); ?>">
+                            <label>Firm Name</label>
+                            <span class="correct-sign">✓</span>
+                            <span class="wrong-sign">×</span>
+                        </div>
+                    </div>
+                    <div class="submit_btn_setget twoToneCenter">
+                        <button type="submit" class="submit_btn job_start btn-process"><span class="label">JOB START</span></button>
+                        <button type="submit" class="submit_btn check_start btn-process"><span class="label">CHECK</span></button>
+                    </div>
+
+                
+                    <!-- <div class="get-set-btn">
+                        <div class="submit_btn_setget twoToneCenter">
+                            <button type="submit" class="submit_btn get btn-process"><span class="label">GET</span></button>
+                        </div>
+                        <div class="submit_btn_setget twoToneCenter">
+                            <button type="submit" class="submit_btn set btn-process"><span class="label">SET</span></button>
+                        </div>
+                    </div> -->
+                
+                </form>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="right-box">        
+        <div class="inner-content-data">
+                <h2 class="boxtitle display_total">Reviews Info</h2>               
+
+                <div class="typewriter">
+                    <h1 class="output"> ... </h1>
+                </div>
+                
+        </div>
+    </div>
+
+    <!-- <div class="right-box">        
+        <button class="upload-btn">Upload</button>
+    </div> -->
+
+    
+
+</div>
 <?php
 }
 

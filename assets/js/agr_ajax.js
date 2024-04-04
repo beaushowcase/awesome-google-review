@@ -125,6 +125,7 @@ function getClientIP(callback) {
 
 // correctSign_BUSINESS.removeClass("visible");
 
+// FOR API BOX
 let sign_TRUE = false;
 let sign_FALSE = false;
 let btnProcess_API = $("#api_key_setting_form .btn-process");
@@ -132,19 +133,20 @@ let correctSign_API = $("#api_key_setting_form .correct-sign");
 let wrongSign_API = $("#api_key_setting_form .wrong-sign");
 
 if (correctSign_API.is(":visible")) {
-  console.log('correctSign_API visible');
   sign_TRUE = true;
 }
 if (wrongSign_API.is(":visible")) {
-  console.log('wrongSign_API visible');
   sign_FALSE = true;
 }
 
+let BUSINESS_BOX = $(".cont");
+// FOR BUSINESS BOX
+let sign_BUSINESS_TRUE = false;
+let sign_BUSINESS_FALSE = false;
 let btnProcess_BUSINESS_START = $("#google_review_upload_form .btn-process.job_start");
 let btnProcess_BUSINESS_CHECK = $("#google_review_upload_form .btn-process.check_start");
-let BUSINESS_BOX = $(".cont");
-
-
+let correctSign_BUSINESS_BOX = $("#google_review_upload_form .correct-sign");
+let wrongSign_BUSINESS_BOX = $("#google_review_upload_form .wrong-sign");
 
 function initial_check() {
   const nonce = $("#review_api_key_nonce").val();
@@ -163,32 +165,30 @@ function initial_check() {
     success: function (response) {
       if (response.success_api == 1) {
         if (sign_TRUE) {
-          correctSign_API.addClass("visible");          
+          correctSign_API.addClass("visible");
         }
         if (sign_FALSE) {
-          wrongSign_API.removeClass("visible");         
-        }       
+          wrongSign_API.removeClass("visible");
+        }
         BUSINESS_BOX.removeClass("hidden");
-        btnProcess_API.prop("disabled", true);        
-      }     
+        btnProcess_API.prop("disabled", true);
+      }
       else {
         if (sign_TRUE) {
-          correctSign_API.removeClass("visible");  
+          correctSign_API.removeClass("visible");
         }
         if (sign_FALSE) {
-          wrongSign_API.addClass("visible");      
+          wrongSign_API.addClass("visible");
         }
         BUSINESS_BOX.addClass("hidden");
-        btnProcess_API.prop("disabled", false);        
+        btnProcess_API.prop("disabled", false);
       }
 
-
-      if(response.success_api == 1 && response.success_business == 1){
-        console.log('fdasfdaf');
+      if (response.success_api == 1 && response.success_business == 1) {
         btnProcess_BUSINESS_START.prop("disabled", true);
         btnProcess_BUSINESS_CHECK.addClass("visible");
       }
-      else{
+      else {
         btnProcess_BUSINESS_START.prop("disabled", false);
         btnProcess_BUSINESS_CHECK.removeClass("visible");
       }
@@ -199,20 +199,18 @@ function initial_check() {
     complete: function () {
       setTimeout(function () {
         $('#loader').addClass('hidden');
-        // btnProcess_API.prop("disabled", false);
       }, 100);
 
     },
   });
 }
 
+// key up check API KEY
 let element = jQuery("#review_api_key");
 $(document).ready(function () {
   var initialValue = $(element).val();
   $(element).on('input', function () {
     var currentValue = $(this).val();
-    console.log('currentValue = '+currentValue);
-    console.log('initialValue = '+currentValue);
     if (currentValue !== initialValue) {
       button_effects_enable();
     }
@@ -221,30 +219,61 @@ $(document).ready(function () {
     }
   });
   function button_effects_enable() {
-    console.log("button_effects_enable!");       
+    console.log("button_effects_enable!");
     if (sign_TRUE) {
-      correctSign_API.removeClass("visible");        
+      correctSign_API.removeClass("visible");
+      wrongSign_API.removeClass("visible");
     }
-    if (sign_FALSE) {
-      wrongSign_API.removeClass("visible");       
-    }  
+
+    if (jQuery('.google_review_upload_form.cont').length > 0) {
+      correctSign_API.removeClass("visible");
+      wrongSign_API.addClass("visible");
+    }
+
     BUSINESS_BOX.addClass("hidden");
     btnProcess_API.prop("disabled", false);
     return true;
   }
   function button_effects_disable() {
-    console.log("button_effects_disable!");    
-    if (sign_TRUE) {
+    console.log("button_effects_disable!");
+    if (jQuery('.google_review_upload_form.cont').length > 0) {
       correctSign_API.addClass("visible");
+      wrongSign_API.removeClass("visible");
     }
-    if (sign_FALSE) {
-      wrongSign_API.addClass("visible");
-    }     
+
     BUSINESS_BOX.removeClass("hidden");
     btnProcess_API.prop("disabled", true);
     return true;
   }
 });
+
+
+// key up check BUSINESS TERM
+let business_term = jQuery("#firm_name");
+$(document).ready(function () {
+  var initialValue = $(business_term).val(); 
+  $(business_term).on('input', function () {    
+    var currentValue = $(this).val();
+    if (currentValue !== initialValue) {
+      button_effects_business_enable();
+    }
+    else {
+      button_effects_business_disable();
+    }
+  });  
+});
+
+
+function button_effects_business_enable() { 
+  btnProcess_BUSINESS_START.prop("disabled", false);
+  btnProcess_BUSINESS_CHECK.hide(500);
+  return true;
+}
+function button_effects_business_disable() {  
+  btnProcess_BUSINESS_START.prop("disabled", true);
+  btnProcess_BUSINESS_CHECK.show(500);
+  return true;
+}
 
 
 function response_success(response) {
@@ -256,7 +285,7 @@ function response_success(response) {
     allowOutsideClick: false,
     grow: false,
     timer: 3500,
-  });  
+  });
   return true;
 }
 
@@ -270,7 +299,7 @@ function response_fail(response) {
     allowOutsideClick: false,
     grow: false,
     timer: 3500,
-  }); 
+  });
   return true;
 }
 
@@ -300,7 +329,7 @@ function ApiKeySave(check) {
             response_success(response.msg);
             correctSign_API.addClass("visible");
             wrongSign_API.removeClass("visible");
-            BUSINESS_BOX.removeClass("hidden");                        
+            BUSINESS_BOX.removeClass("hidden");
           }
         } else {
           if (check) {
@@ -334,24 +363,86 @@ $("#google_review_upload_form button.job_start").click(function (event) {
   check = true;
   Swal.fire({
     title: "Confirmation: Initiate Job?",
-    text: "Are you certain about initiating this job? Once completed, you'll be able to upload reviews.",   
+    text: "Are you certain about initiating this job? Once completed, you'll be able to upload reviews.",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
     confirmButtonText: "Start Job",
-    popup: 'swal2-show',
+    allowOutsideClick: false,    
     backdrop: 'swal2-backdrop-show',
     icon: 'question',
     color: "#716add",
-  }).then((result) => {    
+  }).then((result) => {
     if (result.isConfirmed) {
-      job_start(check);      
+      job_start(check);
     } else if (result.isDenied) {
       Swal.fire("Changes are not saved", "", "info");
     }
   });
   $("#google_review_upload_form").submit(); // Manually submit the form
 });
+
+// Assuming ".get" is the class of the button you want to trigger the form submission
+$("#google_review_upload_form button.check_start").click(function (event) {
+ 
+  check = true;
+  Swal.fire({
+    title: "Check",
+    html: "Start to proceed the reviews of " + `<b>${$(FirmNameInput).val()}</b>` + " !",
+    showCloseButton: true,
+    allowOutsideClick: false,
+    confirmButtonColor: "#141414",
+    confirmButtonText: "Check",
+    backdrop: 'swal2-backdrop-show',
+    icon: "question",   
+  }).then((result) => {
+    if (result.isConfirmed) {
+      check_start(check);
+      let timerInterval;
+      Swal.fire({
+        title: "Google Reviews !",
+        html: "Checking in <b></b> milliseconds.",
+        timer: 3500,
+        timerProgressBar: true,
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+          const timer = Swal.getPopup().querySelector("b");
+          timerInterval = setInterval(() => {
+            timer.textContent = `${Swal.getTimerLeft()}`;
+          }, 100);
+        },
+        willClose: () => {
+          clearInterval(timerInterval);
+        }
+      }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+          let display_msg = "" + `<b>${$(FirmNameInput).val()} = 250 Reviews</b>` + " !";
+          console.log("I was closed by the timer");          
+          Swal.fire({
+            icon: "success",
+            title: "Completed",
+            html: display_msg,            
+            showConfirmButton: false,
+            timer: 3500,
+            allowOutsideClick: false,
+            grow: false,
+            position: 'bottom-end',
+          });
+          
+          $('.right-box .output').html(display_msg);
+          $('.right-box .output').addClass('display');
+        }
+      });
+    }
+  });
+  $("#google_review_upload_form").submit();
+});
+
+function check_start(check) {
+  console.log('check = ' + check);
+}
 
 function confirm_msg(msg, jobID) {
   const timerDuration = 5000;
@@ -366,14 +457,14 @@ function confirm_msg(msg, jobID) {
     grow: false,
     position: 'bottom-end',
     didOpen: () => {
-      Swal.showLoading();     
+      Swal.showLoading();
     },
     willClose: () => {
       clearInterval(timerInterval);
     }
-  }).then((result) => { 
-    if (result.dismiss === Swal.DismissReason.timer) {     
-      Swal.fire({      
+  }).then((result) => {
+    if (result.dismiss === Swal.DismissReason.timer) {
+      Swal.fire({
         icon: "success",
         title: "Your job has been completed",
         showConfirmButton: false,
@@ -381,8 +472,8 @@ function confirm_msg(msg, jobID) {
         allowOutsideClick: false,
         grow: false,
         position: 'bottom-end',
-      });     
-    }
+      });
+    }    
   });
 }
 
@@ -398,7 +489,7 @@ function job_start(check) {
     dataType: "json",
     beforeSend: function () {
       $('#loader').removeClass('hidden');
-      btnProcess_BUSINESS_START.addClass("spinning");      
+      btnProcess_BUSINESS_START.addClass("spinning");
     },
     data: {
       action: "job_start_ajax_action",
@@ -406,15 +497,15 @@ function job_start(check) {
       review_api_key: ajax_object.review_api_key,
       nonce: nonce,
     },
-    success: function (response, status, error) { 
+    success: function (response, status, error) {
       setTimeout(function () {
-        if (response.success === 1) {          
-          if (check) {            
+        if (response.success === 1) {
+          if (check) {
             confirm_msg(response.msg, response.data.jobID);
             btnProcess_BUSINESS_START.prop("disabled", true);
             btnProcess_BUSINESS_CHECK.addClass("visible");
           }
-        } else {         
+        } else {
           if (check) {
             response_fail(response.msg);
             btnProcess_BUSINESS_START.prop("disabled", false);
@@ -436,7 +527,7 @@ function job_start(check) {
     complete: function () {
       setTimeout(function () {
         $('#loader').addClass('hidden');
-        btnProcess_BUSINESS_START.removeClass("spinning");        
+        btnProcess_BUSINESS_START.removeClass("spinning");
       }, 3500);
     },
   });
@@ -481,7 +572,7 @@ function GetAndSet(check) {
           toastr.error("", response.message);
           btnProcess_get_set.removeClass("spinning").html("GET & SET");
           btnProcess_get_set.prop("disabled", false).val("GET & SET");
-          btnProcess.prop("disabled", false);          
+          btnProcess.prop("disabled", false);
         }, 1500);
       }
     },
