@@ -166,6 +166,7 @@ function initial_check() {
       if (response.success_api == 1) {
         if (sign_TRUE) {
           correctSign_API.addClass("visible");
+          $('.api_key_setting_form').addClass("showdisable");
         }
         if (sign_FALSE) {
           wrongSign_API.removeClass("visible");
@@ -176,6 +177,7 @@ function initial_check() {
       else {
         if (sign_TRUE) {
           correctSign_API.removeClass("visible");
+          $('.api_key_setting_form').removeClass("showdisable");
         }
         if (sign_FALSE) {
           wrongSign_API.addClass("visible");
@@ -184,14 +186,14 @@ function initial_check() {
         btnProcess_API.prop("disabled", false);
       }
 
-      if (response.success_api == 1 && response.success_business == 1) {
-        btnProcess_BUSINESS_START.prop("disabled", true);
-        btnProcess_BUSINESS_CHECK.addClass("visible");
-      }
-      else {
-        btnProcess_BUSINESS_START.prop("disabled", false);
-        btnProcess_BUSINESS_CHECK.removeClass("visible");
-      }
+      // if (response.success_api == 1 && response.success_business == 1) {
+      //   btnProcess_BUSINESS_START.prop("disabled", true);
+      //   btnProcess_BUSINESS_CHECK.addClass("visible");
+      // }
+      // else {
+      //   btnProcess_BUSINESS_START.prop("disabled", false);
+      //   btnProcess_BUSINESS_CHECK.removeClass("visible");
+      // }
     },
     error: function () {
       response_fail('Something went wrong !');
@@ -204,6 +206,19 @@ function initial_check() {
     },
   });
 }
+
+
+// $(document).ready(function(){
+//   $('#review_api_key').focusin(function(){
+//       console.log('Input field focused');
+     
+//   });
+
+//   $('#review_api_key').focusout(function(){
+//       console.log('Input field focus lost');
+      
+//   });
+// });
 
 // key up check API KEY
 let element = jQuery("#review_api_key");
@@ -223,11 +238,13 @@ $(document).ready(function () {
     if (sign_TRUE) {
       correctSign_API.removeClass("visible");
       wrongSign_API.removeClass("visible");
+      $('.api_key_setting_form').removeClass("showdisable");
     }
 
     if (jQuery('.google_review_upload_form.cont').length > 0) {
       correctSign_API.removeClass("visible");
       wrongSign_API.addClass("visible");
+      $('.api_key_setting_form').removeClass("showdisable");
     }
 
     BUSINESS_BOX.addClass("hidden");
@@ -239,6 +256,7 @@ $(document).ready(function () {
     if (jQuery('.google_review_upload_form.cont').length > 0) {
       correctSign_API.addClass("visible");
       wrongSign_API.removeClass("visible");
+      $('.api_key_setting_form').addClass("showdisable");
     }
 
     BUSINESS_BOX.removeClass("hidden");
@@ -249,31 +267,118 @@ $(document).ready(function () {
 
 
 // key up check BUSINESS TERM
-let business_term = jQuery("#firm_name");
-$(document).ready(function () {
-  var initialValue = $(business_term).val(); 
-  $(business_term).on('input', function () {    
-    var currentValue = $(this).val();
-    if (currentValue !== initialValue) {
-      button_effects_business_enable();
-    }
-    else {
-      button_effects_business_disable();
-    }
-  });  
-});
+
+// $(document).ready(function () {
+//   var initialValue = $(business_term).val(); 
+//   $(business_term).on('input', function () {    
+//     var currentValue = $(this).val();
+//     if (currentValue !== initialValue) {
+//       button_effects_business_enable();
+//     }
+//     else {
+//       button_effects_business_disable();
+//     }
+//   });  
+// });
 
 
-function button_effects_business_enable() { 
-  btnProcess_BUSINESS_START.prop("disabled", false);
-  btnProcess_BUSINESS_CHECK.hide(500);
-  return true;
-}
-function button_effects_business_disable() {  
-  btnProcess_BUSINESS_START.prop("disabled", true);
-  btnProcess_BUSINESS_CHECK.show(500);
-  return true;
-}
+// function button_effects_business_enable() { 
+//   btnProcess_BUSINESS_START.prop("disabled", false);
+//   btnProcess_BUSINESS_CHECK.hide(500);
+//   return true;
+// }
+// function button_effects_business_disable() {  
+//   btnProcess_BUSINESS_START.prop("disabled", true);
+//   btnProcess_BUSINESS_CHECK.show(500);
+//   return true;
+// }
+
+
+
+//new function
+// key up check BUSINESS TERM
+// let business_term = jQuery("#firm_name");
+// $(document).ready(function(){
+//   btnProcess_BUSINESS_CHECK.show();
+//   $(business_term).on('input', function () {
+//     button_effects_business_enable();
+//   });
+
+//   $(business_term).on('blur', function () {
+//     button_effects_business_disable();
+//   });
+
+//   function button_effects_business_enable() {
+//     console.log("button_effects_business_enable!");
+//     // if (sign_TRUE) {
+//     //   correctSign_BUSINESS_BOX.removeClass("visible");
+//     //   wrongSign_BUSINESS_BOX.removeClass("visible");
+//     // }
+
+//     // if (jQuery('.google_review_upload_form.cont').length > 0) {
+//     //   correctSign_BUSINESS_BOX.removeClass("visible");
+//     //   wrongSign_BUSINESS_BOX.addClass("visible");
+//     // }
+
+//     // BUSINESS_BOX.addClass("hidden");
+//     btnProcess_BUSINESS_START.prop("disabled", false);
+//     btnProcess_BUSINESS_CHECK.hide();
+//     return true;
+//   }
+//   function button_effects_business_disable() {
+//     // console.log("button_effects_business_disable!");
+//     // if (jQuery('.google_review_upload_form.cont').length > 0) {
+//     //   correctSign_BUSINESS_BOX.addClass("visible");
+//     //   wrongSign_BUSINESS_BOX.removeClass("visible");
+//     // }
+
+//     // BUSINESS_BOX.removeClass("hidden");
+//     btnProcess_BUSINESS_START.prop("disabled", false);
+//     btnProcess_BUSINESS_CHECK.show();
+//     return true;
+//   }
+// });
+
+
+// $(document).ready(function () {
+//   var initialValue = $(business_term).val();
+//   $(business_term).on('input focus', function () {
+//     var currentValue = $(this).val();
+//     if (currentValue !== initialValue) {
+//       button_effects_business_enable();
+//     }
+//     else {
+//       button_effects_business_disable();
+//     }
+//   });
+//   function button_effects_business_enable() {
+//     console.log("button_effects_business_enable!");
+//     // if (sign_TRUE) {
+//     //   correctSign_BUSINESS_BOX.removeClass("visible");
+//     //   wrongSign_BUSINESS_BOX.removeClass("visible");
+//     // }
+
+//     // if (jQuery('.google_review_upload_form.cont').length > 0) {
+//     //   correctSign_BUSINESS_BOX.removeClass("visible");
+//     //   wrongSign_BUSINESS_BOX.addClass("visible");
+//     // }
+
+//     // BUSINESS_BOX.addClass("hidden");
+//     btnProcess_BUSINESS_START.prop("disabled", false);
+//     return true;
+//   }
+//   function button_effects_business_disable() {
+//     // console.log("button_effects_business_disable!");
+//     // if (jQuery('.google_review_upload_form.cont').length > 0) {
+//     //   correctSign_BUSINESS_BOX.addClass("visible");
+//     //   wrongSign_BUSINESS_BOX.removeClass("visible");
+//     // }
+
+//     // BUSINESS_BOX.removeClass("hidden");
+//     btnProcess_BUSINESS_START.prop("disabled", true);
+//     return true;
+//   }
+// });
 
 
 function response_success(response) {

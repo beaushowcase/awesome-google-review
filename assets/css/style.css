@@ -539,10 +539,12 @@ input:valid ~ label {
     box-shadow: 0 1px 0 #6E6E6E inset, 0px 1px 0 #3B3B3B;
   } */
 
-  .check_start{
+  /* .check_start{
     display: none;
-    /* transition        : all .8s ease;
-    -webkit-transition: all .8s ease; */
+  } */
+
+  .api_key_setting_form.showdisable{
+    opacity: 0.6;
   }
 
   .check_start.visible{
