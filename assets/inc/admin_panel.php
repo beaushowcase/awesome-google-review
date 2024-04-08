@@ -135,6 +135,17 @@ function add_agr_google_review_post_type() {
 
     register_post_type('agr_google_review', $args);
 
+    // Register 'Business' custom taxonomy
+    register_taxonomy(
+        'business',
+        'agr_google_review',
+        array(
+            'label' => __('Business'),
+            'rewrite' => array('slug' => 'business'),
+            'hierarchical' => true,
+        )
+    );
+
     add_action('add_meta_boxes', 'add_agr_google_review_meta_box');
 
     job_table();
@@ -209,6 +220,11 @@ function our_google_reviews_callback() {
         </div>
 
    
+        <?php        
+        $firm_data = get_existing_firm_data();
+        $firm_name_data = isset($firm_data['firm_name']) ? $firm_data['firm_name'] : '';        
+        $job_id_data = isset($firm_data['jobID']) ? $firm_data['jobID'] : '';        
+        ?>
 
 
         <div class="seo-plugin-data-info container google_review_upload_form cont hidden">
@@ -219,7 +235,7 @@ function our_google_reviews_callback() {
                     <?php wp_nonce_field('get_set_trigger', 'get_set_trigger_nonce'); ?>
                     <div class="field_container">
                         <div class="input-field">
-                            <input type="text" id="firm_name" required spellcheck="false" value="<?php echo esc_attr(get_existing_firm_name() ? get_existing_firm_name() : ''); ?>">
+                            <input type="text" id="firm_name" data-jobid="<?php echo esc_attr($job_id_data ? $job_id_data : ''); ?>" required spellcheck="false" value="<?php echo esc_attr($firm_name_data ? $firm_name_data : ''); ?>">
                             <label>Firm Name</label>
                             <span class="correct-sign">✓</span>
                             <span class="wrong-sign">×</span>

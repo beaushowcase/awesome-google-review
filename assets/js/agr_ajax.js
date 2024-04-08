@@ -211,12 +211,12 @@ function initial_check() {
 // $(document).ready(function(){
 //   $('#review_api_key').focusin(function(){
 //       console.log('Input field focused');
-     
+
 //   });
 
 //   $('#review_api_key').focusout(function(){
 //       console.log('Input field focus lost');
-      
+
 //   });
 // });
 
@@ -340,6 +340,7 @@ $(document).ready(function () {
 // });
 
 
+// let business_term = jQuery("#firm_name");
 // $(document).ready(function () {
 //   var initialValue = $(business_term).val();
 //   $(business_term).on('input focus', function () {
@@ -473,7 +474,7 @@ $("#google_review_upload_form button.job_start").click(function (event) {
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
     confirmButtonText: "Start Job",
-    allowOutsideClick: false,    
+    allowOutsideClick: false,
     backdrop: 'swal2-backdrop-show',
     icon: 'question',
     color: "#716add",
@@ -489,7 +490,7 @@ $("#google_review_upload_form button.job_start").click(function (event) {
 
 // Assuming ".get" is the class of the button you want to trigger the form submission
 $("#google_review_upload_form button.check_start").click(function (event) {
- 
+
   check = true;
   Swal.fire({
     title: "Check",
@@ -499,7 +500,7 @@ $("#google_review_upload_form button.check_start").click(function (event) {
     confirmButtonColor: "#141414",
     confirmButtonText: "Check",
     backdrop: 'swal2-backdrop-show',
-    icon: "question",   
+    icon: "question",
   }).then((result) => {
     if (result.isConfirmed) {
       check_start(check);
@@ -524,18 +525,18 @@ $("#google_review_upload_form button.check_start").click(function (event) {
         /* Read more about handling dismissals below */
         if (result.dismiss === Swal.DismissReason.timer) {
           let display_msg = "" + `<b>${$(FirmNameInput).val()} = 250 Reviews</b>` + " !";
-          console.log("I was closed by the timer");          
+          console.log("I was closed by the timer");
           Swal.fire({
             icon: "success",
             title: "Completed",
-            html: display_msg,            
+            html: display_msg,
             showConfirmButton: false,
             timer: 3500,
             allowOutsideClick: false,
             grow: false,
             position: 'bottom-end',
           });
-          
+
           $('.right-box .output').html(display_msg);
           $('.right-box .output').addClass('display');
         }
@@ -547,6 +548,60 @@ $("#google_review_upload_form button.check_start").click(function (event) {
 
 function check_start(check) {
   console.log('check = ' + check);
+
+  let current_job_id = FirmNameInput.attr('data-jobid');
+  // const firm_name = FirmNameInput.val();
+  const nonce = $("#get_set_trigger_nonce").val();
+
+  $.ajax({
+    type: "POST",
+    url: ajax_object.ajax_url,
+    dataType: "json",
+    beforeSend: function () {
+      $('#loader').removeClass('hidden');
+      btnProcess_BUSINESS_START.addClass("spinning");
+    },
+    data: {
+      action: "job_check_ajax_action",
+      current_job_id: current_job_id,
+      review_api_key: ajax_object.review_api_key,
+      nonce: nonce,
+    },
+    success: function (response, status, error) {
+      setTimeout(function () {
+        console.log('completedddddddddddd !');
+        if (response.success === 1) {
+          if (check) {
+            // confirm_msg(response.msg, response.data.jobID);
+            btnProcess_BUSINESS_START.prop("disabled", true);
+            btnProcess_BUSINESS_CHECK.addClass("visible");
+          }
+        } else {
+          if (check) {
+            // response_fail(response.msg);
+            btnProcess_BUSINESS_START.prop("disabled", false);
+            btnProcess_BUSINESS_CHECK.removeClass("visible");
+          }
+        }
+      }, 3500);
+    },
+    error: function (xhr, status, error) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: response.msg,
+        showConfirmButton: false,
+        timer: 3500
+      });
+    },
+    complete: function () {
+      setTimeout(function () {
+        $('#loader').addClass('hidden');
+        btnProcess_BUSINESS_START.removeClass("spinning");
+      }, 3500);
+    },
+  });
+
 }
 
 function confirm_msg(msg, jobID) {
@@ -577,8 +632,12 @@ function confirm_msg(msg, jobID) {
         allowOutsideClick: false,
         grow: false,
         position: 'bottom-end',
-      });
-    }    
+      }).then(function () {
+        setTimeout(function () {
+          location.reload();
+        }, 100);
+      })
+    }
   });
 }
 

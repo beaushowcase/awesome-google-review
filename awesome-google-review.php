@@ -66,24 +66,23 @@ add_action('admin_enqueue_scripts', 'our_load_admin_style');
 // Enqueue = END
 
 
-function get_existing_firm_name(){
+function get_existing_firm_data(){
     global $wpdb;
     $table_name = $wpdb->prefix . 'jobapi';
     $table_name2 = $wpdb->prefix . 'jobdata';
     $client_ip = $_SERVER['REMOTE_ADDR'];    
     
-    $last_job_id = $wpdb->get_var($wpdb->prepare("
-        SELECT j.firm_name
+    $firm_data = $wpdb->get_row($wpdb->prepare("
+        SELECT j.firm_name, j.jobID
         FROM $table_name2 AS j
         INNER JOIN $table_name AS s ON j.review_api_key = s.review_api_key
         WHERE j.client_ip = %s 
         AND s.review_api_key_status = %d
         ORDER BY j.jobID DESC
         LIMIT 1", 
-        $client_ip, 1)
-    );
+        $client_ip, 1), ARRAY_A);
 
-    return $last_job_id;
+    return $firm_data;
 }
 
 // set at locatization
@@ -357,7 +356,7 @@ function get_reviews_data($firm_name, $review_api_key)
     return $api_response;
 }
 
-
+// job start
 add_action('wp_ajax_job_start_ajax_action', 'job_start_ajax_action_function');
 add_action('wp_ajax_nopriv_job_start_ajax_action', 'job_start_ajax_action_function');
 
@@ -424,10 +423,6 @@ function job_start_ajax_action_function() {
     wp_die();
 }
 
-
-
-
-
 function job_start_at_api($review_api_key,$firm_name)
 {   
     $api_response = array(
@@ -471,6 +466,147 @@ function job_start_at_api($review_api_key,$firm_name)
 
     return $api_response;
 }
+
+//job start to check job
+function job_check_at_api($review_api_key,$current_job_id)
+{   
+    $api_response = array(
+        'success' => 0,
+        'data'    => array('jobID' => 0),
+        'msg'     => array('')
+    );
+    $api_url = 'http://localhost:3000/events';      
+    $headers = array(
+        'Content-Type' => 'application/json', // Update content type to JSON
+    );
+    $query_params = array(
+        'api_key' => $review_api_key,
+        'id' => $current_job_id,
+    );
+    $api_url = add_query_arg($query_params, $api_url);   
+
+    // Make a GET request to the Express.js endpoint
+    $response = wp_remote_get($api_url, array(
+        'headers' => $headers,
+        'timeout' => 20,
+    ));   
+
+    if (is_wp_error($response)) {
+        $api_response['data']['jobID'] = 0;
+        $api_response['success'] = 0;
+        $api_response['msg'] = $response->get_error_message();
+    } else {
+        $body = wp_remote_retrieve_body($response); 
+        $data = json_decode($body, true);
+        $file_save = save_json_response_to_file($current_job_id,$data);
+        if (isset($file_save) && $file_save) {
+            $api_response['data']['jobID'] = $current_job_id;
+            $api_response['success'] = 1;
+            $api_response['msg'] = $data['message'];
+        } else {
+            $api_response['data']['jobID'] = 0;
+            $api_response['success'] = 0;
+            $api_response['msg'] = isset($data['error']) ? $data['error'] : 'something went wrong !';
+        }
+    }
+    return $api_response;
+}
+
+
+// Function to save JSON response to a file
+function save_json_response_to_file($current_job_id,$data) {    
+    $parent_dir = plugin_dir_path(__FILE__);
+    $folder_path = $parent_dir . 'jobdata';
+    if (!file_exists($folder_path) && !is_dir($folder_path)) {
+        mkdir($folder_path, 0755, true);
+    }
+    $file_path = $folder_path . '/' . $current_job_id . '.json';
+    $json_data = json_encode($data, JSON_PRETTY_PRINT);
+    $saved = file_put_contents($file_path, $json_data);        
+    if ($saved !== false) {        
+        return true;
+    } else {    
+        return false;
+    }   
+}
+
+//check job
+add_action('wp_ajax_job_check_ajax_action', 'job_check_ajax_action_function');
+add_action('wp_ajax_nopriv_job_check_ajax_action', 'job_check_ajax_action_function');
+
+function job_check_ajax_action_function() {
+    global $wpdb;
+    $response = array(
+        'success' => 0,
+        'data'    => array('jobID' => ''),
+        'msg'     => ''
+    );
+
+    $nonce         = isset($_POST['nonce']) ? sanitize_text_field($_POST['nonce']) : '';
+    $review_api_key = isset($_POST['review_api_key']) ? sanitize_text_field($_POST['review_api_key']) : '';
+    $current_job_id     = isset($_POST['current_job_id']) ? sanitize_text_field($_POST['current_job_id']) : '';
+
+    if (!empty($nonce) && wp_verify_nonce($nonce, 'get_set_trigger')) {
+        $response_api_data = job_check_at_api($review_api_key, $current_job_id);
+
+        // ptr($response_api_data);exit;
+
+        if ($response_api_data['success']) {
+
+
+            $jobID = $response_api_data['data']['jobID'];
+            
+            $response['data']['jobID'] = $jobID;
+                    $response['success'] = 1;
+                    $response['msg'] = $response_api_data['msg'];
+
+
+            // $table_name = $wpdb->prefix . 'jobapi';
+            // $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));  
+
+
+            // if ($wpdb->last_error) {                
+            //     $response['msg'] = "Database Error: " . $wpdb->last_error;
+            // } else {                
+            //     $existing_jobID = $wpdb->get_var(
+            //         $wpdb->prepare(
+            //             "SELECT jobID FROM {$wpdb->prefix}jobdata WHERE jobID = %s",
+            //             $jobID
+            //         )
+            //     );
+
+            //     $data = array('jobID' => $jobID, 'jobID_json' => 1, 'review_api_key' => $review_api_key, 'firm_name' => $firm_name, 'client_ip' => $c_ip, 'created' => current_time('mysql'));
+               
+
+            //     if ($existing_jobID !== null) {
+            //         $where = array('jobID' => $jobID);
+            //         $result = $wpdb->update($wpdb->prefix . 'jobdata', $data, $where, array('%d'), array('%s'));
+            //     } else {
+            //         $result = $wpdb->insert($wpdb->prefix . 'jobdata', $data, array('%s', '%d'));
+            //     }
+
+
+            //     if ($result !== false) {
+            //         $response['data']['jobID'] = $jobID;
+            //         $response['success'] = 1;
+            //         $response['msg'] = $response_api_data['msg'];
+            //     } else {
+            //         $response['msg'] = "Database Error: Failed to insert/update job data.";
+            //     }
+            // }
+
+
+        } else {
+            $response['msg'] = "API Error: " . $response_api_data['msg'];
+        }
+    } else {
+        $response['msg'] = 'Invalid nonce.';
+    }
+
+    wp_send_json($response);
+    wp_die();
+}
+
 
 add_action('wp_ajax_review_get_set_ajax_action', 'review_get_set_ajax_action_function');
 add_action('wp_ajax_nopriv_review_get_set_ajax_action', 'review_get_set_ajax_action_function');
