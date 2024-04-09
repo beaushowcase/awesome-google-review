@@ -16,6 +16,21 @@ jQuery(document).ready(function ($) {
   initial_check();
 });
 
+jQuery(document).ready(function() {
+  var h1 = $('.output');
+  if (h1.hasClass('output')) {
+      // Load the text file
+      let file_path = ajax_object.plugin_url+'/logs.txt';      
+      $.get(file_path, function(data) {         
+          h1.html(data);
+          h1.addClass('display');
+      })
+      .fail(function(error) {
+          console.error('Error:', error);
+      });
+  }
+});
+
 $("#api_key_setting_form").submit(function (event) {
   event.preventDefault();
   check = true;
@@ -148,6 +163,8 @@ let btnProcess_BUSINESS_CHECK = $("#google_review_upload_form .btn-process.check
 let correctSign_BUSINESS_BOX = $("#google_review_upload_form .correct-sign");
 let wrongSign_BUSINESS_BOX = $("#google_review_upload_form .wrong-sign");
 
+let btnProcess_BUSINESS_UPLOAD = $("#google_review_upload_form .btn-process.btn_upload");
+
 function initial_check() {
   const nonce = $("#review_api_key_nonce").val();
   $.ajax({
@@ -186,14 +203,14 @@ function initial_check() {
         btnProcess_API.prop("disabled", false);
       }
 
-      // if (response.success_api == 1 && response.success_business == 1) {
-      //   btnProcess_BUSINESS_START.prop("disabled", true);
-      //   btnProcess_BUSINESS_CHECK.addClass("visible");
-      // }
-      // else {
-      //   btnProcess_BUSINESS_START.prop("disabled", false);
-      //   btnProcess_BUSINESS_CHECK.removeClass("visible");
-      // }
+      if (response.success_api == 1 && response.success_business == 1) {
+        // btnProcess_BUSINESS_START.prop("disabled", true);
+        btnProcess_BUSINESS_CHECK.addClass("visible");
+      }
+      else {
+        // btnProcess_BUSINESS_START.prop("disabled", false);
+        btnProcess_BUSINESS_CHECK.removeClass("visible");
+      }
     },
     error: function () {
       response_fail('Something went wrong !');
@@ -381,7 +398,7 @@ $(document).ready(function () {
 //   }
 // });
 
-
+//api save call
 function response_success(response) {
   Swal.fire({
     icon: "success",
@@ -396,6 +413,8 @@ function response_success(response) {
 }
 
 function response_fail(response) {
+  $('#loader').addClass('hidden');
+  btnProcess_BUSINESS_START.removeClass("spinning");
   Swal.fire({
     icon: "error",
     position: 'bottom-end',
@@ -408,6 +427,9 @@ function response_fail(response) {
   });
   return true;
 }
+
+
+
 
 
 function ApiKeySave(check) {
@@ -454,8 +476,9 @@ function ApiKeySave(check) {
       setTimeout(function () {
         $('#loader').addClass('hidden');
         btnProcess_API.removeClass("spinning");
-        btnProcess_API.prop("disabled", false);
-      }, 1500);
+        btnProcess_API.prop("disabled", false);        
+        location.reload();
+      }, 5000);
     },
   });
 }
@@ -504,47 +527,83 @@ $("#google_review_upload_form button.check_start").click(function (event) {
   }).then((result) => {
     if (result.isConfirmed) {
       check_start(check);
-      let timerInterval;
-      Swal.fire({
-        title: "Google Reviews !",
-        html: "Checking in <b></b> milliseconds.",
-        timer: 3500,
-        timerProgressBar: true,
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-          const timer = Swal.getPopup().querySelector("b");
-          timerInterval = setInterval(() => {
-            timer.textContent = `${Swal.getTimerLeft()}`;
-          }, 100);
-        },
-        willClose: () => {
-          clearInterval(timerInterval);
-        }
-      }).then((result) => {
-        /* Read more about handling dismissals below */
-        if (result.dismiss === Swal.DismissReason.timer) {
-          let display_msg = "" + `<b>${$(FirmNameInput).val()} = 250 Reviews</b>` + " !";
-          console.log("I was closed by the timer");
-          Swal.fire({
-            icon: "success",
-            title: "Completed",
-            html: display_msg,
-            showConfirmButton: false,
-            timer: 3500,
-            allowOutsideClick: false,
-            grow: false,
-            position: 'bottom-end',
-          });
-
-          $('.right-box .output').html(display_msg);
-          $('.right-box .output').addClass('display');
-        }
-      });
+    }
+    else {
+      alert();
     }
   });
   $("#google_review_upload_form").submit();
 });
+
+
+//GMB call
+function response_business_success(response) {
+  let timerInterval;
+  Swal.fire({
+    title: "Google Reviews !",
+    html: "Checking in <b></b> milliseconds.",
+    timer: 3500,
+    timerProgressBar: true,
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+      const timer = Swal.getPopup().querySelector("b");
+      timerInterval = setInterval(() => {
+        timer.textContent = `${Swal.getTimerLeft()}`;
+      }, 100);
+    },
+    willClose: () => {
+      clearInterval(timerInterval);
+    }
+  }).then((result) => {
+    /* Read more about handling dismissals below */
+    if (result.dismiss === Swal.DismissReason.timer) {
+      // let display_msg = "" + `<b>${$(FirmNameInput).val()} = 250 Reviews</b>` + " !";
+      let display_msg = response;
+      console.log("I was closed by the timer");
+      Swal.fire({
+        icon: "success",
+        title: "Completed",
+        html: display_msg,
+        showConfirmButton: false,
+        timer: 3500,
+        allowOutsideClick: false,
+        grow: false,
+        position: 'bottom-end',
+      });
+      btnProcess_BUSINESS_START.hide();
+      btnProcess_BUSINESS_CHECK.hide();
+      btnProcess_BUSINESS_UPLOAD.addClass('visible');
+      btnProcess_BUSINESS_START.prop("disabled", true);
+      btnProcess_BUSINESS_CHECK.prop("disabled", true);
+      $('.right-box .output').html(display_msg);
+      $('.right-box .output').addClass('display');
+    }
+  });
+  return true;
+}
+
+function response_business_fail(response) {
+  let display_msg = response;
+  console.log("I was closed by the timer");
+  Swal.fire({
+    icon: "error",
+    title: "Failed !",
+    html: display_msg,
+    showConfirmButton: false,
+    timer: 3500,
+    allowOutsideClick: false,
+    grow: false,
+    position: 'bottom-end',
+  });
+  btnProcess_BUSINESS_START.show();
+  btnProcess_BUSINESS_CHECK.show();
+  btnProcess_BUSINESS_UPLOAD.removeClass('visible');
+  btnProcess_BUSINESS_START.prop("disabled", false);
+  $('.right-box .output').html(display_msg);
+  $('.right-box .output').addClass('display');
+  return true;
+}
 
 function check_start(check) {
   console.log('check = ' + check);
@@ -559,7 +618,7 @@ function check_start(check) {
     dataType: "json",
     beforeSend: function () {
       $('#loader').removeClass('hidden');
-      btnProcess_BUSINESS_START.addClass("spinning");
+      btnProcess_BUSINESS_CHECK.addClass("spinning");
     },
     data: {
       action: "job_check_ajax_action",
@@ -572,15 +631,11 @@ function check_start(check) {
         console.log('completedddddddddddd !');
         if (response.success === 1) {
           if (check) {
-            // confirm_msg(response.msg, response.data.jobID);
-            btnProcess_BUSINESS_START.prop("disabled", true);
-            btnProcess_BUSINESS_CHECK.addClass("visible");
+            response_business_success(response.msg);
           }
         } else {
           if (check) {
-            // response_fail(response.msg);
-            btnProcess_BUSINESS_START.prop("disabled", false);
-            btnProcess_BUSINESS_CHECK.removeClass("visible");
+            response_business_fail(response.msg);
           }
         }
       }, 3500);
@@ -597,7 +652,7 @@ function check_start(check) {
     complete: function () {
       setTimeout(function () {
         $('#loader').addClass('hidden');
-        btnProcess_BUSINESS_START.removeClass("spinning");
+        btnProcess_BUSINESS_CHECK.removeClass("spinning");
       }, 3500);
     },
   });
@@ -624,6 +679,9 @@ function confirm_msg(msg, jobID) {
     }
   }).then((result) => {
     if (result.dismiss === Swal.DismissReason.timer) {
+      $('#loader').addClass('hidden');
+      btnProcess_BUSINESS_START.removeClass("spinning");
+
       Swal.fire({
         icon: "success",
         title: "Your job has been completed",
@@ -666,7 +724,7 @@ function job_start(check) {
         if (response.success === 1) {
           if (check) {
             confirm_msg(response.msg, response.data.jobID);
-            btnProcess_BUSINESS_START.prop("disabled", true);
+            // btnProcess_BUSINESS_START.prop("disabled", true);
             btnProcess_BUSINESS_CHECK.addClass("visible");
           }
         } else {
@@ -689,10 +747,10 @@ function job_start(check) {
       });
     },
     complete: function () {
-      setTimeout(function () {
-        $('#loader').addClass('hidden');
-        btnProcess_BUSINESS_START.removeClass("spinning");
-      }, 3500);
+      // setTimeout(function () {
+      //   $('#loader').addClass('hidden');
+      //   btnProcess_BUSINESS_START.removeClass("spinning");
+      // }, 3500);
     },
   });
 }

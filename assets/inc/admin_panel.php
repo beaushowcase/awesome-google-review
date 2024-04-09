@@ -47,6 +47,7 @@ function job_table() {
             review_api_key varchar(255) NOT NULL,
             jobID bigint(20) NOT NULL,
             jobID_json bigint(20) NOT NULL,
+            jobID_check bigint(20) NOT NULL,
             firm_name varchar(255) NOT NULL,
             client_ip varchar(255) NOT NULL,
             created datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -245,8 +246,9 @@ function our_google_reviews_callback() {
                         <button type="submit" class="submit_btn job_start btn-process"><span class="label">JOB START</span></button>
                         <button type="submit" class="submit_btn check_start btn-process"><span class="label">CHECK</span></button>
                     </div>
-
-                
+                    <div class="submit_btn_setget twoToneCenter">
+                        <button type="submit" class="submit_btn btn_upload btn-process"><span class="label">UPLOAD</span></button>                        
+                    </div>
                     <!-- <div class="get-set-btn">
                         <div class="submit_btn_setget twoToneCenter">
                             <button type="submit" class="submit_btn get btn-process"><span class="label">GET</span></button>
@@ -264,12 +266,10 @@ function our_google_reviews_callback() {
 
     <div class="right-box">        
         <div class="inner-content-data">
-                <h2 class="boxtitle display_total">Reviews Info</h2>               
-
+                <h2 class="boxtitle display_total">Status</h2>
                 <div class="typewriter">
                     <h1 class="output"> ... </h1>
-                </div>
-                
+                </div>                
         </div>
     </div>
 

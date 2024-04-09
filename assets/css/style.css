@@ -373,11 +373,12 @@ input:valid ~ label {
   text-shadow: black -1px -1px 0px;
   position: relative;
   /* transition: padding-right 0.3s ease; */
-  font-weight: 700;
-  box-shadow: 0 1px 0 #6E6E6E inset, 0px 1px 0 #3B3B3B;
+  font-weight: 700;  
   /* transition        : all .8s ease;
   -webkit-transition: all .8s ease;   */
 }
+
+
 
 .btn-process:disabled {
   background: linear-gradient(to bottom, #545454 0%, #474747 50%, #141414 51%, #1B1B1B 100%);
@@ -387,6 +388,11 @@ input:valid ~ label {
   cursor: not-allowed;
   user-select: none;
 }
+
+button:not(:disabled) {
+ box-shadow: 1px 1px 5px rgba(255, 255, 65, 0.2);
+}
+
 
 /* .btn-process:hover{
   pointer-events: none;
@@ -539,9 +545,9 @@ input:valid ~ label {
     box-shadow: 0 1px 0 #6E6E6E inset, 0px 1px 0 #3B3B3B;
   } */
 
-  /* .check_start{
+  .check_start{
     display: none;
-  } */
+  }
 
   .api_key_setting_form.showdisable{
     opacity: 0.6;
@@ -555,12 +561,13 @@ input:valid ~ label {
     display: flex;
 }
 .right-box {
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5), 0px 6px 20px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0px 4px 8px rgba(255, 255, 0, 0.3), 0px 6px 20px rgba(255, 255, 0, 0.2); */
+  box-shadow: 1px 5px 15px rgba(255, 255, 65, 0.1);
   border: 2px solid #ddd;
   /* background: #1c1c1c85; */
   padding: 20px;
   border-radius: 6px;
-  width: 500px;
+  width: 100%;
   margin: 50px;
   background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */    
   transition: opacity 0.5s ease; /* Fade animation transition */
@@ -632,3 +639,18 @@ input:valid ~ label {
   from, to { border-color: transparent }
   50% { border-color: orange }
 }
+
+
+
+
+
+/* btn new */
+
+  .btn_upload{
+    display: none;
+  }
+
+
+  .btn_upload.visible{
+    display: block;
+  }
