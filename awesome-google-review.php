@@ -134,18 +134,28 @@ function get_business_by_client_ip($client_ip){
     return $last_firm_name;
 }
 
-//log status file updated
-function appendMessageToFile($message) {
-    $folder_path = plugin_dir_path(__FILE__);
-    $file_path = $folder_path . 'logs.txt';
-    $fileHandle = fopen($file_path, 'w');
-    if ($fileHandle === false) {
-        return false;
-    }
-    fwrite($fileHandle, $message . PHP_EOL);
-    fclose($fileHandle);
-    return true;
-}
+// Function to append message to a log file with bullet point prefix
+// function appendMessageToFile($message) {
+//     $folder_path = plugin_dir_path(__FILE__);
+//     $file_path = $folder_path . 'logs.txt';
+    
+//     // Open file in append mode
+//     $fileHandle = fopen($file_path, 'a');
+    
+//     // Check if file handle is valid
+//     if ($fileHandle === false) {
+//         return false; // Return false if file couldn't be opened
+//     }
+    
+//     // Append message with bullet point prefix and a new line
+//     fwrite($fileHandle, "• " . $message . PHP_EOL);
+    
+//     // Close the file handle
+//     fclose($fileHandle);
+    
+//     // Return true indicating success
+//     return true;
+// }
 
 // Include admin panel files.
 require_once AGR_PLUGIN_PATH . 'assets/inc/admin_panel.php';
@@ -169,7 +179,7 @@ function initial_check_api_function()
         $response['success_business'] = 1; 
         $response['msg_business'] = 'Business Verified !';       
     }
-    appendMessageToFile($response['msg_business']);
+    // appendMessageToFile($response['msg_business']);
     wp_send_json($response);
     wp_die();
 }
@@ -260,6 +270,7 @@ function review_api_key_ajax_action_function()
     } else {
         $response['msg'] = 'Invalid nonce.';
     }
+    // appendMessageToFile($response['msg']);
     wp_send_json($response);
     wp_die();
 }

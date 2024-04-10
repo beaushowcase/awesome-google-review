@@ -16,20 +16,26 @@ jQuery(document).ready(function ($) {
   initial_check();
 });
 
-jQuery(document).ready(function() {
-  var h1 = $('.output');
-  if (h1.hasClass('output')) {
-      // Load the text file
-      let file_path = ajax_object.plugin_url+'/logs.txt';      
-      $.get(file_path, function(data) {         
-          h1.html(data);
-          h1.addClass('display');
-      })
-      .fail(function(error) {
-          console.error('Error:', error);
-      });
-  }
-});
+// jQuery(document).ready(function() {
+//   var h1 = $('.output');
+//   if (h1.hasClass('output')) {
+//       // Load the text file
+//       let file_path = ajax_object.plugin_url + '/logs.txt';      
+//       $.get(file_path, function(data) {         
+//           // Split data by newline characters and create <p> elements
+//           let lines = data.split('\n');
+//           let paragraphs = lines.map(function(line) {
+//               return '<p>' + line + '</p>';
+//           });
+//           // Join the paragraphs and set as HTML content of h1
+//           h1.html(paragraphs.join(''));
+//           // h1.addClass('display');
+//       })
+//       .fail(function(error) {
+//           console.error('Error:', error);
+//       });
+//   }
+// });
 
 $("#api_key_setting_form").submit(function (event) {
   event.preventDefault();
@@ -46,11 +52,6 @@ $.fn.focusAtEnd = function () {
   });
 };
 
-function getClientIP(callback) {
-  $.get("https://api.ipify.org?format=json", function (response) {
-    callback(response.ip);
-  });
-}
 
 
 // btnProcess_get_set.removeClass("spinning");

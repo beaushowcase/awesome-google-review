@@ -249,15 +249,6 @@ function our_google_reviews_callback() {
                     <div class="submit_btn_setget twoToneCenter">
                         <button type="submit" class="submit_btn btn_upload btn-process"><span class="label">UPLOAD</span></button>                        
                     </div>
-                    <!-- <div class="get-set-btn">
-                        <div class="submit_btn_setget twoToneCenter">
-                            <button type="submit" class="submit_btn get btn-process"><span class="label">GET</span></button>
-                        </div>
-                        <div class="submit_btn_setget twoToneCenter">
-                            <button type="submit" class="submit_btn set btn-process"><span class="label">SET</span></button>
-                        </div>
-                    </div> -->
-                
                 </form>
                 
             </div>
@@ -268,7 +259,7 @@ function our_google_reviews_callback() {
         <div class="inner-content-data">
                 <h2 class="boxtitle display_total">Status</h2>
                 <div class="typewriter">
-                    <h1 class="output"> ... </h1>
+                    <h1 class="output"> <p>...</p> </h1>
                 </div>                
         </div>
     </div>

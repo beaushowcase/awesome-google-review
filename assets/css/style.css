@@ -389,7 +389,7 @@ input:valid ~ label {
   user-select: none;
 }
 
-button:not(:disabled) {
+button.btn-process:not(:disabled) {
  box-shadow: 1px 1px 5px rgba(255, 255, 65, 0.2);
 }
 
