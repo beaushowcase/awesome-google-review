@@ -170,15 +170,45 @@ function initial_check_api_function()
         'msg_api' => "",
         'success_business' => 0,
         'msg_business' => "",
+        'success_check' => 0,
+        'msg_check' => "", 
     );
     if (get_existing_api_key_data()) {        
         $response['success_api'] = 1; 
         $response['msg_api'] = 'API Verified !';       
     }
-    if (get_existing_business_data()) {        
-        $response['success_business'] = 1; 
-        $response['msg_business'] = 'Business Verified !';       
+
+
+    // if (get_existing_business_data()) {        
+    //     $response['success_business'] = 1; 
+    //     $response['msg_business'] = 'Business Verified !';       
+    // }
+
+
+    $client_ip = $_SERVER['REMOTE_ADDR'];    
+    
+    $check_job_status = check_job_status($client_ip);
+    $check_upload_job_status = check_upload_job_status($client_ip);
+
+    if ($check_job_status) {        
+        $response['success_business'] = $check_job_status; 
+        $response['msg_business'] = 'Business verified !';
     }
+    else{
+        $response['success_business'] = $check_job_status; 
+        $response['msg_business'] = 'Business NOT verified !';
+    }
+
+
+    if ($check_upload_job_status) {        
+        $response['success_check'] = $check_upload_job_status; 
+        $response['msg_check'] = 'Ready to UPLOAD !';       
+    }
+    else{
+        $response['success_check'] = $check_upload_job_status; 
+        $response['msg_check'] = 'Need to CHECK !';
+    }
+
     // appendMessageToFile($response['msg_business']);
     wp_send_json($response);
     wp_die();
@@ -582,6 +612,8 @@ function job_check_ajax_action_function() {
     if (!empty($nonce) && wp_verify_nonce($nonce, 'get_set_trigger')) {
         $response_api_data = job_check_at_api($review_api_key, $current_job_id);        
 
+        // ptr($response_api_data);exit;
+
         if ($response_api_data['success']) {
 
             $jobID = $response_api_data['data']['jobID'];
@@ -625,7 +657,54 @@ function job_check_ajax_action_function() {
                 }
             }
         } else {
-            $response['msg'] = "API Error: " . $response_api_data['msg'];
+
+            $jobID = $response_api_data['data']['jobID'];
+            
+            $response['data']['jobID'] = $jobID;
+            $response['success'] = 1;
+            $response['msg'] = $response_api_data['msg'];
+
+            $table_name = $wpdb->prefix . 'jobapi';
+            $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));
+
+           
+
+            if ($wpdb->last_error) {                
+                $response['msg'] = "Database Error: " . $wpdb->last_error;
+            } else {                
+                $existing_jobID = $wpdb->get_var(
+                    $wpdb->prepare(
+                        "SELECT jobID FROM {$wpdb->prefix}jobdata WHERE jobID = %s",
+                        $jobID
+                    )
+                );
+
+                $data2 = array(
+                    'jobID_check' => 0,
+                    'jobID_json' => 0,
+                    'created' => current_time('mysql')
+                );
+                
+                if ($existing_jobID !== null) {
+                    $where = array('jobID' => $jobID , 'client_ip' => $c_ip);
+                    $result = $wpdb->update($wpdb->prefix . 'jobdata', $data2, $where);
+                   
+                } else {
+                    $data2['review_api_key'] = $review_api_key;
+                    $data2['created'] = current_time('mysql');
+                    $result = $wpdb->insert($wpdb->prefix . 'jobdata', $data2);
+                }
+
+                if ($result !== false) {
+                    $response['data']['jobID'] = $jobID;
+                    $response['success'] = 0;
+                    $response['msg'] = $response_api_data['msg'];
+                } else {
+                    $response['msg'] = "Database Error: Failed to insert/update job data.";
+                }
+            }
+
+            // $response['msg'] = "API Error: " . $response_api_data['msg'];
         }
     } else {
         $response['msg'] = 'Invalid nonce.';

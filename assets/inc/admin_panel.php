@@ -224,7 +224,8 @@ function our_google_reviews_callback() {
         <?php        
         $firm_data = get_existing_firm_data();
         $firm_name_data = isset($firm_data['firm_name']) ? $firm_data['firm_name'] : '';        
-        $job_id_data = isset($firm_data['jobID']) ? $firm_data['jobID'] : '';        
+        $job_id_data = isset($firm_data['jobID']) ? $firm_data['jobID'] : '';    
+     
         ?>
 
 
@@ -242,12 +243,14 @@ function our_google_reviews_callback() {
                             <span class="wrong-sign">×</span>
                         </div>
                     </div>
+            
                     <div class="submit_btn_setget twoToneCenter">
                         <button type="submit" class="submit_btn job_start btn-process"><span class="label">JOB START</span></button>
                         <button type="submit" class="submit_btn check_start btn-process"><span class="label">CHECK</span></button>
                     </div>
+
                     <div class="submit_btn_setget twoToneCenter">
-                        <button type="submit" class="submit_btn btn_upload btn-process"><span class="label">UPLOAD</span></button>                        
+                        <button type="submit" class="submit_btn upload_start btn-process"><span class="label">UPLOAD</span></button>                        
                     </div>
                 </form>
                 
@@ -343,3 +346,55 @@ function custom_orderby($query) {
     }
 }
 add_action('pre_get_posts', 'custom_orderby');
+
+
+
+// CHECK BTN STATUS
+function check_job_status($client_ip) {
+    global $wpdb;
+    
+    $table_data = $wpdb->prefix . 'jobdata';
+    $table_api = $wpdb->prefix . 'jobapi';
+
+    // Check if the last record with the client_ip exists in both tables with specific conditions
+    $result = $wpdb->get_row($wpdb->prepare(
+        "SELECT COUNT(*) AS count 
+        FROM (
+            SELECT data.jobID_json, data.jobID_check
+            FROM $table_data AS data
+            INNER JOIN $table_api AS api ON data.client_ip = api.client_ip 
+            WHERE data.client_ip = %s 
+            ORDER BY data.id DESC
+            LIMIT 1
+        ) AS last_record
+        WHERE last_record.jobID_json = 1",
+        $client_ip
+    ));
+
+    return $result->count == 1 ? true : false;
+}
+
+// UPLOAD BTN STATUS
+function check_upload_job_status($client_ip) {
+    global $wpdb;
+    
+    $table_data = $wpdb->prefix . 'jobdata';
+    $table_api = $wpdb->prefix . 'jobapi';
+
+    // Check if the last record with the client_ip exists in both tables with specific conditions
+    $result = $wpdb->get_row($wpdb->prepare(
+        "SELECT COUNT(*) AS count 
+        FROM (
+            SELECT data.jobID_json, data.jobID_check
+            FROM $table_data AS data
+            INNER JOIN $table_api AS api ON data.client_ip = api.client_ip 
+            WHERE data.client_ip = %s 
+            ORDER BY data.id DESC
+            LIMIT 1
+        ) AS last_record
+        WHERE last_record.jobID_json = 1 AND last_record.jobID_check = 1",
+        $client_ip
+    ));
+
+    return $result->count == 1 ? true : false;
+}

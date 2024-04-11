@@ -164,7 +164,7 @@ let btnProcess_BUSINESS_CHECK = $("#google_review_upload_form .btn-process.check
 let correctSign_BUSINESS_BOX = $("#google_review_upload_form .correct-sign");
 let wrongSign_BUSINESS_BOX = $("#google_review_upload_form .wrong-sign");
 
-let btnProcess_BUSINESS_UPLOAD = $("#google_review_upload_form .btn-process.btn_upload");
+let btnProcess_BUSINESS_UPLOAD = $("#google_review_upload_form .btn-process.upload_start");
 
 function initial_check() {
   const nonce = $("#review_api_key_nonce").val();
@@ -204,14 +204,92 @@ function initial_check() {
         btnProcess_API.prop("disabled", false);
       }
 
-      if (response.success_api == 1 && response.success_business == 1) {
-        // btnProcess_BUSINESS_START.prop("disabled", true);
-        btnProcess_BUSINESS_CHECK.addClass("visible");
+      //business CHECK
+
+
+      // START SHOW ONLY
+      if (response.success_api && !response.success_business) {
+        if (response.success_api && !response.success_business && !response.success_check) {
+          btnProcess_BUSINESS_CHECK.hide();
+          btnProcess_BUSINESS_UPLOAD.hide();
+
+          //start show only
+          btnProcess_BUSINESS_START.show();
+        }              
       }
-      else {
-        // btnProcess_BUSINESS_START.prop("disabled", false);
-        btnProcess_BUSINESS_CHECK.removeClass("visible");
+
+
+      else if (response.success_api && response.success_business) {
+        //CHECK SHOW
+        if (response.success_api && response.success_business && !response.success_check) {
+          btnProcess_BUSINESS_START.hide();
+          btnProcess_BUSINESS_UPLOAD.hide();
+
+          //check show
+          btnProcess_BUSINESS_CHECK.show();
+        }
+
+        //UPLOAD SHOW
+        else if (response.success_api && response.success_business && response.success_check) {
+          btnProcess_BUSINESS_START.hide();          
+          btnProcess_BUSINESS_CHECK.hide();
+
+          //upload show
+          btnProcess_BUSINESS_UPLOAD.show();
+        }
       }
+
+
+      // btnProcess_BUSINESS_START.show();
+      // btnProcess_BUSINESS_CHECK.hide();
+
+      // else if (response.success_api && response.success_business && response.success_check == false) {
+
+      // }
+
+      // //business UPLOAD
+      // if (response.success_api && response.success_business && response.success_check == true) {
+      //   btnProcess_BUSINESS_START.hide();                
+      //   btnProcess_BUSINESS_CHECK.hide();        
+      //   btnProcess_BUSINESS_UPLOAD.show();
+      // }     
+      
+
+      //business CHECK
+      // if (response.success_api == 1 && response.success_business == 1 ) {
+      //   btnProcess_BUSINESS_START.hide();
+      //   btnProcess_BUSINESS_CHECK.hide();
+      //   btnProcess_BUSINESS_UPLOAD.show();
+      // }
+      // else {
+      //   btnProcess_BUSINESS_START.show();
+      //   btnProcess_BUSINESS_CHECK.show();
+      //   btnProcess_BUSINESS_UPLOAD.hide();
+      // }
+
+
+      // //business UPLOAD
+      // if (response.success_check == 1) {     
+      //   btnProcess_BUSINESS_START.hide();
+      //   btnProcess_BUSINESS_CHECK.hide();
+      //   btnProcess_BUSINESS_UPLOAD.show();
+      // }
+      // else {        
+      //   btnProcess_BUSINESS_START.show();
+      //   btnProcess_BUSINESS_CHECK.show();
+      //   btnProcess_BUSINESS_UPLOAD.hide();
+      // }
+
+      
+
+      // if (response.success_api == 1 && response.success_business == 1) {
+      //   // btnProcess_BUSINESS_START.prop("disabled", true);
+      //   btnProcess_BUSINESS_CHECK.addClass("visible");
+      // }
+      // else {
+      //   // btnProcess_BUSINESS_START.prop("disabled", false);
+      //   btnProcess_BUSINESS_CHECK.removeClass("visible");
+      // }
     },
     error: function () {
       response_fail('Something went wrong !');
@@ -410,6 +488,9 @@ function response_success(response) {
     grow: false,
     timer: 3500,
   });
+  $('#loader').addClass('hidden');
+  btnProcess_API.removeClass("spinning");
+  btnProcess_API.prop("disabled", false); 
   return true;
 }
 
@@ -426,6 +507,9 @@ function response_fail(response) {
     grow: false,
     timer: 3500,
   });
+  $('#loader').addClass('hidden');
+  btnProcess_API.removeClass("spinning");
+  btnProcess_API.prop("disabled", false); 
   return true;
 }
 
@@ -488,7 +572,7 @@ $("#google_review_upload_form").submit(function (event) {
   event.preventDefault(); // Prevent the default form submission behavior
 });
 
-// Assuming ".get" is the class of the button you want to trigger the form submission
+// JOB START CLICKED 
 $("#google_review_upload_form button.job_start").click(function (event) {
   check = true;
   Swal.fire({
@@ -498,6 +582,32 @@ $("#google_review_upload_form button.job_start").click(function (event) {
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
     confirmButtonText: "Start Job",
+    allowOutsideClick: false,
+    backdrop: 'swal2-backdrop-show',
+    icon: 'question',
+    color: "#716add",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      job_start(check);
+    } else if (result.isDenied) {
+      Swal.fire("Changes are not saved", "", "info");
+    }
+  });
+  $("#google_review_upload_form").submit(); // Manually submit the form
+});
+
+
+// JOB UPLOAD CLICKED 
+$("#google_review_upload_form button.upload_start ").click(function (event) {
+  let firm_name_display = $(FirmNameInput).val(); 
+  check = true;
+  Swal.fire({
+    title: `Confirmation: Upload ?`,
+    html: `Upload your reviews now and let your voice be heard about <strong>${firm_name_display}</strong>`,
+    showCancelButton: true,
+    confirmButtonColor: "#405640",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Upload",
     allowOutsideClick: false,
     backdrop: 'swal2-backdrop-show',
     icon: 'question',
@@ -571,14 +681,17 @@ function response_business_success(response) {
         allowOutsideClick: false,
         grow: false,
         position: 'bottom-end',
+      }).then(function () {
+        setTimeout(function () {
+          location.reload();
+        }, 100);
       });
-      btnProcess_BUSINESS_START.hide();
-      btnProcess_BUSINESS_CHECK.hide();
-      btnProcess_BUSINESS_UPLOAD.addClass('visible');
-      btnProcess_BUSINESS_START.prop("disabled", true);
-      btnProcess_BUSINESS_CHECK.prop("disabled", true);
-      $('.right-box .output').html(display_msg);
-      $('.right-box .output').addClass('display');
+      
+      // btnProcess_BUSINESS_START.hide();
+      // btnProcess_BUSINESS_CHECK.hide();
+      // btnProcess_BUSINESS_UPLOAD.addClass('visible');
+      // btnProcess_BUSINESS_START.prop("disabled", true);
+      // btnProcess_BUSINESS_CHECK.prop("disabled", true);      
     }
   });
   return true;
@@ -628,8 +741,7 @@ function check_start(check) {
       nonce: nonce,
     },
     success: function (response, status, error) {
-      setTimeout(function () {
-        console.log('completedddddddddddd !');
+      setTimeout(function () {        
         if (response.success === 1) {
           if (check) {
             response_business_success(response.msg);
