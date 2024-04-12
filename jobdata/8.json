@@ -1,0 +1,728 @@
+{
+    "success": 1,
+    "firm_name": "drc systems",
+    "message": "Google Reviews Successfully Extracted.",
+    "totalCount": 80,
+    "reviews": [
+        {
+            "id": "100376043491633176563",
+            "title": "Patel Tithi",
+            "description": "Never trust or engage with this company.Despite repeated attempts to contact them regarding crucial matters like PF deposits, there's been no response. This lack of responsiveness is deeply concerning and reflects poorly on the company's professionalism and commitment to its employees.Avoid at all costs.",
+            "numericRatingCount": 1,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWjkJqfnERHxIo7oPF5pEjA7vjI0YdhAANoidxaLDjnv_xoofUn=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100376043491633176563\/reviews\/",
+            "publicationDate": "3 weeks ago"
+        },
+        {
+            "id": "103127062178449812300",
+            "title": "manish parihar",
+            "description": "Very bad HR management experience, they post job opportunity on LinkedIn but when we connect with them they don't respond, even emails don't get responded to.",
+            "numericRatingCount": 1,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJUSmOiw4qnX_OJIwHksqF3uzUJQ9yohdxIHi_afk_ndDbdgw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/103127062178449812300\/reviews\/",
+            "publicationDate": "3 days ago"
+        },
+        {
+            "id": "107151125428656524683",
+            "title": "Eden Clairicia",
+            "description": "I worked with the DRC Systems team on a client's website.The team worked quickly and delivered a website that met my expectations.The relationship with the team is both human and professional, and they're always available. It's an ideal context for working well together despite the distance (I work in France).I highly recommend working with the DRC Systems team for the creation of your websites.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKowuqF9bqs_3bDmUcKRzGoEYiodcKpOpeyfAVSuZPYs3vsRbw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107151125428656524683\/reviews\/",
+            "publicationDate": "9 months ago"
+        },
+        {
+            "id": "115507101539979664839",
+            "title": "Trivaliya Bhandari",
+            "description": "I worked at DRC Systems in the sales team, and it was a positive experience overall. The work environment was pleasant, and the company had a supportive culture that emphasized teamwork and customer satisfaction.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjV83a-Ujc0Xgy_JMS1VLI5CcpjXGdkog64mtM0o4fOlo_iuPHGj1Q=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115507101539979664839\/reviews\/",
+            "publicationDate": "10 months ago"
+        },
+        {
+            "id": "116959111975223235053",
+            "title": "binoy wilson",
+            "description": "Working at DRC Systems has been an exceptional experience. The supportive and collaborative culture fosters growth and innovation, making it an ideal workplace. The company's commitment to cutting-edge technology ensures engaging and challenging projects that enhance skills and knowledge. Transparent communication channels and feedback mechanisms create a positive and productive work environment. DRC Systems values work-life balance, offering flexibility . The company invests in professional development, providing training programs and certifications for career advancement. Employee recognition and rewards motivate and instill a sense of pride. In conclusion, DRC Systems is a transformative workplace that prioritizes employee well-being, growth, and success. Highly recommended for those seeking a rewarding career in the technology industry.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXGJzOIOloIVX2zhI0yhRsYVsd-Jvu11aKseDHTInaxTK_DXi2G=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116959111975223235053\/reviews\/",
+            "publicationDate": "9 months ago"
+        },
+        {
+            "id": "114565997020761043016",
+            "title": "Chintan Dave",
+            "description": "I spent more than 5 years in DRC Systems and what a tremendous experience it was. I will be thankful to the agile leadership and remarkable team throughout my career. I got the opportunity to work in almost all the technology which is rare.Excellent management who always believes in your capabilities and provides unbelievable exposure. There is not a single day where I don't apply the learning which I gained from DRC.I would be always a DRCian wherever I will be. Wishing DRC Systems a great success!",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocK75M7c4PoqwdaKBMQiNrllLh0Gy66KWMjxOqDS54pO6V37FA=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/114565997020761043016\/reviews\/",
+            "publicationDate": "9 months ago"
+        },
+        {
+            "id": "106277466132694370491",
+            "title": "Sajid Lanza",
+            "description": "I worked with DRC Systems for almost 2 years in Sales team. Overall it was great time as they are the best example of perfect work life balance structure and the best of all is there time flexibility.",
+            "numericRatingCount": 4,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIxAc3DTiuBKouqhBbPVfCTr88oZ-g0nI9c5G9n6caLv-ZZHg=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/106277466132694370491\/reviews\/",
+            "publicationDate": "9 months ago"
+        },
+        {
+            "id": "104557162120133613218",
+            "title": "Mitesh Prajapati",
+            "description": "I worked with DRC systems for about a year. It was amazing support from HR team Swapna, Jatin and Ketki. Dipesh Shah sir is always my back at any point I stuck in erms of technical and process. I worked with Raju Makwana also.DRC systems Ltd follows the flexibility in time to support work life balance in really.Salary always on time and HR team Swapna ma'am is always ready to help in any matter.The seating arrangement and environment of office is equivalent to MNCs",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLiRxif0QU15cHsK9j_dJwSH1UU-RWSG9e7GO0sXMN0tPF4ow=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104557162120133613218\/reviews\/",
+            "publicationDate": "9 months ago"
+        },
+        {
+            "id": "105596589304480016944",
+            "title": "Chintan Shah",
+            "description": "DRC Systems is a great place to work in terms of infrastructure, culture, working environment and growing your career.Upper and Middle management is highly skilled and competent. A fastest growing company in terms of total strength as well as the quality of projects.Endless opportunities to learn, grow and build your career.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUyiTFz91HslGgFyc7rkGjlEh8x9FRRuxljNWKEoCl2H3FpMhDN-Q=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105596589304480016944\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "101150601062620261747",
+            "title": "Ankit Koshta",
+            "description": "It was such a great experience working with DRC Systems. Started my job career from DRC and got a proper guidance from seniors. Good office location.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXJOI2QsB_v14Auyy3halzm12y2HXrBT8i1PWDCc7fiW5p5Nz8B=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101150601062620261747\/reviews\/",
+            "publicationDate": "8 months ago"
+        },
+        {
+            "id": "108644799862551461357",
+            "title": "Hardik Davaria",
+            "description": "I worked in DRC Systems for more than 10years and highly satisfied with the work & people Culture.I feel like Home, away from Home. People here are very friendly and can go extra mile to support and meet client's expectation & satisfaction. I am blessed working with DRC Systems :)",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWrb0o9KhBUzpX4mSJKBbzVTWNp-BuczmrpgJYiWD-rWHzpLRw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108644799862551461357\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "115863965922487352419",
+            "title": "Ravishankar Patel",
+            "description": "It has been 14yrs journey to \"DRC Systems,\" and still continue!.. Wow... Many ups and downs came, but we still continue the progress from private to listed company, special thanks to management team. I really feel proud that I am the part of DRC systems and will always recommend everyone to be the part of it.\"Coming together is a beginning; keeping together is progress; working together is success.\"",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKklTz0M2Mjc0Gg1lXv13iKAZv222i2lnA24zC-m63d5s3WXbw=s40-c-rp-mo-ba4-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115863965922487352419\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "118076549916133665770",
+            "title": "aslam ansari",
+            "description": "DRC is one of the finest IT Company with huge infrastructure and People's first culture. I enjoyed working with DRC.  Management and colleagues are very supportive and friendly. It's great working here.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocI5s_JIfYmYllF4ZcoBOydv9gg4uEqY06TDa1RXArYPEY4rEw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/118076549916133665770\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "101843959574445360319",
+            "title": "Ashish Undhad",
+            "description": "As i have started my career with this company and worked for 10 years in this company, i am satisfied with team environment, culture and infrastructure.Thank you DRC Systems for giving me such opportunity.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXyKmJIZ0cyMOGmC9iGhz8LcA_YRxUIv8STNgNJBp-IE2-F8V93=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101843959574445360319\/reviews\/",
+            "publicationDate": "10 months ago"
+        },
+        {
+            "id": "111659517473326715096",
+            "title": "Dipesh Shah",
+            "description": "DRC Systems provides opportunities for continued learning and growth, which is greatly appreciated by the team. Their team's expertise in the latest technologies and industry best practices is invaluable in modernizing any systems and processes.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLkQj-tXIG4dbeoXQMnGa2bl089v41vszeeFl-eE8Ei3SYxgw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111659517473326715096\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "104279272563008204739",
+            "title": "Pankaj Bhatia",
+            "description": "DRC Systems is a great company with world class infrastructure and highly skilled team. I would highly recommend for clients as well as job seekers",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJar_oFFEUHtSLdkLzafnh30twybh83v_CbtRP49kiqvedYQw=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104279272563008204739\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "110948171398625473834",
+            "title": "Rajen Ghorecha",
+            "description": "Best place to work, currently company has been moved to Gift city Gandhinagar and work under Infibeam Corporation.. Great opportunities & growth",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWfttEC8GKXTozAM60lJ885XqUEbwziyOPbkHNKoHG6VZIw4ikd=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110948171398625473834\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "100513377281190393906",
+            "title": "Darshan Raval",
+            "description": "I worked at DRC Systems in the NodeJS Department, and it was a positive experience overall. Company staff is very supportive. Work environment was very nice.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWEc-CZkNW0W_3zpnoLgoksMoh0ykuguNOz2eUa-v8u5kRlJEhlUQ=s40-c-rp-mo-ba6-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100513377281190393906\/reviews\/",
+            "publicationDate": "10 months ago"
+        },
+        {
+            "id": "103685208192436118259",
+            "title": "Yugank Gupta",
+            "description": "Waste of time applicants even if you clear all rounds in this company . Company hr and higher management say you are not shortlisted. I got a reply by hr you are not suits as per our requirements and sets of skills.Don't apply here...",
+            "numericRatingCount": 1,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKYDbxoZ3vkpy4QBF9bGVIonwqZItO7PfGtf3ykvFdoNUAeARx3=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/103685208192436118259\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "109003272994320690781",
+            "title": "Vijay Solanki",
+            "description": "I had a requirement for App development for my e-commerce website. But, I had least idea about the design and about the nitty-gritty of putting everything in one app. DRC Systems gave me that unique idea and I decided to choose them for the app development work. The project is ongoing and I am excited to see the LIVE app soon!",
+            "numericRatingCount": 4,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVoQCk2LzQxBOGqhnnaj9eHgmu2xfMaX01YFgGYkOzBlseRDoNy=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109003272994320690781\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "115058675998954910761",
+            "title": "Namrata Vihol",
+            "description": "I had no technical knowledge of websites. I own a small business and wanted to create my own brand\u2019s online store. The entire process of website creation was clearly laid down by DRC System\u2019s team in detail. Upon my satisfaction, I decided to choose them for making a customized website for my business.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWxaoTZdEx7WgTXCDiE7lgMFmjc04mu5eGp3u45HjP5WM_kDfV2=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115058675998954910761\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "111154784383866065791",
+            "title": "Joe Anderson",
+            "description": "I am working with Drc systems since 4+ years . I have faced bit problem in beginning because i was new to outsourcing but Sudhir Has help me a lot for all my projects. He make the process so smooth . They have best plan is dedicated developer. i Have hired 2 developer , I would like to recommend to the Web agency who is looking to lower down there expenses for 50 % to 60 %.  & Increase sales cycle double.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXwlbiiS0Cm19c9C3O99Up-ms_d1z-hwmYC-aMtVCE0ns53gkPu=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111154784383866065791\/reviews\/",
+            "publicationDate": "7 years ago"
+        },
+        {
+            "id": "107005734077807801098",
+            "title": "Uttam Sharma",
+            "description": "DRC is a nice place to work. Apart from Work, There are various activities going throughout the year. It offers perfect balance between work & personal life. Really Amazing place to work :)",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjU2huO4E5muR1CcQ0InkDPPjsN2H_SWOuIn4LvhFXhzP8OKto1L=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107005734077807801098\/reviews\/",
+            "publicationDate": "7 years ago"
+        },
+        {
+            "id": "100316251642231475337",
+            "title": "mansinh solanki",
+            "description": "I had less number of products to showcase on my website but this limitation was overshadowed by DRC Systems with their fantastic design. My limited collection was well put on the website. The customers have liked my work and my client list has shot up in very less time. Thank you DRC Systems",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUnaCJ9hQVZimGL63_g8CyIkt_08ZbVHqtythOJgp4MiFC9cCzJ=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100316251642231475337\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "115858285387395488990",
+            "title": "Milan Gohil",
+            "description": "Really bad experience, unprofessional and don't trust on company without any written proof for job. No any proper HR management. if you are looking best place for work then i suggest other.",
+            "numericRatingCount": 1,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXjJfm4yq_mVdmiuWN6yf2nPuJQNhWbARdiIbaqHlMR7bjY_WO6=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115858285387395488990\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "102203242284835056798",
+            "title": "Riya Sharma",
+            "description": "I had a reception of payment issue with some overseas clients which needed urgent action. There was an error related to the payment gateway integration with the website. For this, I immediately approached team DRC and asked them to fix the issue. The problem was resolved in a matter of 2 days and I felt so relieved! I haven\u2019t come across any problem thereafter. Thanks to DRC System for prompt action.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKvcGh9eyKMlPKdHA2GFEX0ysze4uZwc9w-nWUUx42Z0Kz3Gg=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102203242284835056798\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "108446515422525641124",
+            "title": "Pankaj kamani",
+            "description": "Good work environment and challenging work were the key interesting things for me when I worked here.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVfxoJdJdW2B65qUp7Mqc3ZuGznfTUeEb25h5qdVUrV2SWE7XpP=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108446515422525641124\/reviews\/",
+            "publicationDate": "10 months ago"
+        },
+        {
+            "id": "101401337301455416623",
+            "title": "Harsh Jadav",
+            "description": "Nice people, Nice interview, Big company, Nice hr, nice location.Thank you",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXnetDXsCsPqUcOPBX-TCnst_M_yohu2SmGjLMhW99TFxIu1hv8=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101401337301455416623\/reviews\/",
+            "publicationDate": "6 months ago"
+        },
+        {
+            "id": "104498961080293365250",
+            "title": "DER SPR\u00d6DE",
+            "description": "== Really the worst case ! ! ! ==Two orders:Order 1:- Fully paid.- 6 years have been waiting :(- I never received the website :(- Purchase price was not refunded :(Order 2:- Fully paid.- Order was never started !- Money was not refunded !Check out Goolgle: Experience DRC Systems.I lost a lot of money at DRC Systems!Please be careful!",
+            "numericRatingCount": 1,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKzwgGbfdAwxdQsB0Kft9St3N0eX2QhJqReb6SiX97X9-kfnw=s40-c-rp-mo-ba4-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104498961080293365250\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "109673889969229876105",
+            "title": "Priya Shrivastva",
+            "description": "I had a big project in hand for which I chose DRC systems. The best thing about them which needs special mention is that they gave me timely updates on the status of the project. This was a major sigh of relief and that made all the difference to my team.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJ5m3L1uSaHlRarejop4pkWIC5XsSaXB-IRgPa-KoycFSfGIw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109673889969229876105\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "117191095147849963091",
+            "title": "Ravi Patel",
+            "description": "DRC systems provide end-to-end solutions to every requirement you might have..which basically means they create your website from scratch and into a marvellous spectacle....",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjU388B26C_7HfDAxfIZfPJUtry5hdI-3rQhr77pt5M_FOKCLyyV=s40-c-rp-mo-ba4-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117191095147849963091\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "110678684889034090905",
+            "title": "mahendra gohil",
+            "description": "We have working like a home. Great place to build your future here come and spent some time and visit our company  see and ask our environment and atmosphere...like Haven",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXK886gniOTYkYZ9vYrA2l5IFimUpVlgBkRdXUae6d_AtMGtxrHIQ=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110678684889034090905\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "114429579330966459575",
+            "title": "Nikhil Prajapati",
+            "description": "An amazing place for ideas and team work. Superbly supportive work culture and environment. Feeling proud to be here with such a good people.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVyttJy9NptMUZh7PmW32djY4A-6DWjIEHR51psH5gSIVF-8o3Jvg=s40-c-rp-mo-ba4-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/114429579330966459575\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "111807245094752418145",
+            "title": "satish patel",
+            "description": "Highly energetic Team with a go-get attitude. The motivation that is needed time to time is tremendous. DRCians Rock!!",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVj2tTAg7Yc9hTe_iSTJwPrUjlvP6H4DG5w8Q1LSM7csg0EuSU3=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111807245094752418145\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "113954502923412178850",
+            "title": "Abbas Shaikh",
+            "description": "Good Environment I feel",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJFCFEXZBFhmiV0g7Wcy0yefhzJPrCsBkIMl2uBosOwF5SNbA=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113954502923412178850\/reviews\/",
+            "publicationDate": "3 weeks ago"
+        },
+        {
+            "id": "115257056740604244196",
+            "title": "Varsha Jigar",
+            "description": "One stop solution's for web and app development. I am haooh with their timely delivery for my web and app both. Thanks",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJe4b_FM5GwjFuvKsDTbHoEAPZMH7Y637emv2CXl-EBlkaDoA=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115257056740604244196\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "101687622056601963146",
+            "title": "Harsh Vadodaria",
+            "description": "The company never thinks about your preference of technology. \"One wrong leader will always lead to nothing\" is proven here.",
+            "numericRatingCount": 1,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXvJk8HkJVWURZJ4Fq_ebghx58L8QMWH5MXrudOY_6Hqjivl-pWgQ=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101687622056601963146\/reviews\/",
+            "publicationDate": "3 years ago"
+        },
+        {
+            "id": "111921040476487696186",
+            "title": "Divyanshu Tiwari",
+            "description": "Company is exhilarating under a good leadership, here people are with great enthusiasm to deliver.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIre73sPnB9nQvtipco43iY8rj3ds3sakhYCuFi1qn1SeJSE3I=s40-c-rp-mo-ba4-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111921040476487696186\/reviews\/",
+            "publicationDate": "3 years ago"
+        },
+        {
+            "id": "114158492743672121333",
+            "title": "Piyush Ghedia",
+            "description": "I like the enthusiasm of employees and optimism in delivering projects under time constraints. The team is high on energy!",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUUX2rccUDgg77R0j49mGkA3FMJYzP9v62qoivL3gKMabt6aU3B=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/114158492743672121333\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "107043906647529932047",
+            "title": "Angad A.D",
+            "description": "Great work place. Creativity at its best at DRC",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUsq_1OsBz9JjQgOS5xSxbc2KifwQwoE-XIvJsJUW7J7rye0bbN=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107043906647529932047\/reviews\/",
+            "publicationDate": "2 years ago"
+        },
+        {
+            "id": "105892223179654090196",
+            "title": "saumil nerpagar",
+            "description": "Nice place to make your software or website or app at one place..",
+            "numericRatingCount": 4,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXxGPlA5mwbMq_IWMlpYPnY1Sa3MGHpCtt-izJQcAaE-AMhpQEh=s40-c-rp-mo-ba5-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105892223179654090196\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "105832083502847316884",
+            "title": "yash Thakar",
+            "description": "Really enjoy working at DRC systems.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLEhmUc1SPZDfGJbq88grgKfEgLIoRGQOjQl_MqGQQBNwlJ0qoS=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105832083502847316884\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "116536022733191062206",
+            "title": "Dinesh Mer",
+            "description": "Great place to work. Especially for startup.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXYoTZTarUrytCMx_A7lAuczV7-x7AKjp5JZ0aOnbAfa7Y7IFKj=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116536022733191062206\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "112938845964359002034",
+            "title": "ronak Yadav",
+            "description": "Being a fresher I find it the best place to learn and work",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKR263dzILz6hyRaxD0WZcVpivOSivUd58y19ng-OBdcgMXkg=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/112938845964359002034\/reviews\/",
+            "publicationDate": "7 years ago"
+        },
+        {
+            "id": "116805776677691328509",
+            "title": "dhaval travadi",
+            "description": "Great place to work and learning new things.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocL59NJMpJFRLbESP3mQExK9vGXrhbuSbJWdiprCfng_Q0IQdT8=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116805776677691328509\/reviews\/",
+            "publicationDate": "3 years ago"
+        },
+        {
+            "id": "109399504652192527806",
+            "title": "Sahil Khokhar",
+            "description": "Good place to work in IT industries",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIG0iP45GASpyhdNZcqqmw0X1Pw_UALxGX1ePn3AZuqgvf0xA=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109399504652192527806\/reviews\/",
+            "publicationDate": "2 years ago"
+        },
+        {
+            "id": "112543676772128991399",
+            "title": "Ravi Gadhiya",
+            "description": "Right place for employees to grow. Really nice place.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjViBdQqmw1OUQWDnVyvB93pgSpNCvb-hVVrBEPN_Q0UnLvUmO_Z=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/112543676772128991399\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "103758302498464556035",
+            "title": "Nishi Kampanwala",
+            "description": "DRC Systems is the best place to work.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVLee-oiQlyC3UCzTS00wmWwdDHr4SsQaJPFuf9CW3o1eyz_Jgp=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/103758302498464556035\/reviews\/",
+            "publicationDate": "7 years ago"
+        },
+        {
+            "id": "105026331362997996903",
+            "title": "Arpan Barot",
+            "description": "Awesome Workplace...With beautiful atmospher...",
+            "numericRatingCount": 4,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXgjEyAgkmSGgYtU5aKAfeZzWObfOPGiLZAqHY_YUmEh3tQzhE=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105026331362997996903\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "105873336563139638775",
+            "title": "Pratik Chauhan",
+            "description": "Best place for Work and Opportunity.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjW7erHYXljqSMVhkmpc8zGQa_-PGRAUgVvlkHUYtBpRlPOMbEaP=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105873336563139638775\/reviews\/",
+            "publicationDate": "3 years ago"
+        },
+        {
+            "id": "103382942557907153238",
+            "title": "Ravi Sachaniya",
+            "description": "It is very nice place to work.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWxu7OZGCw3EBc9Zt9VxmvTYj_dd9VWAwCqcDTHRMf0DkPkwzu5=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/103382942557907153238\/reviews\/",
+            "publicationDate": "7 years ago"
+        },
+        {
+            "id": "113030945341319026367",
+            "title": "Dhaval Prajapati",
+            "description": "Very good view...from 27th floor",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUqwp6Eao14lAL6o_Rq2MkhVSD168lyD7XNiFQ1-bV2oh2Hu_g=s40-c-rp-mo-ba4-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113030945341319026367\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "114317808969028823035",
+            "title": "Sudhir parmar",
+            "description": "Drcsystems is the Best TYPO3 Company",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUOZ-WkWKEsn7IjctF9VYfg6APNkT_CkWWLnaRhUwN0Tq0S7Eo76w=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/114317808969028823035\/reviews\/",
+            "publicationDate": "7 years ago"
+        },
+        {
+            "id": "104142918407993443487",
+            "title": "Nirav Sadhu",
+            "description": "Perfact place to work and grow",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjW1kczPF_hmYlvzQ2lIfkC_vanuI9tpjpZW4M6RyAYjeJeMVMCRsw=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104142918407993443487\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "113962172093817089601",
+            "title": "Pritesh Khetani",
+            "description": "Comfortable place to work.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUxKc-fsM1eDWmm08IYgcT7p4Tm-1LrTADL1340ZvjLS5DsteeQ=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113962172093817089601\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "106636447464686045730",
+            "title": "irfan khan",
+            "description": "Great Place to work!",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocK_lOZqND8suHaPlbz4_8WqdTAXQ37d_ltc58Iiljja_rbhk2w=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/106636447464686045730\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "102499305092054284360",
+            "title": "bharat ghanghosh",
+            "description": "Excellent",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJ7GN0I973Tg6bzvZQdwXw4L-G45ISG0nSesPlx6ahndgr39Q=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102499305092054284360\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "109031482063973331506",
+            "title": "Dakshit Golakiya",
+            "description": "As",
+            "numericRatingCount": 3,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocK1tF-3_bdqDgGlXyNEETWsDsJy7n3FyrOxBgkg10mFgJkkQ2Tq=s40-c-rp-mo-ba5-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109031482063973331506\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "100889774312859510345",
+            "title": "Dhrumin Patel",
+            "description": "Good environment for work...",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXcU8zPDrQ5a7ollVJxKt3ppvErPQHk8sx7CZDKC6a1Nk-JFElHUQ=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100889774312859510345\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "112644233335008506465",
+            "title": "Naresh Makwana",
+            "description": "Great place to grow up....",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKx6U33sk9AomtW4yZzpoLPCen4X3DP4-plnGoknaWT2vVyUw=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/112644233335008506465\/reviews\/",
+            "publicationDate": "7 years ago"
+        },
+        {
+            "id": "115827539592519001950",
+            "title": "Dipak Patel",
+            "description": "Good experience",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJgsi1No3VxIP6v5UuwR6GHVOAcv0hlw8Fk2_2fg77qlfoZlII=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115827539592519001950\/reviews\/",
+            "publicationDate": "10 months ago"
+        },
+        {
+            "id": "113442529352895565041",
+            "title": "Raj borisagar",
+            "description": "Good for freshers",
+            "numericRatingCount": 4,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVVD4BFCa2m1OL7Awx2Mzxqp8ybQMULGHJqiG1aBzuj8ok4EAts=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113442529352895565041\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "116532123738413216824",
+            "title": "Krupali Jethva",
+            "description": "Nice",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXZshBXXrlbqeWIvaABZY4vbaUgylVsSWPRLd9KRMlOx9EwFIFv0Q=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116532123738413216824\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "104265267505396537455",
+            "title": "Ankit Patel",
+            "description": "Perfect for quality service",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUKJZhQR0yFcmjOQaNs9yw8CQw4n752DX88MwrE0tNVYs8vTBfO=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104265267505396537455\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "108037482333751585012",
+            "title": "Hemant Kumar",
+            "description": "Good company ...",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUDc-sBrQRwO9xxXvg_pJSU4Vqim4v_5k9DZRuON_b2GVH37SIUww=s40-c-rp-mo-ba5-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108037482333751585012\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "105790785280364790930",
+            "title": "Nidhi Patel",
+            "description": "Best place for Work and opportunity",
+            "numericRatingCount": 4,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLU17TA0EdS4k_ceSYah6Wi4KRaHtYzf2F1L6xz4eDLokag5Q=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105790785280364790930\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "116421562065006403471",
+            "title": "Savaliya Tushar",
+            "description": "i like it your culture",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXsfzbF-aQCkC-drA8EanRy_H_UGBJCm2X0dyra2btwpPqAStgN=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116421562065006403471\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "110342163015833059977",
+            "title": "Monark Bhatt",
+            "description": "Nice company",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVlgoWQOFcbJi4vmnUcUNLPKZKm9WsgLKLMsEZPx8qbMvwXTwy-=s40-c-rp-mo-ba5-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110342163015833059977\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "109504764015390758226",
+            "title": "Sanjay Modi",
+            "description": "Nice work place",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXVTl3fRReagiwAlzHcpgWC66dt1ZPS5wPhqottBu0OAAfRGOgx=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109504764015390758226\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "115134552492772576105",
+            "title": "Patel Maulik",
+            "description": "Its Great Place to work",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXQYbJL642EOzwhzIrE4PLwTiw5HmmjkphOb83YgFrcmRZed8br=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115134552492772576105\/reviews\/",
+            "publicationDate": "7 years ago"
+        },
+        {
+            "id": "108621874113527126094",
+            "title": "Ankit Parikh",
+            "description": "Good company",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjU4JjwMLbrWHcOK1HMuwmz340xn1wJsG8t37U1zysQk3MQPe964=s40-c-rp-mo-ba5-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108621874113527126094\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "115281053436498551894",
+            "title": "Daxesh Patel",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUl6w5zSVfYh8y-NJLJA4Ss9xTQG-u7tsOXxADURAapytVlzLH3vg=s40-c-rp-mo-ba6-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115281053436498551894\/reviews\/",
+            "publicationDate": "3 years ago"
+        },
+        {
+            "id": "102444335795202182533",
+            "title": "Jayshree Rathod",
+            "description": null,
+            "numericRatingCount": 1,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIvGOMBwrQ-hg9xhG3JdoArn9-OuPlaQl095QPu6GTBDqZh-w=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102444335795202182533\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "102755497653656946601",
+            "title": "Er.SHAILESH KUMAR GIRI",
+            "description": null,
+            "numericRatingCount": 4,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVMOFKxPU70ApxlvZycKwa9DXBG7kCvP2m43wEdJDWSn24oGVOD=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102755497653656946601\/reviews\/",
+            "publicationDate": "2 months ago"
+        },
+        {
+            "id": "105652605450863111117",
+            "title": "Chinmay235",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjX4O8l8Zf2dvAUP6tHHO_b7oRT0bBlBhoEjiKHPw1HDlJIdWOuKKA=s40-c-rp-mo-ba6-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105652605450863111117\/reviews\/",
+            "publicationDate": "8 months ago"
+        },
+        {
+            "id": "104149509772072247891",
+            "title": "Saikat Chakrabarti",
+            "description": null,
+            "numericRatingCount": 4,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLM7sHsrURBOViuReMYPZZKKbd6Dd5SMvkOjEuMsXYqZMHFmQ=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104149509772072247891\/reviews\/",
+            "publicationDate": "10 months ago"
+        },
+        {
+            "id": "115323410692546275925",
+            "title": "Vinay Narmeti",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIQJPOnE8LK0TC538zjp3G9A0lMUT-Ruv7OFsUdXmpHTq39=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115323410692546275925\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "101384308614247752323",
+            "title": "Mittal Shah",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWvU4mptMs7DATVhrgoPwC8c_UM6030r-hSPgcJ2aZkzBZ8iV15=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101384308614247752323\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "116907206272341031022",
+            "title": "SIDDHARAJ RAOL",
+            "description": null,
+            "numericRatingCount": 4,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXNWgOylpobSzyxypAAEiwmrSIzP2K5_AuFJDt9d_9SlBpDhx7y=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116907206272341031022\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "109745145483987854195",
+            "title": "Deval Jani",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUmMWegdpTfYS9EKrUYAIF_RBYBCWrO72EzeozYxP0grHW_vvE=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109745145483987854195\/reviews\/",
+            "publicationDate": "a year ago"
+        }
+    ]
+}

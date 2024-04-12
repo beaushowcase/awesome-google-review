@@ -135,27 +135,32 @@ function get_business_by_client_ip($client_ip){
 }
 
 // Function to append message to a log file with bullet point prefix
-// function appendMessageToFile($message) {
-//     $folder_path = plugin_dir_path(__FILE__);
-//     $file_path = $folder_path . 'logs.txt';
-    
-//     // Open file in append mode
-//     $fileHandle = fopen($file_path, 'a');
-    
-//     // Check if file handle is valid
-//     if ($fileHandle === false) {
-//         return false; // Return false if file couldn't be opened
-//     }
-    
-//     // Append message with bullet point prefix and a new line
-//     fwrite($fileHandle, "• " . $message . PHP_EOL);
-    
-//     // Close the file handle
-//     fclose($fileHandle);
-    
-//     // Return true indicating success
-//     return true;
-// }
+function appendMessageToFile($message) {
+    if ($message){        
+        $folder_path = plugin_dir_path(__FILE__);
+        $file_path = $folder_path . 'logs.txt';
+        $current = file_get_contents($file_path);
+        $current .= $message . PHP_EOL;
+        file_put_contents($file_path, $current); 
+    }
+    return true;
+}
+
+//display logs.txt
+function displayMessagesFromFile() {
+    $folder_path = plugin_dir_path(__FILE__);
+    $file_path = $folder_path . 'logs.txt';
+
+    if (file_exists($file_path)) {        
+        $content = file_get_contents($file_path); 
+        $lines = explode(PHP_EOL, $content);
+        foreach ($lines as $line) {
+            echo "$line";
+        }
+    } else {
+        echo "<p>No messages found.</p>";
+    }
+}
 
 // Include admin panel files.
 require_once AGR_PLUGIN_PATH . 'assets/inc/admin_panel.php';
@@ -207,9 +212,7 @@ function initial_check_api_function()
     else{
         $response['success_check'] = $check_upload_job_status; 
         $response['msg_check'] = 'Need to CHECK !';
-    }
-
-    // appendMessageToFile($response['msg_business']);
+    }    
     wp_send_json($response);
     wp_die();
 }
@@ -300,7 +303,8 @@ function review_api_key_ajax_action_function()
     } else {
         $response['msg'] = 'Invalid nonce.';
     }
-    // appendMessageToFile($response['msg']);
+    
+    appendMessageToFile($response['msg']);
     wp_send_json($response);
     wp_die();
 }
@@ -347,7 +351,8 @@ function invalidApiKey($review_api_key)
             $api_response['msg'] = isset($data['error']) ? $data['error'] : 'Invalid API key.';
         }
     }
-
+    
+    appendMessageToFile($api_response['msg']);
     return $api_response;
 }
 
@@ -408,6 +413,8 @@ function get_reviews_data($firm_name, $review_api_key)
             $api_response['reviews'] = $data['reviews'];
         }
     }
+
+    appendMessageToFile($api_response['message']);
     return $api_response;
 }
 
@@ -474,6 +481,8 @@ function job_start_ajax_action_function() {
         $response['msg'] = 'Invalid nonce.';
     }
 
+    appendMessageToFile($response['msg']);
+
     wp_send_json($response);
     wp_die();
 }
@@ -518,6 +527,8 @@ function job_start_at_api($review_api_key,$firm_name)
             $api_response['msg'] = isset($data['error']) ? $data['error'] : 'something went wrong !';
         }
     }
+
+    appendMessageToFile($api_response['msg']);
 
     return $api_response;
 }
@@ -572,6 +583,8 @@ function job_check_at_api($review_api_key,$current_job_id)
             $api_response['msg'] = isset($data['error']) ? $data['error'] : 'something went wrong !';
         }
     }
+
+    appendMessageToFile($api_response['msg']);
     return $api_response;
 }
 
@@ -710,6 +723,8 @@ function job_check_ajax_action_function() {
         $response['msg'] = 'Invalid nonce.';
     }
 
+    appendMessageToFile($response['msg']);
+
     wp_send_json($response);
     wp_die();
 }
@@ -762,6 +777,9 @@ function review_get_set_ajax_action_function()
     } else {
         $response['message'] = 'Nonce is not valid !';
     }
+
+
+    appendMessageToFile($response['message']);
 
     wp_send_json($response);
     wp_die();
@@ -865,3 +883,69 @@ function get_post_id_by_meta($meta_key, $meta_value, $post_type = 'agr_google_re
 
     return 0;
 }
+
+
+
+// reset process action data
+
+// job start
+add_action('wp_ajax_job_reset_ajax_action', 'job_reset_ajax_action_function');
+add_action('wp_ajax_nopriv_job_reset_ajax_action', 'job_reset_ajax_action_function');
+
+function job_reset_ajax_action_function() {
+    global $wpdb;
+    $response = array(
+        'success' => 0,
+        'data'    => array('jobID' => ''),
+        'msg'     => ''
+    );   
+    $current_job_id     = isset($_POST['current_job_id']) ? sanitize_text_field($_POST['current_job_id']) : '';
+    $review_api_key     = isset($_POST['review_api_key']) ? sanitize_text_field($_POST['review_api_key']) : '';
+    $firm_name     = isset($_POST['firm_name']) ? sanitize_text_field($_POST['firm_name']) : '';
+
+    if (!empty($current_job_id)) {        
+            $jobID = $current_job_id ;
+          
+            $table_name = $wpdb->prefix . 'jobapi';
+            $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));
+
+            if ($wpdb->last_error) {                
+                $response['msg'] = "Database Error: " . $wpdb->last_error;
+            } else {          
+                $existing_jobID = $wpdb->get_var(
+                    $wpdb->prepare(
+                        "SELECT jobID FROM {$wpdb->prefix}jobdata WHERE jobID = %s AND client_ip = %s",
+                        $jobID, $c_ip
+                    )
+                );
+            
+                if ($existing_jobID !== null) {
+                    // Update only if jobID and client_ip match
+                    $where = array('jobID' => $jobID, 'client_ip' => $c_ip);
+                    $data = array('jobID_json' => 0, 'jobID_check' => 0);
+                    $result = $wpdb->update($wpdb->prefix . 'jobdata', $data, $where, array('%d', '%d'), array('%s', '%s'));
+            
+                    if ($result !== false) {
+                        $response['data']['jobID'] = $jobID;
+                        $response['success'] = 1;
+                        $response['msg'] = 'Reset data successfully....';
+                    } else {
+                        $response['msg'] = "Database Error: Failed to update job data.";
+                    }
+                } else {
+                    $response['msg'] = "Database Error: No existing jobID found for the provided client_ip.";
+                }
+            }
+        
+    } else {
+        $response['msg'] = 'Something went wrong !';
+    }
+
+    appendMessageToFile($response['msg']);
+
+
+    wp_send_json($response);
+    wp_die();
+}
+
+

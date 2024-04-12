@@ -215,7 +215,7 @@ function initial_check() {
 
           //start show only
           btnProcess_BUSINESS_START.show();
-        }              
+        }
       }
 
 
@@ -231,7 +231,7 @@ function initial_check() {
 
         //UPLOAD SHOW
         else if (response.success_api && response.success_business && response.success_check) {
-          btnProcess_BUSINESS_START.hide();          
+          btnProcess_BUSINESS_START.hide();
           btnProcess_BUSINESS_CHECK.hide();
 
           //upload show
@@ -253,7 +253,7 @@ function initial_check() {
       //   btnProcess_BUSINESS_CHECK.hide();        
       //   btnProcess_BUSINESS_UPLOAD.show();
       // }     
-      
+
 
       //business CHECK
       // if (response.success_api == 1 && response.success_business == 1 ) {
@@ -280,7 +280,7 @@ function initial_check() {
       //   btnProcess_BUSINESS_UPLOAD.hide();
       // }
 
-      
+
 
       // if (response.success_api == 1 && response.success_business == 1) {
       //   // btnProcess_BUSINESS_START.prop("disabled", true);
@@ -490,7 +490,7 @@ function response_success(response) {
   });
   $('#loader').addClass('hidden');
   btnProcess_API.removeClass("spinning");
-  btnProcess_API.prop("disabled", false); 
+  btnProcess_API.prop("disabled", false);
   return true;
 }
 
@@ -509,7 +509,7 @@ function response_fail(response) {
   });
   $('#loader').addClass('hidden');
   btnProcess_API.removeClass("spinning");
-  btnProcess_API.prop("disabled", false); 
+  btnProcess_API.prop("disabled", false);
   return true;
 }
 
@@ -561,11 +561,12 @@ function ApiKeySave(check) {
       setTimeout(function () {
         $('#loader').addClass('hidden');
         btnProcess_API.removeClass("spinning");
-        btnProcess_API.prop("disabled", false);        
+        btnProcess_API.prop("disabled", false);
         location.reload();
       }, 5000);
     },
   });
+
 }
 
 $("#google_review_upload_form").submit(function (event) {
@@ -578,7 +579,8 @@ $("#google_review_upload_form button.job_start").click(function (event) {
   Swal.fire({
     title: "Confirmation: Initiate Job?",
     text: "Are you certain about initiating this job? Once completed, you'll be able to upload reviews.",
-    showCancelButton: true,
+    showCancelButton: false,
+    showCloseButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
     confirmButtonText: "Start Job",
@@ -599,17 +601,18 @@ $("#google_review_upload_form button.job_start").click(function (event) {
 
 // JOB UPLOAD CLICKED 
 $("#google_review_upload_form button.upload_start ").click(function (event) {
-  let firm_name_display = $(FirmNameInput).val(); 
+  let firm_name_display = $(FirmNameInput).val();
   check = true;
   Swal.fire({
     title: `Confirmation: Upload ?`,
     html: `Upload your reviews now and let your voice be heard about <strong>${firm_name_display}</strong>`,
-    showCancelButton: true,
+    showCancelButton: false,
     confirmButtonColor: "#405640",
     cancelButtonColor: "#d33",
     confirmButtonText: "Upload",
     allowOutsideClick: false,
     backdrop: 'swal2-backdrop-show',
+    showCloseButton: true,
     icon: 'question',
     color: "#716add",
   }).then((result) => {
@@ -631,16 +634,13 @@ $("#google_review_upload_form button.check_start").click(function (event) {
     html: "Start to proceed the reviews of " + `<b>${$(FirmNameInput).val()}</b>` + " !",
     showCloseButton: true,
     allowOutsideClick: false,
-    confirmButtonColor: "#141414",
+    confirmButtonColor: "#405640",
     confirmButtonText: "Check",
     backdrop: 'swal2-backdrop-show',
     icon: "question",
   }).then((result) => {
     if (result.isConfirmed) {
       check_start(check);
-    }
-    else {
-      alert();
     }
   });
   $("#google_review_upload_form").submit();
@@ -686,7 +686,7 @@ function response_business_success(response) {
           location.reload();
         }, 100);
       });
-      
+
       // btnProcess_BUSINESS_START.hide();
       // btnProcess_BUSINESS_CHECK.hide();
       // btnProcess_BUSINESS_UPLOAD.addClass('visible');
@@ -741,7 +741,7 @@ function check_start(check) {
       nonce: nonce,
     },
     success: function (response, status, error) {
-      setTimeout(function () {        
+      setTimeout(function () {
         if (response.success === 1) {
           if (check) {
             response_business_success(response.msg);
@@ -923,3 +923,139 @@ function GetAndSet(check) {
     complete: function () { },
   });
 }
+
+
+// RESET PROCESS
+
+
+function reset_success() {
+  let timerInterval;
+  Swal.fire({
+    title: "Reset Reviews Data !",
+    html: "Checking in <b></b> milliseconds.",
+    timer: 3500,
+    timerProgressBar: true,
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+      const timer = Swal.getPopup().querySelector("b");
+      timerInterval = setInterval(() => {
+        timer.textContent = `${Swal.getTimerLeft()}`;
+      }, 100);
+    },
+    willClose: () => {
+      clearInterval(timerInterval);
+    }
+  }).then((result) => {
+    if (result.dismiss === Swal.DismissReason.timer) {
+      console.log("I was closed by the timer");
+      Swal.fire({
+        icon: "success",
+        title: "Reset Completed",
+        html: 'Reset reviews data !',
+        showConfirmButton: false,
+        timer: 3500,
+        allowOutsideClick: false,
+        grow: false,
+      }).then(function () {
+        setTimeout(function () {
+          location.reload();
+        }, 100);
+      });
+    }
+  });
+  return true;
+}
+
+function delete_start() {
+  let current_job_id = FirmNameInput.attr('data-jobid');
+  let firm_name = FirmNameInput.val();
+  $.ajax({
+    type: "POST",
+    url: ajax_object.ajax_url,
+    dataType: "json",
+    beforeSend: function () {
+      $('#loader').removeClass('hidden');
+      btnProcess_BUSINESS_CHECK.addClass("spinning");
+    },
+    data: {
+      action: "job_reset_ajax_action",
+      current_job_id: current_job_id,
+      review_api_key: ajax_object.review_api_key,
+      firm_name: firm_name
+    },
+    success: function (response, status, error) {
+      if (response.success === 1) {
+        if (check) {
+          reset_success();
+        }
+      } else {
+        if (check) {
+          response_business_fail(response.msg);
+        }
+      }
+    },
+    error: function (xhr, status, error) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: response.msg,
+        showConfirmButton: false,
+        timer: 3500
+      });
+    },
+    complete: function () {
+      setTimeout(function () {
+        $('#loader').addClass('hidden');
+        btnProcess_BUSINESS_CHECK.removeClass("spinning");
+      }, 3500);
+    },
+  });
+}
+
+
+$(function () {
+  $(document).on('click', 'p.reset', function (e) {
+    e.preventDefault();
+    check = true;
+    Swal.fire({
+      title: "Reset",
+      html: "Resetting the reviews !",
+      showCloseButton: true,
+      allowOutsideClick: false,
+      confirmButtonColor: "rgb(230 62 50)",
+      confirmButtonText: "Reset",
+      backdrop: 'swal2-backdrop-show',
+      icon: "question",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        delete_start(check);
+      }
+    });
+  });
+
+
+
+});
+
+
+var typingtext = $('.output.typing').find('p').html();
+var speed = 35;
+
+function typeWriter(typingtext, i, fnCallback) {
+  if (i < typingtext.length) {
+    $('.typing p').html(typingtext.substring(0, i + 1));
+    setTimeout(function () {
+      typeWriter(typingtext, i + 1, fnCallback)
+    }, speed);
+  } else if (typeof fnCallback == 'function') {
+    setTimeout(fnCallback, 700);
+  }
+}
+
+// start typing animation
+$(document).ready(function () {
+  typeWriter(typingtext, 0, function () {
+    console.log('Typing complete');
+  });
+});

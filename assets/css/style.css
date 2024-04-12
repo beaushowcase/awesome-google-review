@@ -1,6 +1,7 @@
 .seo-plugin-data-info.container {
   width: 500px;
   margin: 50px;
+  position: relative;
 }
 .seo-plugin-data-info.container h2 {
   font-size: 26px;
@@ -591,7 +592,7 @@ input:valid ~ label {
   color: green;
 }
 
-.right-box .output p{
+.right-box .output p {
   font-size: 22px;
 }
 
@@ -620,43 +621,11 @@ input:valid ~ label {
 } */
 
 .right-box .boxtitle.display_total {
-  background: #ffffffd4;
+  background: linear-gradient(to right, #ffffffd4, #ffffff80);
   color: #2d2d2d;
-}
-
-/* DEMO-SPECIFIC STYLES */
-.typewriter .output.display {
-  color: green;
-  line-height: 1.5em;
-  font-size: 17px;
-  font-family: monospace;
-  overflow: hidden; /* Ensures the content is not revealed until the animation */
-  border-right: 0.15em solid orange; /* The typwriter cursor */
-  white-space: nowrap; /* Keeps the content on a single line */
-  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-  /* letter-spacing: .15em;  */
-  animation: typing 3.5s steps(30, end), blink-caret 0.5s step-end infinite;
-}
-
-/* The typing effect */
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-/* The typewriter cursor effect */
-@keyframes blink-caret {
-  from,
-  to {
-    border-color: transparent;
-  }
-  50% {
-    border-color: orange;
-  }
+  border-radius: 10px;
+  padding: 15px 20px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* btn new */
@@ -669,18 +638,76 @@ input:valid ~ label {
   display: block;
 }
 
-
 /* box animation */
 
-.animated-border{
-  background-image: repeating-linear-gradient(-52deg, #ffffff, #ffffff 0px, transparent 1px, transparent 1px, #ffffff 16px), repeating-linear-gradient(38deg, #ffffff, #ffffff 0px, transparent 1px, transparent 1px, #ffffff 16px), repeating-linear-gradient(128deg, #ffffff, #ffffff 0px, transparent 1px, transparent 1px, #ffffff 16px), repeating-linear-gradient(218deg, #ffffff, #ffffff 0px, transparent 1px, transparent 1px, #ffffff 16px);
-  background-size: 1px calc(100% + 25.99px), calc(100% + 25.99px) 1px, 1px calc(100% + 25.99px) , calc(100% + 25.99px) 1px;
+.animated-border {
+  background-image: repeating-linear-gradient(
+      -52deg,
+      #ffffff,
+      #ffffff 0px,
+      transparent 1px,
+      transparent 1px,
+      #ffffff 16px
+    ),
+    repeating-linear-gradient(
+      38deg,
+      #ffffff,
+      #ffffff 0px,
+      transparent 1px,
+      transparent 1px,
+      #ffffff 16px
+    ),
+    repeating-linear-gradient(
+      128deg,
+      #ffffff,
+      #ffffff 0px,
+      transparent 1px,
+      transparent 1px,
+      #ffffff 16px
+    ),
+    repeating-linear-gradient(
+      218deg,
+      #ffffff,
+      #ffffff 0px,
+      transparent 1px,
+      transparent 1px,
+      #ffffff 16px
+    );
+  background-size: 1px calc(100% + 25.99px), calc(100% + 25.99px) 1px,
+    1px calc(100% + 25.99px), calc(100% + 25.99px) 1px;
   background-position: 0 0, 0 0, 100% 0, 0 100%;
   background-repeat: no-repeat;
   animation: borderAnimation 1s infinite linear;
+}
+
+@keyframes borderAnimation {
+  from {
+    background-position: 0 0, -25.99px 0, 100% -25.99px, 0 100%;
   }
-  
-  @keyframes borderAnimation {
-  from { background-position: 0 0, -25.99px 0, 100% -25.99px, 0 100%; }
-  to { background-position: 0 -25.99px, 0 0, 100% 0, -25.99px 100%; }
+  to {
+    background-position: 0 -25.99px, 0 0, 100% 0, -25.99px 100%;
   }
+}
+
+.reset {
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: 'Math', sans-serif;
+  font-size: 16px;
+  border: none;
+  padding: 1px 10px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+ .reset:hover {
+  transform: scale(1.05); /* Slightly enlarge the button on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Increase box-shadow on hover */
+ }
+ 
+ 
