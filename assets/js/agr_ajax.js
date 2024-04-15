@@ -627,7 +627,6 @@ $("#google_review_upload_form button.upload_start ").click(function (event) {
 
 // Assuming ".get" is the class of the button you want to trigger the form submission
 $("#google_review_upload_form button.check_start").click(function (event) {
-
   check = true;
   Swal.fire({
     title: "Check",
@@ -794,7 +793,6 @@ function confirm_msg(msg, jobID) {
     if (result.dismiss === Swal.DismissReason.timer) {
       $('#loader').addClass('hidden');
       btnProcess_BUSINESS_START.removeClass("spinning");
-
       Swal.fire({
         icon: "success",
         title: "Your job has been completed",
@@ -868,66 +866,7 @@ function job_start(check) {
   });
 }
 
-
-function GetAndSet(check) {
-  // const firm_name = FirmNameInput.val().replace(/\s/g, "");
-  const firm_name = FirmNameInput.val();
-  const nonce = $("#get_set_trigger_nonce").val();
-  btnProcess_get_set.html("Loading").addClass("spinning");
-  btnProcess_get_set.prop("disabled", true);
-  btnProcess.prop("disabled", true);
-
-  $.ajax({
-    type: "POST",
-    url: ajax_object.ajax_url,
-    dataType: "json",
-    beforeSend: function () { },
-    data: {
-      action: "review_get_set_ajax_action",
-      firm_name: firm_name,
-      review_api_key: ajax_object.review_api_key,
-      nonce: nonce,
-    },
-    success: function (response, status, error) {
-      const correctSign = $("#google_review_upload_form .correct-sign");
-      const wrongSign = $("#google_review_upload_form .wrong-sign");
-      wrongSign.removeClass("visible");
-      correctSign.removeClass("visible");
-      if (response.success === 1) {
-        setTimeout(function () {
-          correctSign.addClass("visible");
-          toastr.success("", response.message);
-          btnProcess_get_set.removeClass("spinning").html("GET & SET");
-          btnProcess_get_set.prop("disabled", false).val("GET & SET");
-          btnProcess.prop("disabled", false);
-        }, 1500);
-      } else {
-        setTimeout(function () {
-          wrongSign.addClass("visible");
-          toastr.error("", response.message);
-          btnProcess_get_set.removeClass("spinning").html("GET & SET");
-          btnProcess_get_set.prop("disabled", false).val("GET & SET");
-          btnProcess.prop("disabled", false);
-        }, 1500);
-      }
-    },
-    error: function (xhr, status, error) {
-      var errorMessage = xhr.responseText;
-      if (errorMessage.startsWith("Error")) {
-        errorMessage = errorMessage
-          .substring(errorMessage.indexOf("Error") + 6)
-          .trim();
-      }
-      toastr.error(errorMessage || "An error occurred", "Error");
-    },
-    complete: function () { },
-  });
-}
-
-
-// RESET PROCESS
-
-
+// RESET REVIEWS PROCESS
 function reset_success() {
   let timerInterval;
   Swal.fire({
@@ -967,6 +906,48 @@ function reset_success() {
   return true;
 }
 
+
+// RESET LOGS PROCESS
+function reset_logs_success() {
+  let timerInterval;
+  Swal.fire({
+    title: "Reset Logs !",
+    html: "Checking in <b></b> milliseconds.",
+    timer: 2500,
+    timerProgressBar: true,
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+      const timer = Swal.getPopup().querySelector("b");
+      timerInterval = setInterval(() => {
+        timer.textContent = `${Swal.getTimerLeft()}`;
+      }, 100);
+    },
+    willClose: () => {
+      clearInterval(timerInterval);
+    }
+  }).then((result) => {
+    if (result.dismiss === Swal.DismissReason.timer) {
+      console.log("I was closed by the timer");
+      Swal.fire({
+        icon: "success",
+        title: "Reset Logs Completed",
+        html: 'Reset logs data !',
+        showConfirmButton: false,
+        timer: 2500,
+        allowOutsideClick: false,
+        grow: false,
+      }).then(function () {
+        setTimeout(function () {
+          location.reload();
+        }, 100);
+      });
+    }
+  });
+  return true;
+}
+
+//delete review
 function delete_start() {
   let current_job_id = FirmNameInput.attr('data-jobid');
   let firm_name = FirmNameInput.val();
@@ -975,8 +956,7 @@ function delete_start() {
     url: ajax_object.ajax_url,
     dataType: "json",
     beforeSend: function () {
-      $('#loader').removeClass('hidden');
-      btnProcess_BUSINESS_CHECK.addClass("spinning");
+      $('#loader').removeClass('hidden');    
     },
     data: {
       action: "job_reset_ajax_action",
@@ -1006,8 +986,49 @@ function delete_start() {
     },
     complete: function () {
       setTimeout(function () {
-        $('#loader').addClass('hidden');
-        btnProcess_BUSINESS_CHECK.removeClass("spinning");
+        $('#loader').addClass('hidden');        
+      }, 3500);
+    },
+  });
+}
+
+
+//delete logs
+function delete_logs_start() {
+  $.ajax({
+    type: "POST",
+    url: ajax_object.ajax_url,
+    dataType: "json",
+    beforeSend: function () {
+      $('#loader').removeClass('hidden');    
+    },
+    data: {
+      action: "job_reset_logs_ajax_action",      
+      review_api_key: ajax_object.review_api_key,      
+    },
+    success: function (response, status, error) {
+      if (response.success === 1) {
+        if (check) {
+          reset_logs_success();
+        }
+      } else {
+        if (check) {
+          response_business_fail(response.msg);
+        }
+      }
+    },
+    error: function (xhr, status, error) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: response.msg,
+        showConfirmButton: false,
+        timer: 3500
+      });
+    },
+    complete: function () {
+      setTimeout(function () {
+        $('#loader').addClass('hidden');       
       }, 3500);
     },
   });
@@ -1015,12 +1036,13 @@ function delete_start() {
 
 
 $(function () {
+  // reset review
   $(document).on('click', 'p.reset', function (e) {
     e.preventDefault();
     check = true;
     Swal.fire({
-      title: "Reset",
-      html: "Resetting the reviews !",
+      title: "Reset Review",
+      html: "Resetting the review !",
       showCloseButton: true,
       allowOutsideClick: false,
       confirmButtonColor: "rgb(230 62 50)",
@@ -1035,27 +1057,484 @@ $(function () {
   });
 
 
+  //reset logs
+  $(document).on('click', 'p.reset.status', function (e) {
+    e.preventDefault();
+    check = true;
+    Swal.fire({
+      title: "Reset Logs",
+      html: "Resetting the Logs !",
+      showCloseButton: true,
+      allowOutsideClick: false,
+      confirmButtonColor: "rgb(230 62 50)",
+      confirmButtonText: "Reset",
+      backdrop: 'swal2-backdrop-show',
+      icon: "question",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        delete_logs_start(check);
+      }
+    });
+  });
+
+
 
 });
 
 
-var typingtext = $('.output.typing').find('p').html();
-var speed = 35;
 
-function typeWriter(typingtext, i, fnCallback) {
-  if (i < typingtext.length) {
-    $('.typing p').html(typingtext.substring(0, i + 1));
-    setTimeout(function () {
-      typeWriter(typingtext, i + 1, fnCallback)
-    }, speed);
-  } else if (typeof fnCallback == 'function') {
-    setTimeout(fnCallback, 700);
-  }
+// var typingtext = $('.output.typing').find('p').html();
+// var speed = 35;
+
+// function typeWriter(typingtext, i, fnCallback) {
+//   if (i < typingtext.length) {
+//     $('.typing p').html(typingtext.substring(0, i + 1));
+//     setTimeout(function () {
+//       typeWriter(typingtext, i + 1, fnCallback)
+//     }, speed);
+//   } else if (typeof fnCallback == 'function') {
+//     setTimeout(fnCallback, 700);
+//   }
+// }
+
+// // start typing animation
+// $(document).ready(function () {
+//   typeWriter(typingtext, 0, function () {
+//     console.log('Typing complete');
+//   });
+// });
+
+
+
+//UPLOAD REVIEWS
+// Assuming ".get" is the class of the button you want to trigger the form submission
+$("#google_review_upload_form button.upload_start").click(function (event) {
+  check = true;
+  Swal.fire({
+    title: "Confirmation: Upload Job?",
+    html: "Start to upload the reviews of " + `<b>${$(FirmNameInput).val()}</b>` + " !",
+    showCloseButton: true,
+    allowOutsideClick: false,
+    confirmButtonColor: "#405640",
+    confirmButtonText: "Check",
+    backdrop: 'swal2-backdrop-show',
+    icon: "question",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      upload_process_box(check);
+    }
+  });
+  $("#google_review_upload_form").submit();
+});
+
+
+
+
+function upload_process_box(check) {
+  console.log('check = ' + check);
+
+  let current_job_id = FirmNameInput.attr('data-jobid');
+  // const firm_name = FirmNameInput.val();
+  const nonce = $("#get_set_trigger_nonce").val();
+
+  $.ajax({
+    type: "POST",
+    url: ajax_object.ajax_url,
+    dataType: "json",
+    beforeSend: function () {
+      $('#loader').removeClass('hidden');
+      btnProcess_BUSINESS_CHECK.addClass("spinning");
+    },
+    data: {
+      action: "job_upload_ajax_action",
+      current_job_id: current_job_id,
+      review_api_key: ajax_object.review_api_key,
+      nonce: nonce,
+    },
+    success: function (response, status, error) {
+      setTimeout(function () {
+        if (response.success === 1) {
+          if (check) {
+            response_upload_success(response.msg);
+          }
+        } else {
+          if (check) {
+            response_business_fail(response.msg);
+          }
+        }
+      }, 3500);
+    },
+    error: function (xhr, status, error) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: response.msg,
+        showConfirmButton: false,
+        timer: 3500
+      });
+    },
+    complete: function () {
+      setTimeout(function () {
+        $('#loader').addClass('hidden');
+        btnProcess_BUSINESS_CHECK.removeClass("spinning");
+      }, 3500);
+    },
+  });
+
 }
 
-// start typing animation
-$(document).ready(function () {
-  typeWriter(typingtext, 0, function () {
-    console.log('Typing complete');
+
+//GMB call
+function response_upload_success(response) {
+  let timerInterval;
+  Swal.fire({
+    title: "Google Reviews !",
+    html: "Checking in <b></b> milliseconds.",
+    timer: 3500,
+    timerProgressBar: true,
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+      const timer = Swal.getPopup().querySelector("b");
+      timerInterval = setInterval(() => {
+        timer.textContent = `${Swal.getTimerLeft()}`;
+      }, 100);
+    },
+    willClose: () => {
+      clearInterval(timerInterval);
+    }
+  }).then((result) => {
+    /* Read more about handling dismissals below */
+    if (result.dismiss === Swal.DismissReason.timer) {
+      // let display_msg = "" + `<b>${$(FirmNameInput).val()} = 250 Reviews</b>` + " !";
+      let display_msg = response;
+      console.log("I was closed by the timer");
+      Swal.fire({
+        icon: "success",
+        title: "Completed",
+        html: display_msg,
+        showConfirmButton: false,
+        timer: 3500,
+        allowOutsideClick: false,
+        grow: false,
+        backdrop: 'swal2-backdrop-show',
+      }).then(function () {
+        setTimeout(function () {
+          location.reload();
+        }, 100);
+      });
+
+      // btnProcess_BUSINESS_START.hide();
+      // btnProcess_BUSINESS_CHECK.hide();
+      // btnProcess_BUSINESS_UPLOAD.addClass('visible');
+      // btnProcess_BUSINESS_START.prop("disabled", true);
+      // btnProcess_BUSINESS_CHECK.prop("disabled", true);      
+    }
   });
-});
+  return true;
+}
+
+
+
+
+// function GetAndSet(check) {
+//   // const firm_name = FirmNameInput.val().replace(/\s/g, "");
+//   const firm_name = FirmNameInput.val();
+//   const nonce = $("#get_set_trigger_nonce").val();
+//   btnProcess_get_set.html("Loading").addClass("spinning");
+//   btnProcess_get_set.prop("disabled", true);
+//   btnProcess.prop("disabled", true);
+//   $.ajax({
+//     type: "POST",
+//     url: ajax_object.ajax_url,
+//     dataType: "json",
+//     beforeSend: function () { },
+//     data: {
+//       action: "review_get_set_ajax_action",
+//       firm_name: firm_name,
+//       review_api_key: ajax_object.review_api_key,
+//       nonce: nonce,
+//     },
+//     success: function (response, status, error) {
+//       const correctSign = $("#google_review_upload_form .correct-sign");
+//       const wrongSign = $("#google_review_upload_form .wrong-sign");
+//       wrongSign.removeClass("visible");
+//       correctSign.removeClass("visible");
+//       if (response.success === 1) {
+//         setTimeout(function () {
+//           correctSign.addClass("visible");
+//           toastr.success("", response.message);
+//           btnProcess_get_set.removeClass("spinning").html("GET & SET");
+//           btnProcess_get_set.prop("disabled", false).val("GET & SET");
+//           btnProcess.prop("disabled", false);
+//         }, 1500);
+//       } else {
+//         setTimeout(function () {
+//           wrongSign.addClass("visible");
+//           toastr.error("", response.message);
+//           btnProcess_get_set.removeClass("spinning").html("GET & SET");
+//           btnProcess_get_set.prop("disabled", false).val("GET & SET");
+//           btnProcess.prop("disabled", false);
+//         }, 1500);
+//       }
+//     },
+//     error: function (xhr, status, error) {
+//       var errorMessage = xhr.responseText;
+//       if (errorMessage.startsWith("Error")) {
+//         errorMessage = errorMessage
+//           .substring(errorMessage.indexOf("Error") + 6)
+//           .trim();
+//       }
+//       toastr.error(errorMessage || "An error occurred", "Error");
+//     },
+//     complete: function () { },
+//   });
+// }
+
+
+
+// celebration effect
+
+(function () {
+  // globals
+  var canvas;
+  var ctx;
+  var W;
+  var H;
+  var mp = 150; //max particles
+  var particles = [];
+  var angle = 0;
+  var tiltAngle = 0;
+  var confettiActive = true;
+  var animationComplete = true;
+  var deactivationTimerHandler;
+  var reactivationTimerHandler;
+  var animationHandler;
+  
+  // colors
+  var calypso = "#00a4bd";
+  var sorbet = "#ff8f59";
+  var lorax = "#ff7a59";
+  var marigold = "#f5c26b";
+  var candy_apple = "#f2545b";
+  var norman = "#f2547d";
+  var thunderdome = "#6a78d1";
+  var oz = "00bda5";
+  
+  
+  // objects
+
+
+  var particleColors = {
+      colorOptions: [
+        calypso, 
+        sorbet, 
+        lorax, 
+        marigold, 
+        candy_apple, 
+        norman, 
+        thunderdome, 
+        oz
+      ],
+      colorIndex: 0,
+      colorIncrementer: 0,
+      colorThreshold: 10,
+      getColor: function () {
+          if (this.colorIncrementer >= 10) {
+              this.colorIncrementer = 0;
+              this.colorIndex++;
+              if (this.colorIndex >= this.colorOptions.length) {
+                  this.colorIndex = 0;
+              }
+          }
+          this.colorIncrementer++;
+          return this.colorOptions[this.colorIndex];
+      }
+  }
+
+  function confettiParticle(color) {
+      this.x = Math.random() * W; // x-coordinate
+      this.y = (Math.random() * H) - H; //y-coordinate
+      this.r = RandomFromTo(10, 30); //radius;
+      this.d = (Math.random() * mp) + 10; //density;
+      this.color = color;
+      this.tilt = Math.floor(Math.random() * 10) - 10;
+      this.tiltAngleIncremental = (Math.random() * 0.07) + .05;
+      this.tiltAngle = 0;
+
+      this.draw = function () {
+          ctx.beginPath();
+          ctx.lineWidth = this.r / 2;
+          ctx.strokeStyle = this.color;
+          ctx.moveTo(this.x + this.tilt + (this.r / 4), this.y);
+          ctx.lineTo(this.x + this.tilt, this.y + this.tilt + (this.r / 4));
+          return ctx.stroke();
+      }
+  }
+
+
+  var celebrationTimer;
+
+  $(document).ready(function () {
+      SetGlobals();
+      
+      celebrationTimer = setTimeout(StartAndStopConfetti, 100); // Automatically start and stop after 3500ms
+
+        $(window).resize(function () {
+            W = window.innerWidth;
+            H = window.innerHeight;
+            canvas.width = W;
+            canvas.height = H;
+        });
+
+  });
+
+  function StartAndStopConfetti() {
+        if (!animationComplete) {
+            StopConfetti();
+            clearTimeout(celebrationTimer);
+        } else {
+            InitializeConfetti();
+            celebrationTimer = setTimeout(StopConfetti, 3500);
+        }
+    }
+
+  function SetGlobals() {
+      canvas = document.getElementById("canvas");
+      ctx = canvas.getContext("2d");
+      W = window.innerWidth;
+      H = window.innerHeight;
+      canvas.width = W;
+      canvas.height = H;
+  }
+
+  function InitializeConfetti() {
+      particles = [];
+      animationComplete = false;
+      for (var i = 0; i < mp; i++) {
+          var particleColor = particleColors.getColor();
+          particles.push(new confettiParticle(particleColor));
+      }
+      StartConfetti();
+  }
+
+  function Draw() {
+      ctx.clearRect(0, 0, W, H);
+      var results = [];
+      for (var i = 0; i < mp; i++) {
+          (function (j) {
+              results.push(particles[j].draw());
+          })(i);
+      }
+      Update();
+
+      return results;
+  }
+
+  function RandomFromTo(from, to) {
+      return Math.floor(Math.random() * (to - from + 1) + from);
+  }
+
+
+  function Update() {
+      var remainingFlakes = 0;
+      var particle;
+      angle += 0.01;
+      tiltAngle += 0.1;
+
+      for (var i = 0; i < mp; i++) {
+          particle = particles[i];
+          if (animationComplete) return;
+
+          if (!confettiActive && particle.y < -15) {
+              particle.y = H + 100;
+              continue;
+          }
+
+          stepParticle(particle, i);
+
+          if (particle.y <= H) {
+              remainingFlakes++;
+          }
+          CheckForReposition(particle, i);
+      }
+
+      if (remainingFlakes === 0) {
+          StopConfetti();
+      }
+  }
+
+  function CheckForReposition(particle, index) {
+      if ((particle.x > W + 20 || particle.x < -20 || particle.y > H) && confettiActive) {
+          if (index % 5 > 0 || index % 2 == 0) //66.67% of the flakes
+          {
+              repositionParticle(particle, Math.random() * W, -10, Math.floor(Math.random() * 10) - 10);
+          } else {
+              if (Math.sin(angle) > 0) {
+                  //Enter from the left
+                  repositionParticle(particle, -5, Math.random() * H, Math.floor(Math.random() * 10) - 10);
+              } else {
+                  //Enter from the right
+                  repositionParticle(particle, W + 5, Math.random() * H, Math.floor(Math.random() * 10) - 10);
+              }
+          }
+      }
+  }
+  function stepParticle(particle, particleIndex) {
+      particle.tiltAngle += particle.tiltAngleIncremental;
+      particle.y += (Math.cos(angle + particle.d) + 3 + particle.r / 2) / 2;
+      particle.x += Math.sin(angle);
+      particle.tilt = (Math.sin(particle.tiltAngle - (particleIndex / 3))) * 15;
+  }
+
+  function repositionParticle(particle, xCoordinate, yCoordinate, tilt) {
+      particle.x = xCoordinate;
+      particle.y = yCoordinate;
+      particle.tilt = tilt;
+  }
+
+  function StartConfetti() {
+      W = window.innerWidth;
+      H = window.innerHeight;
+      canvas.width = W;
+      canvas.height = H;
+      (function animloop() {
+          if (animationComplete) return null;
+          animationHandler = requestAnimFrame(animloop);
+          return Draw();
+      })();
+  }
+
+  function ClearTimers() {
+      clearTimeout(reactivationTimerHandler);
+      clearTimeout(animationHandler);
+  }
+
+  function DeactivateConfetti() {
+      confettiActive = false;
+      ClearTimers();
+  }
+
+  function StopConfetti() {
+      animationComplete = true;
+      if (ctx == undefined) return;
+      ctx.clearRect(0, 0, W, H);
+  }
+
+  function RestartConfetti() {
+      ClearTimers();
+      StopConfetti();
+      reactivationTimerHandler = setTimeout(function () {
+          confettiActive = true;
+          animationComplete = false;
+          InitializeConfetti();
+      }, 100);
+
+  }
+
+  window.requestAnimFrame = (function () {
+      return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) {
+          return window.setTimeout(callback, 1000 / 60);
+      };
+  })();
+})();

@@ -155,12 +155,14 @@ function displayMessagesFromFile() {
         $content = file_get_contents($file_path); 
         $lines = explode(PHP_EOL, $content);
         foreach ($lines as $line) {
-            echo "$line";
+            echo "$line<br>"; // Add <br> tag after each line
         }
     } else {
         echo "<p>No messages found.</p>";
     }
 }
+
+
 
 // Include admin panel files.
 require_once AGR_PLUGIN_PATH . 'assets/inc/admin_panel.php';
@@ -352,7 +354,7 @@ function invalidApiKey($review_api_key)
         }
     }
     
-    appendMessageToFile($api_response['msg']);
+    // appendMessageToFile($api_response['msg']);
     return $api_response;
 }
 
@@ -528,7 +530,7 @@ function job_start_at_api($review_api_key,$firm_name)
         }
     }
 
-    appendMessageToFile($api_response['msg']);
+    // appendMessageToFile($api_response['msg']);
 
     return $api_response;
 }
@@ -584,7 +586,7 @@ function job_check_at_api($review_api_key,$current_job_id)
         }
     }
 
-    appendMessageToFile($api_response['msg']);
+    // appendMessageToFile($api_response['msg']);
     return $api_response;
 }
 
@@ -942,6 +944,7 @@ function job_reset_ajax_action_function() {
     }
 
     appendMessageToFile($response['msg']);
+    clearLogFile();
 
 
     wp_send_json($response);
@@ -949,3 +952,63 @@ function job_reset_ajax_action_function() {
 }
 
 
+
+// clear logs
+add_action('wp_ajax_job_reset_logs_ajax_action', 'job_reset_logs_ajax_action_function');
+add_action('wp_ajax_nopriv_job_reset_logs_ajax_action', 'job_reset_logs_ajax_action_function');
+
+function job_reset_logs_ajax_action_function() {
+    global $wpdb;
+    $response = array(
+        'success' => 0,        
+        'msg'     => ''
+    );      
+    $review_api_key     = isset($_POST['review_api_key']) ? sanitize_text_field($_POST['review_api_key']) : '';
+
+    if (!empty($review_api_key) && clearLogFile()) {
+        $response['msg'] = 'Logs reset successfully !';
+        $response['success'] = 1;        
+    } else {
+        $response['msg'] = 'Something went wrong while resetting logs !';
+    }
+    appendMessageToFile($response['msg']);
+    wp_send_json($response);
+    wp_die();
+}
+
+
+// Function to clear the text file
+function clearLogFile() {
+    $folder_path = plugin_dir_path(__FILE__);
+    $file_path = $folder_path . 'logs.txt';
+    if (file_exists($file_path)) {
+        if (file_put_contents($file_path, '') !== false) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
+
+
+
+//upload jobs
+add_action('wp_ajax_job_upload_ajax_action', 'job_upload_ajax_action_function');
+add_action('wp_ajax_nopriv_job_upload_ajax_action', 'job_upload_ajax_action_function');
+
+function job_upload_ajax_action_function() {
+   
+    $response = array(
+        'success' => 0,
+        'data'    => array('jobID' => ''),
+        'msg'     => 'final success'
+    );
+
+    $response['success'] = 1;
+    appendMessageToFile($response['msg']);
+
+    wp_send_json($response);
+    wp_die();
+}
