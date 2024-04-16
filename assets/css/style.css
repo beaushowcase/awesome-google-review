@@ -695,7 +695,7 @@ input:valid ~ label {
   left: 10px;
   color: #ffffff;
   cursor: pointer;
-  font-family: 'Math', sans-serif;
+  font-family: "Math", sans-serif;
   font-size: 16px;
   border: none;
   padding: 1px 10px;
@@ -705,26 +705,22 @@ input:valid ~ label {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
- .reset:hover {
+.reset:hover {
   transform: scale(1.05); /* Slightly enlarge the button on hover */
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Increase box-shadow on hover */
- }
- 
- 
- .reset.status{
-  right: -89%;  
+}
+
+.reset.status {
+  right: -89%;
   left: 0;
   top: 75px;
- }
+}
 
- .reset.status svg {
+.reset.status svg {
   border: 1px solid #000912;
   border-radius: 50%;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
-
-
-
 
 /* celebration*/
 
@@ -732,73 +728,72 @@ canvas {
   display: block;
   position: absolute;
   z-index: 0;
-  top:0;
+  top: 0;
   pointer-events: none;
 }
 
 #content_celebration {
-      text-align: center;
-    width: 500px;
-    border-radius: 0.1875rem;
-    background-color: #ffffff;
-    box-shadow: 0 1px 5px 0 rgba(45,62,80,0.12);
-    padding: 2.5rem;
-    position: relative;
-    color: silver;
-    font-family: verdana;
-    font-size: 45px;
-    font-weight: bold;
-    z-index: 2;
-    margin: 0 auto;
-    display: block;
-    top: 15px;
+  text-align: center;
+  width: 500px;
+  border-radius: 0.1875rem;
+  background-color: #ffffff;
+  box-shadow: 0 1px 5px 0 rgba(45, 62, 80, 0.12);
+  padding: 2.5rem;
+  position: relative;
+  color: silver;
+  font-family: verdana;
+  font-size: 45px;
+  font-weight: bold;
+  z-index: 2;
+  margin: 0 auto;
+  display: block;
+  top: 15px;
 }
-
 
 .buttonContainer {
   display: inline-block;
 }
 
-button.control{
-      border-radius: 0.1875rem;
-    border-style: solid;
-    border-width: 1px;
-    -webkit-font-smoothing: auto;
-    -moz-osx-font-smoothing: auto;
-    font-smoothing: auto;
-    text-shadow: 0 0 1px transparent;
-    font-family: "Avenir Next W02",Helvetica,Arial,sans-serif;
-    font-weight: 500;
-    text-align: center;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    transition: all 150ms ease-out;
-    cursor: pointer;
-    display: inline-block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    vertical-align: middle;
-    white-space: nowrap;
+button.control {
+  border-radius: 0.1875rem;
+  border-style: solid;
+  border-width: 1px;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  font-smoothing: auto;
+  text-shadow: 0 0 1px transparent;
+  font-family: "Avenir Next W02", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  transition: all 150ms ease-out;
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  white-space: nowrap;
 }
 
-.control{
-font-size: 14px;
-    font-size: 0.875rem;
-    line-height: 0.875rem;
-    padding-bottom: 0.75rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    padding-top: 0.75rem;
-    font-family: "Avenir Next W02",Helvetica,Arial,sans-serif;
-    font-weight: 600;
-        background-color: #eaf0f6;
-    border-color: #cbd6e2;
-    color: #506e91;
+.control {
+  font-size: 14px;
+  font-size: 0.875rem;
+  line-height: 0.875rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.75rem;
+  font-family: "Avenir Next W02", Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  background-color: #eaf0f6;
+  border-color: #cbd6e2;
+  color: #506e91;
 }
 
-.control:hover{
-    background-color: #f5f8fa;
-    color: #506e91;
-    }
+.control:hover {
+  background-color: #f5f8fa;
+  color: #506e91;
+}

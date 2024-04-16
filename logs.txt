@@ -1,5 +1,1 @@
-Job 28 queued for scraping
-Google Reviews Successfully Extracted.
-final success
-final success
-final success
+Logs reset successfully !

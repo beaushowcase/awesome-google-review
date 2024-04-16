@@ -195,6 +195,9 @@ function shortcode_display() {}
 function our_google_reviews_callback() {
     $firm_name = get_option('firm_name');
     $review_api_key = get_option('review_api_key');
+
+    $get_existing_api_key = get_existing_api_key();
+    $get_api_status = get_api_key_status($get_existing_api_key);    
 ?>
 
 <div id="loader" class="lds-dual-ring hidden overlay"></div>
@@ -207,7 +210,7 @@ function our_google_reviews_callback() {
                     <?php wp_nonce_field('review_api_key', 'review_api_key_nonce'); ?>
                     <div class="field_container">
                         <div class="input-field">
-                            <input type="text" id="review_api_key" required spellcheck="false" value="<?php echo get_existing_api_key(); ?>">
+                            <input type="text" required id="review_api_key" data-apiValid="<?php echo ($get_api_status ? $get_api_status : 0)?>" spellcheck="false" value="<?php echo ($get_existing_api_key ? $get_existing_api_key : '')?>">
                             <label>API Key</label>
                             <span class="correct-sign">✓</span>
                             <span class="wrong-sign">×</span>
@@ -230,9 +233,17 @@ function our_google_reviews_callback() {
 
 
         <div class="seo-plugin-data-info container google_review_upload_form cont hidden">
-            <p class="reset">
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 256 256" xmlns:v="https://vecta.io/nano"><g transform="matrix(2.81 0 0 2.81 1.4066 1.4066)"><circle cx="45" cy="45" r="45" fill="#e63e32"/><path d="M65.592 29.574h-9.171v-3.481c0-3.635-2.957-6.593-6.593-6.593h-9.656c-3.635 0-6.593 2.958-6.593 6.593v3.481h-9.171a2 2 0 1 0 0 4h3.394V60.41c0 5.563 4.526 10.09 10.09 10.09h14.215c5.563 0 10.09-4.526 10.09-10.09V33.574h3.395a2 2 0 1 0 0-4zm-28.013-3.481c0-1.43 1.163-2.593 2.593-2.593h9.656c1.43 0 2.593 1.163 2.593 2.593v3.481H37.579v-3.481zM58.197 60.41a6.1 6.1 0 0 1-6.09 6.09H37.892a6.1 6.1 0 0 1-6.09-6.09V33.574h26.395V60.41zM40.3 39.566a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2zm9.4 0a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2z" fill="#fff"/></g></svg>
-            </p>
+            <?php 
+                if($firm_data){
+                    ?>
+                    <p class="reset">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 256 256" xmlns:v="https://vecta.io/nano"><g transform="matrix(2.81 0 0 2.81 1.4066 1.4066)"><circle cx="45" cy="45" r="45" fill="#e63e32"/><path d="M65.592 29.574h-9.171v-3.481c0-3.635-2.957-6.593-6.593-6.593h-9.656c-3.635 0-6.593 2.958-6.593 6.593v3.481h-9.171a2 2 0 1 0 0 4h3.394V60.41c0 5.563 4.526 10.09 10.09 10.09h14.215c5.563 0 10.09-4.526 10.09-10.09V33.574h3.395a2 2 0 1 0 0-4zm-28.013-3.481c0-1.43 1.163-2.593 2.593-2.593h9.656c1.43 0 2.593 1.163 2.593 2.593v3.481H37.579v-3.481zM58.197 60.41a6.1 6.1 0 0 1-6.09 6.09H37.892a6.1 6.1 0 0 1-6.09-6.09V33.574h26.395V60.41zM40.3 39.566a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2zm9.4 0a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2z" fill="#fff"/></g></svg>
+                    </p>
+                    <?php
+                }
+            ?>
+            
+
             <div class="inner-content-data">
                 <h2 class="boxtitle ">Google Reviews Upload</h2>
                 
@@ -274,18 +285,8 @@ function our_google_reviews_callback() {
         </div>
     </div>
 
-    <div id="content_celebration"> 
-  <div class="buttonContainer">
-    <button class="control">Celebrate!</button>
-  </div>
-</div>
-<canvas id="canvas"></canvas>
-
-    <!-- <div class="right-box">        
-        <button class="upload-btn">Upload</button>
-    </div> -->
-
-    
+    <button class="control" style="display:none;"></button>
+    <canvas id="canvas"></canvas>
 
 </div>
 <?php

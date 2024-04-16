@@ -94,6 +94,14 @@ function get_existing_api_key(){
     return $api_key;
 }
 
+function get_api_key_status($get_existing_api_key){
+    global $wpdb;
+    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $table_name = $wpdb->prefix . 'jobapi';
+    $status = $wpdb->get_var($wpdb->prepare("SELECT review_api_key_status FROM $table_name WHERE client_ip = %s AND review_api_key = %d", $client_ip, $get_existing_api_key));      
+    return $status;
+}
+
 
 // api check
 function get_api_key_by_client_ip($client_ip){
@@ -922,6 +930,18 @@ function job_reset_ajax_action_function() {
                 );
             
                 if ($existing_jobID !== null) {
+
+                    // Check if jobID_json = 1 and jobID_check = 1
+                    $file_delete_condition = $wpdb->get_var(
+                        $wpdb->prepare(
+                            "SELECT COUNT(*) FROM {$wpdb->prefix}jobdata WHERE jobID_json = %d AND jobID_check = %d AND client_ip = %s",
+                            1, 1, $c_ip
+                        )
+                    );
+                    if ($file_delete_condition == 1) {                            
+                        delete_file($jobID);                        
+                    }
+
                     // Update only if jobID and client_ip match
                     $where = array('jobID' => $jobID, 'client_ip' => $c_ip);
                     $data = array('jobID_json' => 0, 'jobID_check' => 0);
@@ -931,6 +951,7 @@ function job_reset_ajax_action_function() {
                         $response['data']['jobID'] = $jobID;
                         $response['success'] = 1;
                         $response['msg'] = 'Reset data successfully....';
+
                     } else {
                         $response['msg'] = "Database Error: Failed to update job data.";
                     }
@@ -942,13 +963,23 @@ function job_reset_ajax_action_function() {
     } else {
         $response['msg'] = 'Something went wrong !';
     }
-
+        
     appendMessageToFile($response['msg']);
-    clearLogFile();
+    // clearLogFile();
 
 
     wp_send_json($response);
     wp_die();
+}
+
+function delete_file($jobID) {
+    $parent_dir = plugin_dir_path(__FILE__);
+    $folder_path = $parent_dir . 'jobdata';
+    $file_path = $folder_path . '/' . $jobID . '.json';    
+    if (file_exists($file_path)) {
+        unlink($file_path);
+    }
+    return true;
 }
 
 
@@ -991,7 +1022,6 @@ function clearLogFile() {
         return false;
     }
 }
-
 
 
 //upload jobs

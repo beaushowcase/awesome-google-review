@@ -320,7 +320,9 @@ function initial_check() {
 let element = jQuery("#review_api_key");
 $(document).ready(function () {
   var initialValue = $(element).val();
-  $(element).on('input', function () {
+  var api_status = $(element).data('apivalid');
+  
+  $(element).on('input', function () {    
     var currentValue = $(this).val();
     if (currentValue !== initialValue) {
       button_effects_enable();
@@ -329,33 +331,35 @@ $(document).ready(function () {
       button_effects_disable();
     }
   });
+  
   function button_effects_enable() {
     console.log("button_effects_enable!");
     if (sign_TRUE) {
-      correctSign_API.removeClass("visible");
-      wrongSign_API.removeClass("visible");
+      // correctSign_API.removeClass("visible");
+      // wrongSign_API.removeClass("visible");
       $('.api_key_setting_form').removeClass("showdisable");
     }
 
     if (jQuery('.google_review_upload_form.cont').length > 0) {
-      correctSign_API.removeClass("visible");
-      wrongSign_API.addClass("visible");
+      // correctSign_API.removeClass("visible");
+      // wrongSign_API.addClass("visible");
       $('.api_key_setting_form').removeClass("showdisable");
     }
 
-    BUSINESS_BOX.addClass("hidden");
+    // BUSINESS_BOX.addClass("hidden");
     btnProcess_API.prop("disabled", false);
     return true;
   }
+  
   function button_effects_disable() {
     console.log("button_effects_disable!");
     if (jQuery('.google_review_upload_form.cont').length > 0) {
-      correctSign_API.addClass("visible");
-      wrongSign_API.removeClass("visible");
+      // correctSign_API.addClass("visible");
+      // wrongSign_API.removeClass("visible");
       $('.api_key_setting_form').addClass("showdisable");
     }
 
-    BUSINESS_BOX.removeClass("hidden");
+    // BUSINESS_BOX.removeClass("hidden");
     btnProcess_API.prop("disabled", true);
     return true;
   }
@@ -518,6 +522,7 @@ function response_fail(response) {
 
 
 function ApiKeySave(check) {
+  let flagKey = 'api';
   const reviewApiKey = reviewApiKeyInput.val().replace(/\s/g, "");
   reviewApiKeyInput.val(reviewApiKey);
   const nonce = $("#review_api_key_nonce").val();
@@ -529,6 +534,7 @@ function ApiKeySave(check) {
       $('#loader').removeClass('hidden');
       btnProcess_API.addClass("spinning");
       btnProcess_API.prop("disabled", true);
+      setRandomFlag(flagKey, 0);
     },
     data: {
       action: "review_api_key_ajax_action",
@@ -543,6 +549,7 @@ function ApiKeySave(check) {
             correctSign_API.addClass("visible");
             wrongSign_API.removeClass("visible");
             BUSINESS_BOX.removeClass("hidden");
+            setRandomFlag(flagKey, 1);
           }
         } else {
           if (check) {
@@ -956,7 +963,7 @@ function delete_start() {
     url: ajax_object.ajax_url,
     dataType: "json",
     beforeSend: function () {
-      $('#loader').removeClass('hidden');    
+      $('#loader').removeClass('hidden');
     },
     data: {
       action: "job_reset_ajax_action",
@@ -986,7 +993,7 @@ function delete_start() {
     },
     complete: function () {
       setTimeout(function () {
-        $('#loader').addClass('hidden');        
+        $('#loader').addClass('hidden');
       }, 3500);
     },
   });
@@ -1000,11 +1007,11 @@ function delete_logs_start() {
     url: ajax_object.ajax_url,
     dataType: "json",
     beforeSend: function () {
-      $('#loader').removeClass('hidden');    
+      $('#loader').removeClass('hidden');
     },
     data: {
-      action: "job_reset_logs_ajax_action",      
-      review_api_key: ajax_object.review_api_key,      
+      action: "job_reset_logs_ajax_action",
+      review_api_key: ajax_object.review_api_key,
     },
     success: function (response, status, error) {
       if (response.success === 1) {
@@ -1028,7 +1035,7 @@ function delete_logs_start() {
     },
     complete: function () {
       setTimeout(function () {
-        $('#loader').addClass('hidden');       
+        $('#loader').addClass('hidden');
       }, 3500);
     },
   });
@@ -1310,7 +1317,7 @@ function response_upload_success(response) {
   var deactivationTimerHandler;
   var reactivationTimerHandler;
   var animationHandler;
-  
+
   // colors
   var calypso = "#00a4bd";
   var sorbet = "#ff8f59";
@@ -1320,221 +1327,264 @@ function response_upload_success(response) {
   var norman = "#f2547d";
   var thunderdome = "#6a78d1";
   var oz = "00bda5";
-  
-  
+
+
   // objects
 
 
   var particleColors = {
-      colorOptions: [
-        calypso, 
-        sorbet, 
-        lorax, 
-        marigold, 
-        candy_apple, 
-        norman, 
-        thunderdome, 
-        oz
-      ],
-      colorIndex: 0,
-      colorIncrementer: 0,
-      colorThreshold: 10,
-      getColor: function () {
-          if (this.colorIncrementer >= 10) {
-              this.colorIncrementer = 0;
-              this.colorIndex++;
-              if (this.colorIndex >= this.colorOptions.length) {
-                  this.colorIndex = 0;
-              }
-          }
-          this.colorIncrementer++;
-          return this.colorOptions[this.colorIndex];
+    colorOptions: [
+      calypso,
+      sorbet,
+      lorax,
+      marigold,
+      candy_apple,
+      norman,
+      thunderdome,
+      oz
+    ],
+    colorIndex: 0,
+    colorIncrementer: 0,
+    colorThreshold: 10,
+    getColor: function () {
+      if (this.colorIncrementer >= 10) {
+        this.colorIncrementer = 0;
+        this.colorIndex++;
+        if (this.colorIndex >= this.colorOptions.length) {
+          this.colorIndex = 0;
+        }
       }
+      this.colorIncrementer++;
+      return this.colorOptions[this.colorIndex];
+    }
   }
 
   function confettiParticle(color) {
-      this.x = Math.random() * W; // x-coordinate
-      this.y = (Math.random() * H) - H; //y-coordinate
-      this.r = RandomFromTo(10, 30); //radius;
-      this.d = (Math.random() * mp) + 10; //density;
-      this.color = color;
-      this.tilt = Math.floor(Math.random() * 10) - 10;
-      this.tiltAngleIncremental = (Math.random() * 0.07) + .05;
-      this.tiltAngle = 0;
+    this.x = Math.random() * W; // x-coordinate
+    this.y = (Math.random() * H) - H; //y-coordinate
+    this.r = RandomFromTo(10, 30); //radius;
+    this.d = (Math.random() * mp) + 10; //density;
+    this.color = color;
+    this.tilt = Math.floor(Math.random() * 10) - 10;
+    this.tiltAngleIncremental = (Math.random() * 0.07) + .05;
+    this.tiltAngle = 0;
 
-      this.draw = function () {
-          ctx.beginPath();
-          ctx.lineWidth = this.r / 2;
-          ctx.strokeStyle = this.color;
-          ctx.moveTo(this.x + this.tilt + (this.r / 4), this.y);
-          ctx.lineTo(this.x + this.tilt, this.y + this.tilt + (this.r / 4));
-          return ctx.stroke();
-      }
+    this.draw = function () {
+      ctx.beginPath();
+      ctx.lineWidth = this.r / 2;
+      ctx.strokeStyle = this.color;
+      ctx.moveTo(this.x + this.tilt + (this.r / 4), this.y);
+      ctx.lineTo(this.x + this.tilt, this.y + this.tilt + (this.r / 4));
+      return ctx.stroke();
+    }
   }
 
-
-  var celebrationTimer;
-
   $(document).ready(function () {
-      SetGlobals();
-      
-      celebrationTimer = setTimeout(StartAndStopConfetti, 100); // Automatically start and stop after 3500ms
+    SetGlobals();
+    InitializeButton();
+    //InitializeConfetti();
 
-        $(window).resize(function () {
-            W = window.innerWidth;
-            H = window.innerHeight;
-            canvas.width = W;
-            canvas.height = H;
-        });
-
-  });
-
-  function StartAndStopConfetti() {
-        if (!animationComplete) {
-            StopConfetti();
-            clearTimeout(celebrationTimer);
-        } else {
-            InitializeConfetti();
-            celebrationTimer = setTimeout(StopConfetti, 3500);
-        }
-    }
-
-  function SetGlobals() {
-      canvas = document.getElementById("canvas");
-      ctx = canvas.getContext("2d");
+    $(window).resize(function () {
       W = window.innerWidth;
       H = window.innerHeight;
       canvas.width = W;
       canvas.height = H;
+    });
+
+  });
+
+  function InitializeButton() {
+    function handler1() {
+      RestartConfetti();
+      $(this).text('Cops are here!');
+      $(this).one("click", handler2);
+    }
+
+    function handler2() {
+      DeactivateConfetti();
+      $(this).text('Celebrate!');
+      $(this).one("click", handler1);
+    }
+    $("button.control").one("click", handler1);
+  };
+
+  function SetGlobals() {
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext("2d");
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = W;
+    canvas.height = H;
   }
 
   function InitializeConfetti() {
-      particles = [];
-      animationComplete = false;
-      for (var i = 0; i < mp; i++) {
-          var particleColor = particleColors.getColor();
-          particles.push(new confettiParticle(particleColor));
-      }
-      StartConfetti();
+    particles = [];
+    animationComplete = false;
+    for (var i = 0; i < mp; i++) {
+      var particleColor = particleColors.getColor();
+      particles.push(new confettiParticle(particleColor));
+    }
+    StartConfetti();
   }
 
   function Draw() {
-      ctx.clearRect(0, 0, W, H);
-      var results = [];
-      for (var i = 0; i < mp; i++) {
-          (function (j) {
-              results.push(particles[j].draw());
-          })(i);
-      }
-      Update();
+    ctx.clearRect(0, 0, W, H);
+    var results = [];
+    for (var i = 0; i < mp; i++) {
+      (function (j) {
+        results.push(particles[j].draw());
+      })(i);
+    }
+    Update();
 
-      return results;
+    return results;
   }
 
   function RandomFromTo(from, to) {
-      return Math.floor(Math.random() * (to - from + 1) + from);
+    return Math.floor(Math.random() * (to - from + 1) + from);
   }
 
 
   function Update() {
-      var remainingFlakes = 0;
-      var particle;
-      angle += 0.01;
-      tiltAngle += 0.1;
+    var remainingFlakes = 0;
+    var particle;
+    angle += 0.01;
+    tiltAngle += 0.1;
 
-      for (var i = 0; i < mp; i++) {
-          particle = particles[i];
-          if (animationComplete) return;
+    for (var i = 0; i < mp; i++) {
+      particle = particles[i];
+      if (animationComplete) return;
 
-          if (!confettiActive && particle.y < -15) {
-              particle.y = H + 100;
-              continue;
-          }
-
-          stepParticle(particle, i);
-
-          if (particle.y <= H) {
-              remainingFlakes++;
-          }
-          CheckForReposition(particle, i);
+      if (!confettiActive && particle.y < -15) {
+        particle.y = H + 100;
+        continue;
       }
 
-      if (remainingFlakes === 0) {
-          StopConfetti();
+      stepParticle(particle, i);
+
+      if (particle.y <= H) {
+        remainingFlakes++;
       }
+      CheckForReposition(particle, i);
+    }
+
+    if (remainingFlakes === 0) {
+      StopConfetti();
+    }
   }
 
   function CheckForReposition(particle, index) {
-      if ((particle.x > W + 20 || particle.x < -20 || particle.y > H) && confettiActive) {
-          if (index % 5 > 0 || index % 2 == 0) //66.67% of the flakes
-          {
-              repositionParticle(particle, Math.random() * W, -10, Math.floor(Math.random() * 10) - 10);
-          } else {
-              if (Math.sin(angle) > 0) {
-                  //Enter from the left
-                  repositionParticle(particle, -5, Math.random() * H, Math.floor(Math.random() * 10) - 10);
-              } else {
-                  //Enter from the right
-                  repositionParticle(particle, W + 5, Math.random() * H, Math.floor(Math.random() * 10) - 10);
-              }
-          }
+    if ((particle.x > W + 20 || particle.x < -20 || particle.y > H) && confettiActive) {
+      if (index % 5 > 0 || index % 2 == 0) //66.67% of the flakes
+      {
+        repositionParticle(particle, Math.random() * W, -10, Math.floor(Math.random() * 10) - 10);
+      } else {
+        if (Math.sin(angle) > 0) {
+          //Enter from the left
+          repositionParticle(particle, -5, Math.random() * H, Math.floor(Math.random() * 10) - 10);
+        } else {
+          //Enter from the right
+          repositionParticle(particle, W + 5, Math.random() * H, Math.floor(Math.random() * 10) - 10);
+        }
       }
+    }
   }
   function stepParticle(particle, particleIndex) {
-      particle.tiltAngle += particle.tiltAngleIncremental;
-      particle.y += (Math.cos(angle + particle.d) + 3 + particle.r / 2) / 2;
-      particle.x += Math.sin(angle);
-      particle.tilt = (Math.sin(particle.tiltAngle - (particleIndex / 3))) * 15;
+    particle.tiltAngle += particle.tiltAngleIncremental;
+    particle.y += (Math.cos(angle + particle.d) + 3 + particle.r / 2) / 2;
+    particle.x += Math.sin(angle);
+    particle.tilt = (Math.sin(particle.tiltAngle - (particleIndex / 3))) * 15;
   }
 
   function repositionParticle(particle, xCoordinate, yCoordinate, tilt) {
-      particle.x = xCoordinate;
-      particle.y = yCoordinate;
-      particle.tilt = tilt;
+    particle.x = xCoordinate;
+    particle.y = yCoordinate;
+    particle.tilt = tilt;
   }
 
   function StartConfetti() {
-      W = window.innerWidth;
-      H = window.innerHeight;
-      canvas.width = W;
-      canvas.height = H;
-      (function animloop() {
-          if (animationComplete) return null;
-          animationHandler = requestAnimFrame(animloop);
-          return Draw();
-      })();
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = W;
+    canvas.height = H;
+    (function animloop() {
+      if (animationComplete) return null;
+      animationHandler = requestAnimFrame(animloop);
+      return Draw();
+    })();
   }
 
   function ClearTimers() {
-      clearTimeout(reactivationTimerHandler);
-      clearTimeout(animationHandler);
+    clearTimeout(reactivationTimerHandler);
+    clearTimeout(animationHandler);
   }
 
   function DeactivateConfetti() {
-      confettiActive = false;
-      ClearTimers();
+    confettiActive = false;
+    ClearTimers();
   }
 
   function StopConfetti() {
-      animationComplete = true;
-      if (ctx == undefined) return;
-      ctx.clearRect(0, 0, W, H);
+    animationComplete = true;
+    if (ctx == undefined) return;
+    ctx.clearRect(0, 0, W, H);
   }
 
   function RestartConfetti() {
-      ClearTimers();
-      StopConfetti();
-      reactivationTimerHandler = setTimeout(function () {
-          confettiActive = true;
-          animationComplete = false;
-          InitializeConfetti();
-      }, 100);
+    ClearTimers();
+    StopConfetti();
+    reactivationTimerHandler = setTimeout(function () {
+      confettiActive = true;
+      animationComplete = false;
+      InitializeConfetti();
+    }, 100);
 
   }
 
   window.requestAnimFrame = (function () {
-      return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) {
-          return window.setTimeout(callback, 1000 / 60);
-      };
+    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) {
+      return window.setTimeout(callback, 1000 / 60);
+    };
   })();
 })();
+
+function success_celebration() {
+  $("button.control").click();
+  setTimeout(function () {
+    $("button.control").click();
+  }, 3500);
+}
+
+
+
+// generate token
+
+function setRandomFlag(rec, flag) {
+  if (flag === 0 || flag === 1) {
+    sessionStorage.setItem(`${rec}-flag`, flag);
+    console.log(`${rec}-flag set: `, flag);
+  } else {
+    console.error('Invalid manage flag. Please provide 0 or 1.');
+  }
+}
+function getRandomFlag(rec) {
+  var flag = sessionStorage.getItem(`${rec}-flag`);
+  console.log(`${rec}-flag retrieved : `, flag);
+  return flag;
+}
+
+$(document).ready(function () {
+  $(window).one('load', function () {
+    let get_api_token = sessionStorage.getItem(`api-flag`);
+    let get_job_token = sessionStorage.getItem(`job-flag`);
+    if (get_api_token == 1 || get_job_token == 1) {
+      console.log('fired !');
+      success_celebration();
+      setRandomFlag('api', 0);
+      setRandomFlag('job', 0);
+    }
+  });
+
+
+});
+
