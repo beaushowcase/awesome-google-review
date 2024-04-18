@@ -163,9 +163,38 @@ function add_agr_google_review_meta_box() {
     );
 }
 
+// Allow radio button instead of checkboxes for hierarchical taxonomies
+function term_radio_checklist( $args ) {
+    if ( ! empty( $args['taxonomy'] ) && $args['taxonomy'] === 'business' /* <== Change to your required taxonomy */ ) {
+        if ( empty( $args['walker'] ) || is_a( $args['walker'], 'Walker' ) ) { // Don't override 3rd party walkers.
+            if ( ! class_exists( 'term_radio_checklist' ) ) {                
+                class term_radio_checklist extends Walker_Category_Checklist {
+                    function walk( $elements, $max_depth, ...$args ) {
+                        $output = parent::walk( $elements, $max_depth, ...$args );
+                        $output = str_replace(
+                            array( 'type="checkbox"', "type='checkbox'" ),
+                            array( 'type="radio"', "type='radio'" ),
+                            $output
+                        );
+
+                        return $output;
+                    }
+                }
+            }
+
+            $args['walker'] = new term_radio_checklist;
+        }
+    }
+
+    return $args;
+}
+add_filter( 'wp_terms_checklist_args', 'term_radio_checklist' );
+
+
 function render_agr_google_review_meta_box($post) {
     // Retrieve the current values of meta fields
-    $id = get_post_meta($post->ID, 'post_review_id', true);
+    $job_id = get_post_meta($post->ID, 'job_id', true);
+    $id = get_post_meta($post->ID, 'post_review_id', true);    
     $reviewer_name = get_post_meta($post->ID, 'reviewer_name', true);
     $reviewer_picture_url = get_post_meta($post->ID, 'reviewer_picture_url', true);
     $url = get_post_meta($post->ID, 'url', true);
@@ -175,7 +204,8 @@ function render_agr_google_review_meta_box($post) {
 
     // Output the second table for Place ID on the right side
     echo '<table class="form-table" style="border-bottom:1px solid #c3c4c7">';
-    echo '<tr><th>' . __('ID:', 'awesome-google-review') . '</th><td><input style="background:#ccc;" readonly type="text" id="post_review_id" name="post_review_id" value="' . esc_attr($id) . '" /></td></tr>';
+    echo '<tr><th>' . __('Job ID:', 'awesome-google-review') . '</th><td><input style="background:#ccc;" readonly type="text" id="job_id" name="job_id" value="' . esc_attr($job_id) . '" /></td></tr>';
+    echo '<tr><th>' . __('Unique ID:', 'awesome-google-review') . '</th><td><input style="background:#ccc;" readonly type="text" id="post_review_id" name="post_review_id" value="' . esc_attr($id) . '" /></td></tr>';    
     echo '</table>';
 
     // Output a table

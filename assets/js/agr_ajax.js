@@ -1153,12 +1153,16 @@ function upload_process_box(check) {
       btnProcess_BUSINESS_CHECK.addClass("spinning");
     },
     data: {
-      action: "job_upload_ajax_action",
+      action: "review_get_set_ajax_action",
       current_job_id: current_job_id,
       review_api_key: ajax_object.review_api_key,
       nonce: nonce,
     },
     success: function (response, status, error) {
+
+      // console.log('heeeeeeeeeeeeee'+response);
+      // return false;
+
       setTimeout(function () {
         if (response.success === 1) {
           if (check) {
@@ -1172,13 +1176,13 @@ function upload_process_box(check) {
       }, 3500);
     },
     error: function (xhr, status, error) {
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: response.msg,
-        showConfirmButton: false,
-        timer: 3500
-      });
+      // Swal.fire({
+      //   position: "top-end",
+      //   icon: "error",
+      //   title: response.msg,
+      //   showConfirmButton: false,
+      //   timer: 3500
+      // });
     },
     complete: function () {
       setTimeout(function () {
@@ -1257,7 +1261,7 @@ function response_upload_success(response) {
 //     dataType: "json",
 //     beforeSend: function () { },
 //     data: {
-//       action: "review_get_set_ajax_action",
+//       action: "review_get_set_ajax_action2222222222",
 //       firm_name: firm_name,
 //       review_api_key: ajax_object.review_api_key,
 //       nonce: nonce,

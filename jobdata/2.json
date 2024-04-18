@@ -1,62 +1,215 @@
 {
     "success": 1,
-    "firm_name": "Juris General",
+    "firm_name": "VMPLegal \/ Vimal Patel",
     "message": "Google Reviews Successfully Extracted.",
-    "totalCount": 6,
+    "totalCount": 23,
     "reviews": [
         {
-            "id": "116337074885888642440",
-            "title": "Himani Dhandhukiya",
-            "description": "Very good advocate for High Court. One of the best team of young and talented advocates. Recommended for corporate and commercial litigation.",
+            "id": "115979387516720340732",
+            "title": "Vishwajit Brahmbhatt",
+            "description": "I had to sell my property which he helped me through the entire process. He has through and complete knowledge of the Indian real estate laws, which are the most complex sets of rules and regulations. I can\u2019t thanks him enough.He was in communication with me through the entire process",
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUttc4siNTgkY3ZKa7Us4-pLdAwouxVdl7xg4h1dWF6KINIXE-paw=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116337074885888642440\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "103855236830697250513",
-            "title": "suraj kamani",
-            "description": "Good services. I would appreciate their knowledge and understanding of civil law and arbitration matters. Suitable for High Court and Arbitration matters.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVXFO_89eU_SoSAeC8OIxcI61vYp3j0aVBvOBVHLnsCfAbYvos=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/103855236830697250513\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "100693143980505359570",
-            "title": "hetal Trivedi",
-            "description": "Recommended for High Court matters. Appreciate their knowledge. Good lawyers for Civil and Taxation matters.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIgmSASM91ZT9ctNjNLi7LjXrVPqKJsd2Fp9ZkrCVxGSO4hjw=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100693143980505359570\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "112390848618437939395",
-            "title": "vandan sakaria",
-            "description": "One of the very good law firms for NCLT and High Court matters.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjV7Y0lLjV9xvZfYWLxgWvXPo5mu2cCQ-W7rWlNaA2QjiXJOw0bw=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/112390848618437939395\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "110466770586311405141",
-            "title": "Bharat Bhatt",
-            "description": "One of the best lawyers for corporate and taxation laws.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKMibwyOCy8FTRgCOyI0RaCTgumbgzF1azXAMCw_3YuroP3KQ=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110466770586311405141\/reviews\/",
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKy700qAkAePRzPHOvLDocnGVJ7FtJXet8YghQu14GNfwFhog=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115979387516720340732\/reviews\/",
             "publicationDate": "a year ago"
         },
         {
-            "id": "104770946994210845490",
-            "title": "jayesh Joshi",
-            "description": "Very good advocate for High Court Matters ..",
+            "id": "115222520130977957553",
+            "title": "Sandeep Mittal",
+            "description": "Honest and hardworking lawyer.  An excellent team.  Very impressive infrastructure.  Has won all cases for my company Corrtech that were handled by Mr Vimal Patel and his team.",
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWCu63tffpeVPsZD1jGhsdHJxjUDDVPpHaZfi_koRrwGQbkfkNtJw=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104770946994210845490\/reviews\/",
-            "publicationDate": "2 years ago"
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjX-AJDcodJ_gzT9M43GPw2qH2ZGmgyGjOGAIor_tYrWQhpq4sM=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115222520130977957553\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "117408559026492201397",
+            "title": "Armin Anklesaria",
+            "description": "We were very happy to visit the office n felt very comfortable there.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUjUdATCYoGVuRg31LYP74ugMfClZMdEeHZD6EOqaUsZsBL8iLU=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117408559026492201397\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "105505942131999703920",
+            "title": "marvel agrotech",
+            "description": "Good and fast work .....",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXn7FDhwpJ_8AfaU0Cqbemg7nTSv41hN-o-Sh6TKLjUHbTAkXIq=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105505942131999703920\/reviews\/",
+            "publicationDate": "9 months ago"
+        },
+        {
+            "id": "111068170178113648407",
+            "title": "Himat Udani",
+            "description": "It's too good",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLc7Ix7keu8nTR_9meg60nmAa2wRFOPa9as_Kfk9JAqYUqiAPY=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111068170178113648407\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "109198706836503079052",
+            "title": "Dipen Padaria",
+            "description": "Highly professional, experienced experts \ud83d\udc4d",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjV2AlZ0qIXnKmItHnQoPjGQMPSoXiKr-B-Ol22bTyT8zCmetRZz9g=s40-c-rp-mo-ba4-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109198706836503079052\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "117931767743894352947",
+            "title": "Hemal Naik",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUKjNXU24hCq723U64mIyNiNwVWji8GZqNAnDEijjq4DjtuqanPhg=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117931767743894352947\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "108174518565818673941",
+            "title": "Jasan Shah",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXbWdN05ecMLnMEkeP2JllBNsqWUrtRvkoVsfI9s1k078nbEnYD=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108174518565818673941\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "100063486864906698258",
+            "title": "ashish vaghasiya",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJ1odxf7uksvjnPo8pdvbK8oxX-hZfOIJt5pRQtirScVFCAeA=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100063486864906698258\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "102130222107978938469",
+            "title": "MANOHAR GALANI",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLzEsh_73Lk7xJp19S3IdjAtJS0nmRHl8LyKx2BtGe1AlGEgg=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102130222107978938469\/reviews\/",
+            "publicationDate": "3 years ago"
+        },
+        {
+            "id": "109251975727767376007",
+            "title": "Bimal Patel",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXmBeGPFMrMPolbFh7qr8Oqixkkuy1_yp1AbhGTnlzV-H0d9Zzr7g=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109251975727767376007\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "105962477264271917464",
+            "title": "Darshan Makwana",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVEgLlSNkZP33x9KCTyOlNgqHa4NStwjzkbLsBRi8tc-KiXTrzp=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105962477264271917464\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "117938959505360191638",
+            "title": "Avani Doshi",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocI2fsy99Va5EQF51bzn1pT0T8y5zJrq2Ec_3YUTN4vF7bn69Q=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117938959505360191638\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "104354766424031904086",
+            "title": "Anil Chandwani",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIzzr9M8qMDVboZytHliDxwGCwUFeUKiVFF63A3wSflokuY9g=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104354766424031904086\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "117924445332017108172",
+            "title": "Amit P",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIFL2ob-ga927syIDzSSQBEalLbOG5f_a-tkIlkIzjZ7WvXbQ=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117924445332017108172\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "118376637609035359071",
+            "title": "KAUSHAL PADARIYA",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjW83HhmjhdGFpXFR1YRWB_VnMKGiFmfBJ872RXI0IA11g9uD1wd=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/118376637609035359071\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "108530481506137422249",
+            "title": "ankit padaria",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJPcFFCAHNERM3sCglBE6Po934PIhFaxZwfUFXxNdBE5xDZhw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108530481506137422249\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "110690454445243813430",
+            "title": "Suresh Gupta",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLYh5Zyd7k9JEpUdWKoDbvFdtyQC229bIZPPU71jQJ_qzBrcw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110690454445243813430\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "110455821091219873076",
+            "title": "Neha Daftary",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKCJU8zjhrhBVEwhsQyo-TrLMmgtGjTmnkRXNJXOXAUgBaKvw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110455821091219873076\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "117148675736760083306",
+            "title": "AMIT VAGADIA",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJfmQ4DClQoxN_u1ONacBEUt-aEZZebzj1HD3ZtOGlxgAxEEQ=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117148675736760083306\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "104070844566054230458",
+            "title": "Dhaval Shah",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXudKmzumx4UKYjcoEMYgYsH7WbtzfbBNdrUA8n7SvDRggRxKjREA=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104070844566054230458\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "107259560286787410973",
+            "title": "Nick Patel (MTLibrary)",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUqfZkMKugl4GLs-tG7Ln8qhCNSIa8DgzC8Ru1Gbg01QoQafB7T=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107259560286787410973\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "107291477302302921569",
+            "title": "Matrix gaming",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVaHYVdwMUvN_hyUApOFB4O6Gh31lQnG_wLyQtBdhhFV5zf5nOl=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107291477302302921569\/reviews\/",
+            "publicationDate": "5 years ago"
         }
     ]
 }

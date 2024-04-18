@@ -1,0 +1,458 @@
+{
+    "success": 1,
+    "firm_name": "law offices of david smith",
+    "message": "Google Reviews Successfully Extracted.",
+    "totalCount": 50,
+    "reviews": [
+        {
+            "id": "115662324618568220917",
+            "title": "Mercedes Sheehan",
+            "description": "David Smith advised me on Washington real estate law and I was very satisfied with his service. He\u2019s professional and offers clear and practical advice. I\u2019m looking forward to working with him on real estate matters.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjW57oDGbmMi0vzIac6cvjtEB-n4KL03biR6cw52fAk7MmVgYR-I=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115662324618568220917\/reviews\/",
+            "publicationDate": "2 months ago"
+        },
+        {
+            "id": "110789703168985226909",
+            "title": "B S",
+            "description": "Absolutely amazing guy, and very knowledgeable. He's a down to earth guy and doesn't bullshlt like most lawyers. Something to keep in mind, he is GOOD and manages a lot of clients so if he has a stand in because he's working on another high profile case don't get discourages and just leave a message with his front desk. He's helped me with with 3 different cases with completely different parameters because he is so knowledgeable in his field.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKRgJndKyFwVcqZFRqJV1b6c54l9pRLcmel0NMOiZvA8ltpUg=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110789703168985226909\/reviews\/",
+            "publicationDate": "5 months ago"
+        },
+        {
+            "id": "105853826855866033680",
+            "title": "Tanya Lowry",
+            "description": "A perfect team to have on your side. They made a difficult and confusing process easy to navigate.  They never made me feel stupid when I asked dumb questions and helped ease my anxiety. I can't thank them enough.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVXuxMfmuaqqwIHCcsFAh8ewdZowjd3FOsLp4BU2LoR0g60KXI=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105853826855866033680\/reviews\/",
+            "publicationDate": "2 months ago"
+        },
+        {
+            "id": "110332459449178890400",
+            "title": "Yuls Kor",
+            "description": "We\u2019ve had a great experience with David and his office! We\u2019ve used him for a couple cases now and he is easy to work with, explains things clearly, and just gets it done!",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJNwO696prvcXee1Np8rgoVkBceIqX2FNOFF-hClgpaa_FnGw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110332459449178890400\/reviews\/",
+            "publicationDate": "4 months ago"
+        },
+        {
+            "id": "101662560995119097134",
+            "title": "Elijah Skyline",
+            "description": "Dave is great! Easy to work with, straight to the point. Very knowledgeable! Definitely my go to with any legal questions I have! Recommend!!",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUKg_HtfT8SqnT2WRNN1rbLNmG1HjdGqDB_ZyZyzGhxPTX_4ms=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101662560995119097134\/reviews\/",
+            "publicationDate": "4 months ago"
+        },
+        {
+            "id": "104367638380276715710",
+            "title": "Rachel DeAngelis",
+            "description": "I can\u2019t even put into words how my experience with this office went from the very first communication.  I was in a very bad place and we needed out and the only way to do so led to a random Google search to calling David\u2019s office. His office staff is superb! I can\u2019t say that enough. The first communication with David made my daughter and I feel we picked the right number. He scheduled our zoom meeting for the next day. From that meeting he made us feel at ease and we would be safe. Then we went to his office. He made us feel that we would be okay, not to worry as we were shaken and very upset, that he had us and he would make sure we would be okay and he\u2019d be ready for a fight. My situation was  difficult and even though the stress was still enormous we knew we had the right attorney. He answered every call or made sure he got back to me. He explained everything and was always there for another phone call and more questions. His office staff is amazing. They took their time with every call I made or every email. No matter what I needed they were there!! My life was turned upside down but I had the best attorney I could have hoped for. Even after all was said and done I still had more questions and they are all 100% in as if I called the first time. You won\u2019t find a better attorney\/office to help you. They treat you as if you were their only client. I can\u2019t thank them enough!!",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocI7-jkDUuHkYwI8sTkCGt4Vvp0PvYUGL1fW3CCWC-cB_cQVxw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104367638380276715710\/reviews\/",
+            "publicationDate": "3 years ago"
+        },
+        {
+            "id": "100029607157303803952",
+            "title": "Real Reviews",
+            "description": null,
+            "numericRatingCount": 1,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIGf-dhUg2cfPmhdwKucWWrPw0Ep0KNGZzQxQeqZmx50nrIXd5R=s40-c-rp-mo-ba4-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100029607157303803952\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "117630439635085417320",
+            "title": "Connor Naccarato",
+            "description": "David Smith is excellent at what he does. He has provided me with some very sound advice and I would highly recommend him to anyone considering an attorney. He is very responsive, professional, and personable. He goes above and beyond for his clients and you can tell he really cares not only about his job, but about his clients. You will be happy with your decision if you choose to work with him.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWDw91Ie6LMx3xSk_Be4C3rxc0nbz2eGlbNiQ3uJSx3ouH0hfeb=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117630439635085417320\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "100026823365202847001",
+            "title": "Bill Rounded",
+            "description": "David and his team are amazing to work with. I had a time sensitive situation that I needed to get handled right away. David and his team worked late at night and over the weekend just to make sure that my time sensitive issue was taken care of on time. I have contacted other attorneys and they would either call back a couple of days later or not at all. Each and every time I contacted him either he answered or got back to me the same day no matter what day of the week it was. I would not recommend any other attorney except for David.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJCQ4fubI4pPutaahFaYbasIKPgqjY9EKDFZ-8Y9Pbxwi8bGQ=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100026823365202847001\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "100684778674580737852",
+            "title": "Casey Peterson",
+            "description": "As we all know, sometimes when you are in need of an attorney it can be a very trying and stressful time in your life. My experience with David Smith and his office was a completely friendly and stress free atmosphere. Everyone here was great and David Smith really took the extra time and effort in order to help me. As it turned out, my situation ended up not needing legal experience but David Smith still took the time out of his day to give me great advice and followed up on my situation. I definitely recommend them and really appreciate their help!",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocI28TlxM73JAB6mPNVZCDQumR1qWlnHgu_D4jAHJ5oI6UmZYw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100684778674580737852\/reviews\/",
+            "publicationDate": "9 years ago"
+        },
+        {
+            "id": "109993525716309285754",
+            "title": "Viki Lareau",
+            "description": "We have used at least a dozen attorneys over the 20+ years we have been in business. I first called David at 6 PM one evening - he asked us to come right over and continued to work with us for several hours into the AM hours.  I was blown away and knew we had found someone extraordinary.He continues to work closely with our very complicated case, never judging and always caring. This is probably the most stressful of life has been to date, and I am so incredibly grateful that David is there for us. Our situation could have ended very badly and it is only because of David that we are getting through this and I am confident that he has set us up for success going forward.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWBCTIBRftoHMFcYSvrIjaYfSiriNjy4ix-f9nd_mGsiEh4HZ68OQ=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109993525716309285754\/reviews\/",
+            "publicationDate": "9 years ago"
+        },
+        {
+            "id": "100328406531411015816",
+            "title": "NEL V",
+            "description": "Great guy! He really goes above and beyond. Very knowledgeable and professional.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLZ91XEOgacqWPQl5bMxRQxlmhjXb1Z1eVZ6Hq6rix-xSl85A=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100328406531411015816\/reviews\/",
+            "publicationDate": "4 months ago"
+        },
+        {
+            "id": "111909267548418137124",
+            "title": "Dona Morris",
+            "description": "An excellent attorney when you need bankruptcy help in a hurry,and your barely treadiing water. At age 65, bankruptcy was not even a thought in my retirement bucket list a myriad of problems to be negotiated. Mr. Smith and his staff and associates were very kind and helpful as I was quite uncomfortable in this experience. They assured me that I wasn't alone and everything would be okay. Now, 5years later life is good again I still have my home thanks to friends, family and a good and kind attorney.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUjytnBNNYfIHqubKU3iq7lAXfnfEVgi_0FE8OLe9rog7FcLP8Y=s40-c-rp-mo-ba4-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111909267548418137124\/reviews\/",
+            "publicationDate": "2 years ago"
+        },
+        {
+            "id": "114907939114559890115",
+            "title": "TOM BEARDSLEE",
+            "description": "I met David about Three years ago. I found his firm to be well organized and ready to take on any challenges that come up.  I personally think we will see him as a Judge some day. He is always learning from his vast library of law resources.  If you need a competent firm to see you through some rough times, His firm has the capacity and caring you will truly appreciate",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJHD4c2X5mOuscgH5D9pYHzqHui3v-vFj9I6WI_KP_bR_ihBQ=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/114907939114559890115\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "108387692032105789948",
+            "title": "Nicole DeAngelis",
+            "description": "My mom and I were in a really scary situation where we needed to get out FAST and find a place to be safe. We were extremely terrified and shaken up with how scared we were. First face to face meeting with David and he INSTANTLY made us calm down and feel safe and that we would be okay. He is such a kind person, and how quickly he helped us and gave us advice made us feel so secure and grateful. He was ready for anything to come, ready for a fight if it was needed. Him or his office ALWAYS got back to us when we need to call and see what was going on. If you need a good support to help you get through a hard time, this is the place to go. We couldn\u2019t be more thankful for his help. This was the only way we were able to get out and be safe.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWG5N18_Hn1IU_OELYFkvevpfN4X3cLn_avcymOmfirrMF5DYQ=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108387692032105789948\/reviews\/",
+            "publicationDate": "3 years ago"
+        },
+        {
+            "id": "114716880328961684065",
+            "title": "JR LaRoche",
+            "description": "David and his team have helped me with several legal matters over the years. He has a great team with him and it seems they are always willing to bend over backwards to help accommodate their clientele. Never have I had a bad experience with David or his team and would gladly recommend them to anyone.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjW3bMfl4TZBzFSxAX-ALMer2buVgPubOWgB42wyENwJ7v4eAgbr=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/114716880328961684065\/reviews\/",
+            "publicationDate": "9 years ago"
+        },
+        {
+            "id": "113255024763598719140",
+            "title": "J E",
+            "description": "Per the other reviews, David Smith runs a great Law firm!Always available, never looses composure and ensures that you the client \"stay on track\".One unique quality David has compared with other lawyers that I have consulted with is that he will advise you if you have a reasonable case or claim without wasting money. He describes the risks and possible actions that are associated with your case.I would and have recommended David Smith for legal representation.Thank you all so much.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIbeLNoVsId_LuUUGLAnusY76NYSN3zLxizt_TkH1wdTOZrAdAJ=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113255024763598719140\/reviews\/",
+            "publicationDate": "9 years ago"
+        },
+        {
+            "id": "100127692339734772915",
+            "title": "Anthony Foster",
+            "description": "I highly recommend David Smith and his Law office. He was very thorough with my case and sympathetic with my situation. His office was very professional.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVejFL7eAksD2b2Rvx5m_yNfBUlI9qC_3XamZf8h4aX8XT79HI=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100127692339734772915\/reviews\/",
+            "publicationDate": "7 months ago"
+        },
+        {
+            "id": "101497491810863497436",
+            "title": "Carlos Rainey",
+            "description": "Amazing guy, David really helped me when I had nowhere else to turn. The experience was informative, easy, and fun. 10 outta 10 would recommend.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUrX3mLTnzdsZa7a0mbTTjc-otth-GDIbAXcxnp_9Qi3igjrWrg=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101497491810863497436\/reviews\/",
+            "publicationDate": "11 months ago"
+        },
+        {
+            "id": "109480544654623613043",
+            "title": "Trevor Lyons",
+            "description": "Outstanding Office!  Respectful, Understanding of my situation, and Paperless!!! David Smith is running a top notch Law office with a great group working for him,  I would recommend David to anyone for his knowledge, dedication to his client and his candor.  He totally took my complicated situation and made me feel at ease and in control.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIyo68AR1iyLFgtfEV9oCCBJvHSArAhHuC566OlsPQQ2xnTtw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109480544654623613043\/reviews\/",
+            "publicationDate": "9 years ago"
+        },
+        {
+            "id": "103090121840851607988",
+            "title": "fred Jordan",
+            "description": "He fails to respond and I would not recommend him. I am hiring an another attorney to review his work and those are facts. I would not use this firm.",
+            "numericRatingCount": 1,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKpbz23QPOa1x4OvPH4Nvmxjkkrm5ShrkSwalbxmR6cl1PV0w=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/103090121840851607988\/reviews\/",
+            "publicationDate": "7 months ago"
+        },
+        {
+            "id": "117212890642742406241",
+            "title": "wendy Cavan",
+            "description": "Nothing but praise for David Smith and his staff. He was understanding of my circumstances and directed me to the right solution. He and Angela kept me updated on  every phase and I never had to call to see what was going on.  My bankruptcy case was handled swiftly and I am referring friends to use this law office and will use them again.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWfStO4YO5FmCCfwZ44YmYM5k2fj07Jy1Iwzjv7KSaoYLWEdjK2=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117212890642742406241\/reviews\/",
+            "publicationDate": "9 years ago"
+        },
+        {
+            "id": "105631490251666001639",
+            "title": "Paul Lopiccolo",
+            "description": "David Smith helped me with bankruptcy and he was very professional knew his business and I highly recommend. This was quite some time ago but I\u2019ve never forgotten David and his expertise.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjX746R8MBW57lJS9Kkitnb1_WJDSfhGJTJJqLq_tQAWXLQ0X-DG=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105631490251666001639\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "111023246583697552337",
+            "title": "Karl Larson",
+            "description": "David got us out of a big jam that other attorneys could not. Not only extremely knowledgeable but he inspires confidence in getting the desired outcome. I highly recommend his services.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLWFzWvT1nM1mUDUTzTJkXhWyh40WMSgxg72iC2C6cDtBe_jg=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111023246583697552337\/reviews\/",
+            "publicationDate": "3 years ago"
+        },
+        {
+            "id": "105740360868904657205",
+            "title": "K Woods",
+            "description": "David made an extremely stressful process go much smoother than i originally anticipated. David's calming nature, but ability to get things done in one's favor was extraordinary. David's knowledge of the end to end process, while customizing to each indiviudal need was impressive. While i was impressed with the intial service provided, i became truly grateful due to his follow up months and even years later. David is kind and courteous, but fights for what's right. David is a true advocate for his clients. Therefore, i'm an advocate for him.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJc0ZvZXstO9shyfn1KJ7CJEDnNsRwemvELo4OXM03roJlKKg=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105740360868904657205\/reviews\/",
+            "publicationDate": "9 years ago"
+        },
+        {
+            "id": "115611552084458882614",
+            "title": "Luis Bravo",
+            "description": "David Smith helped  to handle a situation with a debt collector I was certain was fraud. It took him moments to settle a situation I was dealing with for months. I was impressed by his competency, communication and follow through. A master of his craft.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJDJf0TygDIGb3AayKxn6yQuI8JyPyQs3NLpAzhrc7wy5J7hg=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115611552084458882614\/reviews\/",
+            "publicationDate": "3 years ago"
+        },
+        {
+            "id": "110874265957757436593",
+            "title": "Paula Jones-Pace",
+            "description": "I never thought I would need to file bankruptcy. When I saw this was the only option for me I saw another attorney who told me she could not help me as I was not eligible.  Not sure what I was going to do, a friend recommended David Smith. I went into filing feeling ashamed, like a failure, sure I would not qualify, and with no understanding of the legal process .  David and his staff's  educated me, supported me , and patiently guided me through the steps basically holding my hand all the way to the court room.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocI0-FyZmTCIJYf7GtUqKLaWvpeb7D7tg33Ivb1xxvM_tPRGucs=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110874265957757436593\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "116929432216094984054",
+            "title": "Penny Peterson",
+            "description": "Dave helped me with a tricky legal issue with lots of things that could have gone wrong, but none did. He put together a comprehensive plan to address all possible problems that could arise (which took away a great deal of stress). In the end all matters worked out very well and I couldn't be happier. I have recommended Dave over and over to my friends.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIk05V1r0U_8CGqmfkw7lzOnDlYTijiLYm2n8BPodwNLzR3Xw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116929432216094984054\/reviews\/",
+            "publicationDate": "9 years ago"
+        },
+        {
+            "id": "101606235543574768699",
+            "title": "Ron Dean",
+            "description": "David Smith's efforts exposed our case around the law and procedures required for reaffirmation of a prior mortgage through bankruptcy.  His keen knowledge of bankruptcy law and regulations opened the door to move forward with our next home purchase.Thank you David Smith!Gratefully submitted,Ron & Teresa Dean",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJ1r7kSnFr926POjEHOkDmn4eUwiMb19ED1Gp2L8IwPj_FpNg=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101606235543574768699\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "117271045734971728036",
+            "title": "James Mikael",
+            "description": "0 communication, will not answer the phone or multiple emails.",
+            "numericRatingCount": 1,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocL1JG2H1QfwTMyrU79oMQ9fwm2q8TP08sX_vt6Td6iqbzuEev4=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117271045734971728036\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "102794155148177524104",
+            "title": "Artem Palich",
+            "description": "David is very professional, very good at his job and kind person treats you like a family. I work late he worked around my time David stayed after Hours just to help me. Thank you David",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocL5m9g2olKD1Dd1F7d4JF3eyI11CDfXg5eOm01WenPdlhHXjg=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102794155148177524104\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "107078579483472973409",
+            "title": "Leon de Leon Guerrero",
+            "description": "Extremely genial and helpful. Would recommend.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjX5Mxq5NOKCt01MMIsVBv7dKLNwoGE3Z068zZgyCXGPU7-y8C3y=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107078579483472973409\/reviews\/",
+            "publicationDate": "3 months ago"
+        },
+        {
+            "id": "106927155692288070974",
+            "title": "Tami Hartwell",
+            "description": "David is amazing, very compassionate and willing to help! Gave us a fresh outlook for our future!",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIvuWehnIhr6uWSv9wJhG09h1LpMgS0DXHieDG0jflgBUJfQQs=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/106927155692288070974\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "100136518072857190714",
+            "title": "Jerad Makay",
+            "description": "Dave took on a very difficult case, in the end Dave and his team did an awesome job. Thank you from the Makay family.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLSNVrS3eXE7IEPhpM5RzbG00EufTyuO414ZUgpHMJfBoGt9g=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100136518072857190714\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "108206293773541083136",
+            "title": "Charles Wilcox",
+            "description": "David is great. He is an amazing attorney and a stand up guy!",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWXz-nt4i46rl19Gc1iuV-CxVJcMuiX6gz-sz2rRyGw8cAXtp4=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108206293773541083136\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "102948136539078118711",
+            "title": "Bobbie Bailey",
+            "description": "Great team to work with on business and after 5 years of doing business with them they are still bringing creative solutions to the table that are aligned with the greater good of my agency!",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUu9IF4OHYbujrqGgLalol9VQeYxdOXY-yF2HARelKDqE0Xa38M=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102948136539078118711\/reviews\/",
+            "publicationDate": "7 years ago"
+        },
+        {
+            "id": "111875673688596857825",
+            "title": "Hipolito Perez",
+            "description": "David is a very nice friendly guy and did so much extra to help us that he did not need to.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVcKEt9IE2Il3LWL0lYmFndRDKhnf00BwFvkNJR714xXTWfz0xt7w=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111875673688596857825\/reviews\/",
+            "publicationDate": "7 years ago"
+        },
+        {
+            "id": "112232200367307266764",
+            "title": "Pj",
+            "description": null,
+            "numericRatingCount": 1,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIy2SSCWlNLenz4LBaONvYB-S_hOk79gSs6xvpFQ9k35NchEA=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/112232200367307266764\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "107758223092796182523",
+            "title": "Zachary Venus",
+            "description": "Wonderful and kind staff who work in their clients best interest.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjX-A1Urpeec5VYpGI9W92_gyIv5OPBrFTID-aww-puAsJl96c0pQw=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107758223092796182523\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "117125945468621515092",
+            "title": "Viki Sath",
+            "description": "Thanks David a team ! Your guys are amazing !",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjW4B-mqEBuzUCzJhSLCTZWVv_fPfidwgngT7Osp2b06bh6OJeZhEw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117125945468621515092\/reviews\/",
+            "publicationDate": "2 years ago"
+        },
+        {
+            "id": "100406619704228250416",
+            "title": "Mar No",
+            "description": "Best attorney and staff ever",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKQxLqhiR1uhF7FtoYkTHJb6n1y4ayF3SlEC9yvMIdxheh5Mw=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100406619704228250416\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "100096752546630154853",
+            "title": "Mark K",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXqoFmJYdv16LLsv_lmO-s2zpYezlfRj1EP4C22xVca6IMq-0M=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100096752546630154853\/reviews\/",
+            "publicationDate": "4 months ago"
+        },
+        {
+            "id": "106412117244880532531",
+            "title": "Maria Arroyo",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJZKuO4Gi3fNcEGiclD80qQuYPu6FUmej6e1efltCCfsoz71Q=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/106412117244880532531\/reviews\/",
+            "publicationDate": "8 months ago"
+        },
+        {
+            "id": "107912906138814928540",
+            "title": "Michelle Gehring",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWbyLLNCfnzyUSKW-X58o-IHR2F4Pzxyn_o7ZvgXw-Se2L4Vbs=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107912906138814928540\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "105395229902930679900",
+            "title": "wanda griffin",
+            "description": null,
+            "numericRatingCount": 1,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKN3_9HolQ2HDhpEsbKxB6yPhbwHqVJQfHeNQc_0Kkwss81JA=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105395229902930679900\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "101442233416658335604",
+            "title": "Dawn Mitchell",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXGZ7CNTR1luxvQhIS1MwnSc2B3-DokjuPws0G0E1sO0OKgxYOk=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101442233416658335604\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "113469053485661324649",
+            "title": "Mark Brady",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJjfjvOX5VtGYNEfSqW9LtwQxC1b2ykAf3ONdkrZuHfeKgZUA=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113469053485661324649\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "101798437100946222600",
+            "title": "Nick Negrini",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjULnnDPTUOrmHk_73cDtELDp7tSDwwi5gLSqJzGgptmrdeApHln=s40-c-rp-mo-ba4-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101798437100946222600\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "113297681980343780193",
+            "title": "anthony rogers",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVL9-SMt30_hgzPL3tYbMxanLrUIy83J3SB4s6LxCUJjYejTOg=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113297681980343780193\/reviews\/",
+            "publicationDate": "7 years ago"
+        },
+        {
+            "id": "101175716257500074710",
+            "title": "Asia Queen",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjX7ZrO5osLjwAvfo7OT4A0FwUuufphrtFeC_54EDh0mGAOZhOE=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101175716257500074710\/reviews\/",
+            "publicationDate": "8 years ago"
+        }
+    ]
+}

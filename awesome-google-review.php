@@ -372,59 +372,59 @@ function ptr($str)
     print_r($str);
 }
 
+// $table_name = $wpdb->prefix . 'jobdata';
+// $client_ip = $_SERVER['REMOTE_ADDR'];
+// $get_current_job_id = $wpdb->get_var($wpdb->prepare("SELECT jobID FROM $table_name WHERE review_api_key = %s AND jobID_json = %d AND jobID_check = %d AND client_ip = %s", $review_api_key, 1, 1, $client_ip));    
 
-function get_reviews_data($firm_name, $review_api_key)
+function check_verify_file($current_job_id, $review_api_key) {
+    global $wpdb;
+    $parent_dir = plugin_dir_path(__FILE__);
+    $folder_path = $parent_dir . 'jobdata';
+
+    $file_path = $folder_path . '/' . $current_job_id . '.json';    
+
+    if (file_exists($file_path)) {        
+        $json_contents = file_get_contents($file_path);
+        $json_array = json_decode($json_contents, true);
+        if ($json_array !== null) {
+            return $json_array;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }        
+}
+
+function get_reviews_data($current_job_id, $review_api_key)
 {
     if (empty($review_api_key)) {
         return;
     }
-    $api_response['firm_name'] = '';
-    $api_response['success'] = 0;
-    $api_response['totalCount'] = 0;
+    $api_response['current_job_id'] = $current_job_id;
+    $api_response['success'] = 0;    
     $api_response['message'] = '';
-    $api_response['reviews'] = 0;
+    $api_response['reviews'] = array();
 
-    // $api_url = 'http://localhost:3000/api/free-google-reviews';
-    $api_url = 'https://api.spiderdunia.com:3001/api/free-google-reviews';
-    $headers = array(
-        'Content-Type' => 'application/x-www-form-urlencoded',
-        'apikey' => $review_api_key,
-    );
-    $firm_name = array(
-        'firm' => $firm_name,
-    );
-    $response = wp_remote_post($api_url, array(
-        'headers' => $headers,
-        'timeout' => 50,
-        'body' => $firm_name,
-    ));
+    $get_existing_api_key = get_existing_api_key();
+    $status = get_api_key_status($get_existing_api_key);
 
-    $body = wp_remote_retrieve_body($response);
-    $data = json_decode($body, true);
-
-    // ptr($response);exit;
-    if (is_wp_error($response)) {
-        $api_response['message'] = $response->errors['http_request_failed'][0];
-    } else {
-        if ($data['success'] == 1) {            
-            $api_response['id'] = $data['id'];
-            $api_response['firm_name'] = $data['firm_name'];
-            $api_response['success'] = $data['success'];
-            $api_response['totalCount'] = $data['totalCount'];
-            $api_response['message'] = $data['message'];
-            $api_response['reviews'] = $data['reviews'];
+    if($status == 1){        
+        $check_verify_file = check_verify_file($current_job_id,$review_api_key);
+       
+        if($check_verify_file){
+            $api_response['message'] = 'Data verified successful..';
+            $api_response['reviews'] = $check_verify_file;
+            $api_response['success'] = 1;
         }
         else{
-            $api_response['id'] = $data['id'];
-            $api_response['firm_name'] = $data['firm_name'];
-            $api_response['success'] = $data['success'];
-            $api_response['totalCount'] = $data['totalCount'];
-            $api_response['message'] = $data['message'];
-            $api_response['reviews'] = $data['reviews'];
+            $api_response['message'] = 'verified failed !';
         }
     }
+    else{
+        $api_response['message'] = 'Something went wrong with upload !';
+    }
 
-    appendMessageToFile($api_response['message']);
     return $api_response;
 }
 
@@ -739,7 +739,6 @@ function job_check_ajax_action_function() {
     wp_die();
 }
 
-
 add_action('wp_ajax_review_get_set_ajax_action', 'review_get_set_ajax_action_function');
 add_action('wp_ajax_nopriv_review_get_set_ajax_action', 'review_get_set_ajax_action_function');
 
@@ -747,49 +746,66 @@ function review_get_set_ajax_action_function()
 {
 
     $response = [];  
-    $response['firm_name'] = '';
+    $response['job_id'] = '';
     $response['success'] = 0;
     $response['totalCount'] = 0;
     $response['message'] = '';
     $response['reviews'] = 0;
     $nonce = sanitize_text_field($_POST['nonce']);
-    $firm_name = sanitize_text_field($_POST['firm_name']);
+    $current_job_id = sanitize_text_field($_POST['current_job_id']);
     $review_api_key = sanitize_text_field($_POST['review_api_key']);
 
     if (!empty($nonce) && wp_verify_nonce($nonce, 'get_set_trigger')) {        
-        $reviews_array = get_reviews_data($firm_name, $review_api_key);
+        $reviews_array = get_reviews_data($current_job_id,$review_api_key);
+        // $reviews_array = $reviews_array['reviews'];
+
         // ptr($reviews_array);exit;
-        if ($reviews_array['success'] == 0) {
+
+        
+        if ($reviews_array['success'] == 0 && $reviews_array['success']['success'] == 0) {
             $response['message'] = $reviews_array['message'];            
         } else {
-            $response['id'] = $reviews_array['id'];
+            $response['job_id'] = $reviews_array['current_job_id'];           
             $response['firm_name'] = $reviews_array['firm_name'];
             $response['success'] = $reviews_array['success'];
             $response['totalCount'] = $reviews_array['totalCount'];
             $response['message'] = $reviews_array['message'];
             $response['reviews'] = $reviews_array['reviews'];
+
+            $post_type = 'agr_google_review';
+            $taxonomy = 'business';
             
-            //Delete Old reviews
-            delete_reviews_data();
+            $term_slug = sanitize_title($reviews_array['reviews']['firm_name']);            
 
-            // Insert all reviews
-            store_data_into_reviews($reviews_array);
+            delete_reviews_data($term_slug);            
+            
+            // upload all reviews
+            $data_stored = store_data_into_reviews($reviews_array,$term_slug);
 
-            add_option('firm_name', $firm_name);
-            if (get_option('firm_name') !== false) {
-                update_option('firm_name', $firm_name);
-            } 
-            add_option('business_valid', 1);          
-            if (get_option('firm_name') !== false) {
-                update_option('business_valid', 1);
+            if($data_stored == 1){
+                $response['message'] = "Data upload successfully!";
+                $response['success'] = 1;
             }
+            else {
+                $response['message'] = "Failed to store data.";                
+            }
+
+            exit;
+            // add_option('firm_name', $firm_name);
+            // if (get_option('firm_name') !== false) {
+            //     update_option('firm_name', $firm_name);
+            // } 
+            // add_option('business_valid', 1);          
+            // if (get_option('firm_name') !== false) {
+            //     update_option('business_valid', 1);
+            // }
         }
     } else {
         $response['message'] = 'Nonce is not valid !';
     }
 
 
-    appendMessageToFile($response['message']);
+    // appendMessageToFile($response['message']);
 
     wp_send_json($response);
     wp_die();
@@ -797,42 +813,61 @@ function review_get_set_ajax_action_function()
 
 
 // delete all data from review post type
-function delete_reviews_data() {
-    // Get all posts of the "agr_google_review" post type
-    $reviews = get_posts(array(
-        'post_type' => 'agr_google_review',
-        'posts_per_page' => -1, // Get all posts
-        'fields' => 'ids', // Fetch only post IDs to improve performance
-    ));
-    // Loop through each review post and delete it
-    foreach ($reviews as $review_id) {
-        // Delete the post
-        wp_delete_post($review_id, true); // Set second parameter to true to force delete (bypassing trash)
+function delete_reviews_data($term_slug) {
+     
+        $term = get_term_by('slug', $term_slug, 'business');
+     
+        if ($term) {
+            $args = array(
+                'post_type' => 'agr_google_review',
+                'posts_per_page' => -1,
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => 'business',
+                        'field' => 'id',
+                        'terms' => $term->term_id,
+                    ),
+                ),
+            );
+    
+            // Get posts to be deleted
+            $posts_to_delete = get_posts($args);
+    
+            // Loop through each post and delete it
+            foreach ($posts_to_delete as $post) {
+                wp_delete_post($post->ID, true);
 
-        // Delete associated post meta
-        delete_post_meta($review_id, 'post_review_id');
-        delete_post_meta($review_id, 'reviewer_name');
-        delete_post_meta($review_id, 'reviewer_picture_url');
-        delete_post_meta($review_id, 'url');
-        delete_post_meta($review_id, 'rating');
-        delete_post_meta($review_id, 'text');
-        delete_post_meta($review_id, 'publish_date'); 
+                // Delete associated post meta
+                delete_post_meta($post->ID, 'post_review_id');
+                delete_post_meta($post->ID, 'reviewer_name');
+                delete_post_meta($post->ID, 'reviewer_picture_url');
+                delete_post_meta($post->ID, 'url');
+                delete_post_meta($post->ID, 'rating');
+                delete_post_meta($post->ID, 'text');
+                delete_post_meta($post->ID, 'publish_date'); 
+            }
 
-    }
-
-    // Optionally, clean up any orphaned post meta
-    global $wpdb;
-    $wpdb->query($wpdb->prepare("DELETE FROM $wpdb->postmeta WHERE post_id NOT IN (SELECT ID FROM $wpdb->posts WHERE post_type = 'agr_google_review')"));
-
-    return true;
+             // Optionally, clean up any orphaned post meta
+            global $wpdb;
+            $wpdb->query($wpdb->prepare("DELETE FROM $wpdb->postmeta WHERE post_id NOT IN (SELECT ID FROM $wpdb->posts WHERE post_type = 'agr_google_review')"));
+    
+            return count($posts_to_delete); // Return the number of deleted posts
+        } else {
+            return 0; // Return 0 if the term does not exist
+        }
 }
 
 
 
-function store_data_into_reviews($reviews_array)
+function store_data_into_reviews($reviews_array, $requested_term)
 {
-   
-    foreach ($reviews_array['reviews'] as $get_review) {
+    $success = false; // Flag to track if data is stored successfully
+
+    $reviews_array_data = $reviews_array['reviews']['reviews'];
+
+    
+
+    foreach ($reviews_array_data as $get_review) {
         $id = $get_review['id'];
         $reviewer_name = $get_review['title'];
         $reviewer_picture_url = $get_review['reviewerPictureUrl'];
@@ -870,11 +905,18 @@ function store_data_into_reviews($reviews_array)
             update_post_meta($new_post_id, 'rating', $rating);
             update_post_meta($new_post_id, 'text', $text);
             update_post_meta($new_post_id, 'publish_date', $published_at);
+
+            // Assign the 'business' taxonomy term to the post
+            $term_taxonomy_ids = wp_set_object_terms($new_post_id, $requested_term, 'business', true);
+            if (!is_wp_error($term_taxonomy_ids)) {
+                $success = true;
+            }
         }
     }
-
-    return true;
+    // Return 1 if data is stored successfully, otherwise return 0
+    return $success ? 1 : 0;
 }
+
 
 function get_post_id_by_meta($meta_key, $meta_value, $post_type = 'agr_google_review')
 {
