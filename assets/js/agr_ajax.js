@@ -168,12 +168,14 @@ let btnProcess_BUSINESS_UPLOAD = $("#google_review_upload_form .btn-process.uplo
 
 function initial_check() {
   const nonce = $("#review_api_key_nonce").val();
+  let current_job_id = FirmNameInput.attr('data-jobid');
   $.ajax({
     type: "POST",
     url: ajax_object.ajax_url,
     dataType: "json",
     data: {
       action: "initial_check_api",
+      current_job_id: current_job_id,
       nonce: nonce,
     },
     beforeSend: function () {
@@ -181,69 +183,113 @@ function initial_check() {
       btnProcess_API.prop("disabled", true);
     },
     success: function (response) {
-      if (response.success_api == 1) {
+
+      // console.log('start = '+response.data.btn_start);
+      // console.log('check = '+response.data.btn_check);
+      // console.log('upload = '+response.data.btn_upload);
+
+      if (response.success && response.api) {
         if (sign_TRUE) {
           correctSign_API.addClass("visible");
           $('.api_key_setting_form').addClass("showdisable");
+          BUSINESS_BOX.removeClass("hidden");
+          btnProcess_API.prop("disabled", true);
         }
         if (sign_FALSE) {
           wrongSign_API.removeClass("visible");
         }
-        BUSINESS_BOX.removeClass("hidden");
-        btnProcess_API.prop("disabled", true);
       }
       else {
         if (sign_TRUE) {
           correctSign_API.removeClass("visible");
           $('.api_key_setting_form').removeClass("showdisable");
+          BUSINESS_BOX.addClass("hidden");
+          btnProcess_API.prop("disabled", false);
         }
         if (sign_FALSE) {
           wrongSign_API.addClass("visible");
         }
-        BUSINESS_BOX.addClass("hidden");
-        btnProcess_API.prop("disabled", false);
       }
 
       //business CHECK
 
+      // start 1
+      if (response.data.btn_start && !response.data.btn_check && !response.data.btn_upload) {
+        btnProcess_BUSINESS_START.hide();
+        btnProcess_BUSINESS_UPLOAD.hide();
+        btnProcess_BUSINESS_CHECK.show();
+      }
+      else if (response.data.btn_start && response.data.btn_check && !response.data.btn_upload) {
+        btnProcess_BUSINESS_START.hide();
+        btnProcess_BUSINESS_UPLOAD.show();
+        btnProcess_BUSINESS_CHECK.hide();
+      }
 
-      // START SHOW ONLY
-      if (response.success_api && !response.success_business) {
-        if (response.success_api && !response.success_business && !response.success_check) {
-          btnProcess_BUSINESS_CHECK.hide();
-          btnProcess_BUSINESS_UPLOAD.hide();
-
-          //start show only
-          btnProcess_BUSINESS_START.show();
-        }
+      else if (response.data.btn_start && response.data.btn_check && response.data.btn_upload) {
+        // btnProcess_BUSINESS_UPLOAD.show();
+        btnProcess_BUSINESS_UPLOAD.show().find('span').text('FINISHED');
+        btnProcess_BUSINESS_UPLOAD.prop("disabled", true);
+        btnProcess_BUSINESS_START.show();
+        btnProcess_BUSINESS_CHECK.hide();
       }
 
 
-      else if (response.success_api && response.success_business) {
-        //CHECK SHOW
-        if (response.success_api && response.success_business && !response.success_check) {
-          btnProcess_BUSINESS_START.hide();
-          btnProcess_BUSINESS_UPLOAD.hide();
 
-          //check show
-          btnProcess_BUSINESS_CHECK.show();
-        }
 
-        //UPLOAD SHOW
-        else if (response.success_api && response.success_business && response.success_check) {
-          btnProcess_BUSINESS_START.hide();
-          btnProcess_BUSINESS_CHECK.hide();
+      // check 1
+      // if(response.data.btn_check){
+      //   console.log('check 1');
+      // }
+      // else{
 
-          //upload show
-          btnProcess_BUSINESS_UPLOAD.show();
-        }
-      }
+      // }
+
+      // // upload 1
+      // if(response.data.btn_upload){
+      //   console.log('upload 1');
+      // }
+      // else{
+
+      // }
+
+
+      // // START SHOW ONLY
+      // if (response.data.btn_start && !response.data.btn_check) {
+      //   if (response.data.btn_start && !response.data.btn_check && !response.data.btn_upload) {
+      //     btnProcess_BUSINESS_CHECK.hide();
+      //     btnProcess_BUSINESS_UPLOAD.hide();
+
+      //     //start show only
+      //     btnProcess_BUSINESS_START.show();
+      //   }
+      // }
+
+
+      // else if (response.data.btn_start && response.data.btn_check) {
+      //   //CHECK SHOW
+      //   if (response.data.btn_start && response.data.btn_check && !response.data.btn_upload) {
+      //     btnProcess_BUSINESS_START.hide();
+      //     btnProcess_BUSINESS_UPLOAD.hide();
+
+      //     //check show
+      //     btnProcess_BUSINESS_CHECK.show();
+      //   }
+
+      //   //UPLOAD SHOW
+      //   else if (response.data.btn_start && response.data.btn_check && response.data.btn_upload) {
+      //     btnProcess_BUSINESS_START.hide();
+      //     btnProcess_BUSINESS_CHECK.hide();
+
+      //     //upload show          
+      //     btnProcess_BUSINESS_UPLOAD.show();
+      //   }
+      // }
 
 
       // btnProcess_BUSINESS_START.show();
       // btnProcess_BUSINESS_CHECK.hide();
 
-      // else if (response.success_api && response.success_business && response.success_check == false) {
+      // else if (response.success_api && response.success_business && response.btn_upload == false) {
 
       // }
 
@@ -607,30 +653,30 @@ $("#google_review_upload_form button.job_start").click(function (event) {
 
 
 // JOB UPLOAD CLICKED 
-$("#google_review_upload_form button.upload_start ").click(function (event) {
-  let firm_name_display = $(FirmNameInput).val();
-  check = true;
-  Swal.fire({
-    title: `Confirmation: Upload ?`,
-    html: `Upload your reviews now and let your voice be heard about <strong>${firm_name_display}</strong>`,
-    showCancelButton: false,
-    confirmButtonColor: "#405640",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Upload",
-    allowOutsideClick: false,
-    backdrop: 'swal2-backdrop-show',
-    showCloseButton: true,
-    icon: 'question',
-    color: "#716add",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      job_start(check);
-    } else if (result.isDenied) {
-      Swal.fire("Changes are not saved", "", "info");
-    }
-  });
-  $("#google_review_upload_form").submit(); // Manually submit the form
-});
+// $("#google_review_upload_form button.upload_start ").click(function (event) {  
+//   let firm_name_display = $(FirmNameInput).val();
+//   check = true;
+//   Swal.fire({
+//     title: `Confirmation: Upload ?`,
+//     html: `Upload your reviews now and let your voice be heard about <strong>${firm_name_display}</strong>`,
+//     showCancelButton: false,
+//     confirmButtonColor: "#405640",
+//     cancelButtonColor: "#d33",
+//     confirmButtonText: "Upload",
+//     allowOutsideClick: false,
+//     backdrop: 'swal2-backdrop-show',
+//     showCloseButton: true,
+//     icon: 'question',
+//     color: "#716add",
+//   }).then((result) => {
+//     if (result.isConfirmed) {
+//       job_start(check);
+//     } else if (result.isDenied) {
+//       Swal.fire("Changes are not saved", "", "info");
+//     }
+//   });
+//   // $("#google_review_upload_form").submit(); // Manually submit the form
+// });
 
 // Assuming ".get" is the class of the button you want to trigger the form submission
 $("#google_review_upload_form button.check_start").click(function (event) {
@@ -715,14 +761,17 @@ function response_business_fail(response) {
     allowOutsideClick: false,
     grow: false,
     position: 'bottom-end',
+  }).then(function () {
+    setTimeout(function () {
+      btnProcess_BUSINESS_START.show();
+      btnProcess_BUSINESS_CHECK.show();
+      btnProcess_BUSINESS_UPLOAD.removeClass('visible');
+      btnProcess_BUSINESS_START.prop("disabled", false);
+      $('.right-box .output').html(display_msg);
+      $('.right-box .output').addClass('display');
+      location.reload();
+    }, 100);
   });
-  btnProcess_BUSINESS_START.show();
-  btnProcess_BUSINESS_CHECK.show();
-  btnProcess_BUSINESS_UPLOAD.removeClass('visible');
-  btnProcess_BUSINESS_START.prop("disabled", false);
-  $('.right-box .output').html(display_msg);
-  $('.right-box .output').addClass('display');
-  return true;
 }
 
 function check_start(check) {
@@ -1113,6 +1162,65 @@ $(function () {
 
 
 
+
+
+
+
+// function GetAndSet(check) {
+//   // const firm_name = FirmNameInput.val().replace(/\s/g, "");
+//   const firm_name = FirmNameInput.val();
+//   const nonce = $("#get_set_trigger_nonce").val();
+//   btnProcess_get_set.html("Loading").addClass("spinning");
+//   btnProcess_get_set.prop("disabled", true);
+//   btnProcess.prop("disabled", true);
+//   $.ajax({
+//     type: "POST",
+//     url: ajax_object.ajax_url,
+//     dataType: "json",
+//     beforeSend: function () { },
+//     data: {
+//       action: "review_get_set_ajax_action2222222222",
+//       firm_name: firm_name,
+//       review_api_key: ajax_object.review_api_key,
+//       nonce: nonce,
+//     },
+//     success: function (response, status, error) {
+//       const correctSign = $("#google_review_upload_form .correct-sign");
+//       const wrongSign = $("#google_review_upload_form .wrong-sign");
+//       wrongSign.removeClass("visible");
+//       correctSign.removeClass("visible");
+//       if (response.success === 1) {
+//         setTimeout(function () {
+//           correctSign.addClass("visible");
+//           toastr.success("", response.message);
+//           btnProcess_get_set.removeClass("spinning").html("GET & SET");
+//           btnProcess_get_set.prop("disabled", false).val("GET & SET");
+//           btnProcess.prop("disabled", false);
+//         }, 1500);
+//       } else {
+//         setTimeout(function () {
+//           wrongSign.addClass("visible");
+//           toastr.error("", response.message);
+//           btnProcess_get_set.removeClass("spinning").html("GET & SET");
+//           btnProcess_get_set.prop("disabled", false).val("GET & SET");
+//           btnProcess.prop("disabled", false);
+//         }, 1500);
+//       }
+//     },
+//     error: function (xhr, status, error) {
+//       var errorMessage = xhr.responseText;
+//       if (errorMessage.startsWith("Error")) {
+//         errorMessage = errorMessage
+//           .substring(errorMessage.indexOf("Error") + 6)
+//           .trim();
+//       }
+//       toastr.error(errorMessage || "An error occurred", "Error");
+//     },
+//     complete: function () { },
+//   });
+// }
+
+
 //UPLOAD REVIEWS
 // Assuming ".get" is the class of the button you want to trigger the form submission
 $("#google_review_upload_form button.upload_start").click(function (event) {
@@ -1139,6 +1247,7 @@ $("#google_review_upload_form button.upload_start").click(function (event) {
 
 function upload_process_box(check) {
   console.log('check = ' + check);
+  let flagKey = 'upload';
 
   let current_job_id = FirmNameInput.attr('data-jobid');
   // const firm_name = FirmNameInput.val();
@@ -1151,6 +1260,7 @@ function upload_process_box(check) {
     beforeSend: function () {
       $('#loader').removeClass('hidden');
       btnProcess_BUSINESS_CHECK.addClass("spinning");
+      setRandomFlag(flagKey, 0);
     },
     data: {
       action: "review_get_set_ajax_action",
@@ -1167,6 +1277,7 @@ function upload_process_box(check) {
         if (response.success === 1) {
           if (check) {
             response_upload_success(response.msg);
+            setRandomFlag(flagKey, 1);
           }
         } else {
           if (check) {
@@ -1244,63 +1355,6 @@ function response_upload_success(response) {
   });
   return true;
 }
-
-
-
-
-// function GetAndSet(check) {
-//   // const firm_name = FirmNameInput.val().replace(/\s/g, "");
-//   const firm_name = FirmNameInput.val();
-//   const nonce = $("#get_set_trigger_nonce").val();
-//   btnProcess_get_set.html("Loading").addClass("spinning");
-//   btnProcess_get_set.prop("disabled", true);
-//   btnProcess.prop("disabled", true);
-//   $.ajax({
-//     type: "POST",
-//     url: ajax_object.ajax_url,
-//     dataType: "json",
-//     beforeSend: function () { },
-//     data: {
-//       action: "review_get_set_ajax_action2222222222",
-//       firm_name: firm_name,
-//       review_api_key: ajax_object.review_api_key,
-//       nonce: nonce,
-//     },
-//     success: function (response, status, error) {
-//       const correctSign = $("#google_review_upload_form .correct-sign");
-//       const wrongSign = $("#google_review_upload_form .wrong-sign");
-//       wrongSign.removeClass("visible");
-//       correctSign.removeClass("visible");
-//       if (response.success === 1) {
-//         setTimeout(function () {
-//           correctSign.addClass("visible");
-//           toastr.success("", response.message);
-//           btnProcess_get_set.removeClass("spinning").html("GET & SET");
-//           btnProcess_get_set.prop("disabled", false).val("GET & SET");
-//           btnProcess.prop("disabled", false);
-//         }, 1500);
-//       } else {
-//         setTimeout(function () {
-//           wrongSign.addClass("visible");
-//           toastr.error("", response.message);
-//           btnProcess_get_set.removeClass("spinning").html("GET & SET");
-//           btnProcess_get_set.prop("disabled", false).val("GET & SET");
-//           btnProcess.prop("disabled", false);
-//         }, 1500);
-//       }
-//     },
-//     error: function (xhr, status, error) {
-//       var errorMessage = xhr.responseText;
-//       if (errorMessage.startsWith("Error")) {
-//         errorMessage = errorMessage
-//           .substring(errorMessage.indexOf("Error") + 6)
-//           .trim();
-//       }
-//       toastr.error(errorMessage || "An error occurred", "Error");
-//     },
-//     complete: function () { },
-//   });
-// }
 
 
 
@@ -1580,15 +1634,13 @@ function getRandomFlag(rec) {
 $(document).ready(function () {
   $(window).one('load', function () {
     let get_api_token = sessionStorage.getItem(`api-flag`);
-    let get_job_token = sessionStorage.getItem(`job-flag`);
+    let get_job_token = sessionStorage.getItem(`upload-flag`);
     if (get_api_token == 1 || get_job_token == 1) {
       console.log('fired !');
       success_celebration();
       setRandomFlag('api', 0);
-      setRandomFlag('job', 0);
+      setRandomFlag('upload', 0);
     }
   });
-
-
 });
 

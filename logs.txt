@@ -1,17 +1,11 @@
 Logs reset successfully !
-Job 2 queued for scraping
+Job 21 queued for scraping
 Google Reviews Successfully Extracted.
-final success
-final success
-final success
-final success
-Uploaded done...
-Uploaded done...
-Job 3 queued for scraping
+Data upload successfully!
+Job 22 queued for scraping
 Google Reviews Successfully Extracted.
-Uploaded failed...
-Uploaded failed...
-Uploaded failed...
-Uploaded failed...
-Uploaded done...
-Data verified successful..
+Data upload successfully!
+Data upload successfully!
+Data upload successfully!
+Data upload successfully!
+Data upload successfully!

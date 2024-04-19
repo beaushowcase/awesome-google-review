@@ -48,6 +48,7 @@ function job_table() {
             jobID bigint(20) NOT NULL,
             jobID_json bigint(20) NOT NULL,
             jobID_check bigint(20) NOT NULL,
+            jobID_final bigint(20) NOT NULL,
             firm_name varchar(255) NOT NULL,
             client_ip varchar(255) NOT NULL,
             created datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -93,10 +94,10 @@ function awesome_google_review_plugin_deactivate() {
 // Remove data on deletion
 register_uninstall_hook(__FILE__, 'awesome_google_review_plugin_uninstall');
 function awesome_google_review_plugin_uninstall() {
-    delete_option('firm_name');
-    delete_option('review_api_key_status');
-    delete_option('business_valid');
-    delete_option('review_api_key');
+    // delete_option('firm_name');
+    // delete_option('review_api_key_status');
+    // delete_option('business_valid');
+    // delete_option('review_api_key');
 }
 
 add_action('init', 'add_agr_google_review_post_type');
@@ -256,9 +257,9 @@ function our_google_reviews_callback() {
    
         <?php        
         $firm_data = get_existing_firm_data();
-        $firm_name_data = isset($firm_data['firm_name']) ? $firm_data['firm_name'] : '';        
+        $firm_name_data = isset($firm_data['firm_name']) ? $firm_data['firm_name'] : '';
         $job_id_data = isset($firm_data['jobID']) ? $firm_data['jobID'] : '';    
-     
+
         ?>
 
 
@@ -291,11 +292,12 @@ function our_google_reviews_callback() {
                     <div class="submit_btn_setget twoToneCenter">
                         <button type="submit" class="submit_btn job_start btn-process"><span class="label">JOB START</span></button>
                         <button type="submit" class="submit_btn check_start btn-process"><span class="label">CHECK</span></button>
+                        <button type="submit" class="submit_btn upload_start btn-process"><span class="label">UPLOAD</span></button>
                     </div>
 
-                    <div class="submit_btn_setget twoToneCenter">
+                    <!-- <div class="submit_btn_setget twoToneCenter">
                         <button type="submit" class="submit_btn upload_start btn-process"><span class="label">UPLOAD</span></button>                        
-                    </div>
+                    </div> -->
                 </form>
                 
             </div>
@@ -333,6 +335,8 @@ function custom_add_custom_columns($columns) {
             $new_columns['rating'] = '<span style="display: block; text-align: center;">Rating</span>';
             $new_columns['read_more'] = '<span style="display: block; text-align: center;">URL</span>';
             $new_columns['publish_date'] = '<span style="display: block; text-align: center;">Review Date</span>';
+            $new_columns['job_id'] = '<span style="display: block; text-align: left;">Job ID</span>';
+            $new_columns['business'] = '<span style="display: block; text-align: center;">Business</span>';
         }
     }
     return $new_columns;
@@ -365,6 +369,28 @@ function custom_display_custom_columns($column, $post_id) {
         case 'publish_date':
             $publish_date = get_post_meta($post_id, 'publish_date', true);
             echo '<div>' . esc_html($publish_date) . '</div>';
+            break;
+
+        case 'job_id':
+            $publish_date = get_post_meta($post_id, 'job_id', true);
+            echo '<div>' . esc_html($publish_date) . '</div>';
+            break;
+
+        case 'business':
+            // Get the taxonomy terms associated with the post
+            $terms = get_the_terms($post_id, 'business');
+            // Check if terms exist
+            if ($terms && !is_wp_error($terms)) {
+                $term_names = array();
+                foreach ($terms as $term) {
+                    // Get term names
+                    $term_names[] = $term->name;
+                }
+                // Output the term names separated by commas
+                echo '<div>' . esc_html(implode(', ', $term_names)) . '</div>';
+            } else {
+                echo '<div>' . esc_html__('No Term', 'google-reviews') . '</div>';
+            }
             break;
     }
 }
@@ -405,7 +431,7 @@ function check_job_status($client_ip) {
     $result = $wpdb->get_row($wpdb->prepare(
         "SELECT COUNT(*) AS count 
         FROM (
-            SELECT data.jobID_json, data.jobID_check
+            SELECT data.jobID_json, data.jobID_check, data.jobID_final
             FROM $table_data AS data
             INNER JOIN $table_api AS api ON data.client_ip = api.client_ip 
             WHERE data.client_ip = %s 
@@ -430,14 +456,14 @@ function check_upload_job_status($client_ip) {
     $result = $wpdb->get_row($wpdb->prepare(
         "SELECT COUNT(*) AS count 
         FROM (
-            SELECT data.jobID_json, data.jobID_check
+            SELECT data.jobID_json, data.jobID_check, data.jobID_final
             FROM $table_data AS data
             INNER JOIN $table_api AS api ON data.client_ip = api.client_ip 
             WHERE data.client_ip = %s 
             ORDER BY data.id DESC
             LIMIT 1
         ) AS last_record
-        WHERE last_record.jobID_json = 1 AND last_record.jobID_check = 1",
+        WHERE last_record.jobID_json = 1 AND last_record.jobID_check = 1 AND last_record.jobID_final = 1",
         $client_ip
     ));
 
