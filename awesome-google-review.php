@@ -36,7 +36,7 @@ function our_load_admin_style()
 {
     global $pagenow;
 
-    if ($pagenow == 'admin.php' && isset($_GET['page']) && $_GET['page'] == 'awesome-google-review') {
+    if ($pagenow == 'admin.php' && isset($_GET['page']) && ($_GET['page'] == 'awesome-google-review' || $_GET['page'] == 'delete-review')) {
         // Enqueue jQuery
         wp_enqueue_script('jquery');
 
@@ -55,12 +55,18 @@ function our_load_admin_style()
         wp_enqueue_script('agr-ajax-script', plugins_url('/assets/js/agr_ajax.js', __FILE__), ['jquery'], $dynamic_version, true);
 
         // Localize Script
-        wp_localize_script('agr-ajax-script', 'ajax_object', ['ajax_url' => admin_url('admin-ajax.php'), 'plugin_url' => plugins_url('', __FILE__), 'review_api_key' => get_existing_api_key()]);
+        wp_localize_script('agr-ajax-script', 'ajax_object', ['ajax_url' => admin_url('admin-ajax.php'), 'get_url_page' => $_GET['page'], 'plugin_url' => plugins_url('', __FILE__), 'review_api_key' => get_existing_api_key()]);
 
         // Enqueue Custom Script with Dependencies
         wp_register_script('agr_custom', plugins_url('/assets/js/custom.js', __FILE__), ['jquery'], $dynamic_version, true);
         wp_enqueue_script('agr_custom');
+         
+        // Enqueue Custom Script with Dependencies
+        wp_register_script('agr_selectize', 'https://s.cdpn.io/55638/selectize.min.0.6.9.js', ['jquery'], $dynamic_version, true);
+        wp_enqueue_script('agr_selectize');
     }
+
+   
 }
 add_action('admin_enqueue_scripts', 'our_load_admin_style');
 // Enqueue = END
@@ -84,6 +90,25 @@ function get_existing_firm_data(){
 
     return $firm_data;
 }
+
+function get_all_firms(){
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'jobapi';
+    $table_name2 = $wpdb->prefix . 'jobdata';
+    $client_ip = $_SERVER['REMOTE_ADDR'];    
+    
+    $firm_data = $wpdb->get_results($wpdb->prepare("
+        SELECT j.firm_name, j.jobID
+        FROM $table_name2 AS j
+        INNER JOIN $table_name AS s ON j.review_api_key = s.review_api_key
+        WHERE j.client_ip = %s 
+        AND s.review_api_key_status = %d
+        ORDER BY j.jobID DESC", 
+        $client_ip, 1), ARRAY_A);
+
+    return $firm_data;
+}
+
 
 // set at locatization
 function get_existing_api_key(){

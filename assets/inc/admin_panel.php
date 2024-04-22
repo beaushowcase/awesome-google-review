@@ -9,6 +9,16 @@ function our_google_reviews_add_menu_page() {
         'our_google_reviews_callback',
         'dashicons-google'
     );
+
+    // Add submenu item
+    add_submenu_page(
+        'awesome-google-review', // Parent slug
+        'Delete Review', // Page title
+        'Delete Review', // Menu title
+        'manage_options', // Capability
+        'delete-review', // Menu slug
+        'delete_review_callback' // Callback function
+    );
 }
 add_action('admin_menu', 'our_google_reviews_add_menu_page');
 
@@ -220,18 +230,51 @@ function render_agr_google_review_meta_box($post) {
     echo '</table>';
 }
 
-function shortcode_display() {}
+function delete_review_callback(){ ?>
+
+<div class="partition">
+<div class="right-box">        
+        <div class="inner-content-data">
+                <h2 class="boxtitle display_total">Delete Review</h2>
+                <div class="delete_reviews">
+
+                    <!-- <h1 class="output typing"></h1> -->
+
+                    <div class="center">
+                    <select name="sources" id="sources" class="custom-select sources" placeholder="Select Business">
+                        <option value="profile">Select business</option>
+                        <option value="profile">Profile</option>
+                        <option value="word">Word</option>
+                        <option value="hashtag">Hashtag</option>
+                    </select>
+
+                    <div class="delete_svg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 256 256" xmlns:v="https://vecta.io/nano"><g transform="matrix(2.81 0 0 2.81 1.4066 1.4066)"><circle cx="45" cy="45" r="45" fill="#e63e32"/><path d="M65.592 29.574h-9.171v-3.481c0-3.635-2.957-6.593-6.593-6.593h-9.656c-3.635 0-6.593 2.958-6.593 6.593v3.481h-9.171a2 2 0 1 0 0 4h3.394V60.41c0 5.563 4.526 10.09 10.09 10.09h14.215c5.563 0 10.09-4.526 10.09-10.09V33.574h3.395a2 2 0 1 0 0-4zm-28.013-3.481c0-1.43 1.163-2.593 2.593-2.593h9.656c1.43 0 2.593 1.163 2.593 2.593v3.481H37.579v-3.481zM58.197 60.41a6.1 6.1 0 0 1-6.09 6.09H37.892a6.1 6.1 0 0 1-6.09-6.09V33.574h26.395V60.41zM40.3 39.566a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2zm9.4 0a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2z" fill="#fff"/></g></svg>
+                    </div>
+
+                    </div>
+
+                    
+                </div>                
+        </div>
+    </div>
+
+    
+
+</div>
+
+
+<?php
+}
 
 
 function our_google_reviews_callback() {
-    $firm_name = get_option('firm_name');
-    $review_api_key = get_option('review_api_key');
-
     $get_existing_api_key = get_existing_api_key();
     $get_api_status = get_api_key_status($get_existing_api_key);    
 ?>
 
 <div id="loader" class="lds-dual-ring hidden overlay"></div>
+
 <div class="partition">
     <div class="left-box">
         <div class="seo-plugin-data-info container api_key_setting_form">
@@ -258,17 +301,16 @@ function our_google_reviews_callback() {
         <?php        
         $firm_data = get_existing_firm_data();
         $firm_name_data = isset($firm_data['firm_name']) ? $firm_data['firm_name'] : '';
-        $job_id_data = isset($firm_data['jobID']) ? $firm_data['jobID'] : '';    
-
+        $job_id_data = isset($firm_data['jobID']) ? $firm_data['jobID'] : '';        
         ?>
-
 
         <div class="seo-plugin-data-info container google_review_upload_form cont hidden">
             <?php 
                 if($firm_data){
                     ?>
                     <p class="reset">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 256 256" xmlns:v="https://vecta.io/nano"><g transform="matrix(2.81 0 0 2.81 1.4066 1.4066)"><circle cx="45" cy="45" r="45" fill="#e63e32"/><path d="M65.592 29.574h-9.171v-3.481c0-3.635-2.957-6.593-6.593-6.593h-9.656c-3.635 0-6.593 2.958-6.593 6.593v3.481h-9.171a2 2 0 1 0 0 4h3.394V60.41c0 5.563 4.526 10.09 10.09 10.09h14.215c5.563 0 10.09-4.526 10.09-10.09V33.574h3.395a2 2 0 1 0 0-4zm-28.013-3.481c0-1.43 1.163-2.593 2.593-2.593h9.656c1.43 0 2.593 1.163 2.593 2.593v3.481H37.579v-3.481zM58.197 60.41a6.1 6.1 0 0 1-6.09 6.09H37.892a6.1 6.1 0 0 1-6.09-6.09V33.574h26.395V60.41zM40.3 39.566a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2zm9.4 0a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2z" fill="#fff"/></g></svg>
+                        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 256 256" xmlns:v="https://vecta.io/nano"><g transform="matrix(2.81 0 0 2.81 1.4066 1.4066)"><circle cx="45" cy="45" r="45" fill="#e63e32"/><path d="M65.592 29.574h-9.171v-3.481c0-3.635-2.957-6.593-6.593-6.593h-9.656c-3.635 0-6.593 2.958-6.593 6.593v3.481h-9.171a2 2 0 1 0 0 4h3.394V60.41c0 5.563 4.526 10.09 10.09 10.09h14.215c5.563 0 10.09-4.526 10.09-10.09V33.574h3.395a2 2 0 1 0 0-4zm-28.013-3.481c0-1.43 1.163-2.593 2.593-2.593h9.656c1.43 0 2.593 1.163 2.593 2.593v3.481H37.579v-3.481zM58.197 60.41a6.1 6.1 0 0 1-6.09 6.09H37.892a6.1 6.1 0 0 1-6.09-6.09V33.574h26.395V60.41zM40.3 39.566a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2zm9.4 0a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2z" fill="#fff"/></g></svg> -->
+                        <svg fill="#ffffff" width="35px" height="35px" viewBox="-1075.2 -1075.2 4070.40 4070.40" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"><rect x="-1075.2" y="-1075.2" width="4070.40" height="4070.40" rx="2035.2" fill="rgb(230, 62, 50)" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M960 0v213.333c411.627 0 746.667 334.934 746.667 746.667S1371.627 1706.667 960 1706.667 213.333 1371.733 213.333 960c0-197.013 78.4-382.507 213.334-520.747v254.08H640V106.667H53.333V320h191.04C88.64 494.08 0 720.96 0 960c0 529.28 430.613 960 960 960s960-430.72 960-960S1489.387 0 960 0" fill-rule="evenodd"></path> </g></svg>
                     </p>
                     <?php
                 }
@@ -308,7 +350,8 @@ function our_google_reviews_callback() {
         <div class="inner-content-data">
                 <h2 class="boxtitle display_total">
                 <p class="reset status">
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 256 256" xmlns:v="https://vecta.io/nano"><g transform="matrix(2.81 0 0 2.81 1.4066 1.4066)"><circle cx="45" cy="45" r="45" fill="#e63e32"/><path d="M65.592 29.574h-9.171v-3.481c0-3.635-2.957-6.593-6.593-6.593h-9.656c-3.635 0-6.593 2.958-6.593 6.593v3.481h-9.171a2 2 0 1 0 0 4h3.394V60.41c0 5.563 4.526 10.09 10.09 10.09h14.215c5.563 0 10.09-4.526 10.09-10.09V33.574h3.395a2 2 0 1 0 0-4zm-28.013-3.481c0-1.43 1.163-2.593 2.593-2.593h9.656c1.43 0 2.593 1.163 2.593 2.593v3.481H37.579v-3.481zM58.197 60.41a6.1 6.1 0 0 1-6.09 6.09H37.892a6.1 6.1 0 0 1-6.09-6.09V33.574h26.395V60.41zM40.3 39.566a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2zm9.4 0a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2z" fill="#fff"/></g></svg>
+                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 256 256" xmlns:v="https://vecta.io/nano"><g transform="matrix(2.81 0 0 2.81 1.4066 1.4066)"><circle cx="45" cy="45" r="45" fill="#e63e32"/><path d="M65.592 29.574h-9.171v-3.481c0-3.635-2.957-6.593-6.593-6.593h-9.656c-3.635 0-6.593 2.958-6.593 6.593v3.481h-9.171a2 2 0 1 0 0 4h3.394V60.41c0 5.563 4.526 10.09 10.09 10.09h14.215c5.563 0 10.09-4.526 10.09-10.09V33.574h3.395a2 2 0 1 0 0-4zm-28.013-3.481c0-1.43 1.163-2.593 2.593-2.593h9.656c1.43 0 2.593 1.163 2.593 2.593v3.481H37.579v-3.481zM58.197 60.41a6.1 6.1 0 0 1-6.09 6.09H37.892a6.1 6.1 0 0 1-6.09-6.09V33.574h26.395V60.41zM40.3 39.566a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2zm9.4 0a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2z" fill="#fff"/></g></svg> -->
+                <svg fill="#ffffff" width="35px" height="35px" viewBox="-1075.2 -1075.2 4070.40 4070.40" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"><rect x="-1075.2" y="-1075.2" width="4070.40" height="4070.40" rx="2035.2" fill="rgb(230, 62, 50)" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M960 0v213.333c411.627 0 746.667 334.934 746.667 746.667S1371.627 1706.667 960 1706.667 213.333 1371.733 213.333 960c0-197.013 78.4-382.507 213.334-520.747v254.08H640V106.667H53.333V320h191.04C88.64 494.08 0 720.96 0 960c0 529.28 430.613 960 960 960s960-430.72 960-960S1489.387 0 960 0" fill-rule="evenodd"></path> </g></svg>
             </p>    
                 Status</h2>
                 <div class="typewriter">
@@ -320,7 +363,7 @@ function our_google_reviews_callback() {
     <button class="control" style="display:none;"></button>
     <canvas id="canvas"></canvas>
 
-</div>
+    </div>
 <?php
 }
 
