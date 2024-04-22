@@ -60,10 +60,6 @@ function our_load_admin_style()
         // Enqueue Custom Script with Dependencies
         wp_register_script('agr_custom', plugins_url('/assets/js/custom.js', __FILE__), ['jquery'], $dynamic_version, true);
         wp_enqueue_script('agr_custom');
-         
-        // Enqueue Custom Script with Dependencies
-        wp_register_script('agr_selectize', 'https://s.cdpn.io/55638/selectize.min.0.6.9.js', ['jquery'], $dynamic_version, true);
-        wp_enqueue_script('agr_selectize');
     }
 
    
