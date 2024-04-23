@@ -13,10 +13,10 @@ let btnProcess_check = $("#google_review_upload_form .check_start");
 // correctSign_business.addClass("visible");
 
 jQuery(document).ready(function ($) {
-  if(current_page != 'delete-review'){
+  if (current_page != 'delete-review') {
     initial_check();
   }
-  
+
 });
 
 // jQuery(document).ready(function() {
@@ -379,8 +379,8 @@ let element = jQuery("#review_api_key");
 $(document).ready(function () {
   var initialValue = $(element).val();
   var api_status = $(element).data('apivalid');
-  
-  $(element).on('input', function () {    
+
+  $(element).on('input', function () {
     var currentValue = $(this).val();
     if (currentValue !== initialValue) {
       button_effects_enable();
@@ -389,7 +389,7 @@ $(document).ready(function () {
       button_effects_disable();
     }
   });
-  
+
   function button_effects_enable() {
     console.log("button_effects_enable!");
     if (sign_TRUE) {
@@ -408,7 +408,7 @@ $(document).ready(function () {
     btnProcess_API.prop("disabled", false);
     return true;
   }
-  
+
   function button_effects_disable() {
     console.log("button_effects_disable!");
     if (jQuery('.google_review_upload_form.cont').length > 0) {
@@ -1657,40 +1657,69 @@ $(document).ready(function () {
 });
 
 
+function error_notify() {
+  // const Toast = Swal.mixin({
+  //   toast: true,
+  //   position: "bottom-end",
+  //   showConfirmButton: false,
+  //   timer: 3000,
+  //   timerProgressBar: true,
+  //   didOpen: (toast) => {
+  //     toast.onmouseenter = Swal.stopTimer;
+  //     toast.onmouseleave = Swal.resumeTimer;
+  //   }
+  // });
+  // Toast.fire({
+  //   icon: "error",
+  //   title: "Please select business !"
+  // });
 
-
-$(".custom-select").each(function() {
-  var classes = $(this).attr("class"),
-      id      = $(this).attr("id"),
-      name    = $(this).attr("name");
-  var template =  '<div class="' + classes + '">';
-      template += '<span class="custom-select-trigger">' + $(this).attr("placeholder") + '</span>';
-      template += '<div class="custom-options">';
-      $(this).find("option").each(function() {
-        template += '<span class="custom-option ' + $(this).attr("class") + '" data-value="' + $(this).attr("value") + '">' + $(this).html() + '</span>';
-      });
-  template += '</div></div>';
-  
-  $(this).wrap('<div class="custom-select-wrapper"></div>');
-  $(this).hide();
-  $(this).after(template);
-});
-$(".custom-option:first-of-type").hover(function() {
-  $(this).parents(".custom-options").addClass("option-hover");
-}, function() {
-  $(this).parents(".custom-options").removeClass("option-hover");
-});
-$(".custom-select-trigger").on("click", function() {
-  $('html').one('click',function() {
-    $(".custom-select").removeClass("opened");
+  Swal.fire({
+    position: "top-end",
+    icon: "error",
+    title: "please select !",
+    showConfirmButton: false,
+    timer: 1500
   });
-  $(this).parents(".custom-select").toggleClass("opened");
-  event.stopPropagation();
-});
-$(".custom-option").on("click", function() {
-  $(this).parents(".custom-select-wrapper").find("select").val($(this).data("value"));
-  $(this).parents(".custom-options").find(".custom-option").removeClass("selection");
-  $(this).addClass("selection");
-  $(this).parents(".custom-select").removeClass("opened");
-  $(this).parents(".custom-select").find(".custom-select-trigger").text($(this).text());
+}
+
+
+//DELETE REVIEWS
+function review_delete_process(check,$this) {
+
+  var selected_value = $this.find(":selected").val();
+  console.log(selected_value);
+
+  if (selected_value == 0) {
+    error_notify(); 
+  }
+  else {    
+    check = true;
+    Swal.fire({
+      title: "Delete Review?",
+      html: "Start to upload the reviews of " + `<b>${$(FirmNameInput).val()}</b>` + " !",
+      showCloseButton: true,
+      allowOutsideClick: false,
+      confirmButtonColor: "#405640",
+      confirmButtonText: "Check",
+      backdrop: 'swal2-backdrop-show',
+      icon: "question",
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+      }
+    });
+
+  }
+
+};
+
+
+
+
+$("#review_delete_form").submit(function (event) {
+  var $this = jQuery(this);
+  event.preventDefault();
+  check = true;
+  review_delete_process(check,$this);
 });

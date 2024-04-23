@@ -87,22 +87,52 @@ function get_existing_firm_data(){
     return $firm_data;
 }
 
-function get_all_firms(){
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'jobapi';
-    $table_name2 = $wpdb->prefix . 'jobdata';
-    $client_ip = $_SERVER['REMOTE_ADDR'];    
+// function get_all_firms(){
+//     global $wpdb;
+//     $table_name = $wpdb->prefix . 'jobapi';
+//     $table_name2 = $wpdb->prefix . 'jobdata';
+//     $client_ip = $_SERVER['REMOTE_ADDR'];    
     
-    $firm_data = $wpdb->get_results($wpdb->prepare("
-        SELECT j.firm_name, j.jobID
-        FROM $table_name2 AS j
-        INNER JOIN $table_name AS s ON j.review_api_key = s.review_api_key
-        WHERE j.client_ip = %s 
-        AND s.review_api_key_status = %d
-        ORDER BY j.jobID DESC", 
-        $client_ip, 1), ARRAY_A);
+//     $firm_data = $wpdb->get_results($wpdb->prepare("
+//         SELECT j.firm_name, j.jobID
+//         FROM $table_name2 AS j
+//         INNER JOIN $table_name AS s ON j.review_api_key = s.review_api_key
+//         WHERE j.client_ip = %s 
+//         AND s.review_api_key_status = %d
+//         ORDER BY j.jobID DESC", 
+//         $client_ip, 1), ARRAY_A);
 
-    return $firm_data;
+//     return $firm_data;
+// }
+
+function get_all_firms(){
+    
+    $terms = get_terms(array(
+        'taxonomy' => 'business',
+        'hide_empty' => false,
+    ));    
+    $term_data = array();    
+    foreach ($terms as $term) {
+        
+        $posts = get_posts(array(
+            'post_type' => 'agr_google_review',
+            'tax_query' => array(
+                array(
+                    'taxonomy' => $term->taxonomy,
+                    'field' => 'term_id',
+                    'terms' => $term->term_id,
+                ),
+            ),
+        ));
+        if ($posts) {
+            $term_data[] = array(
+                'name' => $term->name,
+                'id' => $term->term_id,
+            );
+        }
+    }
+
+    return $term_data;
 }
 
 
@@ -851,8 +881,9 @@ function review_get_set_ajax_action_function()
             // upload all reviews
             $data_stored = store_data_into_reviews($current_job_id,$reviews_array, $term_name);
             
-            if($data_stored == 1){
+            if($data_stored['status'] == 1){
                 update_flag('jobID_final', 1, $current_job_id);
+                update_flag('term_id', $data_stored['term_id'], $current_job_id);                
                 $response['message'] = "Data upload successfully!";
                 $response['success'] = 1;
             }
@@ -935,6 +966,10 @@ function delete_reviews_data($term_slug) {
 
 function store_data_into_reviews($current_job_id, $reviews_array, $term_name)
 {   
+    $success = [];
+    $success['status'] = false; // Flag to track if data is stored successfully
+    $success['term_id'] = '';
+
     $append = true ;
     $taxonomy = 'business';
     $term = get_term_by('name', $term_name , $taxonomy);
@@ -945,7 +980,9 @@ function store_data_into_reviews($current_job_id, $reviews_array, $term_name)
         $term_id = $term->term_id ;
     }
 
-    $success = false; // Flag to track if data is stored successfully
+    $success['term_id'] = $term_id;
+    
+    
 
     $reviews_array_data = $reviews_array['reviews']['reviews'];
 
@@ -994,14 +1031,21 @@ function store_data_into_reviews($current_job_id, $reviews_array, $term_name)
                 // $term_taxonomy_ids = wp_set_object_terms($new_post_id, $term_id, 'business', true);
                 $term_taxonomy_ids = wp_set_post_terms($new_post_id, $term_id, $taxonomy, $append);                
                 if (!is_wp_error($term_taxonomy_ids)) {                    
-                    $success = true;
+                    $success['status'] = true;
                 }
             }
+            
         }
     }
 
+    if($success['status'] == true){
+        $success['term_id'] == $term_id;
+    }
+
+   
+
     // Return 1 if data is stored successfully, otherwise return 0
-    return $success ? 1 : 0;
+    return $success;
 }
 
 
