@@ -281,12 +281,34 @@ function our_google_reviews_callback() {
     $get_api_status = get_api_key_status($get_existing_api_key);    
 ?>
 
+<?php        
+$firm_data = get_existing_firm_data();
+$firm_name_data = isset($firm_data['firm_name']) ? $firm_data['firm_name'] : '';
+$job_id_data = isset($firm_data['jobID']) ? $firm_data['jobID'] : '';
+$j_term_id = isset($firm_data['term_id']) ? $firm_data['term_id'] : '';
+    
+
+// Function to check if ID exists
+function isIdExists($array, $idToCheck) {
+    foreach ($array as $item) {
+        if ($item['id'] == $idToCheck) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+?>
+
 <div id="loader" class="lds-dual-ring hidden overlay"></div>
 
 <div class="partition">
     <div class="left-box">
+
         <div class="seo-plugin-data-info container api_key_setting_form">
             <div class="inner-content-data">
+
                 <h2 class="boxtitle ">API Key Setting</h2>
                 <form id="api_key_setting_form" method="post" autocomplete="off">
                     <?php wp_nonce_field('review_api_key', 'review_api_key_nonce'); ?>
@@ -305,12 +327,37 @@ function our_google_reviews_callback() {
             </div>
         </div>
 
-   
-        <?php        
-        $firm_data = get_existing_firm_data();
-        $firm_name_data = isset($firm_data['firm_name']) ? $firm_data['firm_name'] : '';
-        $job_id_data = isset($firm_data['jobID']) ? $firm_data['jobID'] : '';        
-        ?>
+        <!-- datalist input -->
+        <!-- <input list="great" placeholder="Enter Business">
+        <datalist id="great">            
+            <option>San Marino</option>
+            <option>Holy See</option>
+        </datalist> -->
+
+
+        <?php 
+        /*
+        <div class="selection_box container">
+            <div class="inner-content-data">
+                <div class="container_selection_box">    
+                    <div class="form cf">
+                        <section class="payment-type cf">                            
+                        <?php 
+                        $all_firms = get_all_firms();
+                        $checked = false;                            
+                        foreach ($all_firms as $firm) {                                
+                            if($firm['id'] == $j_term_id){
+                                $checked = true;
+                            }                        
+                        ?>
+                            <input <?php echo ($checked && $firm['id'] == $j_term_id ? 'checked' : ''); ?> type="radio" name="radio3" id="<?php echo $firm['id']; ?>" value="<?php echo $firm['id']; ?>"><label class="paypal-label four col" for="<?php echo $firm['id']; ?>"><?php echo $firm['name']; ?></label>
+                            <?php } ?> 
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        */ ?>    
 
         <div class="seo-plugin-data-info container google_review_upload_form cont hidden">
             <?php 
@@ -327,12 +374,12 @@ function our_google_reviews_callback() {
 
             <div class="inner-content-data">
                 <h2 class="boxtitle ">Google Reviews Upload</h2>
-                
+
                 <form id="google_review_upload_form" method="post" autocomplete="off">
                     <?php wp_nonce_field('get_set_trigger', 'get_set_trigger_nonce'); ?>
                     <div class="field_container">
                         <div class="input-field">
-                            <input type="text" id="firm_name" data-jobid="<?php echo esc_attr($job_id_data ? $job_id_data : ''); ?>" required spellcheck="false" value="<?php echo esc_attr($firm_name_data ? $firm_name_data : ''); ?>">
+                            <input type="text" id="firm_name" data-termID="<?php echo ($j_term_id ? $j_term_id : 0)?>"  data-jobid="<?php echo esc_attr($job_id_data ? $job_id_data : ''); ?>" required spellcheck="false" value="<?php echo esc_attr($firm_name_data ? $firm_name_data : ''); ?>">
                             <label>Firm Name</label>
                             <span class="correct-sign">✓</span>
                             <span class="wrong-sign">×</span>
@@ -519,4 +566,35 @@ function check_upload_job_status($client_ip) {
     ));
 
     return $result->count == 1 ? true : false;
+}
+
+
+
+/**
+ * Function to delete all data of a specific post type and taxonomy.
+ */
+
+// add_action( 'admin_init', 'delete_all_agr_google_reviews' );
+function delete_all_agr_google_reviews() {
+    global $wpdb;
+    $post_type = 'agr_google_review';
+    $taxonomy = 'business';
+    $wpdb->query(
+        $wpdb->prepare(
+            "DELETE FROM {$wpdb->posts} WHERE post_type = %s",
+            $post_type
+        )
+    );
+    $wpdb->query(
+        $wpdb->prepare(
+            "DELETE FROM {$wpdb->term_taxonomy} WHERE taxonomy = %s",
+            $taxonomy
+        )
+    );
+    $wpdb->query(
+        $wpdb->prepare(
+            "DELETE FROM {$wpdb->term_relationships} WHERE term_taxonomy_id NOT IN (SELECT term_taxonomy_id FROM {$wpdb->term_taxonomy}) AND object_id NOT IN (SELECT ID FROM {$wpdb->posts} WHERE post_type = %s)",
+            $post_type
+        )
+    );
 }

@@ -1,28 +1,20 @@
 Logs reset successfully !
-Reset and deleted data successfully 
-Job 23 queued for scraping
 Google Reviews Successfully Extracted.
 Data upload successfully!
-Job 23 queued for scraping
-Job 24 queued for scraping
+Delete data of Delete data successfully successfully
 Google Reviews Successfully Extracted.
 Data upload successfully!
-Job 25 queued for scraping
+Delete data of beardog digital successfully
 Google Reviews Successfully Extracted.
 Data upload successfully!
-Job 26 queued for scraping
 Google Reviews Successfully Extracted.
 Data upload successfully!
-Job 27 queued for scraping
 Google Reviews Successfully Extracted.
+Data upload successfully!
+Deleted data of beardog digital.
+Deleted data of drc systems.
+Deleted data of sys.
+Unauthorized: Invalid API key
 API key is valid
-Job 28 queued for scraping
-Google Reviews Successfully Extracted.
-Data upload successfully!
-Data upload successfully!
-Job 29 queued for scraping
-Job 30 queued for scraping
-No events found for the provided job ID
-Job 31 queued for scraping
 Google Reviews Successfully Extracted.
 Data upload successfully!

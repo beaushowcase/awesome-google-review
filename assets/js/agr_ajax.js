@@ -65,6 +65,8 @@ $.fn.focusAtEnd = function () {
 
 
 var current_page = ajax_object.get_url_page;
+var admin_plugin_main_url = ajax_object.admin_plugin_main_url;
+
 
 // btnProcess_get_set.removeClass("spinning");
 // btnProcess_get_set.prop("disabled", true);
@@ -1658,22 +1660,6 @@ $(document).ready(function () {
 
 
 function error_notify() {
-  // const Toast = Swal.mixin({
-  //   toast: true,
-  //   position: "bottom-end",
-  //   showConfirmButton: false,
-  //   timer: 3000,
-  //   timerProgressBar: true,
-  //   didOpen: (toast) => {
-  //     toast.onmouseenter = Swal.stopTimer;
-  //     toast.onmouseleave = Swal.resumeTimer;
-  //   }
-  // });
-  // Toast.fire({
-  //   icon: "error",
-  //   title: "Please select business !"
-  // });
-
   Swal.fire({
     position: "top-end",
     icon: "error",
@@ -1686,10 +1672,9 @@ function error_notify() {
 
 //DELETE REVIEWS
 function review_delete_process(check,$this) {
-
   var selected_value = $this.find(":selected").val();
-  console.log(selected_value);
-
+  var selected_value_name  = $this.find(":selected").text();
+  console.log(selected_value_name);
   if (selected_value == 0) {
     error_notify(); 
   }
@@ -1697,29 +1682,122 @@ function review_delete_process(check,$this) {
     check = true;
     Swal.fire({
       title: "Delete Review?",
-      html: "Start to upload the reviews of " + `<b>${$(FirmNameInput).val()}</b>` + " !",
+      html: "Start to delete the reviews data of " + `<b>${selected_value_name}</b>` + " !",
       showCloseButton: true,
       allowOutsideClick: false,
-      confirmButtonColor: "#405640",
-      confirmButtonText: "Check",
+      confirmButtonColor: "#e63e32",
+      confirmButtonText: "Delete",
       backdrop: 'swal2-backdrop-show',
       icon: "question",
     }).then((result) => {
       if (result.isConfirmed) {
-
+        delete_review_start(selected_value);
       }
     });
-
   }
-
 };
 
 
-
-
-$("#review_delete_form").submit(function (event) {
+$("#review_delete_form").submit(function (event) {  
   var $this = jQuery(this);
   event.preventDefault();
   check = true;
   review_delete_process(check,$this);
+});
+
+//delete review
+function delete_review_start(id) {
+  let current_term_id = id;  
+  $.ajax({
+    type: "POST",
+    url: ajax_object.ajax_url,
+    dataType: "json",
+    beforeSend: function () {
+      $('#loader').removeClass('hidden');
+    },
+    data: {
+      action: "job_review_delete_ajax_action",
+      current_term_id: current_term_id,
+      review_api_key: ajax_object.review_api_key,      
+    },
+    success: function (response, status, error) {
+      if (response.success === 1) {
+        if (check) {
+          delete_reviews_success();
+        }
+      } else {
+        if (check) {
+          response_business_fail(response.msg);
+        }
+      }
+    },
+    error: function (xhr, status, error) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: response.msg,
+        showConfirmButton: false,
+        timer: 3500
+      });
+    },
+    complete: function () {
+      setTimeout(function () {
+        $('#loader').addClass('hidden');
+      }, 3500);
+    },
+  });
+}
+
+
+
+// RESET REVIEWS PROCESS
+function delete_reviews_success() {
+  let timerInterval;
+  Swal.fire({
+    title: "Delete Reviews Data !",
+    html: "Deleting in <b></b> milliseconds.",
+    timer: 3500,
+    timerProgressBar: true,
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+      const timer = Swal.getPopup().querySelector("b");
+      timerInterval = setInterval(() => {
+        timer.textContent = `${Swal.getTimerLeft()}`;
+      }, 100);
+    },
+    willClose: () => {
+      clearInterval(timerInterval);
+    }
+  }).then((result) => {
+    
+    if (result.dismiss === Swal.DismissReason.timer) {
+      console.log("I was closed by the timer");
+      Swal.fire({
+        icon: "success",
+        title: "Delete Completed",
+        // html: 'Delete reviews data !',
+        showConfirmButton: false,
+        timer: 3500,
+        allowOutsideClick: false,
+        grow: false,
+      }).then(function () {
+        setTimeout(function () {
+          window.location.href = admin_plugin_main_url;
+          // location.reload();
+        }, 100);
+      });
+    }
+  });
+  return true;
+}
+
+
+
+
+$(document).ready(function(){
+  $('input[type="radio"][name="radio3"]').change(function(){
+      var selectedValue = $(this).val();
+      // alert("Selected value: " + selectedValue);
+  });
 });

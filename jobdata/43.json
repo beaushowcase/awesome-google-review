@@ -1,0 +1,62 @@
+{
+    "success": 1,
+    "firm_name": "Dimple Anil Thaker Advocate",
+    "message": "Google Reviews Successfully Extracted.",
+    "totalCount": 6,
+    "reviews": [
+        {
+            "id": "115313811979467189736",
+            "title": "PARMAR SWETA",
+            "description": "Lawyer with very good knowledge and always gives right suggestions. Best in business",
+            "numericRatingCount": 4,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKkSy0-sSkrQ1PXVAAGnSuRw1zxfq-H-MNjpVuG5DP5-CQvjA=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115313811979467189736\/reviews\/",
+            "publicationDate": "3 years ago"
+        },
+        {
+            "id": "104519490741450180005",
+            "title": "Bansari Naik",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXqLMiC760zjalSpZZO-E4-08dCk05VcrFrfVT0qY7PB7qsVyMn=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104519490741450180005\/reviews\/",
+            "publicationDate": "2 years ago"
+        },
+        {
+            "id": "110208166517368658424",
+            "title": "UTPAL PATEL",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIq50xPpXhYX3Nt_z4u6uNycKXtAq-n0IXTXXP7Id7ZCZLSbQ=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110208166517368658424\/reviews\/",
+            "publicationDate": "3 years ago"
+        },
+        {
+            "id": "115715240618362110082",
+            "title": "CMA Amit",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWPYOd0KU_0s8ueytkjuPGEDXuNuOGSyjKrGGtiMOj4Q9frG01C=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115715240618362110082\/reviews\/",
+            "publicationDate": "3 years ago"
+        },
+        {
+            "id": "112541609167338746636",
+            "title": "Amit Mehta",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWO-Hwyc6zoxpkNLcAfkCIzvus75cmI7ovJNEhJWCORoQ2GjHY5=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/112541609167338746636\/reviews\/",
+            "publicationDate": "3 years ago"
+        },
+        {
+            "id": "100680728941378346547",
+            "title": "kety patel",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUntYqGfD0yT9-S-z36Q-8WBbGtJjajdS2sHYFNvGf1GY5z_Uo=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100680728941378346547\/reviews\/",
+            "publicationDate": "3 years ago"
+        }
+    ]
+}
