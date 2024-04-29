@@ -58,6 +58,7 @@ function job_table() {
             jobID bigint(20) NOT NULL,
             jobID_json bigint(20) NOT NULL,
             jobID_check bigint(20) NOT NULL,
+            jobID_check_status bigint(20) NOT NULL,
             jobID_final bigint(20) NOT NULL,
             term_id bigint(20) NOT NULL,
             firm_name varchar(255) NOT NULL,
@@ -301,6 +302,13 @@ function isIdExists($array, $idToCheck) {
 
 ?>
 
+<!-- fieldset -->
+<!-- <input list="great" placeholder="Enter Business">
+<datalist id="great">            
+    <option>San Marino</option>
+    <option>Holy See</option>
+</datalist> -->
+
 <div id="loader" class="lds-dual-ring hidden overlay"></div>
 
 <div class="partition">
@@ -325,14 +333,7 @@ function isIdExists($array, $idToCheck) {
                     </div>
                 </form>
             </div>
-        </div>
-
-        <!-- datalist input -->
-        <!-- <input list="great" placeholder="Enter Business">
-        <datalist id="great">            
-            <option>San Marino</option>
-            <option>Holy See</option>
-        </datalist> -->
+        </div>       
 
 
         <?php 
@@ -359,6 +360,8 @@ function isIdExists($array, $idToCheck) {
         </div>
         */ ?>    
 
+        
+
         <div class="seo-plugin-data-info container google_review_upload_form cont hidden">
             <?php 
                 if($firm_data){
@@ -370,17 +373,27 @@ function isIdExists($array, $idToCheck) {
                     <?php
                 }
             ?>
-            
 
             <div class="inner-content-data">
                 <h2 class="boxtitle ">Google Reviews Upload</h2>
 
                 <form id="google_review_upload_form" method="post" autocomplete="off">
                     <?php wp_nonce_field('get_set_trigger', 'get_set_trigger_nonce'); ?>
+
+
                     <div class="field_container">
                         <div class="input-field">
-                            <input type="text" id="firm_name" data-termID="<?php echo ($j_term_id ? $j_term_id : 0)?>"  data-jobid="<?php echo esc_attr($job_id_data ? $job_id_data : ''); ?>" required spellcheck="false" value="<?php echo esc_attr($firm_name_data ? $firm_name_data : ''); ?>">
-                            <label>Firm Name</label>
+                            <input list="existing" type="text" id="firm_name" data-termID="<?php echo ($j_term_id ? $j_term_id : 0)?>"  data-jobid="<?php echo esc_attr($job_id_data ? $job_id_data : ''); ?>" required spellcheck="false" value="<?php echo esc_attr($firm_name_data ? $firm_name_data : ''); ?>" <?php echo esc_attr($firm_name_data ? 'disabled' : ''); ?>>
+                            <datalist id="existing"> 
+                                            <?php 
+                                                $all_firms = get_all_firms();                                            
+                                                foreach ($all_firms as $firm) {                        
+                                                ?>                        
+                                                <option class="select_business" data-listID="<?php echo $firm['id']; ?>"><?php echo $firm['name']; ?></option>
+                                            <?php } ?>
+                                           
+                            </datalist>
+                            <label class="focus_label">Firm Name</label>
                             <span class="correct-sign">✓</span>
                             <span class="wrong-sign">×</span>
                         </div>
@@ -388,7 +401,12 @@ function isIdExists($array, $idToCheck) {
             
                     <div class="submit_btn_setget twoToneCenter">
                         <button type="submit" class="submit_btn job_start btn-process"><span class="label">JOB START</span></button>
-                        <button type="submit" class="submit_btn check_start btn-process"><span class="label">CHECK</span></button>
+                      
+                        <button type="submit" class="submit_btn check_start_status btn-process" style="display:none;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="100%" viewBox="0 0 256 256" xml:space="preserve"><g style="stroke:none;stroke-width:0;stroke-dasharray:none;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;fill:none;fill-rule:nonzero;opacity:1"><path d="M56.375 60.616c-.75-1.027-2.151-1.388-3.266-.776A16.785 16.785 0 0 1 45 61.905c-7.2 0-13.346-4.532-15.778-10.887h5.968a2.003 2.003 0 0 0 1.674-3.095L20.269 22.551a2 2 0 0 0-3.348 0L.326 47.924A2 2 0 0 0 2 51.019h7.609C12.482 67.96 27.253 80.905 45 80.905c6.736 0 13.203-1.841 18.864-5.348 1.272-.788 1.586-2.509.704-3.718l-8.193-11.223z" style="stroke:none;stroke-width:1;stroke-dasharray:none;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;fill:green;fill-rule:nonzero;opacity:1" transform="matrix(2.81 0 0 2.81 1.407 1.407)"/><path d="M89.759 39.227A1.998 1.998 0 0 0 88 38.179h-7.753C77.051 21.632 62.465 9.095 45 9.095a35.782 35.782 0 0 0-17.291 4.432c-1.307.719-1.7 2.42-.883 3.668l7.613 11.628c.694 1.06 2.072 1.499 3.213.947A16.862 16.862 0 0 1 45 28.095c6.893 0 12.827 4.153 15.455 10.083H54.81a2 2 0 0 0-1.674 3.094l16.595 25.373a2.002 2.002 0 0 0 3.348 0l16.595-25.373a1.999 1.999 0 0 0 .085-2.045z" style="stroke:none;stroke-width:1;stroke-dasharray:none;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;fill:#fff;fill-rule:nonzero;opacity:1" transform="matrix(2.81 0 0 2.81 1.407 1.407)"/></g></svg>
+                        </button>
+
+                        <button type="submit" class="submit_btn check_start btn-process" disabled><span class="label">CHECK</span></button>
                         <button type="submit" class="submit_btn upload_start btn-process"><span class="label">UPLOAD</span></button>
                     </div>
 
@@ -529,7 +547,7 @@ function check_job_status($client_ip) {
     $result = $wpdb->get_row($wpdb->prepare(
         "SELECT COUNT(*) AS count 
         FROM (
-            SELECT data.jobID_json, data.jobID_check, data.jobID_final
+            SELECT data.jobID_json, data.jobID_check, data.jobID_check_status, data.jobID_final
             FROM $table_data AS data
             INNER JOIN $table_api AS api ON data.client_ip = api.client_ip 
             WHERE data.client_ip = %s 
@@ -554,14 +572,14 @@ function check_upload_job_status($client_ip) {
     $result = $wpdb->get_row($wpdb->prepare(
         "SELECT COUNT(*) AS count 
         FROM (
-            SELECT data.jobID_json, data.jobID_check, data.jobID_final
+            SELECT data.jobID_json, data.jobID_check, data.jobID_check_status, data.jobID_final
             FROM $table_data AS data
             INNER JOIN $table_api AS api ON data.client_ip = api.client_ip 
             WHERE data.client_ip = %s 
             ORDER BY data.id DESC
             LIMIT 1
         ) AS last_record
-        WHERE last_record.jobID_json = 1 AND last_record.jobID_check = 1 AND last_record.jobID_final = 1",
+        WHERE last_record.jobID_json = 1 AND last_record.jobID_check = 1 AND last_record.jobID_check_status = 1 AND last_record.jobID_final = 1",
         $client_ip
     ));
 

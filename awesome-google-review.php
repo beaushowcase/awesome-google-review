@@ -234,7 +234,7 @@ function get_job_data($job_id) {
     );
 
     // Retrieve the row from the database
-    $row = $wpdb->get_row($wpdb->prepare("SELECT jobID_json, jobID_check, jobID_final FROM $table_name WHERE jobID = %d", $job_id), ARRAY_A);
+    $row = $wpdb->get_row($wpdb->prepare("SELECT jobID_json, jobID_check, jobID_check_status, jobID_final FROM $table_name WHERE jobID = %d", $job_id), ARRAY_A);
 
     // Check if the row exists
     if ($row) {
@@ -275,6 +275,7 @@ function initial_check_api_function()
 
     $btn_start = intval($get_job_data['jobID_json']);
     $btn_check = intval($get_job_data['jobID_check']);
+    $btn_check_status = intval($get_job_data['jobID_check_status']);
     $btn_upload = intval($get_job_data['jobID_final']);
 
     if(isset($btn_start)){        
@@ -283,6 +284,10 @@ function initial_check_api_function()
 
     if(isset($btn_check)){
         $response['data']['btn_check'] = $btn_check;
+    }
+
+    if(isset($btn_check_status)){
+        $response['data']['btn_check_status'] = $btn_check_status;
     }
 
     if(isset($btn_upload)){
@@ -572,6 +577,7 @@ function job_start_ajax_action_function() {
                     'jobID' => $jobID,
                     'jobID_json' => 1,
                     'jobID_check' => 0,
+                    'jobID_check_status' => 0,
                     'jobID_final' => 0,
                     'term_id' => 0,
                     'review_api_key' => $review_api_key,
@@ -768,6 +774,7 @@ function job_check_ajax_action_function() {
 
                 $data2 = array(
                     'jobID_check' => 1,
+                    'jobID_check_status' => 1,
                     'created' => current_time('mysql')
                 );
                 
@@ -810,6 +817,7 @@ function job_check_ajax_action_function() {
 
                 $data2 = array(
                     'jobID_check' => 0,
+                    'jobID_check_status' => 0,
                     'jobID_json' => 0,
                     'jobID_final' => 0,
                     'created' => current_time('mysql')
@@ -1153,7 +1161,7 @@ function job_reset_ajax_action_function() {
                     // Update only if jobID and client_ip match
                     delete_file($jobID); 
                     $where = array('jobID' => $jobID, 'client_ip' => $c_ip);
-                    $data = array('jobID_json' => 0, 'jobID_check' => 0, 'jobID_final' => 0);
+                    $data = array('jobID_json' => 0, 'jobID_check' => 0, 'jobID_check_status' => 0, 'jobID_final' => 0);
                     $result = $wpdb->update($wpdb->prefix . 'jobdata', $data, $where, array('%d', '%d'), array('%s', '%s'));
 
                     if ($result !== false) {
@@ -1386,4 +1394,84 @@ function get_firm_name_by_term_id($current_term_id,$client_ip){
         AND client_ip = %s", $current_term_id,$client_ip);
     $result = $wpdb->get_var($query);
     return $result;
+}
+
+// Display all 5 start reviews by term_id
+// usage : get_all_reviews_by_term($term_id)
+function get_all_reviews_by_term($term_id){    
+    $args = array(
+        'post_type'      => 'agr_google_review',
+        'posts_per_page' => -1,
+        'tax_query'      => array(
+            array(
+                'taxonomy' => 'business',
+                'field'    => 'id',
+                'terms'    => $term_id,
+            ),
+        ),
+        'order'          => 'ASC',
+    );
+    $reviews_query = new WP_Query($args);
+    $total_posts = 0;
+    $all_reviews = array();
+    $job_id = '';
+    if ($reviews_query->have_posts()) {        
+        while ($reviews_query->have_posts()) {
+            $reviews_query->the_post();
+            $review_id = get_the_ID();
+            $rating = get_post_meta($review_id, 'rating', true);
+            if ($rating == 5) {
+                $job_id = get_post_meta($review_id, 'job_id', true);
+                $post_review_id = get_post_meta($review_id, 'post_review_id', true);
+                $reviewer_name = get_post_meta($review_id, 'reviewer_name', true);
+                $reviewer_picture_url = get_post_meta($review_id, 'reviewer_picture_url', true);
+                $url = get_post_meta($review_id, 'url', true);
+                $text = get_post_meta($review_id, 'text', true);
+                $publish_date = get_post_meta($review_id, 'publish_date', true);
+                $review_data = array(                 
+                    'reviewer_name' => $reviewer_name,
+                    'reviewer_picture_url' => $reviewer_picture_url,
+                    'url' => $url,
+                    'text' => $text,
+                    'publish_date' => $publish_date,
+                );
+                $all_reviews[] = $review_data;
+            }
+        }
+        $total_posts = count($all_reviews);
+        wp_reset_postdata();
+    }
+    return array(
+        'total_posts' => $total_posts,
+        'job_id' => $job_id,
+        'all_reviews' => $all_reviews,
+    );
+}
+
+
+add_shortcode('display','display_fun');
+function display_fun(){
+    $term_id = 42;
+    ptr(get_all_reviews_by_term($term_id));exit;
+}
+
+
+
+
+// Check status
+add_action('wp_ajax_job_check_status_update_ajax_action', 'job_check_status_update_ajax_action_function');
+add_action('wp_ajax_nopriv_job_check_status_update_ajax_action', 'job_check_status_update_ajax_action_function');
+
+function job_check_status_update_ajax_action_function() {
+
+    global $wpdb;
+    $response = array(
+        'success' => 1,       
+        'msg'     => 'greatssss'
+    );   
+    
+    appendMessageToFile($response['msg']);
+    wp_send_json($response);
+    wp_die();
+
 }

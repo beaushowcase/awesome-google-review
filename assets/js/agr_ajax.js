@@ -229,9 +229,10 @@ function initial_check() {
 
       // start 1
       if (response.data.btn_start && !response.data.btn_check && !response.data.btn_upload) {
-        btnProcess_BUSINESS_START.hide();
+        btnProcess_BUSINESS_START.hide();        
         btnProcess_BUSINESS_UPLOAD.hide();
-        btnProcess_BUSINESS_CHECK.show();
+        $("#google_review_upload_form .btn-process.check_start_status").show();
+        btnProcess_BUSINESS_CHECK.show();        
       }
       else if (response.data.btn_start && response.data.btn_check && !response.data.btn_upload) {
         btnProcess_BUSINESS_START.hide();
@@ -749,6 +750,7 @@ function response_business_success(response) {
         position: 'bottom-end',
       }).then(function () {
         setTimeout(function () {
+          localStorage.setItem("checkval", 2);
           location.reload();
         }, 100);
       });
@@ -872,7 +874,8 @@ function confirm_msg(msg, jobID) {
         grow: false,
         position: 'bottom-end',
       }).then(function () {
-        setTimeout(function () {
+        setTimeout(function () {          
+          localStorage.setItem("checkval", 1);
           location.reload();
         }, 100);
       })
@@ -892,7 +895,7 @@ function job_start(check) {
     dataType: "json",
     beforeSend: function () {
       $('#loader').removeClass('hidden');
-      btnProcess_BUSINESS_START.addClass("spinning");
+      // btnProcess_BUSINESS_START.addClass("spinning");
     },
     data: {
       action: "job_start_ajax_action",
@@ -906,13 +909,13 @@ function job_start(check) {
           if (check) {
             confirm_msg(response.msg, response.data.jobID);
             // btnProcess_BUSINESS_START.prop("disabled", true);
-            btnProcess_BUSINESS_CHECK.addClass("visible");
+            // btnProcess_BUSINESS_CHECK.addClass("visible");            
           }
         } else {
           if (check) {
             response_fail(response.msg);
-            btnProcess_BUSINESS_START.prop("disabled", false);
-            btnProcess_BUSINESS_CHECK.removeClass("visible");
+            // btnProcess_BUSINESS_START.prop("disabled", false);
+            // btnProcess_BUSINESS_CHECK.removeClass("visible");
           }
 
         }
@@ -1145,6 +1148,8 @@ $(function () {
         delete_logs_start(check);
       }
     });
+
+
   });
 
 
@@ -1801,3 +1806,164 @@ $(document).ready(function(){
       // alert("Selected value: " + selectedValue);
   });
 });
+
+
+
+
+//countdown
+// $(document).ready(function() {   
+//   const button = $('.check_start');
+//   var checkval = localStorage.getItem("checkval");  
+//   if(checkval == 0){
+//     button.prop('disabled', false);
+//   }
+//   if(checkval == 1){    
+//     countdown();    
+//   }
+//   if(checkval == 2){    
+//     localStorage.removeItem("checkval");
+//   }
+  
+//   function countdown() {
+//       let seconds = 30;      
+//       const interval = setInterval(() => {
+//           button.find('.label').text(`CHECK (${seconds})`);
+//           if (seconds <= 0) {
+//               clearInterval(interval);
+//               button.prop('disabled', false);
+//               button.find('.label').text('CHECK');       
+//               localStorage.setItem("checkval", 0);       
+//           }
+//           seconds--;          
+//       }, 800);
+//   }
+// });
+
+
+// status update
+$(document).on('click', 'button.check_start_status', function (e) {
+  e.preventDefault();
+  check = true;
+  Swal.fire({
+    title: "Check Status",
+    html: "Checking the status !",
+    showCloseButton: true,
+    allowOutsideClick: false,
+    confirmButtonColor: "#008000",
+    confirmButtonText: "Check Status",
+    backdrop: 'swal2-backdrop-show',
+    icon: "info",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      check_status_update(check);
+    }
+  });
+});
+
+
+//delete review
+function check_status_update() {
+  let current_job_id = FirmNameInput.attr('data-jobid');  
+  let firm_name = FirmNameInput.val();
+  $.ajax({
+    type: "POST",
+    url: ajax_object.ajax_url,
+    dataType: "json",
+    beforeSend: function () {
+      $('#loader').removeClass('hidden');
+    },
+    data: {
+      action: "job_check_status_update_ajax_action",
+      current_job_id: current_job_id,
+      review_api_key: ajax_object.review_api_key,
+      firm_name: firm_name
+    },
+    success: function (response, status, error) {
+      if (response.success === 1) {
+        if (check) {
+          check_success();
+        }
+      } else {
+        if (check) {
+          check_failed(response.msg);
+        }
+      }
+    },
+    error: function (xhr, status, error) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: response.msg,
+        showConfirmButton: false,
+        timer: 3500
+      });
+    },
+    complete: function () {
+      setTimeout(function () {
+        $('#loader').addClass('hidden');
+      }, 3500);
+    },
+  });
+}
+
+
+function check_success() {
+  let timerInterval;
+  Swal.fire({
+    title: "Status Checking...",
+    html: "<br>Checking in <b></b> milliseconds.",
+    timer: 3500,
+    timerProgressBar: true,
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+      const timer = Swal.getPopup().querySelector("b");
+      timerInterval = setInterval(() => {
+        timer.textContent = `${Swal.getTimerLeft()}`;
+      }, 100);
+    },
+    willClose: () => {
+      clearInterval(timerInterval);
+    }
+  }).then((result) => {
+    if (result.dismiss === Swal.DismissReason.timer) {
+      console.log("I was closed by the timer");
+      Swal.fire({
+        icon: "success",
+        title: "Check Completed",
+        html: 'Checked status !',
+        showConfirmButton: false,
+        timer: 3500,
+        allowOutsideClick: false,
+        grow: false,
+      }).then(function () {
+        setTimeout(function () {
+          localStorage.setItem("checkval", 1);
+          location.reload();
+        }, 100);
+      });
+    }
+  });
+  return true;
+}
+
+
+function check_failed(response) {
+  let display_msg = response;
+  console.log("I was closed by the timer");
+  Swal.fire({
+    icon: "error",
+    title: "Failed !",
+    html: display_msg,
+    showConfirmButton: false,
+    timer: 3500,
+    allowOutsideClick: false,
+    grow: false,
+    position: 'bottom-end',
+  }).then(function () {
+    setTimeout(function () { 
+      localStorage.setItem("checkval",0);  
+      location.reload();
+    }, 100);
+  });
+}
