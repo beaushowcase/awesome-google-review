@@ -1,33 +1,26 @@
-Logs reset successfully !
-Google Reviews Successfully Extracted.
-Reset and deleted data successfully 
-No events found for the provided job ID
-Reset and deleted data successfully 
-Reset and deleted data successfully 
-Google Reviews Successfully Extracted.
-Data upload successfully!
-Reset and deleted data successfully 
-Reset and deleted data successfully 
-Reset and deleted data successfully 
-Reset and deleted data successfully 
-Deleted data of Dipak dave law office.
-Deleted data of JML Law, APLC Woodland Hills.
-API key is valid
-No events found for the provided job ID
-greatssss
-greatssss
-greatssss
-greatssss
-greatssss
-greatssss
-greatssss
-greatssss
-greatssss
-greatssss
-greatssss
-greatssss
-greatssss
-greatssss
-greatssss
-greatssss
-greatssss
+- Logs reset successfully !
+- Job 16 queued for scraping
+- Checked successful ! Now go ahead with GET
+- Google Reviews Successfully Extracted.
+- Reset and deleted data successfully 
+- API key is valid
+- Job 17 queued for scraping
+- Checked successful ! Now go ahead with GET
+- Google Reviews Successfully Extracted.
+- Data upload successfully!
+- Job 18 queued for scraping
+- Job 19 queued for scraping
+- Checked successful ! Now go ahead with GET
+- Google Reviews Successfully Extracted.
+- Data upload successfully!
+- Deleted data of WebsLaw.
+- Deleted data of drc systems.
+- Deleted data of Dipak dave law office.
+- Deleted data of BEARDOG DIGITAL.
+- Job 20 queued for scraping
+- Job 21 queued for scraping
+- Job 22 queued for scraping
+- Checked successful ! Now go ahead with GET
+- Google Reviews Successfully Extracted.
+- Data upload successfully!
+- Deleted data of beardog digital.

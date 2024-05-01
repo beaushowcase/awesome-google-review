@@ -13,6 +13,8 @@ let btnProcess_check = $("#google_review_upload_form .check_start");
 // correctSign_business.addClass("visible");
 
 jQuery(document).ready(function ($) {
+  $('#processbar').hide();
+
   if (current_page != 'delete-review') {
     initial_check();
   }
@@ -697,12 +699,12 @@ $("#google_review_upload_form button.job_start").click(function (event) {
 $("#google_review_upload_form button.check_start").click(function (event) {
   check = true;
   Swal.fire({
-    title: "Check",
-    html: "Start to proceed the reviews of " + `<b>${$(FirmNameInput).val()}</b>` + " !",
+    title: "GET",
+    html: "Let's begin gathering reviews for " + `<b>${$(FirmNameInput).val()}</b>` + " !",
     showCloseButton: true,
     allowOutsideClick: false,
     confirmButtonColor: "#405640",
-    confirmButtonText: "Check",
+    confirmButtonText: "GET",
     backdrop: 'swal2-backdrop-show',
     icon: "question",
   }).then((result) => {
@@ -802,8 +804,8 @@ function check_start(check) {
     url: ajax_object.ajax_url,
     dataType: "json",
     beforeSend: function () {
-      $('#loader').removeClass('hidden');
-      btnProcess_BUSINESS_CHECK.addClass("spinning");
+      $('#loader').removeClass('hidden');  
+      $('#processbar').show();    
     },
     data: {
       action: "job_check_ajax_action",
@@ -822,6 +824,7 @@ function check_start(check) {
             response_business_fail(response.msg);
           }
         }
+        $('#processbar').hide();
       }, 3500);
     },
     error: function (xhr, status, error) {
@@ -832,11 +835,11 @@ function check_start(check) {
         showConfirmButton: false,
         timer: 3500
       });
+      $('#processbar').hide();
     },
     complete: function () {
       setTimeout(function () {
-        $('#loader').addClass('hidden');
-        btnProcess_BUSINESS_CHECK.removeClass("spinning");
+        $('#loader').addClass('hidden');       
       }, 3500);
     },
   });
@@ -896,6 +899,7 @@ function job_start(check) {
     beforeSend: function () {
       $('#loader').removeClass('hidden');
       // btnProcess_BUSINESS_START.addClass("spinning");
+      $('#processbar').show();
     },
     data: {
       action: "job_start_ajax_action",
@@ -908,12 +912,14 @@ function job_start(check) {
         if (response.success === 1) {
           if (check) {
             confirm_msg(response.msg, response.data.jobID);
+            $('#processbar').hide();
             // btnProcess_BUSINESS_START.prop("disabled", true);
             // btnProcess_BUSINESS_CHECK.addClass("visible");            
           }
         } else {
           if (check) {
             response_fail(response.msg);
+            $('#processbar').hide();
             // btnProcess_BUSINESS_START.prop("disabled", false);
             // btnProcess_BUSINESS_CHECK.removeClass("visible");
           }
@@ -935,6 +941,7 @@ function job_start(check) {
       //   $('#loader').addClass('hidden');
       //   btnProcess_BUSINESS_START.removeClass("spinning");
       // }, 3500);
+      
     },
   });
 }
@@ -1246,11 +1253,11 @@ $("#google_review_upload_form button.upload_start").click(function (event) {
   check = true;
   Swal.fire({
     title: "Confirmation: Upload Job?",
-    html: "Start to upload the reviews of " + `<b>${$(FirmNameInput).val()}</b>` + " !",
+    html: "Initiate the uploading process for " + `<b>${$(FirmNameInput).val()}</b>` + " !",
     showCloseButton: true,
     allowOutsideClick: false,
     confirmButtonColor: "#405640",
-    confirmButtonText: "Check",
+    confirmButtonText: "Upload",
     backdrop: 'swal2-backdrop-show',
     icon: "question",
   }).then((result) => {
@@ -1280,6 +1287,7 @@ function upload_process_box(check) {
       $('#loader').removeClass('hidden');
       btnProcess_BUSINESS_CHECK.addClass("spinning");
       setRandomFlag(flagKey, 0);
+      $('#processbar').show();
     },
     data: {
       action: "review_get_set_ajax_action",
@@ -1303,6 +1311,7 @@ function upload_process_box(check) {
             response_business_fail(response.msg);
           }
         }
+        $('#processbar').hide();
       }, 3500);
     },
     error: function (xhr, status, error) {
@@ -1313,6 +1322,7 @@ function upload_process_box(check) {
       //   showConfirmButton: false,
       //   timer: 3500
       // });
+      $('#processbar').hide();
     },
     complete: function () {
       setTimeout(function () {
@@ -1687,7 +1697,7 @@ function review_delete_process(check,$this) {
     check = true;
     Swal.fire({
       title: "Delete Review?",
-      html: "Start to delete the reviews data of " + `<b>${selected_value_name}</b>` + " !",
+      html: "Initiate deletion of the review data for " + `<b>${selected_value_name}</b>` + " !",
       showCloseButton: true,
       allowOutsideClick: false,
       confirmButtonColor: "#e63e32",
@@ -1719,6 +1729,7 @@ function delete_review_start(id) {
     dataType: "json",
     beforeSend: function () {
       $('#loader').removeClass('hidden');
+      $('#processbar').show();
     },
     data: {
       action: "job_review_delete_ajax_action",
@@ -1735,6 +1746,7 @@ function delete_review_start(id) {
           response_business_fail(response.msg);
         }
       }
+      $('#processbar').hide();
     },
     error: function (xhr, status, error) {
       Swal.fire({
@@ -1744,6 +1756,7 @@ function delete_review_start(id) {
         showConfirmButton: false,
         timer: 3500
       });
+      $('#processbar').hide();
     },
     complete: function () {
       setTimeout(function () {
@@ -1861,33 +1874,41 @@ $(document).on('click', 'button.check_start_status', function (e) {
 });
 
 
+
+
 //delete review
 function check_status_update() {
-  let current_job_id = FirmNameInput.attr('data-jobid');  
-  let firm_name = FirmNameInput.val();
+  let current_job_id = FirmNameInput.attr('data-jobid');
+  // const firm_name = FirmNameInput.val();
+  const nonce = $("#get_set_trigger_nonce").val();
+
   $.ajax({
     type: "POST",
     url: ajax_object.ajax_url,
     dataType: "json",
     beforeSend: function () {
-      $('#loader').removeClass('hidden');
+      $('#loader').removeClass('hidden');    
+      $('#processbar').show();
     },
     data: {
       action: "job_check_status_update_ajax_action",
       current_job_id: current_job_id,
       review_api_key: ajax_object.review_api_key,
-      firm_name: firm_name
+      nonce: nonce,
     },
     success: function (response, status, error) {
-      if (response.success === 1) {
-        if (check) {
-          check_success();
+      setTimeout(function () {
+        if (response.success === 1) {
+          if (check) {
+            check_success(response.msg);
+          }
+        } else {
+          if (check) {
+            check_failed(response.msg);
+          }
         }
-      } else {
-        if (check) {
-          check_failed(response.msg);
-        }
-      }
+        $('#processbar').hide();
+      }, 3500);
     },
     error: function (xhr, status, error) {
       Swal.fire({
@@ -1897,10 +1918,11 @@ function check_status_update() {
         showConfirmButton: false,
         timer: 3500
       });
+      $('#processbar').hide();
     },
     complete: function () {
       setTimeout(function () {
-        $('#loader').addClass('hidden');
+        $('#loader').addClass('hidden');      
       }, 3500);
     },
   });
