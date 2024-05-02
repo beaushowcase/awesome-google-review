@@ -312,6 +312,11 @@ if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjda
     $jflag = 1;
 }
 
+$step = false;
+if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 0 || $getjdata['jobID_check'] == 0 || $getjdata['jobID_final'] == 0)){
+    $step = true;
+}
+
 ?>
 
 <!-- fieldset -->
@@ -320,6 +325,117 @@ if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjda
     <option>San Marino</option>
     <option>Holy See</option>
 </datalist> -->
+
+
+<!-- animation 1 = START -->
+
+<style>
+
+.container-process {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.step-indicator {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    color: white;
+    border-radius: 8px;
+    padding: 40px 70px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0px 0px 20px 0px rgba(255, 255, 255, .5), 7px 7px 20px 0px rgba(0, 0, 0, .1), 4px 4px 5px 0px rgba(0, 0, 0, .1);
+    position: relative;
+    margin-top: 5%;
+    padding-top: 25px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+.step-indicator .step-icon {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background: transparent;
+  font-size: 10px;
+  text-align: center;
+  color: #ffffff;
+  position: relative;
+  line-height: 50px;
+  font-size: 20px;
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5), 7px 7px 20px 0px rgba(0, 0, 0, .1), 4px 4px 5px 0px rgba(0, 0, 0, .1);
+}
+
+.step.active .step-icon {
+  background: #000912;
+}
+
+.step p {
+  text-align: center;
+  position: absolute;
+  bottom: -40px;
+  color: #c2c2c2;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.step.active p {
+  color: green;
+}
+
+.step.step2 p,
+.step.step3 p {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.indicator-line {
+  width: 100%;
+  height: 2px;
+  background: #c2c2c2;
+  flex: 1;
+}
+
+.indicator-line.active {
+  background: green;
+}
+
+@media screen and (max-width: 500px) {
+  .step p {
+    font-size: 11px;
+    bottom: -20px;
+  }
+}
+</style>
+
+
+<div class="container-process">
+  <section class="step-indicator">
+      <div class="step step1 active">
+          <div class="step-icon">1</div>
+        <p>Delivery</p>
+      </div>
+    <div class="indicator-line active"></div>
+    <div class="step step2">
+        <div class="step-icon">2</div>
+      <p>Payment</p>
+    </div>
+    <div class="indicator-line"></div>
+    <div class="step step3">
+        <div class="step-icon">3</div>
+      <p>Confirmation</p>
+    </div>
+  </section>
+</div>
+
+
+<!-- animation 1 = STOP -->
 
 <section id="processbar" style="display:none;"><span class="loader-71"> </span></section>
 
@@ -382,7 +498,11 @@ if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjda
                     ?>
                     <p class="reset">
                         <!-- <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 256 256" xmlns:v="https://vecta.io/nano"><g transform="matrix(2.81 0 0 2.81 1.4066 1.4066)"><circle cx="45" cy="45" r="45" fill="#e63e32"/><path d="M65.592 29.574h-9.171v-3.481c0-3.635-2.957-6.593-6.593-6.593h-9.656c-3.635 0-6.593 2.958-6.593 6.593v3.481h-9.171a2 2 0 1 0 0 4h3.394V60.41c0 5.563 4.526 10.09 10.09 10.09h14.215c5.563 0 10.09-4.526 10.09-10.09V33.574h3.395a2 2 0 1 0 0-4zm-28.013-3.481c0-1.43 1.163-2.593 2.593-2.593h9.656c1.43 0 2.593 1.163 2.593 2.593v3.481H37.579v-3.481zM58.197 60.41a6.1 6.1 0 0 1-6.09 6.09H37.892a6.1 6.1 0 0 1-6.09-6.09V33.574h26.395V60.41zM40.3 39.566a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2zm9.4 0a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2z" fill="#fff"/></g></svg> -->
-                        <svg fill="#ffffff" width="35px" height="35px" viewBox="-1075.2 -1075.2 4070.40 4070.40" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"><rect x="-1075.2" y="-1075.2" width="4070.40" height="4070.40" rx="2035.2" fill="rgb(230, 62, 50)" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M960 0v213.333c411.627 0 746.667 334.934 746.667 746.667S1371.627 1706.667 960 1706.667 213.333 1371.733 213.333 960c0-197.013 78.4-382.507 213.334-520.747v254.08H640V106.667H53.333V320h191.04C88.64 494.08 0 720.96 0 960c0 529.28 430.613 960 960 960s960-430.72 960-960S1489.387 0 960 0" fill-rule="evenodd"></path> </g></svg>
+                        <!-- <svg fill="#ffffff" width="35px" height="35px" viewBox="-1075.2 -1075.2 4070.40 4070.40" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"><rect x="-1075.2" y="-1075.2" width="4070.40" height="4070.40" rx="2035.2" fill="rgb(230, 62, 50)" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M960 0v213.333c411.627 0 746.667 334.934 746.667 746.667S1371.627 1706.667 960 1706.667 213.333 1371.733 213.333 960c0-197.013 78.4-382.507 213.334-520.747v254.08H640V106.667H53.333V320h191.04C88.64 494.08 0 720.96 0 960c0 529.28 430.613 960 960 960s960-430.72 960-960S1489.387 0 960 0" fill-rule="evenodd"></path> </g></svg> -->
+                        
+<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 20 20" fill="#fff" xmlns:v="https://vecta.io/nano"><path d="M5.05 14.95a1 1 0 0 1 1.414-1.414A4.98 4.98 0 0 0 10 15a5 5 0 0 0 5-5 1 1 0 1 1 2 0 7 7 0 0 1-7 7 6.98 6.98 0 0 1-4.95-2.05z"/><path d="M13.559 12.832a1 1 0 1 1-1.109-1.664l3-2a1 1 0 1 1 1.109 1.664l-3 2z"/><path d="M18.832 12.445a1 1 0 1 1-1.664 1.109l-2-3a1 1 0 0 1 1.664-1.109l2 3zm-3.975-7.594a1 1 0 0 1-1.414 1.414 4.98 4.98 0 0 0-3.536-1.464 5 5 0 0 0-5 5 1 1 0 1 1-2 0 7 7 0 0 1 7-7 6.98 6.98 0 0 1 4.95 2.05z"/><path d="M6.349 6.969a1 1 0 1 1 1.109 1.664l-3 2a1 1 0 1 1-1.109-1.664l3-2z"/><path d="M1.075 7.356a1 1 0 1 1 1.664-1.109l2 3a1 1 0 1 1-1.664 1.109l-2-3z"/></svg>
+
+
                     </p>
                     <?php
                 }
@@ -418,11 +538,12 @@ if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjda
                     <div class="submit_btn_setget twoToneCenter">
                         <button type="submit" class="submit_btn job_start btn-process"><span class="label">JOB START</span></button>
                       
-                        <button type="submit" class="submit_btn check_start_status btn-process" style="display:none;">
+                        <!-- <button type="submit" class="submit_btn check_start_status btn-process" style="display:none;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="80" height="100%" viewBox="0 0 256 256" xml:space="preserve"><g style="stroke:none;stroke-width:0;stroke-dasharray:none;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;fill:none;fill-rule:nonzero;opacity:1"><path d="M56.375 60.616c-.75-1.027-2.151-1.388-3.266-.776A16.785 16.785 0 0 1 45 61.905c-7.2 0-13.346-4.532-15.778-10.887h5.968a2.003 2.003 0 0 0 1.674-3.095L20.269 22.551a2 2 0 0 0-3.348 0L.326 47.924A2 2 0 0 0 2 51.019h7.609C12.482 67.96 27.253 80.905 45 80.905c6.736 0 13.203-1.841 18.864-5.348 1.272-.788 1.586-2.509.704-3.718l-8.193-11.223z" style="stroke:none;stroke-width:1;stroke-dasharray:none;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;fill:green;fill-rule:nonzero;opacity:1" transform="matrix(2.81 0 0 2.81 1.407 1.407)"/><path d="M89.759 39.227A1.998 1.998 0 0 0 88 38.179h-7.753C77.051 21.632 62.465 9.095 45 9.095a35.782 35.782 0 0 0-17.291 4.432c-1.307.719-1.7 2.42-.883 3.668l7.613 11.628c.694 1.06 2.072 1.499 3.213.947A16.862 16.862 0 0 1 45 28.095c6.893 0 12.827 4.153 15.455 10.083H54.81a2 2 0 0 0-1.674 3.094l16.595 25.373a2.002 2.002 0 0 0 3.348 0l16.595-25.373a1.999 1.999 0 0 0 .085-2.045z" style="stroke:none;stroke-width:1;stroke-dasharray:none;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;fill:#fff;fill-rule:nonzero;opacity:1" transform="matrix(2.81 0 0 2.81 1.407 1.407)"/></g></svg>
-                        </button>
-
-                        <button type="submit" class="submit_btn check_start btn-process" <?php echo($jp != 1 ? 'disabled' : '') ?>><span class="label">GET</span></button>
+                        </button> -->
+                                   
+                        <button type="submit" class="submit_btn check_start_status btn-process" style="display:none;"><span class="label">GET</span></button>
+                        <button type="submit" class="submit_btn check_start btn-process" <?php echo($jp != 1 ? 'disabled' : '') ?>><span class="label">SET</span></button>
                         <button type="submit" class="submit_btn upload_start btn-process"><span class="label">UPLOAD</span></button>
                     </div>
 
@@ -441,8 +562,10 @@ if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjda
         <div class="inner-content-data">
                 <h2 class="boxtitle display_total">
                 <p class="reset status">
-                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 256 256" xmlns:v="https://vecta.io/nano"><g transform="matrix(2.81 0 0 2.81 1.4066 1.4066)"><circle cx="45" cy="45" r="45" fill="#e63e32"/><path d="M65.592 29.574h-9.171v-3.481c0-3.635-2.957-6.593-6.593-6.593h-9.656c-3.635 0-6.593 2.958-6.593 6.593v3.481h-9.171a2 2 0 1 0 0 4h3.394V60.41c0 5.563 4.526 10.09 10.09 10.09h14.215c5.563 0 10.09-4.526 10.09-10.09V33.574h3.395a2 2 0 1 0 0-4zm-28.013-3.481c0-1.43 1.163-2.593 2.593-2.593h9.656c1.43 0 2.593 1.163 2.593 2.593v3.481H37.579v-3.481zM58.197 60.41a6.1 6.1 0 0 1-6.09 6.09H37.892a6.1 6.1 0 0 1-6.09-6.09V33.574h26.395V60.41zM40.3 39.566a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2zm9.4 0a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2z" fill="#fff"/></g></svg> -->
-                <svg fill="#ffffff" width="35px" height="35px" viewBox="-1075.2 -1075.2 4070.40 4070.40" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"><rect x="-1075.2" y="-1075.2" width="4070.40" height="4070.40" rx="2035.2" fill="rgb(230, 62, 50)" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M960 0v213.333c411.627 0 746.667 334.934 746.667 746.667S1371.627 1706.667 960 1706.667 213.333 1371.733 213.333 960c0-197.013 78.4-382.507 213.334-520.747v254.08H640V106.667H53.333V320h191.04C88.64 494.08 0 720.96 0 960c0 529.28 430.613 960 960 960s960-430.72 960-960S1489.387 0 960 0" fill-rule="evenodd"></path> </g></svg>
+              
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 20 20" fill="#fff" xmlns:v="https://vecta.io/nano"><path d="M5.05 14.95a1 1 0 0 1 1.414-1.414A4.98 4.98 0 0 0 10 15a5 5 0 0 0 5-5 1 1 0 1 1 2 0 7 7 0 0 1-7 7 6.98 6.98 0 0 1-4.95-2.05z"/><path d="M13.559 12.832a1 1 0 1 1-1.109-1.664l3-2a1 1 0 1 1 1.109 1.664l-3 2z"/><path d="M18.832 12.445a1 1 0 1 1-1.664 1.109l-2-3a1 1 0 0 1 1.664-1.109l2 3zm-3.975-7.594a1 1 0 0 1-1.414 1.414 4.98 4.98 0 0 0-3.536-1.464 5 5 0 0 0-5 5 1 1 0 1 1-2 0 7 7 0 0 1 7-7 6.98 6.98 0 0 1 4.95 2.05z"/><path d="M6.349 6.969a1 1 0 1 1 1.109 1.664l-3 2a1 1 0 1 1-1.109-1.664l3-2z"/><path d="M1.075 7.356a1 1 0 1 1 1.664-1.109l2 3a1 1 0 1 1-1.664 1.109l-2-3z"/></svg>
+
             </p>    
                 Status</h2>
                 <div class="typewriter">

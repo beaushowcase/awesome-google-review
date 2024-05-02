@@ -24,3 +24,6 @@
 - Google Reviews Successfully Extracted.
 - Data upload successfully!
 - Deleted data of beardog digital.
+- API Error: cURL error 28: Operation timed out after 20003 milliseconds with 0 bytes received
+- Job 21 queued for scraping
+- Checked successful ! Now go ahead with GET
