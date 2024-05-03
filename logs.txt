@@ -28,3 +28,27 @@
 - Job 21 queued for scraping
 - Checked successful ! Now go ahead with GET
 - Reset and deleted data successfully 
+- Job 20 queued for scraping
+- Job not found
+- Job not found
+- Job not found
+- Job 21 queued for scraping
+- Job 22 queued for scraping
+- Checked successful ! Now go ahead with GET
+- Checked successful ! Now go ahead with GET
+- Checked successful ! Now go ahead with GET
+- Google Reviews Successfully Extracted.
+- Data upload successfully!
+- Job 23 queued for scraping
+- Checked successful ! Now go ahead with GET
+- Google Reviews Successfully Extracted.
+- Data upload successfully!
+- Job 24 queued for scraping
+- Checked successful ! Now go ahead with GET
+- Google Reviews Successfully Extracted.
+- Data upload successfully!
+- Job 25 queued for scraping
+- Checked successful ! Now go ahead with GET
+- Job 26 queued for scraping
+- Checked successful ! Now go ahead with GET
+- Google Reviews Successfully Extracted.

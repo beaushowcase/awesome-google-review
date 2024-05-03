@@ -940,8 +940,7 @@ function job_start(check) {
       // setTimeout(function () {
       //   $('#loader').addClass('hidden');
       //   btnProcess_BUSINESS_START.removeClass("spinning");
-      // }, 3500);
-      
+      // }, 3500);      
     },
   });
 }
