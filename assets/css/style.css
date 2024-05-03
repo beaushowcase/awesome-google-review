@@ -690,7 +690,7 @@ input:valid ~ label {
 }
 
 .reset {
-  position: absolute;
+  /* position: absolute; */
   top: 15px;
   left: 10px;
   color: #ffffff;
@@ -704,6 +704,7 @@ input:valid ~ label {
   margin: 0 auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  float: right;
 }
 .reset:hover {
   transform: scale(1.05); /* Slightly enlarge the button on hover */
@@ -1369,4 +1370,23 @@ section {
     left: 100%;
     transform: translateX(0%);
  }
+}
+
+
+.reset.status{
+  position: absolute;
+}
+
+.reset.new{
+  
+    border: 2px solid #ccc;
+    border-radius: 50px;
+    vertical-align: middle;
+    overflow: hidden;
+    margin: 0 auto;
+    display: flex;
+    padding: 5px;
+    box-shadow: inset 0px 0px 5px 1px rgba(255, 255, 255, .5), 7px 7px 20px 0px rgba(0, 0, 0, .1), 4px 4px 5px 0px rgba(0, 0, 0, .1);
+    background: transparent;
+
 }
