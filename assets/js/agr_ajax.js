@@ -699,12 +699,12 @@ $("#google_review_upload_form button.job_start").click(function (event) {
 $("#google_review_upload_form button.check_start").click(function (event) {
   check = true;
   Swal.fire({
-    title: "GET",
+    title: "SET",
     html: "Let's begin gathering reviews for " + `<b>${$(FirmNameInput).val()}</b>` + " !",
     showCloseButton: true,
     allowOutsideClick: false,
     confirmButtonColor: "#405640",
-    confirmButtonText: "GET",
+    confirmButtonText: "SET",
     backdrop: 'swal2-backdrop-show',
     icon: "question",
   }).then((result) => {

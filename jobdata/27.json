@@ -1,0 +1,161 @@
+{
+    "success": 1,
+    "firm_name": "NATRAJ DISTRIBUTOR",
+    "message": "Google Reviews Successfully Extracted.",
+    "totalCount": 17,
+    "reviews": [
+        {
+            "id": "111775443178983487956",
+            "title": "Sandesh Vishwakarma",
+            "description": "Nice Product, and Affordable Price. \ud83d\udc4d\ud83c\udffb",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocL6O6Udhex3TqMO00eyoGIEmPAfT3X-nLfXxoXt2mL_-ZzbhGw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111775443178983487956\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "112589188080281863257",
+            "title": "Prince Gupta",
+            "description": "This product was amazing the quality was to good \ud83d\udc4d keep going....",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUa9hmAkkbHvcPSuoTgBca8ZueXk2GyAHPaBlpPjN5zTwUEGvp0=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/112589188080281863257\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "117832556934905535103",
+            "title": "Sandesh Vishwakarma",
+            "description": "Very Good Product....",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUvKd6fMczT8NAAyO92jeYAEhTRExQYFap5kjBreGbgG9vez6uc=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117832556934905535103\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "116667259064083673581",
+            "title": "Dinesh",
+            "description": "Amazing quality of product:",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUCFSkCd3vbeTmHzAK-IKuzjhG1DYeh_Hdp7EP_hxZLHaR6Wdc=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116667259064083673581\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "100272021206811327636",
+            "title": "Anamika Raj",
+            "description": "Good product \ud83d\udc4d",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJkRHQi142On8X56ldcXuKolqgFD4rzSayM6h0su2SBxDo1P6Q=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100272021206811327636\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "110297288151075061413",
+            "title": "Guddi Devi",
+            "description": "Good \ud83d\ude0d",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLFJuBOJnDgck3-zkie_pKqiEe4XAmUy5H48oO8Bqq9IL2m5g=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110297288151075061413\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "106478835321139794416",
+            "title": "Vinay Shrivas",
+            "description": "Nice experience",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocL5Cp-pbBi443eWCVrtDr7uJM7WGePiuY6jjil_XbbPkmmtew=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/106478835321139794416\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "110401417305955332181",
+            "title": "Deepu",
+            "description": "Good \ud83d\udc4d",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJ5TD7mg-yetRm681-KS1jejQnUpq_9RnNFDPyvh9LP-zq2eg=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110401417305955332181\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "103460327204681362065",
+            "title": "Muskan kumari",
+            "description": "Superb",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUvK847TDrUwCMVp-n9dRRQpJCrkWJFZXv-r4jvwQSNfx8z1dS_=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/103460327204681362065\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "112178034448551430448",
+            "title": "chauhan hetvi",
+            "description": "best experience",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJHFAnWrsHXVtiXdk8PBXRpOn7bSms8Ua68TIQHsNPefZ6VIw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/112178034448551430448\/reviews\/",
+            "publicationDate": "2 years ago"
+        },
+        {
+            "id": "102970028580017681800",
+            "title": "Rishabh Jacker",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVQqVp00sSfJLqHjeG-QtqHXsyK_LjiXjr2C5k0tusQoVjZJ0Eg=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102970028580017681800\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "109423763493586869675",
+            "title": "Ar Abhinav",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXsgg9gcZBqGj8c9GbqHXUMM-wrBnacmGrh9AvaPiJrPzIrOX8=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109423763493586869675\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "101678871820856760129",
+            "title": "Archala Raj",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWYEqV4PKjW_DuiqGVB7sy0y9xLQXxzWN8uuhq1O_zCVlKia8jy=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101678871820856760129\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "100750117343786943520",
+            "title": "Manav Prajapati",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXRgn5PKMju6xf0xXgeeab2DBtt7sdlLmoqogTrEvykX3KLZMfp=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100750117343786943520\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "111196583390457720403",
+            "title": "Srishti Yadav",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWGLQRRWe4zHg8Qx0tddVxzEK2gK_1ui9PofnoqbDtPxAosKzw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111196583390457720403\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "108875030529087842293",
+            "title": "Het Prajapati",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUgkYXXXAou1cYLPRxc4mxNXES2UgFvaUCmvRqC60fO5y9hdbzQ=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108875030529087842293\/reviews\/",
+            "publicationDate": "2 years ago"
+        },
+        {
+            "id": "114661798165117077598",
+            "title": "RGP SERIES OFFICIAL",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXyNmUYJE_qDd-0B9u2ENV-NBmp9AMmcOFcYQs0s5_koyrxzgE=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/114661798165117077598\/reviews\/",
+            "publicationDate": "2 years ago"
+        }
+    ]
+}

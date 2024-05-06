@@ -372,7 +372,7 @@ if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjda
 }
 
 .step.active .step-icon {
-  background: #000912;
+  background: green;
 }
 
 .step p {
@@ -419,33 +419,24 @@ $get_active = false;
 $set_active = false;
 $upload_active = false;
 
-if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 0 && $getjdata['jobID_check'] == 0 && $getjdata['jobID_final'] == 0)){
+if (!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) {
     $start_active = true;
+
+    if ($getjdata['jobID_check_status'] == 1) {
+        $get_active = true;
+
+        if ($getjdata['jobID_check'] == 1) {            
+            $set_active = true;
+
+            if ($getjdata['jobID_final'] == 1) {
+                $upload_active = true;
+            }
+        }
+    }
 }
-else if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 1 && $getjdata['jobID_check'] == 0 && $getjdata['jobID_final'] == 0)){
-    $start_active = true;
-}
-
-
-if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 1 && $getjdata['jobID_check'] == 0 && $getjdata['jobID_final'] == 0)){
-    $get_active = true;
-}
-else if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 1 && $getjdata['jobID_check'] == 1 && $getjdata['jobID_final'] == 0)){
-    $get_active = true;
-}
-
-
-if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 1 && $getjdata['jobID_check'] == 1 && $getjdata['jobID_final'] == 0)){
-    $set_active = true;
-}
-else if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 1 && $getjdata['jobID_check'] == 1 && $getjdata['jobID_final'] == 1)){
-    $set_active = true;
-}
-
-
-
 ?>
 
+<?php //echo($upload_active ? 'active' : '') ; ?>
 
 <div class="container-process">
   <section class="step-indicator">
@@ -459,7 +450,7 @@ else if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($g
 
     <div class="step step2 <?php echo($get_active ? 'active' : '') ; ?>">
         <div class="step-icon">2</div>
-      <p>GET</p>
+      <p>CHECK</p>
     </div>
     <div class="indicator-line <?php echo($get_active ? 'active' : '') ; ?>"></div>
 
@@ -590,7 +581,7 @@ else if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($g
                     <div class="submit_btn_setget twoToneCenter">
                     
                         <button type="submit" class="submit_btn job_start btn-process"><span class="label">JOB START</span></button>
-                        <button type="submit" class="submit_btn check_start_status btn-process" style="display:none;" <?php echo($get_d == 1 ? 'disabled' : '') ?>><span class="label">GET</span></button>
+                        <button type="submit" class="submit_btn check_start_status btn-process" style="display:none;" <?php echo($get_d == 1 ? 'disabled' : '') ?>><span class="label">CHECK STATUS</span></button>
                         <button type="submit" class="submit_btn check_start btn-process" <?php echo($jp != 1 ? 'disabled' : '') ?>><span class="label">SET</span></button>
                         <button type="submit" class="submit_btn upload_start btn-process"><span class="label">UPLOAD</span></button>
                         

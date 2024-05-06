@@ -586,8 +586,10 @@ function job_start_ajax_action_function() {
                     'created' => current_time('mysql')
                 );
 
+                $existing_jobID = $wpdb->get_var($wpdb->prepare("SELECT jobID FROM {$wpdb->prefix}jobdata WHERE jobID = %s", $jobID));
+
                 // Insert/update job data
-                if ($existing_jobID = $wpdb->get_var($wpdb->prepare("SELECT jobID FROM {$wpdb->prefix}jobdata WHERE jobID = %s", $jobID)) !== null) {
+                if ( $existing_jobID !== null) {
                     $where = array('jobID' => $jobID);
                     $result = $wpdb->update($wpdb->prefix . 'jobdata', $data, $where, array('%d'), array('%s'));
                 } else {
@@ -1479,31 +1481,40 @@ function job_check_status_update_ajax_action_function() {
                         $jobID
                     )
                 );
-                $data2 = array(
-                    'jobID_check' => 0,
-                    'jobID_check_status' => 0,
-                    'jobID_json' => 0,
-                    'jobID_final' => 0,
-                    'created' => current_time('mysql')
-                );
+                // $data2 = array(
+                //     'jobID_check' => 0,
+                //     'jobID_check_status' => 0,
+                //     'jobID_json' => 0,
+                //     'jobID_final' => 0,
+                //     'created' => current_time('mysql')
+                // );
                 
                 if ($existing_jobID !== null) {
-                    $where = array('jobID' => $jobID , 'client_ip' => $c_ip);
-                    $result = $wpdb->update($wpdb->prefix . 'jobdata', $data2, $where);
-                   
-                } else {
-                    $data2['review_api_key'] = $review_api_key;
-                    $data2['created'] = current_time('mysql');
-                    $result = $wpdb->insert($wpdb->prefix . 'jobdata', $data2);
-                }
-
-                if ($result !== false) {
                     $response['data']['jobID'] = $jobID;
                     $response['success'] = 0;
-                    $response['msg'] = $response_api_data['msg'];
-                } else {
-                    $response['msg'] = "Database Error: Failed to insert/update job data.";
+                    $response['msg'] = 'Check Again !';
+                    // $where = array('jobID' => $jobID , 'client_ip' => $c_ip);
+                    // $result = $wpdb->update($wpdb->prefix . 'jobdata', $data2, $where);
+                   
                 }
+                else{
+                    $response['data']['jobID'] = $jobID;
+                    $response['success'] = 0;
+                    $response['msg'] = 'Check Again !';
+                }
+                //  else {
+                //     $data2['review_api_key'] = $review_api_key;
+                //     $data2['created'] = current_time('mysql');
+                //     $result = $wpdb->insert($wpdb->prefix . 'jobdata', $data2);
+                // }
+
+                // if ($result !== false) {
+                //     $response['data']['jobID'] = $jobID;
+                //     $response['success'] = 0;
+                //     $response['msg'] = $response_api_data['msg'];
+                // } else {
+                //     $response['msg'] = "Database Error: Failed to insert/update job data.";
+                // }
             }
         }
     } else {

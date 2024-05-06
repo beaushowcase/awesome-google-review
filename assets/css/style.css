@@ -1378,13 +1378,13 @@ section {
 }
 
 .reset.new{  
-    border: 2px solid #ccc;
+    border: 1px solid #ccc;
     border-radius: 50px;
     vertical-align: middle;
     overflow: hidden;
     margin: 0 auto;
     display: flex;
     padding: 5px;
-    box-shadow: inset 0px 0px 5px 1px rgba(255, 255, 255, .5), 7px 7px 20px 0px rgba(0, 0, 0, .1), 4px 4px 5px 0px rgba(0, 0, 0, .1);
+    /* box-shadow: inset 0px 0px 5px 1px rgba(255, 255, 255, .5), 7px 7px 20px 0px rgba(0, 0, 0, .1), 4px 4px 5px 0px rgba(0, 0, 0, .1); */
     background: transparent;
 }
