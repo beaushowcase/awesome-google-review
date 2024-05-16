@@ -233,64 +233,48 @@ function render_agr_google_review_meta_box($post) {
 }
 
 function delete_review_callback(){ ?>
-
-<section id="processbar" style="display:none;"><span class="loader-71"> </span></section>
-
-<div class="partition">
-<div class="right-box">        
-        <div class="inner-content-data">
+<div class="container-process">
+    <section id="processbar" style="display:none;"><span class="loader-71"> </span></section>
+    <div class="partition delete-part">
+        <div class="right-box">        
+            <div class="inner-content-data">
                 <h2 class="boxtitle display_total">Delete Review</h2>
                 <form id="review_delete_form" method="post" autocomplete="off">
-                    <div class="delete_reviews">
-                        <div class="center">                                        
-                            <select name="sources" id="sources" class="custom-select sources" placeholder="Select Business">
-                                <option class="select_business" value="0">Select business</option>
-                                <?php 
-                                $all_firms = get_all_firms();                                            
-                                foreach ($all_firms as $firm) {                        
-                                ?>                        
-                                <option class="select_business" value="<?php echo $firm['id']; ?>"><?php echo $firm['name']; ?></option>
-                            <?php } ?>                        
-                            </select>
-                            <div class="">
-                                <button type="submit" class="custom-btn btn-16">                    
-                                    <section>
-                                        <span class="trash">
-                                            <span></span>
-                                            <i></i>
-                                        </span>
-                                    </section>
-                                </button>
-                            </div>
+                    <div class="delete_reviews">                                     
+                        <select name="sources" id="sources" class="custom-select sources" placeholder="Select Business">
+                            <option class="select_business" value="0">Select business</option>
+                            <?php 
+                            $all_firms = get_all_firms();                                            
+                            foreach ($all_firms as $firm) {                        
+                            ?>                        
+                            <option class="select_business" value="<?php echo $firm['id']; ?>"><?php echo $firm['name']; ?></option>
+                        <?php } ?>                        
+                        </select>
+                        <div class="del-btn">
+                            <button type="submit" class="custom-btn btn-16">
+                                <span class="trash">
+                                    <span></span>
+                                    <i></i>
+                                </span>
+                            </button>
                         </div>
                     </div> 
                 </form> 
-                
-                
+            </div>
         </div>
     </div>
-
-    
-
 </div>
-
-
 <?php
 }
-
-
 function our_google_reviews_callback() {
     $get_existing_api_key = get_existing_api_key();
     $get_api_status = get_api_key_status($get_existing_api_key);    
 ?>
-
 <?php        
 $firm_data = get_existing_firm_data();
 $firm_name_data = isset($firm_data['firm_name']) ? $firm_data['firm_name'] : '';
 $job_id_data = isset($firm_data['jobID']) ? $firm_data['jobID'] : '';
 $j_term_id = isset($firm_data['term_id']) ? $firm_data['term_id'] : '';
-    
-
 // Function to check if ID exists
 function isIdExists($array, $idToCheck) {
     foreach ($array as $item) {
@@ -300,55 +284,49 @@ function isIdExists($array, $idToCheck) {
     }
     return false;
 }
-
-
-$client_ip = $_SERVER['REMOTE_ADDR'];
+$client_ip = '192.168.1.143';
 $jp = check_prepared_job_status($client_ip);
-
 $getjdata = get_job_data_by_client_ip($client_ip);
 $jflag = 0;
 if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 0 || $getjdata['jobID_check'] == 0 || $getjdata['jobID_final'] == 0)){
     $jflag = 1;
 }
-
 $step = false;
 if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 0 || $getjdata['jobID_check'] == 0 || $getjdata['jobID_final'] == 0)){
     $step = true;
 }
-
 ?>
-
 <!-- fieldset -->
 <!-- <input list="great" placeholder="Enter Business">
 <datalist id="great">            
     <option>San Marino</option>
     <option>Holy See</option>
 </datalist> -->
-
-
 <!-- animation 1 = START -->
-
 <style>
-
 .container-process {
-  max-width: 1200px;
-  margin: 0 auto;
+    max-width: 1520px;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
 }
-
 .step-indicator {
     display: flex;
     align-items: center;
     background: transparent;
     color: white;
     border-radius: 8px;
-    padding: 40px 70px;
+    padding: 40px 20px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     box-shadow: inset 0px 0px 20px 0px rgba(255, 255, 255, .5), 7px 7px 20px 0px rgba(0, 0, 0, .1), 4px 4px 5px 0px rgba(0, 0, 0, .1);
     position: relative;
-    margin-top: 5%;
+    margin-top: 50px;
     padding-top: 25px;
+    /* max-width: 1500px; */
+    /* margin: 50px auto 0; */
 }
-
 .step {
   display: flex;
   align-items: center;
@@ -356,7 +334,6 @@ if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjda
   position: relative;
   z-index: 1;
 }
-
 .step-indicator .step-icon {
   height: 50px;
   width: 50px;
@@ -370,11 +347,9 @@ if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjda
   font-size: 20px;
   box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5), 7px 7px 20px 0px rgba(0, 0, 0, .1), 4px 4px 5px 0px rgba(0, 0, 0, .1);
 }
-
 .step.active .step-icon {
   background: green;
 }
-
 .step p {
   text-align: center;
   position: absolute;
@@ -383,28 +358,95 @@ if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjda
   font-size: 14px;
   font-weight: bold;
 }
-
 .step.active p {
   color: green;
 }
-
 .step.step2 p,
 .step.step3 p {
   left: 50%;
   transform: translateX(-50%);
 }
-
 .indicator-line {
   width: 100%;
   height: 2px;
   background: #c2c2c2;
   flex: 1;
 }
-
 .indicator-line.active {
   background: green;
 }
-
+.partition {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    width: 100%;
+    margin-top: 50px;
+}
+.left-box {
+    flex-grow: 1;
+}
+.left-box .seo-plugin-data-info.container + .seo-plugin-data-info.container {
+    margin-top: 50px;
+}
+@media screen and (max-width:1799px){
+    .container-process{
+        max-width: 1360px;
+    }
+}
+@media screen and (max-width:1599px){
+    .container-process{
+        max-width: 1260px;
+    }
+    .seo-plugin-data-info.container {
+        width: 400px;
+    }
+}
+@media screen and (max-width:1499px){
+    .container-process {
+        max-width: 1060px;
+    }
+}
+@media screen and (max-width:1299px){
+    .container-process {
+        max-width: 960px;
+    }
+    .seo-plugin-data-info.container {
+        width: 350px;
+    }
+}
+@media screen and (max-width:1199px){
+    .container-process {
+        max-width: 90%;
+    }
+    .auto-fold #wpcontent {
+        padding-left: 0;
+    }
+}
+@media screen and (max-width:991px){
+    .partition {
+        flex-direction: column;
+    }
+    .seo-plugin-data-info.container,.right-box {
+        width: 100%;
+        margin: 0 auto;
+        max-width: 500px;
+    }
+}
+@media screen and (max-width:767px){
+    .seo-plugin-data-info.container, .right-box {
+        width: auto;
+    }
+    .step-indicator .step-icon {
+        height: 40px;
+        width: 40px;
+        line-height: 40px;
+        font-size: 16px;
+    }
+    .step p {
+        bottom: -35px;
+        font-size: 12px;
+    }
+}
 @media screen and (max-width: 500px) {
   .step p {
     font-size: 11px;
@@ -412,13 +454,11 @@ if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjda
   }
 }
 </style>
-
 <?php
 $start_active = false;
 $get_active = false;
 $set_active = false;
 $upload_active = false;
-
 if (!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) {
     $start_active = true;
 
@@ -435,198 +475,148 @@ if (!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) {
     }
 }
 ?>
-
 <?php //echo($upload_active ? 'active' : '') ; ?>
-
 <div class="container-process">
-  <section class="step-indicator">
-
+    <div class="step-indicator">
       <div class="step step1 <?php echo($start_active ? 'active' : '') ; ?>">
           <div class="step-icon">1</div>
         <p>START</p>
       </div>
-
       <div class="indicator-line <?php echo($start_active ? 'active' : '') ; ?>"></div>
-
     <div class="step step2 <?php echo($get_active ? 'active' : '') ; ?>">
         <div class="step-icon">2</div>
       <p>CHECK</p>
     </div>
     <div class="indicator-line <?php echo($get_active ? 'active' : '') ; ?>"></div>
-
     <div class="step step3 <?php echo($set_active ? 'active' : '') ; ?>">
         <div class="step-icon">3</div>
       <p>SET</p>
     </div>
     <div class="indicator-line <?php echo($set_active ? 'active' : '') ; ?>"></div>
-
     <div class="step step4 <?php echo($upload_active ? 'active' : '') ; ?>">
         <div class="step-icon">4</div>
       <p>UPLOAD</p>
     </div>
-
-
-  </section>
-</div>
-
-
-<!-- animation 1 = STOP -->
-
-<section id="processbar" style="display:none;"><span class="loader-71"> </span></section>
-
-<div id="loader" class="lds-dual-ring hidden overlay"></div>
-
-<div class="partition">
-    <div class="left-box">
-
-        <div class="seo-plugin-data-info container api_key_setting_form">
-            <div class="inner-content-data">
-
-                <h2 class="boxtitle ">API Key Setting</h2>
-                <form id="api_key_setting_form" method="post" autocomplete="off">
-                    <?php wp_nonce_field('review_api_key', 'review_api_key_nonce'); ?>
-                    <div class="field_container">
-                        <div class="input-field">
-                            <input type="text" required id="review_api_key" data-apiValid="<?php echo ($get_api_status ? $get_api_status : 0)?>" spellcheck="false" value="<?php echo ($get_existing_api_key ? $get_existing_api_key : '')?>">
-                            <label>API Key</label>
-                            <span class="correct-sign">✓</span>
-                            <span class="wrong-sign">×</span>
+    </div>
+    <!-- animation 1 = STOP -->
+    <section id="processbar" style="display:none;"><span class="loader-71"> </span></section>
+    <div id="loader" class="lds-dual-ring hidden overlay"></div>
+    <div class="partition">
+        <div class="left-box">
+            <div class="seo-plugin-data-info container api_key_setting_form">
+                <div class="inner-content-data">
+                    <h2 class="boxtitle ">API Key Setting</h2>
+                    <form id="api_key_setting_form" method="post" autocomplete="off">
+                        <?php wp_nonce_field('review_api_key', 'review_api_key_nonce'); ?>
+                        <div class="field_container">
+                            <div class="input-field">
+                                <input type="text" required id="review_api_key" data-apiValid="<?php echo ($get_api_status ? $get_api_status : 0)?>" spellcheck="false" value="<?php echo ($get_existing_api_key ? $get_existing_api_key : '')?>">
+                                <label>API Key</label>
+                                <span class="correct-sign">✓</span>
+                                <span class="wrong-sign">×</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="twoToneCenter">
-                        <button type="submit" class="submit_btn save btn-process">Save</button>
-                    </div>
-                </form>
-            </div>
-        </div>       
+                        <div class="twoToneCenter">
+                            <button type="submit" class="submit_btn save btn-process">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>       
 
 
-        <?php 
-        /*
-        <div class="selection_box container">
-            <div class="inner-content-data">
-                <div class="container_selection_box">    
-                    <div class="form cf">
-                        <section class="payment-type cf">                            
-                        <?php 
-                        $all_firms = get_all_firms();
-                        $checked = false;                            
-                        foreach ($all_firms as $firm) {                                
-                            if($firm['id'] == $j_term_id){
-                                $checked = true;
-                            }                        
-                        ?>
-                            <input <?php echo ($checked && $firm['id'] == $j_term_id ? 'checked' : ''); ?> type="radio" name="radio3" id="<?php echo $firm['id']; ?>" value="<?php echo $firm['id']; ?>"><label class="paypal-label four col" for="<?php echo $firm['id']; ?>"><?php echo $firm['name']; ?></label>
-                            <?php } ?> 
-                        </section>
+            <?php 
+            /*
+            <div class="selection_box container">
+                <div class="inner-content-data">
+                    <div class="container_selection_box">    
+                        <div class="form cf">
+                            <section class="payment-type cf">                            
+                            <?php 
+                            $all_firms = get_all_firms();
+                            $checked = false;                            
+                            foreach ($all_firms as $firm) {                                
+                                if($firm['id'] == $j_term_id){
+                                    $checked = true;
+                                }                        
+                            ?>
+                                <input <?php echo ($checked && $firm['id'] == $j_term_id ? 'checked' : ''); ?> type="radio" name="radio3" id="<?php echo $firm['id']; ?>" value="<?php echo $firm['id']; ?>"><label class="paypal-label four col" for="<?php echo $firm['id']; ?>"><?php echo $firm['name']; ?></label>
+                                <?php } ?> 
+                            </section>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        */ ?>    
+            */ ?>    
 
-        
-
-        <div class="seo-plugin-data-info container google_review_upload_form cont hidden">
-            <?php 
-                if($firm_data){
-                    ?>
-                    <p class="reset new">
-                        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 256 256" xmlns:v="https://vecta.io/nano"><g transform="matrix(2.81 0 0 2.81 1.4066 1.4066)"><circle cx="45" cy="45" r="45" fill="#e63e32"/><path d="M65.592 29.574h-9.171v-3.481c0-3.635-2.957-6.593-6.593-6.593h-9.656c-3.635 0-6.593 2.958-6.593 6.593v3.481h-9.171a2 2 0 1 0 0 4h3.394V60.41c0 5.563 4.526 10.09 10.09 10.09h14.215c5.563 0 10.09-4.526 10.09-10.09V33.574h3.395a2 2 0 1 0 0-4zm-28.013-3.481c0-1.43 1.163-2.593 2.593-2.593h9.656c1.43 0 2.593 1.163 2.593 2.593v3.481H37.579v-3.481zM58.197 60.41a6.1 6.1 0 0 1-6.09 6.09H37.892a6.1 6.1 0 0 1-6.09-6.09V33.574h26.395V60.41zM40.3 39.566a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2zm9.4 0a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2z" fill="#fff"/></g></svg> -->
-                        <!-- <svg fill="#ffffff" width="35px" height="35px" viewBox="-1075.2 -1075.2 4070.40 4070.40" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"><rect x="-1075.2" y="-1075.2" width="4070.40" height="4070.40" rx="2035.2" fill="rgb(230, 62, 50)" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M960 0v213.333c411.627 0 746.667 334.934 746.667 746.667S1371.627 1706.667 960 1706.667 213.333 1371.733 213.333 960c0-197.013 78.4-382.507 213.334-520.747v254.08H640V106.667H53.333V320h191.04C88.64 494.08 0 720.96 0 960c0 529.28 430.613 960 960 960s960-430.72 960-960S1489.387 0 960 0" fill-rule="evenodd"></path> </g></svg> -->
-                        
-<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 20 20" fill="#fff" xmlns:v="https://vecta.io/nano"><path d="M5.05 14.95a1 1 0 0 1 1.414-1.414A4.98 4.98 0 0 0 10 15a5 5 0 0 0 5-5 1 1 0 1 1 2 0 7 7 0 0 1-7 7 6.98 6.98 0 0 1-4.95-2.05z"/><path d="M13.559 12.832a1 1 0 1 1-1.109-1.664l3-2a1 1 0 1 1 1.109 1.664l-3 2z"/><path d="M18.832 12.445a1 1 0 1 1-1.664 1.109l-2-3a1 1 0 0 1 1.664-1.109l2 3zm-3.975-7.594a1 1 0 0 1-1.414 1.414 4.98 4.98 0 0 0-3.536-1.464 5 5 0 0 0-5 5 1 1 0 1 1-2 0 7 7 0 0 1 7-7 6.98 6.98 0 0 1 4.95 2.05z"/><path d="M6.349 6.969a1 1 0 1 1 1.109 1.664l-3 2a1 1 0 1 1-1.109-1.664l3-2z"/><path d="M1.075 7.356a1 1 0 1 1 1.664-1.109l2 3a1 1 0 1 1-1.664 1.109l-2-3z"/></svg>
-
-
-                    </p>
-                    <?php
-                }
-            ?>
             
 
-            <div class="inner-content-data">
-                <h2 class="boxtitle ">Google Reviews Upload</h2>
-
-                <form id="google_review_upload_form" method="post" autocomplete="off">
-                    <?php wp_nonce_field('get_set_trigger', 'get_set_trigger_nonce'); ?>
-
-
-                    <div class="field_container">
-                        <div class="input-field">
-                            <input <?php echo($jflag ? 'disabled' : '') ?> list="existing" type="text" id="firm_name" data-termID="<?php echo ($j_term_id ? $j_term_id : 0)?>"  data-jobid="<?php echo esc_attr($job_id_data ? $job_id_data : ''); ?>" required spellcheck="false" value="<?php echo esc_attr($firm_name_data ? $firm_name_data : ''); ?>">
-                            <datalist id="existing"> 
-                                            <?php 
-                                                $all_firms = get_all_firms();                                            
-                                                foreach ($all_firms as $firm) {                        
-                                                ?>                        
-                                                <option class="select_business" data-listID="<?php echo $firm['id']; ?>"><?php echo $firm['name']; ?></option>
-                                            <?php } ?>
-                                           
-                            </datalist>
-                            <label class="focus_label">Firm Name</label>
-                            <span class="correct-sign">✓</span>
-                            <span class="wrong-sign">×</span>
-                        </div>
-                    </div>
-
-                    <?php
-                    $get_d = 0;
-                    if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 1 && $getjdata['jobID_check'] == 0 && $getjdata['jobID_final'] == 0)){
-                        $get_d = 1;
+            <div class="seo-plugin-data-info container google_review_upload_form cont hidden">
+                <?php 
+                    if($firm_data){
+                        ?>
+                        <p class="reset new">
+                            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 256 256" xmlns:v="https://vecta.io/nano"><g transform="matrix(2.81 0 0 2.81 1.4066 1.4066)"><circle cx="45" cy="45" r="45" fill="#e63e32"/><path d="M65.592 29.574h-9.171v-3.481c0-3.635-2.957-6.593-6.593-6.593h-9.656c-3.635 0-6.593 2.958-6.593 6.593v3.481h-9.171a2 2 0 1 0 0 4h3.394V60.41c0 5.563 4.526 10.09 10.09 10.09h14.215c5.563 0 10.09-4.526 10.09-10.09V33.574h3.395a2 2 0 1 0 0-4zm-28.013-3.481c0-1.43 1.163-2.593 2.593-2.593h9.656c1.43 0 2.593 1.163 2.593 2.593v3.481H37.579v-3.481zM58.197 60.41a6.1 6.1 0 0 1-6.09 6.09H37.892a6.1 6.1 0 0 1-6.09-6.09V33.574h26.395V60.41zM40.3 39.566a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2zm9.4 0a2 2 0 0 0-2 2V56.78a2 2 0 1 0 4 0V41.566a2 2 0 0 0-2-2z" fill="#fff"/></g></svg> -->
+                            <!-- <svg fill="#ffffff" width="35px" height="35px" viewBox="-1075.2 -1075.2 4070.40 4070.40" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"><rect x="-1075.2" y="-1075.2" width="4070.40" height="4070.40" rx="2035.2" fill="rgb(230, 62, 50)" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M960 0v213.333c411.627 0 746.667 334.934 746.667 746.667S1371.627 1706.667 960 1706.667 213.333 1371.733 213.333 960c0-197.013 78.4-382.507 213.334-520.747v254.08H640V106.667H53.333V320h191.04C88.64 494.08 0 720.96 0 960c0 529.28 430.613 960 960 960s960-430.72 960-960S1489.387 0 960 0" fill-rule="evenodd"></path> </g></svg> -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 20 20" fill="#fff" xmlns:v="https://vecta.io/nano"><path d="M5.05 14.95a1 1 0 0 1 1.414-1.414A4.98 4.98 0 0 0 10 15a5 5 0 0 0 5-5 1 1 0 1 1 2 0 7 7 0 0 1-7 7 6.98 6.98 0 0 1-4.95-2.05z"/><path d="M13.559 12.832a1 1 0 1 1-1.109-1.664l3-2a1 1 0 1 1 1.109 1.664l-3 2z"/><path d="M18.832 12.445a1 1 0 1 1-1.664 1.109l-2-3a1 1 0 0 1 1.664-1.109l2 3zm-3.975-7.594a1 1 0 0 1-1.414 1.414 4.98 4.98 0 0 0-3.536-1.464 5 5 0 0 0-5 5 1 1 0 1 1-2 0 7 7 0 0 1 7-7 6.98 6.98 0 0 1 4.95 2.05z"/><path d="M6.349 6.969a1 1 0 1 1 1.109 1.664l-3 2a1 1 0 1 1-1.109-1.664l3-2z"/><path d="M1.075 7.356a1 1 0 1 1 1.664-1.109l2 3a1 1 0 1 1-1.664 1.109l-2-3z"/></svg>
+                        </p>
+                        <?php
                     }
-                    
-                    ?>
-                    
-            
-                    <div class="submit_btn_setget twoToneCenter">
-                    
-                        <button type="submit" class="submit_btn job_start btn-process"><span class="label">JOB START</span></button>
-                        <button type="submit" class="submit_btn check_start_status btn-process" style="display:none;" <?php echo($get_d == 1 ? 'disabled' : '') ?>><span class="label">CHECK STATUS</span></button>
-                        <button type="submit" class="submit_btn check_start btn-process" <?php echo($jp != 1 ? 'disabled' : '') ?>><span class="label">SET</span></button>
-                        <button type="submit" class="submit_btn upload_start btn-process"><span class="label">UPLOAD</span></button>
-                        
-                    </div>
-                    
-                </form>
-                
+                ?>
+                <div class="inner-content-data">
+                    <h2 class="boxtitle ">Google Reviews Upload</h2>
+                    <form id="google_review_upload_form" method="post" autocomplete="off">
+                        <?php wp_nonce_field('get_set_trigger', 'get_set_trigger_nonce'); ?>
+                        <div class="field_container">
+                            <div class="input-field">
+                                <input <?php echo($jflag ? 'disabled' : '') ?> list="existing" type="text" id="firm_name" data-termID="<?php echo ($j_term_id ? $j_term_id : 0)?>"  data-jobid="<?php echo esc_attr($job_id_data ? $job_id_data : ''); ?>" required spellcheck="false" value="<?php echo esc_attr($firm_name_data ? $firm_name_data : ''); ?>">
+                                <datalist id="existing"> 
+                                    <?php 
+                                        $all_firms = get_all_firms();                                            
+                                        foreach ($all_firms as $firm) {                        
+                                        ?>                        
+                                        <option class="select_business" data-listID="<?php echo $firm['id']; ?>"><?php echo $firm['name']; ?></option>
+                                    <?php } ?>
+                                               
+                                </datalist>
+                                <label class="focus_label">Firm Name</label>
+                                <span class="correct-sign">✓</span>
+                                <span class="wrong-sign">×</span>
+                            </div>
+                        </div>
+                        <?php
+                        $get_d = 0;
+                        if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 1 && $getjdata['jobID_check'] == 0 && $getjdata['jobID_final'] == 0)){
+                            $get_d = 1;
+                        } ?>
+                        <div class="submit_btn_setget twoToneCenter">
+                            <button type="submit" class="submit_btn job_start btn-process"><span class="label">JOB START</span></button>
+                            <button type="submit" class="submit_btn check_start_status btn-process" style="display:none;" <?php echo($get_d == 1 ? 'disabled' : '') ?>><span class="label">CHECK STATUS</span></button>
+                            <button type="submit" class="submit_btn check_start btn-process" <?php echo($jp != 1 ? 'disabled' : '') ?>><span class="label">SET</span></button>
+                            <button type="submit" class="submit_btn upload_start btn-process"><span class="label">UPLOAD</span></button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-        
-    </div>
-
-    <div class="right-box">        
-        <div class="inner-content-data">
+        <div class="right-box">        
+            <div class="inner-content-data">
                 <h2 class="boxtitle display_total">
-                <p class="reset status">
-              
-                
-<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 20 20" fill="#fff" xmlns:v="https://vecta.io/nano"><path d="M5.05 14.95a1 1 0 0 1 1.414-1.414A4.98 4.98 0 0 0 10 15a5 5 0 0 0 5-5 1 1 0 1 1 2 0 7 7 0 0 1-7 7 6.98 6.98 0 0 1-4.95-2.05z"/><path d="M13.559 12.832a1 1 0 1 1-1.109-1.664l3-2a1 1 0 1 1 1.109 1.664l-3 2z"/><path d="M18.832 12.445a1 1 0 1 1-1.664 1.109l-2-3a1 1 0 0 1 1.664-1.109l2 3zm-3.975-7.594a1 1 0 0 1-1.414 1.414 4.98 4.98 0 0 0-3.536-1.464 5 5 0 0 0-5 5 1 1 0 1 1-2 0 7 7 0 0 1 7-7 6.98 6.98 0 0 1 4.95 2.05z"/><path d="M6.349 6.969a1 1 0 1 1 1.109 1.664l-3 2a1 1 0 1 1-1.109-1.664l3-2z"/><path d="M1.075 7.356a1 1 0 1 1 1.664-1.109l2 3a1 1 0 1 1-1.664 1.109l-2-3z"/></svg>
-
-            </p>    
+                    <p class="reset status"><svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 20 20" fill="#fff" xmlns:v="https://vecta.io/nano"><path d="M5.05 14.95a1 1 0 0 1 1.414-1.414A4.98 4.98 0 0 0 10 15a5 5 0 0 0 5-5 1 1 0 1 1 2 0 7 7 0 0 1-7 7 6.98 6.98 0 0 1-4.95-2.05z"/><path d="M13.559 12.832a1 1 0 1 1-1.109-1.664l3-2a1 1 0 1 1 1.109 1.664l-3 2z"/><path d="M18.832 12.445a1 1 0 1 1-1.664 1.109l-2-3a1 1 0 0 1 1.664-1.109l2 3zm-3.975-7.594a1 1 0 0 1-1.414 1.414 4.98 4.98 0 0 0-3.536-1.464 5 5 0 0 0-5 5 1 1 0 1 1-2 0 7 7 0 0 1 7-7 6.98 6.98 0 0 1 4.95 2.05z"/><path d="M6.349 6.969a1 1 0 1 1 1.109 1.664l-3 2a1 1 0 1 1-1.109-1.664l3-2z"/><path d="M1.075 7.356a1 1 0 1 1 1.664-1.109l2 3a1 1 0 1 1-1.664 1.109l-2-3z"/></svg></p>
                 Status</h2>
                 <div class="typewriter">
-                    <h1 class="output typing"><p><?php echo displayMessagesFromFile(); ?></p></h1>
-                </div>   
-                             
+                    <div class="output typing"><p><?php echo displayMessagesFromFile(); ?></p></div>
+                </div>         
+            </div>
         </div>
-        
+        <button class="control" style="display:none;"></button>
+        <canvas id="canvas"></canvas>
     </div>
-
-    <button class="control" style="display:none;"></button>
-    <canvas id="canvas"></canvas>
-
-    </div>
-    
-
-    
-
+</div>
 <?php
 }
-
 // Add custom columns to post type
 function custom_add_custom_columns($columns) {
     $new_columns = array();
-
     foreach ($columns as $key => $value) {
         $new_columns[$key] = $value;
         if ($key === 'title') {
@@ -641,7 +631,6 @@ function custom_add_custom_columns($columns) {
     return $new_columns;
 }
 add_filter('manage_agr_google_review_posts_columns', 'custom_add_custom_columns');
-
 // Display custom meta values in the custom columns
 function custom_display_custom_columns($column, $post_id) {
     switch ($column) {
@@ -769,8 +758,6 @@ function check_upload_job_status($client_ip) {
     return $result->count == 1 ? true : false;
 }
 
-
-
 /**
  * Function to delete all data of a specific post type and taxonomy.
  */
@@ -800,7 +787,6 @@ function delete_all_agr_google_reviews() {
     );
 }
 
-
 // check job status
 function check_prepared_job_status($client_ip) {
     global $wpdb;
@@ -825,7 +811,6 @@ function check_prepared_job_status($client_ip) {
 
     return $result->count == 1 ? true : false;
 }
-
 
 // Get job data by client IP
 function get_job_data_by_client_ip($client_ip) {

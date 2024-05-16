@@ -13,6 +13,8 @@
 define('AGR_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('AGR_PLUGIN_URL', plugin_dir_url(__FILE__));
 
+global $pagenow;
+
 // PLUGIN CHECKER = START
 require_once 'update-checker/update-checker.php';
 
@@ -35,7 +37,6 @@ function get_dynamic_version()
 function our_load_admin_style()
 {
     global $pagenow;
-
     if ($pagenow == 'admin.php' && isset($_GET['page']) && ($_GET['page'] == 'awesome-google-review' || $_GET['page'] == 'delete-review')) {
         // Enqueue jQuery
         wp_enqueue_script('jquery');
@@ -71,7 +72,8 @@ function get_existing_firm_data(){
     global $wpdb;
     $table_name = $wpdb->prefix . 'jobapi';
     $table_name2 = $wpdb->prefix . 'jobdata';
-    $client_ip = $_SERVER['REMOTE_ADDR'];    
+    $client_ip = '192.168.1.143';    
+    // $client_ip = '192.168.1.143';    
     
     $firm_data = $wpdb->get_row($wpdb->prepare("
         SELECT j.firm_name, j.jobID, j.term_id
@@ -90,7 +92,7 @@ function get_existing_firm_data(){
 //     global $wpdb;
 //     $table_name = $wpdb->prefix . 'jobapi';
 //     $table_name2 = $wpdb->prefix . 'jobdata';
-//     $client_ip = $_SERVER['REMOTE_ADDR'];    
+//     $client_ip = '192.168.1.143';    
     
 //     $firm_data = $wpdb->get_results($wpdb->prepare("
 //         SELECT j.firm_name, j.jobID
@@ -139,14 +141,14 @@ function get_all_firms(){
 function get_existing_api_key(){
     global $wpdb;
     $table_name = $wpdb->prefix . 'jobapi';   
-    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $client_ip = '192.168.1.143';
     $api_key = $wpdb->get_var($wpdb->prepare("SELECT review_api_key FROM $table_name WHERE client_ip = %s", $client_ip));
     return $api_key;
 }
 
 function get_api_key_status($get_existing_api_key){
     global $wpdb;
-    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $client_ip = '192.168.1.143';
     $table_name = $wpdb->prefix . 'jobapi';
     $status = $wpdb->get_var($wpdb->prepare("SELECT review_api_key_status FROM $table_name WHERE client_ip = %s AND review_api_key = %d", $client_ip, $get_existing_api_key));      
     return $status;
@@ -162,14 +164,14 @@ function get_api_key_by_client_ip($client_ip){
 }
 
 function get_existing_api_key_data(){
-    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $client_ip = '192.168.1.143';
     $api_key = get_api_key_by_client_ip($client_ip);   
     return $api_key;
 }
 
 //business check
 function get_existing_business_data(){
-    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $client_ip = '192.168.1.143';
     $last_firm_name = get_business_by_client_ip($client_ip);   
     return $last_firm_name;
 }
@@ -306,7 +308,7 @@ function initial_check_api_function()
     // }
 
 
-    // $client_ip = $_SERVER['REMOTE_ADDR'];
+    // $client_ip = '192.168.1.143';
 
     // $check_job_status = check_job_status($client_ip);
     // $check_upload_job_status = check_upload_job_status($client_ip);
@@ -385,7 +387,7 @@ function review_api_key_ajax_action_function()
 
     $table_name = set_table_required('jobapi');
 
-    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $client_ip = '192.168.1.143';
   
     // $serialized_data = serialize($data);
     if (!empty($nonce) && wp_verify_nonce($nonce, 'review_api_key')) {
@@ -480,7 +482,7 @@ function ptr($str)
 }
 
 // $table_name = $wpdb->prefix . 'jobdata';
-// $client_ip = $_SERVER['REMOTE_ADDR'];
+// $client_ip = '192.168.1.143';
 // $get_current_job_id = $wpdb->get_var($wpdb->prepare("SELECT jobID FROM $table_name WHERE review_api_key = %s AND jobID_json = %d AND jobID_check = %d AND client_ip = %s", $review_api_key, 1, 1, $client_ip));    
 
 function check_verify_file($current_job_id, $review_api_key) {
@@ -1642,3 +1644,18 @@ function display_fun(){
     $term_id = 42;
     ptr(get_all_reviews_by_term($term_id));exit;
 }
+
+
+//remove unused assets backend
+if ($pagenow == 'admin.php' && isset($_GET['page']) && ($_GET['page'] == 'awesome-google-review' || $_GET['page'] == 'delete-review')) {
+    add_action( 'admin_menu', 'my_footer_shh' );
+    add_filter('admin_footer_text', 'remove_footer_admin');
+}
+function remove_footer_admin () 
+{
+    return '';
+}
+function my_footer_shh() {
+    remove_filter( 'update_footer', 'core_update_footer' ); 
+}
+

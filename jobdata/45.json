@@ -1,0 +1,71 @@
+{
+    "success": 1,
+    "firm_name": "Vatrika Villa",
+    "message": "Google Reviews Successfully Extracted.",
+    "totalCount": 7,
+    "reviews": [
+        {
+            "id": "115405907879593077087",
+            "title": "Bhavesh Chauhan",
+            "description": "1. Room's are very dirty.2. Management is don't know about anything customer requirements.3. Waste of money and time \ud83d\ude14.",
+            "numericRatingCount": 1,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWaA7fSriWzlywLhx6otALrfdiwPs-WP50iADkpKMcht5JwRjRJ=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115405907879593077087\/reviews\/",
+            "publicationDate": "7 months ago"
+        },
+        {
+            "id": "104458893984179996899",
+            "title": "devanshi enterprise",
+            "description": "Gg",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWYXrOP51kCTgGQv49njDU0am2FNf6DNWmJCqRmhCEybSkbfPk=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104458893984179996899\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "111720430240149687117",
+            "title": "MILY THAKKAR",
+            "description": "Very nice project",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUn5_il_xITxYzOKzWeuQlqjLLjGd-3DkSlX5s2Qg16UFm_C0Kv=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111720430240149687117\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "113239100693643365145",
+            "title": "Hiren Prajapati",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVSKorusl9p6HU66hUmJZgaMmGvURBdoRdPEG4mqejnFA2sf6IX=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113239100693643365145\/reviews\/",
+            "publicationDate": "a month ago"
+        },
+        {
+            "id": "108430138859129073320",
+            "title": "Dhanani Harshil",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIOutis70vMqhMjxiZGRjOtNs8m9F4GhuBNRI19xE0yNsGqzA=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108430138859129073320\/reviews\/",
+            "publicationDate": "3 months ago"
+        },
+        {
+            "id": "107875561641913268516",
+            "title": "Jyoti Rajput",
+            "description": null,
+            "numericRatingCount": 1,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLl2BpxvRw1kgK-T3oHFauYpCeYBMjuvdBrSGlg2Llkw5m2zA=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107875561641913268516\/reviews\/",
+            "publicationDate": "4 months ago"
+        },
+        {
+            "id": "113525483061259044615",
+            "title": "Narayan Singh",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUcSjtk02YOhlt5kBST9RYqguKJXl4oSt897zU6J7pMXUa9Ub0=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113525483061259044615\/reviews\/",
+            "publicationDate": "11 months ago"
+        }
+    ]
+}
