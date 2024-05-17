@@ -1,1 +1,13 @@
 - Logs reset successfully !
+- Unauthorized: Invalid API key
+- API key is valid
+- Unauthorized: Invalid API key
+- API key is valid
+- Deleted data of drc systems.
+- Deleted data of Vatrika Villa.
+- Reset and deleted data successfully 
+- Job 17 queued for scraping
+- Job 18 queued for scraping
+- Checked successful ! Now go ahead with GET
+- Google Reviews Successfully Extracted.
+- Data upload successfully!

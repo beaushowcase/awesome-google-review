@@ -437,7 +437,7 @@ function invalidApiKey($review_api_key)
         'data'    => array('api' => 0),
         'msg'     => array('')
     );
-    $api_url = 'http://192.168.1.143:3000/validateApiKey'; // Assuming your Express.js server is running locally on port 3000
+    $api_url = 'https://api.spiderdunia.com:3000/validateApiKey'; // Assuming your Express.js server is running locally on port 3000
     // $api_url = 'https://api.spiderdunia.com:3001/api/free-google-reviews'; // Uncomment this line if the Express.js server is running on a different host/port
     $headers = array(
         'Content-Type' => 'application/json', // Update content type to JSON
@@ -627,7 +627,7 @@ function job_start_at_api($review_api_key, $firm_name) {
         'data'    => array('jobID' => 0),
         'msg'     => ''
     );
-    $api_url = 'http://192.168.1.143:3000/scrape';
+    $api_url = 'https://api.spiderdunia.com:3000/scrape';
     $headers = array(
         'Content-Type' => 'application/json', // Update content type to JSON
     );
@@ -670,7 +670,7 @@ function job_check_at_api($review_api_key,$current_job_id)
         'data'    => array('jobID' => 0),
         'msg'     => array('')
     );
-    $api_url = 'http://192.168.1.143:3000/events';      
+    $api_url = 'https://api.spiderdunia.com:3000/events';      
     $headers = array(
         'Content-Type' => 'application/json', // Update content type to JSON
     );
@@ -1540,7 +1540,7 @@ function job_check_status_at_api($review_api_key,$current_job_id)
         'msg'     => array(''),
         'state'     => 0,
     );
-    $api_url = 'http://192.168.1.143:3000/job/status';      
+    $api_url = 'https://api.spiderdunia.com:3000/job/status';      
     $headers = array(
         'Content-Type' => 'application/json', // Update content type to JSON
     );

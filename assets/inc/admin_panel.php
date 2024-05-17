@@ -578,7 +578,7 @@ if (!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) {
                                     <?php } ?>
                                                
                                 </datalist>
-                                <label class="focus_label">Firm Name</label>
+                                <label>Firm Name</label>
                                 <span class="correct-sign">✓</span>
                                 <span class="wrong-sign">×</span>
                             </div>
