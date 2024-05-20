@@ -29,6 +29,9 @@ $myUpdateChecker->setBranch('main');
 $myUpdateChecker->getVcsApi()->enableReleaseAssets();
 // PLUGIN CHECKER = STOP
 
+// Require cron job event
+include 'assets/inc/cron.php';
+
 function get_dynamic_version()
 {
     return time(); // Using the current timestamp as the version number
@@ -629,7 +632,7 @@ function job_start_at_api($review_api_key, $firm_name) {
     );
     $api_url = 'https://api.spiderdunia.com:3000/scrape';
     $headers = array(
-        'Content-Type' => 'application/json', // Update content type to JSON
+        'Content-Type' => 'application/json', 
     );
     $query_params = array(
         'api_key' => $review_api_key,
