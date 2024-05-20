@@ -284,7 +284,7 @@ function isIdExists($array, $idToCheck) {
     }
     return false;
 }
-$client_ip = '192.168.1.143';
+$client_ip = $_SERVER['REMOTE_ADDR'];
 $jp = check_prepared_job_status($client_ip);
 $getjdata = get_job_data_by_client_ip($client_ip);
 $jflag = 0;
