@@ -569,6 +569,7 @@ if (!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) {
                         <div class="field_container">
                             <div class="input-field">
                                 <input <?php echo($jflag ? 'disabled' : '') ?> list="existing" type="text" id="firm_name" data-termID="<?php echo ($j_term_id ? $j_term_id : 0)?>"  data-jobid="<?php echo esc_attr($job_id_data ? $job_id_data : ''); ?>" required spellcheck="false" value="<?php echo esc_attr($firm_name_data ? $firm_name_data : ''); ?>">
+                                <label>Firm Name</label>
                                 <datalist id="existing"> 
                                     <?php 
                                         $all_firms = get_all_firms();                                            
@@ -576,9 +577,7 @@ if (!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) {
                                         ?>                        
                                         <option class="select_business" data-listID="<?php echo $firm['id']; ?>"><?php echo $firm['name']; ?></option>
                                     <?php } ?>
-                                               
                                 </datalist>
-                                <label>Firm Name</label>
                                 <span class="correct-sign">✓</span>
                                 <span class="wrong-sign">×</span>
                             </div>

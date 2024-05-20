@@ -239,7 +239,7 @@ label {
 input:focus {
     border: 2px solid #ffcc00;
 }
-input:focus ~ label, input:valid ~ label {
+input:focus ~ label, input:valid ~ label,input:disabled ~ label {
     top: 0;
     left: 15px;
     font-size: 16px;
