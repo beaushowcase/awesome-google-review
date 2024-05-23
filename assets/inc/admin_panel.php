@@ -96,9 +96,27 @@ function job_table() {
     }
 }
 
+function remove_custom_tables() {
+    global $wpdb;
+
+    // Define table names
+    $table_names = [
+        $wpdb->prefix . 'jobdata',
+        $wpdb->prefix . 'jobapi'
+    ];
+
+    // Remove tables
+    foreach ($table_names as $table_name) {
+        $wpdb->query("DROP TABLE IF EXISTS $table_name");
+    }
+}
+
 // Hide post type on deactivation
 register_deactivation_hook(__FILE__, 'awesome_google_review_plugin_deactivate');
 function awesome_google_review_plugin_deactivate() {
+
+    remove_custom_tables();
+
     unregister_post_type('agr_google_review');
     flush_rewrite_rules();
 }
@@ -266,15 +284,7 @@ function delete_review_callback(){ ?>
 </div>
 <?php
 }
-function our_google_reviews_callback() {
-    $get_existing_api_key = get_existing_api_key();
-    $get_api_status = get_api_key_status($get_existing_api_key);    
-?>
-<?php        
-$firm_data = get_existing_firm_data();
-$firm_name_data = isset($firm_data['firm_name']) ? $firm_data['firm_name'] : '';
-$job_id_data = isset($firm_data['jobID']) ? $firm_data['jobID'] : '';
-$j_term_id = isset($firm_data['term_id']) ? $firm_data['term_id'] : '';
+
 // Function to check if ID exists
 function isIdExists($array, $idToCheck) {
     foreach ($array as $item) {
@@ -284,9 +294,21 @@ function isIdExists($array, $idToCheck) {
     }
     return false;
 }
+
+
+function our_google_reviews_callback() {
+    $get_existing_api_key = get_existing_api_key();
+    $get_api_status = get_api_key_status($get_existing_api_key);    
+?>
+<?php        
+$firm_data = get_existing_firm_data();
+$firm_name_data = isset($firm_data['firm_name']) ? $firm_data['firm_name'] : '';
+$job_id_data = isset($firm_data['jobID']) ? $firm_data['jobID'] : '';
+$j_term_id = isset($firm_data['term_id']) ? $firm_data['term_id'] : '';
+
 $client_ip = $_SERVER['REMOTE_ADDR'];
-$jp = check_prepared_job_status($client_ip);
-$getjdata = get_job_data_by_client_ip($client_ip);
+$jp = check_prepared_job_status($get_existing_api_key);
+$getjdata = get_job_data_by_api_key($get_existing_api_key);
 $jflag = 0;
 if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 0 || $getjdata['jobID_check'] == 0 || $getjdata['jobID_final'] == 0)){
     $jflag = 1;
@@ -454,6 +476,7 @@ if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjda
   }
 }
 </style>
+
 <?php
 $start_active = false;
 $get_active = false;
@@ -787,32 +810,35 @@ function delete_all_agr_google_reviews() {
 }
 
 // check job status
-function check_prepared_job_status($client_ip) {
+function check_prepared_job_status($review_api_key) {
+
     global $wpdb;
     
     $table_data = $wpdb->prefix . 'jobdata';
     $table_api = $wpdb->prefix . 'jobapi';
 
-    // Check if the last record with the client_ip exists in both tables with specific conditions
+    // Check if the last record with the review_api_key exists in both tables with specific conditions
     $result = $wpdb->get_row($wpdb->prepare(
         "SELECT COUNT(*) AS count 
         FROM (
             SELECT data.jobID_json, data.jobID_check, data.jobID_check_status, data.jobID_final
             FROM $table_data AS data
-            INNER JOIN $table_api AS api ON data.client_ip = api.client_ip 
-            WHERE data.client_ip = %s 
+            INNER JOIN $table_api AS api ON data.review_api_key = api.review_api_key 
+            WHERE data.review_api_key = %s 
             ORDER BY data.id DESC
             LIMIT 1
         ) AS last_record
         WHERE last_record.jobID_json = 1 AND last_record.jobID_check_status = 1 AND last_record.jobID_check = 0 AND last_record.jobID_final = 0",
-        $client_ip
+        $review_api_key
     ));
 
     return $result->count == 1 ? true : false;
 }
 
+
+
 // Get job data by client IP
-function get_job_data_by_client_ip($client_ip) {
+function get_job_data_by_api_key($review_api_key) {
     global $wpdb;
 
     $table_data = $wpdb->prefix . 'jobdata';
@@ -820,13 +846,13 @@ function get_job_data_by_client_ip($client_ip) {
 
     // Query to retrieve job data
     $query = $wpdb->prepare(
-        "SELECT data.jobID_json, data.jobID_check, data.jobID_check_status, data.jobID_final
+        "SELECT data.jobID_json, data.jobID_check_status, data.jobID_check, data.jobID_final
         FROM $table_data AS data
-        INNER JOIN $table_api AS api ON data.client_ip = api.client_ip 
-        WHERE data.client_ip = %s 
+        INNER JOIN $table_api AS api ON data.review_api_key = api.review_api_key 
+        WHERE data.review_api_key = %s 
         ORDER BY data.id DESC
         LIMIT 1",
-        $client_ip
+        $review_api_key
     );
 
     // Retrieve job data from the database

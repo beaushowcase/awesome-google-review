@@ -3,7 +3,7 @@
  * Plugin Name:       Awesome Google Review
  * Plugin URI:        https://beardog.digital/
  * Description:       Impresses with top-notch service and skilled professionals. A 5-star destination for grooming excellence!
- * Version:           1.2.3
+ * Version:           1.2.4
  * Requires PHP:      7.2
  * Author:            #beaubhavik
  * Author URI:        https://beardog.digital/
@@ -75,18 +75,18 @@ function get_existing_firm_data(){
     global $wpdb;
     $table_name = $wpdb->prefix . 'jobapi';
     $table_name2 = $wpdb->prefix . 'jobdata';
-    // $client_ip = $_SERVER['REMOTE_ADDR'];    
-    // $client_ip = $_SERVER['REMOTE_ADDR'];    
-    
     $firm_data = $wpdb->get_row($wpdb->prepare("
         SELECT j.firm_name, j.jobID, j.term_id
         FROM $table_name2 AS j
         INNER JOIN $table_name AS s ON j.review_api_key = s.review_api_key
-        s.review_api_key_status = %d
+        WHERE s.review_api_key_status = %d
         ORDER BY j.jobID DESC
-        LIMIT 1", 1), ARRAY_A);
+        LIMIT 1", 
+        1), ARRAY_A);
     return $firm_data;
 }
+
+
 
 // function get_all_firms(){
 //     global $wpdb;
@@ -179,28 +179,39 @@ function get_existing_api_key_data() {
 
 //business check
 function get_existing_business_data(){
-    $client_ip = $_SERVER['REMOTE_ADDR'];
-    $last_firm_name = get_business_by_client_ip($client_ip);   
-    return $last_firm_name;
-}
-function get_business_by_client_ip($client_ip){
     global $wpdb;
     $table_name = $wpdb->prefix . 'jobapi';
-    $table_name2 = $wpdb->prefix . 'jobdata';
-    
+    $table_name2 = $wpdb->prefix . 'jobdata';    
     $last_firm_name = $wpdb->get_var($wpdb->prepare("
         SELECT j.firm_name
         FROM $table_name2 AS j
         INNER JOIN $table_name AS s ON j.review_api_key = s.review_api_key
-        WHERE j.client_ip = %s 
-        AND s.review_api_key_status = %d
+        s.review_api_key_status = %d
         ORDER BY j.jobID DESC
-        LIMIT 1", 
-        $client_ip, 1)
+        LIMIT 1", 1)
     );
-
     return $last_firm_name;
 }
+
+
+// function get_business_by_client_ip($client_ip){
+//     global $wpdb;
+//     $table_name = $wpdb->prefix . 'jobapi';
+//     $table_name2 = $wpdb->prefix . 'jobdata';
+    
+//     $last_firm_name = $wpdb->get_var($wpdb->prepare("
+//         SELECT j.firm_name
+//         FROM $table_name2 AS j
+//         INNER JOIN $table_name AS s ON j.review_api_key = s.review_api_key
+//         WHERE j.client_ip = %s 
+//         AND s.review_api_key_status = %d
+//         ORDER BY j.jobID DESC
+//         LIMIT 1", 
+//         $client_ip, 1)
+//     );
+
+//     return $last_firm_name;
+// }
 
 // Function to append message to a log file with bullet point prefix
 function appendMessageToFile($message) {
@@ -275,6 +286,8 @@ function initial_check_api_function()
     $current_job_id = isset($_POST['current_job_id']) ? sanitize_text_field($_POST['current_job_id']) : '';
     $get_job_data   = get_job_data($current_job_id);
 
+    // ptr($current_job_id);exit;
+
     $btn_start = intval($get_job_data['jobID_json']);
     $btn_check = intval($get_job_data['jobID_check']);
     $btn_check_status = intval($get_job_data['jobID_check_status']);
@@ -314,20 +327,20 @@ function save_data_to_table($table_name, $data) {
         return false;
     }    
 
-    // Check if client_ip and client_mac are present in the data array
-    if (isset($data['client_ip'])) {        
-        $data['client_ip'] = sanitize_text_field($data['client_ip']);
+    // Check if review_api_key in the data array
+    if (isset($data['review_api_key'])) {        
+        $data['review_api_key'] = sanitize_text_field($data['review_api_key']);
         
     } else {        
-        $data['client_ip'] = null;      
+        $data['review_api_key'] = null;      
     }
 
-    $existing_api_key = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE client_ip = %s", $data['client_ip']), ARRAY_A);    
+    $existing_api_key = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE review_api_key = %s", $data['review_api_key']), ARRAY_A);    
     if ($existing_api_key) {      
         $result = $wpdb->update(
             $table_name,
             $data,
-            array('client_ip' => $data['client_ip'])
+            array('review_api_key' => $data['review_api_key'])
         );
         return $result !== false;
     } else {
@@ -352,7 +365,7 @@ function review_api_key_ajax_action_function()
 
     $table_name = set_table_required('jobapi');
 
-    $client_ip = $_SERVER['REMOTE_ADDR'];
+    // $client_ip = $_SERVER['REMOTE_ADDR'];
   
     // $serialized_data = serialize($data);
     if (!empty($nonce) && wp_verify_nonce($nonce, 'review_api_key')) {
@@ -363,7 +376,7 @@ function review_api_key_ajax_action_function()
             $data = array(
                 'review_api_key' => $review_api_key,
                 'review_api_key_status' => 1,
-                'client_ip' => $client_ip,
+                // 'client_ip' => $client_ip,
             );
 
             $success = save_data_to_table($table_name, $data);
@@ -376,7 +389,7 @@ function review_api_key_ajax_action_function()
             $data = array(
                 'review_api_key' => $review_api_key,
                 'review_api_key_status' => 0,
-                'client_ip' => $client_ip,
+                // 'client_ip' => $client_ip,
             );
             $success = save_data_to_table($table_name, $data);
 
@@ -534,7 +547,7 @@ function job_start_ajax_action_function() {
 
             // Retrieve client IP
             $table_name = $wpdb->prefix . 'jobapi';
-            $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));
+            // $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));
 
             if ($wpdb->last_error) {
                 $response['msg'] = "Database Error: " . $wpdb->last_error;
@@ -549,7 +562,7 @@ function job_start_ajax_action_function() {
                     'term_id' => 0,
                     'review_api_key' => $review_api_key,
                     'firm_name' => $firm_name,
-                    'client_ip' => $c_ip,
+                    // 'client_ip' => $c_ip,
                     'created' => current_time('mysql')
                 );
 
@@ -730,7 +743,7 @@ function job_check_ajax_action_function() {
             $response['msg'] = $response_api_data['msg'];
 
             $table_name = $wpdb->prefix . 'jobapi';
-            $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));
+            // $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));
 
             if ($wpdb->last_error) {                
                 $response['msg'] = "Database Error: " . $wpdb->last_error;
@@ -749,7 +762,7 @@ function job_check_ajax_action_function() {
                 );
                 
                 if ($existing_jobID !== null) {
-                    $where = array('jobID' => $jobID , 'jobID_json' => 1, 'client_ip' => $c_ip);
+                    $where = array('jobID' => $jobID , 'jobID_json' => 1);
                     $result = $wpdb->update($wpdb->prefix . 'jobdata', $data2, $where);
                 } else {
                     $data2['review_api_key'] = $review_api_key;
@@ -773,7 +786,7 @@ function job_check_ajax_action_function() {
             $response['msg'] = $response_api_data['msg'];
 
             $table_name = $wpdb->prefix . 'jobapi';
-            $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));           
+            // $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));           
 
             if ($wpdb->last_error) {                
                 $response['msg'] = "Database Error: " . $wpdb->last_error;
@@ -794,7 +807,7 @@ function job_check_ajax_action_function() {
                 );
                 
                 if ($existing_jobID !== null) {
-                    $where = array('jobID' => $jobID , 'client_ip' => $c_ip);
+                    $where = array('jobID' => $jobID);
                     $result = $wpdb->update($wpdb->prefix . 'jobdata', $data2, $where);
                    
                 } else {
@@ -1074,15 +1087,15 @@ function job_reset_ajax_action_function() {
             $jobID = $current_job_id ;
           
             $table_name = $wpdb->prefix . 'jobapi';
-            $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));
+            // $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));
 
             if ($wpdb->last_error) {                
                 $response['msg'] = "Database Error: " . $wpdb->last_error;
             } else {          
                 $existing_jobID = $wpdb->get_var(
                     $wpdb->prepare(
-                        "SELECT jobID FROM {$wpdb->prefix}jobdata WHERE jobID = %s AND client_ip = %s",
-                        $jobID, $c_ip
+                        "SELECT jobID FROM {$wpdb->prefix}jobdata WHERE jobID = %s",
+                        $jobID
                     )
                 );
             
@@ -1130,7 +1143,7 @@ function job_reset_ajax_action_function() {
 
                     // Update only if jobID and client_ip match
                     delete_file($jobID); 
-                    $where = array('jobID' => $jobID, 'client_ip' => $c_ip);
+                    $where = array('jobID' => $jobID);
                     $data = array('jobID_json' => 0, 'jobID_check' => 0, 'jobID_check_status' => 0, 'jobID_final' => 0);
                     $result = $wpdb->update($wpdb->prefix . 'jobdata', $data, $where, array('%d', '%d'), array('%s', '%s'));
 
@@ -1142,7 +1155,7 @@ function job_reset_ajax_action_function() {
                         $response['msg'] = "Database Error: Failed to update job data.";
                     }
                 } else {
-                    $response['msg'] = "Database Error: No existing jobID found for the provided client_ip.";
+                    $response['msg'] = "Database Error: No existing jobID found for the provided detail.";
                 }
             }
         
@@ -1275,7 +1288,7 @@ function job_review_delete_ajax_action_function() {
     if (!empty($current_term_id)) {
           
             $table_name = $wpdb->prefix . 'jobapi';
-            $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));
+            // $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));
 
             if ($wpdb->last_error) {                
                 $response['msg'] = "Database Error: " . $wpdb->last_error;
@@ -1288,7 +1301,7 @@ function job_review_delete_ajax_action_function() {
                 );
                 if ($existing_termID !== null) {
                     $delete = delete_reviews_by_term_id($existing_termID); 
-                    $firm = get_firm_name_by_term_id($existing_termID,$c_ip);
+                    $firm = get_firm_name_by_term_id($existing_termID);
                     $msg = 'Deleted data successfully';
                     if($firm){
                         $msg = 'Deleted data of '.$firm.'.';
@@ -1354,14 +1367,13 @@ function delete_reviews_by_term_id($existing_termID) {
 
 
 // get_firm_name_by_term_id
-function get_firm_name_by_term_id($current_term_id,$client_ip){
+function get_firm_name_by_term_id($current_term_id){
     global $wpdb;
     $table_name = $wpdb->prefix . 'jobdata';
     $query = $wpdb->prepare("
         SELECT firm_name 
         FROM $table_name 
-        WHERE term_id = %d 
-        AND client_ip = %s", $current_term_id,$client_ip);
+        WHERE term_id = %d", $current_term_id);
     $result = $wpdb->get_var($query);
     return $result;
 }
@@ -1395,7 +1407,7 @@ function job_check_status_update_ajax_action_function() {
             $response['msg'] = $response_api_data['msg'];
 
             $table_name = $wpdb->prefix . 'jobapi';
-            $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));
+            // $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));
 
             if ($wpdb->last_error) {                
                 $response['msg'] = "Database Error: " . $wpdb->last_error;
@@ -1413,7 +1425,7 @@ function job_check_status_update_ajax_action_function() {
                 );
                 
                 if ($existing_jobID !== null) {
-                    $where = array('jobID' => $jobID , 'jobID_json' => 1, 'client_ip' => $c_ip);
+                    $where = array('jobID' => $jobID , 'jobID_json' => 1);
                     $result = $wpdb->update($wpdb->prefix . 'jobdata', $data2, $where);
                 } else {
                     $data2['review_api_key'] = $review_api_key;
@@ -1437,7 +1449,7 @@ function job_check_status_update_ajax_action_function() {
             $response['msg'] = $response_api_data['msg'];
 
             $table_name = $wpdb->prefix . 'jobapi';
-            $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));           
+            // $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));           
 
             if ($wpdb->last_error) {                
                 $response['msg'] = "Database Error: " . $wpdb->last_error;
