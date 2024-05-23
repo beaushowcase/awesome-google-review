@@ -3,7 +3,7 @@
  * Plugin Name:       Awesome Google Review
  * Plugin URI:        https://beardog.digital/
  * Description:       Impresses with top-notch service and skilled professionals. A 5-star destination for grooming excellence!
- * Version:           1.2.1
+ * Version:           1.2.2
  * Requires PHP:      7.2
  * Author:            #beaubhavik
  * Author URI:        https://beardog.digital/
@@ -141,21 +141,36 @@ function get_all_firms(){
 
 
 // set at locatization
+// function get_existing_api_key(){
+//     global $wpdb;
+//     $table_name = $wpdb->prefix . 'jobapi';   
+//     $client_ip = $_SERVER['REMOTE_ADDR'];
+//     $api_key = $wpdb->get_var($wpdb->prepare("SELECT review_api_key FROM $table_name WHERE client_ip = %s", $client_ip));
+//     return $api_key;
+// }
+
 function get_existing_api_key(){
     global $wpdb;
     $table_name = $wpdb->prefix . 'jobapi';   
-    $client_ip = $_SERVER['REMOTE_ADDR'];
-    $api_key = $wpdb->get_var($wpdb->prepare("SELECT review_api_key FROM $table_name WHERE client_ip = %s", $client_ip));
+    $api_key = $wpdb->get_var("SELECT review_api_key FROM $table_name ORDER BY id DESC LIMIT 1");
     return $api_key;
 }
 
-function get_api_key_status($get_existing_api_key){
+// function get_api_key_status($get_existing_api_key){
+//     global $wpdb;
+//     $client_ip = $_SERVER['REMOTE_ADDR'];
+//     $table_name = $wpdb->prefix . 'jobapi';
+//     $status = $wpdb->get_var($wpdb->prepare("SELECT review_api_key_status FROM $table_name WHERE client_ip = %s AND review_api_key = %d", $client_ip, $get_existing_api_key));      
+//     return $status;
+// }
+
+function get_api_key_status() {
     global $wpdb;
-    $client_ip = $_SERVER['REMOTE_ADDR'];
     $table_name = $wpdb->prefix . 'jobapi';
-    $status = $wpdb->get_var($wpdb->prepare("SELECT review_api_key_status FROM $table_name WHERE client_ip = %s AND review_api_key = %d", $client_ip, $get_existing_api_key));      
+    $status = $wpdb->get_var("SELECT review_api_key_status FROM $table_name ORDER BY id DESC LIMIT 1");
     return $status;
 }
+
 
 function get_existing_api_key_data() {
     global $wpdb;
