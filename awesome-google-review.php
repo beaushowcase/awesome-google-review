@@ -3,7 +3,7 @@
  * Plugin Name:       Awesome Google Review
  * Plugin URI:        https://beardog.digital/
  * Description:       Impresses with top-notch service and skilled professionals. A 5-star destination for grooming excellence!
- * Version:           1.2
+ * Version:           1.2.1
  * Requires PHP:      7.2
  * Author:            #beaubhavik
  * Author URI:        https://beardog.digital/
@@ -157,20 +157,13 @@ function get_api_key_status($get_existing_api_key){
     return $status;
 }
 
-
-// api check
-function get_api_key_by_client_ip($client_ip){
+function get_existing_api_key_data() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'jobapi';
-    $api_key = $wpdb->get_var($wpdb->prepare("SELECT review_api_key FROM $table_name WHERE client_ip = %s AND review_api_key_status = %d", $client_ip, 1));  
+    $api_key = $wpdb->get_var($wpdb->prepare("SELECT review_api_key FROM $table_name WHERE review_api_key_status = %d ORDER BY id DESC LIMIT 1", 1));    
     return $api_key;
 }
 
-function get_existing_api_key_data(){
-    $client_ip = $_SERVER['REMOTE_ADDR'];
-    $api_key = get_api_key_by_client_ip($client_ip);   
-    return $api_key;
-}
 
 //business check
 function get_existing_business_data(){
@@ -229,23 +222,15 @@ function displayMessagesFromFile() {
 
 function get_job_data($job_id) {
     global $wpdb;
-
-    // Prepare the table name
     $table_name = $wpdb->prefix . 'jobdata';
-
-    // Prepare the where clause
     $where = array(
         'jobID' => $job_id
     );
-
-    // Retrieve the row from the database
     $row = $wpdb->get_row($wpdb->prepare("SELECT jobID_json, jobID_check, jobID_check_status, jobID_final FROM $table_name WHERE jobID = %d", $job_id), ARRAY_A);
-
-    // Check if the row exists
     if ($row) {
-        return $row; // Return the row data
+        return $row;
     } else {
-        return false; // Return false if row not found
+        return false;
     }
 }
 
@@ -298,41 +283,6 @@ function initial_check_api_function()
     if(isset($btn_upload)){
         $response['data']['btn_upload'] = $btn_upload;
     }
-
-    // if (get_existing_api_key_data()) {        
-    //     $response['success_api'] = 1; 
-    //     $response['msg_api'] = 'API Verified !';       
-    // }
-
-
-    // if (get_existing_business_data()) {
-    //     $response['success_business'] = 1; 
-    //     $response['msg_business'] = 'Business Verified !';       
-    // }
-
-
-    // $client_ip = $_SERVER['REMOTE_ADDR'];
-
-    // $check_job_status = check_job_status($client_ip);
-    // $check_upload_job_status = check_upload_job_status($client_ip);
-
-    // if ($check_job_status) {        
-    //     $response['success_business'] = $check_job_status; 
-    //     $response['msg_business'] = 'Business verified !';
-    // }
-    // else{
-    //     $response['success_business'] = $check_job_status; 
-    //     $response['msg_business'] = 'Business NOT verified !';
-    // }
-
-    // if ($check_upload_job_status) {        
-    //     $response['success_check'] = $check_upload_job_status; 
-    //     $response['msg_check'] = 'Ready to UPLOAD !';       
-    // }
-    // else{
-    //     $response['success_check'] = $check_upload_job_status; 
-    //     $response['msg_check'] = 'Need to CHECK !';
-    // }
 
     $response['success'] = true;
     wp_send_json($response);
