@@ -3,7 +3,7 @@
  * Plugin Name:       Awesome Google Review
  * Plugin URI:        https://beardog.digital/
  * Description:       Impresses with top-notch service and skilled professionals. A 5-star destination for grooming excellence!
- * Version:           1.2.2
+ * Version:           1.2.3
  * Requires PHP:      7.2
  * Author:            #beaubhavik
  * Author URI:        https://beardog.digital/
@@ -75,19 +75,16 @@ function get_existing_firm_data(){
     global $wpdb;
     $table_name = $wpdb->prefix . 'jobapi';
     $table_name2 = $wpdb->prefix . 'jobdata';
-    $client_ip = $_SERVER['REMOTE_ADDR'];    
+    // $client_ip = $_SERVER['REMOTE_ADDR'];    
     // $client_ip = $_SERVER['REMOTE_ADDR'];    
     
     $firm_data = $wpdb->get_row($wpdb->prepare("
         SELECT j.firm_name, j.jobID, j.term_id
         FROM $table_name2 AS j
         INNER JOIN $table_name AS s ON j.review_api_key = s.review_api_key
-        WHERE j.client_ip = %s 
-        AND s.review_api_key_status = %d
+        s.review_api_key_status = %d
         ORDER BY j.jobID DESC
-        LIMIT 1", 
-        $client_ip, 1), ARRAY_A);
-
+        LIMIT 1", 1), ARRAY_A);
     return $firm_data;
 }
 
