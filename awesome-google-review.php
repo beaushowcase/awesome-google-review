@@ -172,8 +172,8 @@ function get_api_key_status() {
 function get_existing_api_key_data() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'jobapi';
-    $api_key = $wpdb->get_var($wpdb->prepare("SELECT review_api_key FROM $table_name WHERE review_api_key_status = %d ORDER BY id DESC LIMIT 1", 1));    
-    return $api_key;
+    $last_record = $wpdb->get_row("SELECT * FROM $table_name ORDER BY id DESC LIMIT 1");
+    return $last_record;
 }
 
 
@@ -279,7 +279,7 @@ function initial_check_api_function()
         wp_die();
     }
 
-    if (get_existing_api_key_data()) {        
+    if (get_existing_api_key_data()->review_api_key) {        
         $response['api'] = true;        
     }
 
@@ -336,6 +336,7 @@ function save_data_to_table($table_name, $data) {
     }
 
     $existing_api_key = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE review_api_key = %s", $data['review_api_key']), ARRAY_A);    
+
     if ($existing_api_key) {      
         $result = $wpdb->update(
             $table_name,
