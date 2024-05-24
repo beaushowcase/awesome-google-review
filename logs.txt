@@ -1,9 +1,4 @@
-- Job 39 queued for scraping
-- Checked successful ! Now go ahead with GET
-- Google Reviews Successfully Extracted.
+- Logs reset successfully !
 - Data upload successfully!
-- Unauthorized: Invalid API key
-- API key is valid
-- API key is valid
-- Unauthorized: Invalid API key
-- API key is valid
+- Data upload successfully!
+- Data upload successfully!

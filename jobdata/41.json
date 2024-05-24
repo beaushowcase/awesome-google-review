@@ -1,1448 +1,251 @@
 {
     "success": 1,
-    "firm_name": "drc systems",
+    "firm_name": "beardog digital",
     "message": "Google Reviews Successfully Extracted.",
-    "totalCount": 160,
+    "totalCount": 27,
     "reviews": [
         {
-            "id": "100376043491633176563",
-            "title": "Patel Tithi",
-            "description": "Never trust or engage with this company.Despite repeated attempts to contact them regarding crucial matters like PF deposits, there's been no response. This lack of responsiveness is deeply concerning and reflects poorly on the company's professionalism and commitment to its employees.Avoid at all costs.",
-            "numericRatingCount": 1,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWjkJqfnERHxIo7oPF5pEjA7vjI0YdhAANoidxaLDjnv_xoofUn=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100376043491633176563\/reviews\/",
-            "publicationDate": "a month ago"
-        },
-        {
-            "id": "103127062178449812300",
-            "title": "manish parihar",
-            "description": "Very bad HR management experience, they post job opportunity on LinkedIn but when we connect with them they don't respond, even emails don't get responded to.",
-            "numericRatingCount": 1,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJUSmOiw4qnX_OJIwHksqF3uzUJQ9yohdxIHi_afk_ndDbdgw=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/103127062178449812300\/reviews\/",
-            "publicationDate": "4 weeks ago"
-        },
-        {
-            "id": "107151125428656524683",
-            "title": "Eden Clairicia",
-            "description": "I worked with the DRC Systems team on a client's website.The team worked quickly and delivered a website that met my expectations.The relationship with the team is both human and professional, and they're always available. It's an ideal context for working well together despite the distance (I work in France).I highly recommend working with the DRC Systems team for the creation of your websites.",
+            "id": "106240262402384585732",
+            "title": "Kelby Derenick",
+            "description": "I highly recommend Barry for whatever digital marketing needs your business requires. I had no idea how to navigate a digital presence to reach more clients but Barry was able to take the reins and assist me through the entire process.  His expertise will certainly help any business get up and running or help an established business grow in the digital world. I will most certainly continue to  use The Bear Consulting Firm in the years ahead and I recommend  other businesses do the same!",
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKowuqF9bqs_3bDmUcKRzGoEYiodcKpOpeyfAVSuZPYs3vsRbw=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107151125428656524683\/reviews\/",
-            "publicationDate": "10 months ago"
-        },
-        {
-            "id": "116959111975223235053",
-            "title": "binoy wilson",
-            "description": "Working at DRC Systems has been an exceptional experience. The supportive and collaborative culture fosters growth and innovation, making it an ideal workplace. The company's commitment to cutting-edge technology ensures engaging and challenging projects that enhance skills and knowledge. Transparent communication channels and feedback mechanisms create a positive and productive work environment. DRC Systems values work-life balance, offering flexibility . The company invests in professional development, providing training programs and certifications for career advancement. Employee recognition and rewards motivate and instill a sense of pride. In conclusion, DRC Systems is a transformative workplace that prioritizes employee well-being, growth, and success. Highly recommended for those seeking a rewarding career in the technology industry.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXGJzOIOloIVX2zhI0yhRsYVsd-Jvu11aKseDHTInaxTK_DXi2G=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116959111975223235053\/reviews\/",
-            "publicationDate": "10 months ago"
-        },
-        {
-            "id": "114565997020761043016",
-            "title": "Chintan Dave",
-            "description": "I spent more than 5 years in DRC Systems and what a tremendous experience it was. I will be thankful to the agile leadership and remarkable team throughout my career. I got the opportunity to work in almost all the technology which is rare.Excellent management who always believes in your capabilities and provides unbelievable exposure. There is not a single day where I don't apply the learning which I gained from DRC.I would be always a DRCian wherever I will be. Wishing DRC Systems a great success!",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocK75M7c4PoqwdaKBMQiNrllLh0Gy66KWMjxOqDS54pO6V37FA=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/114565997020761043016\/reviews\/",
-            "publicationDate": "10 months ago"
-        },
-        {
-            "id": "106277466132694370491",
-            "title": "Sajid Lanza",
-            "description": "I worked with DRC Systems for almost 2 years in Sales team. Overall it was great time as they are the best example of perfect work life balance structure and the best of all is there time flexibility.",
-            "numericRatingCount": 4,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIxAc3DTiuBKouqhBbPVfCTr88oZ-g0nI9c5G9n6caLv-ZZHg=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/106277466132694370491\/reviews\/",
-            "publicationDate": "9 months ago"
-        },
-        {
-            "id": "105596589304480016944",
-            "title": "Chintan Shah",
-            "description": "DRC Systems is a great place to work in terms of infrastructure, culture, working environment and growing your career.Upper and Middle management is highly skilled and competent. A fastest growing company in terms of total strength as well as the quality of projects.Endless opportunities to learn, grow and build your career.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUyiTFz91HslGgFyc7rkGjlEh8x9FRRuxljNWKEoCl2H3FpMhDN-Q=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105596589304480016944\/reviews\/",
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUOMs3eWCMskSSNloVfCnM9B6ZNV_OKk3ljUmdGD3G-wY5iBSfJ=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/106240262402384585732\/reviews\/",
             "publicationDate": "a year ago"
         },
         {
-            "id": "101150601062620261747",
-            "title": "Ankit Koshta",
-            "description": "It was such a great experience working with DRC Systems. Started my job career from DRC and got a proper guidance from seniors. Good office location.",
+            "id": "114444997035385471049",
+            "title": "Andrew Cohen",
+            "description": "Barry is a top-notch Google Business consultant. My company is getting noticed and I'm seeing increased calls and contacts that are leading to good clients.  Barry understands search.  Critically, he takes the time to understand my business so the search results are meaningful and captures quality clients. I\u2019d give more than 5 stars if I could.",
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXJOI2QsB_v14Auyy3halzm12y2HXrBT8i1PWDCc7fiW5p5Nz8B=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101150601062620261747\/reviews\/",
-            "publicationDate": "9 months ago"
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUHi9r6LzUTOa1JlqU0DFHClIJ7ibk5h3waCqheY-6-qmD9wOQ=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/114444997035385471049\/reviews\/",
+            "publicationDate": "6 months ago"
         },
         {
-            "id": "115507101539979664839",
-            "title": "Trivaliya Bhandari",
-            "description": "I worked at DRC Systems in the sales team, and it was a positive experience overall. The work environment was pleasant, and the company had a supportive culture that emphasized teamwork and customer satisfaction.",
+            "id": "102128488286946882222",
+            "title": "Wendy Perez",
+            "description": "Barry is great for digital marketing and always wants to make his clients happy. I recommend him to business that need his skills of marketing digitally",
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjV83a-Ujc0Xgy_JMS1VLI5CcpjXGdkog64mtM0o4fOlo_iuPHGj1Q=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115507101539979664839\/reviews\/",
-            "publicationDate": "11 months ago"
-        },
-        {
-            "id": "108644799862551461357",
-            "title": "Hardik Davaria",
-            "description": "I worked in DRC Systems for more than 10years and highly satisfied with the work & people Culture.I feel like Home, away from Home. People here are very friendly and can go extra mile to support and meet client's expectation & satisfaction. I am blessed working with DRC Systems :)",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWrb0o9KhBUzpX4mSJKBbzVTWNp-BuczmrpgJYiWD-rWHzpLRw=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108644799862551461357\/reviews\/",
-            "publicationDate": "a year ago"
-        },
-        {
-            "id": "104557162120133613218",
-            "title": "Mitesh Prajapati",
-            "description": "I worked with DRC systems for about a year. It was amazing support from HR team Swapna, Jatin and Ketki. Dipesh Shah sir is always my back at any point I stuck in erms of technical and process. I worked with Raju Makwana also.DRC systems Ltd follows the flexibility in time to support work life balance in really.Salary always on time and HR team Swapna ma'am is always ready to help in any matter.The seating arrangement and environment of office is equivalent to MNCs",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLiRxif0QU15cHsK9j_dJwSH1UU-RWSG9e7GO0sXMN0tPF4ow=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104557162120133613218\/reviews\/",
-            "publicationDate": "10 months ago"
-        },
-        {
-            "id": "115863965922487352419",
-            "title": "Ravishankar Patel",
-            "description": "It has been 14yrs journey to \"DRC Systems,\" and still continue!.. Wow... Many ups and downs came, but we still continue the progress from private to listed company, special thanks to management team. I really feel proud that I am the part of DRC systems and will always recommend everyone to be the part of it.\"Coming together is a beginning; keeping together is progress; working together is success.\"",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKklTz0M2Mjc0Gg1lXv13iKAZv222i2lnA24zC-m63d5s3WXbw=s40-c-rp-mo-ba4-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115863965922487352419\/reviews\/",
-            "publicationDate": "a year ago"
-        },
-        {
-            "id": "118076549916133665770",
-            "title": "aslam ansari",
-            "description": "DRC is one of the finest IT Company with huge infrastructure and People's first culture. I enjoyed working with DRC.  Management and colleagues are very supportive and friendly. It's great working here.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocI5s_JIfYmYllF4ZcoBOydv9gg4uEqY06TDa1RXArYPEY4rEw=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/118076549916133665770\/reviews\/",
-            "publicationDate": "a year ago"
-        },
-        {
-            "id": "101843959574445360319",
-            "title": "Ashish Undhad",
-            "description": "As i have started my career with this company and worked for 10 years in this company, i am satisfied with team environment, culture and infrastructure.Thank you DRC Systems for giving me such opportunity.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXyKmJIZ0cyMOGmC9iGhz8LcA_YRxUIv8STNgNJBp-IE2-F8V93=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101843959574445360319\/reviews\/",
-            "publicationDate": "11 months ago"
-        },
-        {
-            "id": "111659517473326715096",
-            "title": "Dipesh Shah",
-            "description": "DRC Systems provides opportunities for continued learning and growth, which is greatly appreciated by the team. Their team's expertise in the latest technologies and industry best practices is invaluable in modernizing any systems and processes.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLkQj-tXIG4dbeoXQMnGa2bl089v41vszeeFl-eE8Ei3SYxgw=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111659517473326715096\/reviews\/",
-            "publicationDate": "a year ago"
-        },
-        {
-            "id": "110948171398625473834",
-            "title": "Rajen Ghorecha",
-            "description": "Best place to work, currently company has been moved to Gift city Gandhinagar and work under Infibeam Corporation.. Great opportunities & growth",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWfttEC8GKXTozAM60lJ885XqUEbwziyOPbkHNKoHG6VZIw4ikd=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110948171398625473834\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "104279272563008204739",
-            "title": "Pankaj Bhatia",
-            "description": "DRC Systems is a great company with world class infrastructure and highly skilled team. I would highly recommend for clients as well as job seekers",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJar_oFFEUHtSLdkLzafnh30twybh83v_CbtRP49kiqvedYQw=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104279272563008204739\/reviews\/",
-            "publicationDate": "a year ago"
-        },
-        {
-            "id": "100513377281190393906",
-            "title": "Darshan Raval",
-            "description": "I worked at DRC Systems in the NodeJS Department, and it was a positive experience overall. Company staff is very supportive. Work environment was very nice.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWEc-CZkNW0W_3zpnoLgoksMoh0ykuguNOz2eUa-v8u5kRlJEhlUQ=s40-c-rp-mo-ba6-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100513377281190393906\/reviews\/",
-            "publicationDate": "10 months ago"
-        },
-        {
-            "id": "109003272994320690781",
-            "title": "Vijay Solanki",
-            "description": "I had a requirement for App development for my e-commerce website. But, I had least idea about the design and about the nitty-gritty of putting everything in one app. DRC Systems gave me that unique idea and I decided to choose them for the app development work. The project is ongoing and I am excited to see the LIVE app soon!",
-            "numericRatingCount": 4,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVoQCk2LzQxBOGqhnnaj9eHgmu2xfMaX01YFgGYkOzBlseRDoNy=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109003272994320690781\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "103685208192436118259",
-            "title": "Yugank Gupta",
-            "description": "Waste of time applicants even if you clear all rounds in this company . Company hr and higher management say you are not shortlisted. I got a reply by hr you are not suits as per our requirements and sets of skills.Don't apply here...",
-            "numericRatingCount": 1,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKYDbxoZ3vkpy4QBF9bGVIonwqZItO7PfGtf3ykvFdoNUAeARx3=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/103685208192436118259\/reviews\/",
-            "publicationDate": "a year ago"
-        },
-        {
-            "id": "115058675998954910761",
-            "title": "Namrata Vihol",
-            "description": "I had no technical knowledge of websites. I own a small business and wanted to create my own brand\u2019s online store. The entire process of website creation was clearly laid down by DRC System\u2019s team in detail. Upon my satisfaction, I decided to choose them for making a customized website for my business.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWxaoTZdEx7WgTXCDiE7lgMFmjc04mu5eGp3u45HjP5WM_kDfV2=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115058675998954910761\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "111154784383866065791",
-            "title": "Joe Anderson",
-            "description": "I am working with Drc systems since 4+ years . I have faced bit problem in beginning because i was new to outsourcing but Sudhir Has help me a lot for all my projects. He make the process so smooth . They have best plan is dedicated developer. i Have hired 2 developer , I would like to recommend to the Web agency who is looking to lower down there expenses for 50 % to 60 %.  & Increase sales cycle double.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXwlbiiS0Cm19c9C3O99Up-ms_d1z-hwmYC-aMtVCE0ns53gkPu=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111154784383866065791\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "107005734077807801098",
-            "title": "Uttam Sharma",
-            "description": "DRC is a nice place to work. Apart from Work, There are various activities going throughout the year. It offers perfect balance between work & personal life. Really Amazing place to work :)",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjU2huO4E5muR1CcQ0InkDPPjsN2H_SWOuIn4LvhFXhzP8OKto1L=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107005734077807801098\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "100316251642231475337",
-            "title": "mansinh solanki",
-            "description": "I had less number of products to showcase on my website but this limitation was overshadowed by DRC Systems with their fantastic design. My limited collection was well put on the website. The customers have liked my work and my client list has shot up in very less time. Thank you DRC Systems",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUnaCJ9hQVZimGL63_g8CyIkt_08ZbVHqtythOJgp4MiFC9cCzJ=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100316251642231475337\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "102203242284835056798",
-            "title": "Riya Sharma",
-            "description": "I had a reception of payment issue with some overseas clients which needed urgent action. There was an error related to the payment gateway integration with the website. For this, I immediately approached team DRC and asked them to fix the issue. The problem was resolved in a matter of 2 days and I felt so relieved! I haven\u2019t come across any problem thereafter. Thanks to DRC System for prompt action.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKvcGh9eyKMlPKdHA2GFEX0ysze4uZwc9w-nWUUx42Z0Kz3Gg=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102203242284835056798\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "104498961080293365250",
-            "title": "DER SPR\u00d6DE",
-            "description": "== Really the worst case ! ! ! ==Two orders:Order 1:- Fully paid.- 6 years have been waiting :(- I never received the website :(- Purchase price was not refunded :(Order 2:- Fully paid.- Order was never started !- Money was not refunded !Check out Goolgle: Experience DRC Systems.I lost a lot of money at DRC Systems!Please be careful!",
-            "numericRatingCount": 1,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKzwgGbfdAwxdQsB0Kft9St3N0eX2QhJqReb6SiX97X9-kfnw=s40-c-rp-mo-ba4-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104498961080293365250\/reviews\/",
-            "publicationDate": "a year ago"
-        },
-        {
-            "id": "109673889969229876105",
-            "title": "Priya Shrivastva",
-            "description": "I had a big project in hand for which I chose DRC systems. The best thing about them which needs special mention is that they gave me timely updates on the status of the project. This was a major sigh of relief and that made all the difference to my team.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJ5m3L1uSaHlRarejop4pkWIC5XsSaXB-IRgPa-KoycFSfGIw=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109673889969229876105\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "115858285387395488990",
-            "title": "Milan Gohil",
-            "description": "Really bad experience, unprofessional and don't trust on company without any written proof for job. No any proper HR management. if you are looking best place for work then i suggest other.",
-            "numericRatingCount": 1,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXjJfm4yq_mVdmiuWN6yf2nPuJQNhWbARdiIbaqHlMR7bjY_WO6=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115858285387395488990\/reviews\/",
-            "publicationDate": "a year ago"
-        },
-        {
-            "id": "108446515422525641124",
-            "title": "Pankaj kamani",
-            "description": "Good work environment and challenging work were the key interesting things for me when I worked here.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVfxoJdJdW2B65qUp7Mqc3ZuGznfTUeEb25h5qdVUrV2SWE7XpP=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108446515422525641124\/reviews\/",
-            "publicationDate": "11 months ago"
-        },
-        {
-            "id": "101401337301455416623",
-            "title": "Harsh Jadav",
-            "description": "Nice people, Nice interview, Big company, Nice hr, nice location.Thank you",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXnetDXsCsPqUcOPBX-TCnst_M_yohu2SmGjLMhW99TFxIu1hv8=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101401337301455416623\/reviews\/",
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWPQbn8eJ7qB2Uh7QWGzaUiommkYxM2IRFluIWkbasVkkboBOwH0A=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102128488286946882222\/reviews\/",
             "publicationDate": "7 months ago"
         },
         {
-            "id": "117191095147849963091",
-            "title": "Ravi Patel",
-            "description": "DRC systems provide end-to-end solutions to every requirement you might have..which basically means they create your website from scratch and into a marvellous spectacle....",
+            "id": "110370687397801197506",
+            "title": "Dusty DePree",
+            "description": "The Bear Consulting Firm is awesome to work with. Barry is sharp as they come, easy to work with and knows how to steer ships in the right direction, towards success. I am lucky to have crossed his path and it is a pleasure to work with him.",
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjU388B26C_7HfDAxfIZfPJUtry5hdI-3rQhr77pt5M_FOKCLyyV=s40-c-rp-mo-ba4-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117191095147849963091\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "110678684889034090905",
-            "title": "mahendra gohil",
-            "description": "We have working like a home. Great place to build your future here come and spent some time and visit our company  see and ask our environment and atmosphere...like Haven",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXK886gniOTYkYZ9vYrA2l5IFimUpVlgBkRdXUae6d_AtMGtxrHIQ=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110678684889034090905\/reviews\/",
-            "publicationDate": "4 years ago"
-        },
-        {
-            "id": "114429579330966459575",
-            "title": "Nikhil Prajapati",
-            "description": "An amazing place for ideas and team work. Superbly supportive work culture and environment. Feeling proud to be here with such a good people.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVyttJy9NptMUZh7PmW32djY4A-6DWjIEHR51psH5gSIVF-8o3Jvg=s40-c-rp-mo-ba4-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/114429579330966459575\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "111807245094752418145",
-            "title": "satish patel",
-            "description": "Highly energetic Team with a go-get attitude. The motivation that is needed time to time is tremendous. DRCians Rock!!",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVj2tTAg7Yc9hTe_iSTJwPrUjlvP6H4DG5w8Q1LSM7csg0EuSU3=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111807245094752418145\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "113954502923412178850",
-            "title": "Abbas Shaikh",
-            "description": "Good Environment I feel",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJFCFEXZBFhmiV0g7Wcy0yefhzJPrCsBkIMl2uBosOwF5SNbA=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113954502923412178850\/reviews\/",
-            "publicationDate": "a month ago"
-        },
-        {
-            "id": "115257056740604244196",
-            "title": "Varsha Jigar",
-            "description": "One stop solution's for web and app development. I am haooh with their timely delivery for my web and app both. Thanks",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJe4b_FM5GwjFuvKsDTbHoEAPZMH7Y637emv2CXl-EBlkaDoA=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115257056740604244196\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "101687622056601963146",
-            "title": "Harsh Vadodaria",
-            "description": "The company never thinks about your preference of technology. \"One wrong leader will always lead to nothing\" is proven here.",
-            "numericRatingCount": 1,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXvJk8HkJVWURZJ4Fq_ebghx58L8QMWH5MXrudOY_6Hqjivl-pWgQ=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101687622056601963146\/reviews\/",
-            "publicationDate": "3 years ago"
-        },
-        {
-            "id": "111921040476487696186",
-            "title": "Divyanshu Tiwari",
-            "description": "Company is exhilarating under a good leadership, here people are with great enthusiasm to deliver.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIre73sPnB9nQvtipco43iY8rj3ds3sakhYCuFi1qn1SeJSE3I=s40-c-rp-mo-ba4-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111921040476487696186\/reviews\/",
-            "publicationDate": "3 years ago"
-        },
-        {
-            "id": "114158492743672121333",
-            "title": "Piyush Ghedia",
-            "description": "I like the enthusiasm of employees and optimism in delivering projects under time constraints. The team is high on energy!",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUUX2rccUDgg77R0j49mGkA3FMJYzP9v62qoivL3gKMabt6aU3B=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/114158492743672121333\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "105892223179654090196",
-            "title": "saumil nerpagar",
-            "description": "Nice place to make your software or website or app at one place..",
-            "numericRatingCount": 4,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXxGPlA5mwbMq_IWMlpYPnY1Sa3MGHpCtt-izJQcAaE-AMhpQEh=s40-c-rp-mo-ba5-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105892223179654090196\/reviews\/",
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUtYb7FNAqvo0YVA2dSEdoacwiuY3ufX5-titJ0vyceJzRKXA66=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110370687397801197506\/reviews\/",
             "publicationDate": "a year ago"
         },
         {
-            "id": "107043906647529932047",
-            "title": "Angad A.D",
-            "description": "Great work place. Creativity at its best at DRC",
+            "id": "107528134788684905401",
+            "title": "Eric Baker",
+            "description": "Barry is not only a lifelong friend but an absolute expert when it comes to digital marketing.  I\u2019m an independent insurance agent and the growth of my agency was unimaginable before I started working with Barry!  His attention to detail and knowledge of Internet marketing and google my home are second to none!  Most importantly, Barry really cares about each and every client like they are family and his passion for helping people grow their business is infectious!  I would highly recommend Barry to anyone wanting to grow their business and have fun while doing it!",
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUsq_1OsBz9JjQgOS5xSxbc2KifwQwoE-XIvJsJUW7J7rye0bbN=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107043906647529932047\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "105832083502847316884",
-            "title": "yash Thakar",
-            "description": "Really enjoy working at DRC systems.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVQ_Lg1QTnMl4R0nTnFbZviqu29KPP3nR_H7hcC56LBCQVnQJD9gw=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105832083502847316884\/reviews\/",
-            "publicationDate": "a year ago"
-        },
-        {
-            "id": "116536022733191062206",
-            "title": "Dinesh Mer",
-            "description": "Great place to work. Especially for startup.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXYoTZTarUrytCMx_A7lAuczV7-x7AKjp5JZ0aOnbAfa7Y7IFKj=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116536022733191062206\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "112938845964359002034",
-            "title": "ronak Yadav",
-            "description": "Being a fresher I find it the best place to learn and work",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKR263dzILz6hyRaxD0WZcVpivOSivUd58y19ng-OBdcgMXkg=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/112938845964359002034\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "116805776677691328509",
-            "title": "dhaval travadi",
-            "description": "Great place to work and learning new things.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocL59NJMpJFRLbESP3mQExK9vGXrhbuSbJWdiprCfng_Q0IQdT8=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116805776677691328509\/reviews\/",
-            "publicationDate": "3 years ago"
-        },
-        {
-            "id": "109399504652192527806",
-            "title": "Sahil Khokhar",
-            "description": "Good place to work in IT industries",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIG0iP45GASpyhdNZcqqmw0X1Pw_UALxGX1ePn3AZuqgvf0xA=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109399504652192527806\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "112543676772128991399",
-            "title": "Ravi Gadhiya",
-            "description": "Right place for employees to grow. Really nice place.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjViBdQqmw1OUQWDnVyvB93pgSpNCvb-hVVrBEPN_Q0UnLvUmO_Z=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/112543676772128991399\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "103758302498464556035",
-            "title": "Nishi Kampanwala",
-            "description": "DRC Systems is the best place to work.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVLee-oiQlyC3UCzTS00wmWwdDHr4SsQaJPFuf9CW3o1eyz_Jgp=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/103758302498464556035\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "105026331362997996903",
-            "title": "Arpan Barot",
-            "description": "Awesome Workplace...With beautiful atmospher...",
-            "numericRatingCount": 4,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXgjEyAgkmSGgYtU5aKAfeZzWObfOPGiLZAqHY_YUmEh3tQzhE=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105026331362997996903\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "103382942557907153238",
-            "title": "Ravi Sachaniya",
-            "description": "It is very nice place to work.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWxu7OZGCw3EBc9Zt9VxmvTYj_dd9VWAwCqcDTHRMf0DkPkwzu5=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/103382942557907153238\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "113030945341319026367",
-            "title": "Dhaval Prajapati",
-            "description": "Very good view...from 27th floor",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUqwp6Eao14lAL6o_Rq2MkhVSD168lyD7XNiFQ1-bV2oh2Hu_g=s40-c-rp-mo-ba4-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113030945341319026367\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "105873336563139638775",
-            "title": "Pratik Chauhan",
-            "description": "Best place for Work and Opportunity.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWMIKAqUQXfuYe2cIKIM0662wPhup9fTfJji5W2IBU2QR9qaAax=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105873336563139638775\/reviews\/",
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJDOjn18aOiH499jt01Av7JRUog6Cqq-04hDv1yIpfZ7Aqlzg=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107528134788684905401\/reviews\/",
             "publicationDate": "4 years ago"
         },
         {
-            "id": "114317808969028823035",
-            "title": "Sudhir parmar",
-            "description": "Drcsystems is the Best TYPO3 Company",
+            "id": "117938156187918587885",
+            "title": "Scott Neubauer",
+            "description": "Barry has not only brought success to his clients beyond expectation, but he does it without being an annoying salesperson.  He is genuine, unique, funny, and a very knowledgable law firm digital marketing consultant.  Barry is extremely valuable to any law firm and is so good at trimming the fat when it comes to the marketing budget.   He is a trusted advisor, and anyone who gets to work with him understands what I am saying.  I highly recommend for all law firms to hire him for his unique skills with Google My Business optimization and all consultation needs.",
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUOZ-WkWKEsn7IjctF9VYfg6APNkT_CkWWLnaRhUwN0Tq0S7Eo76w=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/114317808969028823035\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "104142918407993443487",
-            "title": "Nirav Sadhu",
-            "description": "Perfact place to work and grow",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjW1kczPF_hmYlvzQ2lIfkC_vanuI9tpjpZW4M6RyAYjeJeMVMCRsw=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104142918407993443487\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "113962172093817089601",
-            "title": "Pritesh Khetani",
-            "description": "Comfortable place to work.",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUxKc-fsM1eDWmm08IYgcT7p4Tm-1LrTADL1340ZvjLS5DsteeQ=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113962172093817089601\/reviews\/",
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKAqYtNP34EW7z7vkIDAp8DENHFn2kXqYyybHjHPP8PKIB56w=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117938156187918587885\/reviews\/",
             "publicationDate": "4 years ago"
         },
         {
-            "id": "106636447464686045730",
-            "title": "irfan khan",
-            "description": "Great Place to work!",
+            "id": "101169580804620637905",
+            "title": "J Jeffrey Herman",
+            "description": "Barry is the best law firm consultant in the country.  He a force and a vigilante against the \"Too Big to Fail\" companies \ud83d\ude0f.  He will guide you and take care of everything dealing with online marketing.",
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocK_lOZqND8suHaPlbz4_8WqdTAXQ37d_ltc58Iiljja_rbhk2w=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/106636447464686045730\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "102499305092054284360",
-            "title": "bharat ghanghosh",
-            "description": "Excellent",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJ7GN0I973Tg6bzvZQdwXw4L-G45ISG0nSesPlx6ahndgr39Q=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102499305092054284360\/reviews\/",
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocImpo60ajFirROKqEZ3VvST8W1HgmyUyQMwies0DTS2FYYUlA=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101169580804620637905\/reviews\/",
             "publicationDate": "a year ago"
         },
         {
-            "id": "109031482063973331506",
-            "title": "Dakshit Golakiya",
-            "description": "As",
-            "numericRatingCount": 3,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocK1tF-3_bdqDgGlXyNEETWsDsJy7n3FyrOxBgkg10mFgJkkQ2Tq=s40-c-rp-mo-ba5-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109031482063973331506\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "100889774312859510345",
-            "title": "Dhrumin Patel",
-            "description": "Good environment for work...",
+            "id": "112606851190347438977",
+            "title": "W SM",
+            "description": "We have worked with Barry for several years and there is no one better with digital marketing consulting.  Specifically, he is a guru with the Google My Business listing optimization.  His service is second to none, and you can trust him like he is family.  He has your best interest at heart and always comes through.",
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXcU8zPDrQ5a7ollVJxKt3ppvErPQHk8sx7CZDKC6a1Nk-JFElHUQ=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100889774312859510345\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "112644233335008506465",
-            "title": "Naresh Makwana",
-            "description": "Great place to grow up....",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKx6U33sk9AomtW4yZzpoLPCen4X3DP4-plnGoknaWT2vVyUw=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/112644233335008506465\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "115827539592519001950",
-            "title": "Dipak Patel",
-            "description": "Good experience",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJgsi1No3VxIP6v5UuwR6GHVOAcv0hlw8Fk2_2fg77qlfoZlII=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115827539592519001950\/reviews\/",
-            "publicationDate": "11 months ago"
-        },
-        {
-            "id": "113442529352895565041",
-            "title": "Raj borisagar",
-            "description": "Good for freshers",
-            "numericRatingCount": 4,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVVD4BFCa2m1OL7Awx2Mzxqp8ybQMULGHJqiG1aBzuj8ok4EAts=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113442529352895565041\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "116532123738413216824",
-            "title": "Krupali Jethva",
-            "description": "Nice",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXZshBXXrlbqeWIvaABZY4vbaUgylVsSWPRLd9KRMlOx9EwFIFv0Q=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116532123738413216824\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "104265267505396537455",
-            "title": "Ankit Patel",
-            "description": "Perfect for quality service",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUKJZhQR0yFcmjOQaNs9yw8CQw4n752DX88MwrE0tNVYs8vTBfO=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104265267505396537455\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "108037482333751585012",
-            "title": "Hemant Kumar",
-            "description": "Good company ...",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUDc-sBrQRwO9xxXvg_pJSU4Vqim4v_5k9DZRuON_b2GVH37SIUww=s40-c-rp-mo-ba5-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108037482333751585012\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "105790785280364790930",
-            "title": "Nidhi Patel",
-            "description": "Best place for Work and opportunity",
-            "numericRatingCount": 4,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLU17TA0EdS4k_ceSYah6Wi4KRaHtYzf2F1L6xz4eDLokag5Q=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105790785280364790930\/reviews\/",
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVX1GepVzoOqpi_BoTpTl24y6RxlGLGt99o_WDhL6a8YugwEBE=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/112606851190347438977\/reviews\/",
             "publicationDate": "4 years ago"
         },
         {
-            "id": "116421562065006403471",
-            "title": "Savaliya Tushar",
-            "description": "i like it your culture",
+            "id": "107097420835312654310",
+            "title": "Ronald Stitch",
+            "description": "Barry is amazing. The work he does for our google business page generates leads. He is very professional and extremely responsive. We can't recommend Barry enough!",
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXsfzbF-aQCkC-drA8EanRy_H_UGBJCm2X0dyra2btwpPqAStgN=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116421562065006403471\/reviews\/",
-            "publicationDate": "6 years ago"
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLDhJByr-LqCwYeq7uSFY_6cxDFnzrC1RNwRRcTI__jPomXHA=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107097420835312654310\/reviews\/",
+            "publicationDate": "2 years ago"
         },
         {
-            "id": "110342163015833059977",
-            "title": "Monark Bhatt",
-            "description": "Nice company",
+            "id": "108055408816954323967",
+            "title": "Stephanie Mahdavi",
+            "description": "Barry is very knowledgeable and very honest. He has proven to our firm his worth on \u201cGoogle My Business\u201d listing. His skill sets are top notch. He took us by surprise when he generated big leads in our area. I would highly recommend him for all your marketing needs.  He is very wise when it comes to Google My Business. Incredible customer service, prompt, and brings in the clients.  Can\u2019t ask for anything more!",
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVlgoWQOFcbJi4vmnUcUNLPKZKm9WsgLKLMsEZPx8qbMvwXTwy-=s40-c-rp-mo-ba5-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110342163015833059977\/reviews\/",
-            "publicationDate": "6 years ago"
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJbl0DfcB4NPROweAohFYO5WRid4TWhc3bl08du0XFFiltAlA=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108055408816954323967\/reviews\/",
+            "publicationDate": "2 years ago"
         },
         {
-            "id": "109504764015390758226",
-            "title": "Sanjay Modi",
-            "description": "Nice work place",
+            "id": "104035723726709885094",
+            "title": "Ani Azadian",
+            "description": "Barry is very responsive and always striving to help his clients. His approach is to take the proper channels to achieve longevity in marketing.",
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXVTl3fRReagiwAlzHcpgWC66dt1ZPS5wPhqottBu0OAAfRGOgx=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109504764015390758226\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "115134552492772576105",
-            "title": "Patel Maulik",
-            "description": "Its Great Place to work",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXQYbJL642EOzwhzIrE4PLwTiw5HmmjkphOb83YgFrcmRZed8br=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115134552492772576105\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "108621874113527126094",
-            "title": "Ankit Parikh",
-            "description": "Good company",
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjU4JjwMLbrWHcOK1HMuwmz340xn1wJsG8t37U1zysQk3MQPe964=s40-c-rp-mo-ba5-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108621874113527126094\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "115281053436498551894",
-            "title": "Daxesh Patel",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUl6w5zSVfYh8y-NJLJA4Ss9xTQG-u7tsOXxADURAapytVlzLH3vg=s40-c-rp-mo-ba6-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115281053436498551894\/reviews\/",
-            "publicationDate": "3 years ago"
-        },
-        {
-            "id": "102444335795202182533",
-            "title": "Jayshree Rathod",
-            "description": null,
-            "numericRatingCount": 1,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIvGOMBwrQ-hg9xhG3JdoArn9-OuPlaQl095QPu6GTBDqZh-w=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102444335795202182533\/reviews\/",
-            "publicationDate": "2 months ago"
-        },
-        {
-            "id": "102755497653656946601",
-            "title": "Er.SHAILESH KUMAR GIRI",
-            "description": null,
-            "numericRatingCount": 4,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVMOFKxPU70ApxlvZycKwa9DXBG7kCvP2m43wEdJDWSn24oGVOD=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102755497653656946601\/reviews\/",
-            "publicationDate": "3 months ago"
-        },
-        {
-            "id": "105652605450863111117",
-            "title": "Chinmay235",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjX4O8l8Zf2dvAUP6tHHO_b7oRT0bBlBhoEjiKHPw1HDlJIdWOuKKA=s40-c-rp-mo-ba6-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105652605450863111117\/reviews\/",
-            "publicationDate": "9 months ago"
-        },
-        {
-            "id": "104149509772072247891",
-            "title": "Saikat Chakrabarti",
-            "description": null,
-            "numericRatingCount": 4,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLM7sHsrURBOViuReMYPZZKKbd6Dd5SMvkOjEuMsXYqZMHFmQ=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104149509772072247891\/reviews\/",
-            "publicationDate": "10 months ago"
-        },
-        {
-            "id": "115323410692546275925",
-            "title": "Vinay Narmeti",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIQJPOnE8LK0TC538zjp3G9A0lMUT-Ruv7OFsUdXmpHTq39=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115323410692546275925\/reviews\/",
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLZD4Pybod2-08VDjDoU5Mlw6knMwWaIFOFIGShLpBo1knqRg=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104035723726709885094\/reviews\/",
             "publicationDate": "a year ago"
         },
         {
-            "id": "101384308614247752323",
-            "title": "Mittal Shah",
-            "description": null,
+            "id": "110727211688986990408",
+            "title": "George Azadian",
+            "description": "Barry is an honest guy who has skills that bring in quality clients. He is always available and very responsive. Much appreciate his work on GMB (google my business), which is incredible. I  wish I could find a SEO guy who delivers like Barry does...",
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWvU4mptMs7DATVhrgoPwC8c_UM6030r-hSPgcJ2aZkzBZ8iV15=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101384308614247752323\/reviews\/",
-            "publicationDate": "a year ago"
-        },
-        {
-            "id": "116907206272341031022",
-            "title": "SIDDHARAJ RAOL",
-            "description": null,
-            "numericRatingCount": 4,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXNWgOylpobSzyxypAAEiwmrSIzP2K5_AuFJDt9d_9SlBpDhx7y=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116907206272341031022\/reviews\/",
-            "publicationDate": "a year ago"
-        },
-        {
-            "id": "109745145483987854195",
-            "title": "Deval Jani",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUmMWegdpTfYS9EKrUYAIF_RBYBCWrO72EzeozYxP0grHW_vvE=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109745145483987854195\/reviews\/",
-            "publicationDate": "a year ago"
-        },
-        {
-            "id": "105626766557775001052",
-            "title": "Priyanshu Ahir",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXgqy6oUsUXZVRBxkYU-qVi07TvnWfL3HGsGkrXwl3MCv3GnY3L=s40-c-rp-mo-ba4-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105626766557775001052\/reviews\/",
-            "publicationDate": "a year ago"
-        },
-        {
-            "id": "102723562276897550071",
-            "title": "Rushabh Gohil",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXzjhLVlp9SRke7zTDEycKRH_YuIcWX8s83hHAFry2X3gMsdQkbIA=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102723562276897550071\/reviews\/",
-            "publicationDate": "a year ago"
-        },
-        {
-            "id": "100309904289207761802",
-            "title": "Jisha Patel",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXDOUdHIwCJbHqHBZIYu6xSH4IJeeIJ7nT8xyLF-2pHQ6gYJMflyA=s40-c-rp-mo-ba4-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100309904289207761802\/reviews\/",
-            "publicationDate": "a year ago"
-        },
-        {
-            "id": "103886346930760698909",
-            "title": "Yash Trivedi",
-            "description": null,
-            "numericRatingCount": 3,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKTc2sLGS0QyXkrZ055jKhKf7Im1qOyvuk2mpujNgUAwDaCVQ=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/103886346930760698909\/reviews\/",
-            "publicationDate": "a year ago"
-        },
-        {
-            "id": "112137738158422471910",
-            "title": "Dhiren prajapati",
-            "description": null,
-            "numericRatingCount": 3,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVJA0nhwlI16zB4Yl5Gtb11DhghMe2825pIFjVBlBhS4RI-_gQ=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/112137738158422471910\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "115672751616265528459",
-            "title": "Lathiya Jayesh",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWGaRAWXg5O476xR5t56kFKh8JosMO_HYM3p6O0Bh1I-2wZM4jeqA=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115672751616265528459\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "116234551089352928580",
-            "title": "Book knock",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXQDxXTkQaJJvHBsKXiMWVD9nHd44CZu4moFO5xoaMlLHkkYh8=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116234551089352928580\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "113108115172938992631",
-            "title": "Jay Patel",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWLwDgIn4j89h37vRAEYSRuNvQVwI-cHRrGWskoa--lGhyPZksu_A=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113108115172938992631\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "115178946760755681555",
-            "title": "Patel Vrushi",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUgPvNBqFwET-uHNYEKAfNkJMk1iYPWRy1BmokpAMhpcIO0D3tA1w=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115178946760755681555\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "116018356374959179000",
-            "title": "Viswas Bhimani",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUmfpKjmRozNR1cYqmkVbGU3kr50SiYX2VyonqDiurduEFo1VS0Gw=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116018356374959179000\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "112077037056644950443",
-            "title": "Ronak Pandya",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWp0-kQo4tOgcmk3Ywxb7GwGXTJ0hXsFR0DS-5J90sWXpVS3s9Y=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/112077037056644950443\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "104047382600608076201",
-            "title": "Chintan mendpara",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjX5PdiJyfOGfA2b6QHX1Iw6MIR-ZWnTLaoYUluQPAzZT9F_LNy2=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104047382600608076201\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "109642942402586404886",
-            "title": "Dhaval Bhoot",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUf8aS_pSZ7iVpD5CaaVdO_RWAdVH2lUwVRjaD34V2pnGEyOHE=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109642942402586404886\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "117165540103060872084",
-            "title": "Keshvi Lativala",
-            "description": null,
-            "numericRatingCount": 1,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJCQDqUFpYrb23O2Q29GfaFs4EJjCt4I-ZMNVfNf4ukyeq5QQ=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117165540103060872084\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "108969369043626975428",
-            "title": "Devarshi Upadhyay",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXpRDJxjOLxd5vc7h2hpNRDeLS4wAQsvOg1dfGCvl6SmfH9lcVZ8A=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108969369043626975428\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "102097411190910429662",
-            "title": "Kava H!tesh (Kava HD)",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjURZzYPMGlTNHGyyc4coAijSrh23WJ-h5SgjE_pdgDqPDkIswQh=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102097411190910429662\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "109755142864828196564",
-            "title": "Mahendra Chaudhari",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocK-XjtvLTQsiqZvtkZXP00MELjOpHmrBEJrJHdhge_EcxIQKwo=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109755142864828196564\/reviews\/",
-            "publicationDate": "2 years ago"
-        },
-        {
-            "id": "110246962127282653029",
-            "title": "HEMANT JOSHI",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVMKp7kHpu_4X-tGA5_kjQrW5kEDdStftKqO2Z5jNsethDSXH0=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110246962127282653029\/reviews\/",
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjX6UWj_zUC4n6PFD9ycZLqLn724rSJA4c4BrxfPFeBXg37ygNef=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110727211688986990408\/reviews\/",
             "publicationDate": "3 years ago"
         },
         {
-            "id": "117342697879211779121",
-            "title": "patel asha",
-            "description": null,
-            "numericRatingCount": 4,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXaXWmvvXNqaVq09Mi8GTIWHB2G9ljmrVOPzwtbBUEVT_h8guUx=s40-c-rp-mo-ba4-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117342697879211779121\/reviews\/",
-            "publicationDate": "3 years ago"
-        },
-        {
-            "id": "111993526285199524968",
-            "title": "Deepak Vyas",
-            "description": null,
-            "numericRatingCount": 3,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXV-fjPkz7q38KmjtbRdUS7fFwJqoXLaWDJ_LyBzTKr9np61jRj=s40-c-rp-mo-ba5-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111993526285199524968\/reviews\/",
-            "publicationDate": "3 years ago"
-        },
-        {
-            "id": "105051112131056205606",
-            "title": "Smit Soni",
-            "description": null,
+            "id": "113224148463153340000",
+            "title": "Ronald Stitch",
+            "description": "Barry is not only the best at what he does he is an absolute pleasure to work with.  Not only does he generate leads that you thought were not possible, but he is friendly, professional, and truly cares about his clients.  If you want your business to grow you can't go wrong using this company!",
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJSpXgKJ6sgrLlQtNwPzNLQ2INGTjGsD8DM7aGVzLYhSgUdOg=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105051112131056205606\/reviews\/",
-            "publicationDate": "3 years ago"
-        },
-        {
-            "id": "103399522887469562673",
-            "title": "Ansari Aslam",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjW_pmiy3zEBGfBzGpDpeUVXGWcYEs2jUIaA_31ZIH9Gt70Ouh0m=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/103399522887469562673\/reviews\/",
-            "publicationDate": "3 years ago"
-        },
-        {
-            "id": "115545552528438093625",
-            "title": "monika sharma",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocK2cI-Ko0WsanHhU9KOBz647yPloyRdZ3avfz6ArqmRkc_wlQ=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115545552528438093625\/reviews\/",
-            "publicationDate": "3 years ago"
-        },
-        {
-            "id": "113111932724337888110",
-            "title": "Bhavana's Library",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJliAlGEuAXuVXGuV3YnZuR_po6qtZ9ufi020oeYSnHC-wMaw=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113111932724337888110\/reviews\/",
-            "publicationDate": "3 years ago"
-        },
-        {
-            "id": "113796711173411806464",
-            "title": "Priyanka Parmar",
-            "description": null,
-            "numericRatingCount": 4,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVHm_IaATcV8gyPLO8GYxTrNs3_t9Mnwip22JRihou6N0R9x1it=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113796711173411806464\/reviews\/",
-            "publicationDate": "3 years ago"
-        },
-        {
-            "id": "105759349002321340503",
-            "title": "jaydeep modi",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjX6dnKlylVV1EkaprOOsJ-oIxKCRLyenPbQJj2uZ1O-2d8X51Ni=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105759349002321340503\/reviews\/",
-            "publicationDate": "3 years ago"
-        },
-        {
-            "id": "104860795889979774045",
-            "title": "Himani Panchal",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUtRLmoAikOldGd_NaWecxwn5m1Suy6MXCRCNze4CJ5y0LMqiA=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104860795889979774045\/reviews\/",
-            "publicationDate": "3 years ago"
-        },
-        {
-            "id": "107012506817075173619",
-            "title": "Md Kiyamuddin",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVhnqnO6E43QXDmw_SN-6D2QHUnIPHq0MPnE2TWwge8cR_JhxKN=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107012506817075173619\/reviews\/",
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIcGMpI-86aiO7D7HDKrHHxHOPwCMFXDv7ol49TBYcrbvoNCg=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113224148463153340000\/reviews\/",
             "publicationDate": "4 years ago"
         },
         {
-            "id": "102910657762719514298",
-            "title": "Dipak Kobiya",
-            "description": null,
-            "numericRatingCount": 3,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUvVU3JX0KoX5jcSpjx2KupidxyAT6glD4Q4taUV67czFhYn-Mn=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102910657762719514298\/reviews\/",
+            "id": "106883546295440293762",
+            "title": "Hilda Yavrouian",
+            "description": "Barry is amazing! He is responsive, professional, patient and knowledgeable. The work he does for our business is solid. Our business page has generated a lot of business. Thank you!!",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWPWTN1LL-TfxbQoegCU_wa8PtrLkHmzjlRlzZprkfQ_TGltfvQ=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/106883546295440293762\/reviews\/",
+            "publicationDate": "7 months ago"
+        },
+        {
+            "id": "113675310013729693003",
+            "title": "Carlos Perez",
+            "description": "Barry Ryan has provided us with excellent advice, service, and support to our firm. Barry Ryan has demonstrated his unique skills and expertise in Law Firm Marketing. Listens to every request, explains everything to detail, and delivers. Truly the best. Won\u2019t want to ask for anyone else.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKRDbn8IRql5HOdnu7RTd0ynCKjOpYKfTaC72Mu3g5GMmcuog=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113675310013729693003\/reviews\/",
             "publicationDate": "4 years ago"
         },
         {
-            "id": "101139982644797148580",
-            "title": "Apoorv Yadav",
-            "description": null,
-            "numericRatingCount": 3,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWqeP9DmcIvf7a3e1aJ7bK9qbKaWrBB83oQ_MfSHUJ4yvkmnTqe=s40-c-rp-mo-ba4-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101139982644797148580\/reviews\/",
+            "id": "117851148261858383794",
+            "title": "Jamie Roth",
+            "description": "Barry is one of the best in the industry. Very knowledgeable and very honest. He delivers what is promised and his skill set is top notch. I would highly recommend him for all your marketing needs.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUEcERKTDoyy2w7QTplwoAX3qPUTNTBkquMjHoHKq-5oYchRe60=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117851148261858383794\/reviews\/",
             "publicationDate": "4 years ago"
         },
         {
-            "id": "115678270270396934953",
-            "title": "Mahesh Rathod",
-            "description": null,
+            "id": "109857805259071612038",
+            "title": "Pamela Anderson",
+            "description": "Barry is the absolute best! If you want jaw-dropping results with a quickness at a fair and reasonable price, he should be your go-to. He stands behind his word and delivers. Thank you, Barry!",
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWKqEQTCpH2pVCyAIpX1bKxmXrxjIKfmOYDsKCmRPiH7DzKB2xTZw=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115678270270396934953\/reviews\/",
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUQQnPw5khHVEjPjCgLpphnMmb0EgRaJwjXYBZ7270vC5BXF_A=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109857805259071612038\/reviews\/",
+            "publicationDate": "2 years ago"
+        },
+        {
+            "id": "101497545658921259885",
+            "title": "Matt Russell",
+            "description": "Barry has really helped our business grow with his leadership on our GMB page.  We are consistently in the local maps 3-pack and are very happy with the results!",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIVD_gBxpO9AcMoJ3EmcJMavPpnm_1ly7HMzttgzCKQDxUDTA=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101497545658921259885\/reviews\/",
+            "publicationDate": "2 years ago"
+        },
+        {
+            "id": "104249888405971132600",
+            "title": "Matt Kaufman",
+            "description": "Barry is very knowledgeable about the Google search process  \/ business.  He helped my business out in many aspects of improving search results.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLBv-2O6bnlbePsdlzicqhDoB-77O7wB___djbIBeZ6oJP_ew=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/104249888405971132600\/reviews\/",
             "publicationDate": "4 years ago"
         },
         {
-            "id": "106573196142127602422",
-            "title": "pankaj kanungo",
+            "id": "107769829295263283359",
+            "title": "Eric Yavrouian",
+            "description": "Barry and his group have been great to work with and to help increase visibility of our business.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXi8OHLz_gDMGREZPT_uULH5aJCGWv6P9eEoAgMMhYW1qStHVw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107769829295263283359\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "112080782254467725745",
+            "title": "Milena Kropach",
             "description": null,
-            "numericRatingCount": 2,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLg8y8kt5yy8JQkgk1Q7v1Q_tzCZ9COLlmwtKKKKmeG05lTvQ=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/106573196142127602422\/reviews\/",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVwIhuaYRZOocoR6AvYtnxP-yc8kHVzwRpxOw3WGuu1vai5bDo=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/112080782254467725745\/reviews\/",
             "publicationDate": "4 years ago"
         },
         {
-            "id": "108842083706027753846",
-            "title": "Parth Vyas",
-            "description": null,
+            "id": "102165204688642619038",
+            "title": "Jared Berryman",
+            "description": "Barry is very good at what he does.  If you need leads, he\u2019s the guy to consult.",
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVzUjeYDLGgbdD6St6-7uPpgTykw-Km4rvfILhDjkuv8nK-BajA=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108842083706027753846\/reviews\/",
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVewyzCY0TgZ9JMObmdtAXznZbdwAGejjWyppUYT-lN28bu74M=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102165204688642619038\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "117255640516982800666",
+            "title": "Robert Yavrouian",
+            "description": "Solid overall management of my google my business profile. Responsive and professional. Easily gets your return on investment in the business he generates.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLuUFoKnwSxdYYx-Ja-_BFG0BM-EzlP150O_7qiE8qeAHT7Dw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117255640516982800666\/reviews\/",
+            "publicationDate": "2 years ago"
+        },
+        {
+            "id": "110042659183341987565",
+            "title": "Brett Sherry",
+            "description": "Barry is incredibly knowledgeable and experienced in this field and our firm has been pleased with the services he provides.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWf0XDAx7nLS28caMIKQLAzVF6hTDhTgVL_1cPw9JpJ9lXoQQc=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110042659183341987565\/reviews\/",
             "publicationDate": "4 years ago"
         },
         {
-            "id": "109777506915696356536",
-            "title": "Maulik Raval",
-            "description": null,
+            "id": "105740109985353863741",
+            "title": "Ryan Okabe",
+            "description": "Hands down the finest internet web consulting company!  Highly recommended!",
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUesZTHI6s7pFv2wm8ITa9ijqTgK_5J0Ve2XXLAQd63p7E5zrnR=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109777506915696356536\/reviews\/",
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocLpOzICKOu0Y234_g50lsVk8tQNwHiJBv1iqk-nEk2W4SqNPw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105740109985353863741\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "118113217823150982880",
+            "title": "Jeff Rager",
+            "description": "Incredible customer service; friendly, prompt, and brings in the clients.  Can\u2019t ask for anything more!",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUV12j5DBdlPTarNz7GWCiWAH3LToecMPL9I5yki30CCYRNX3g=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/118113217823150982880\/reviews\/",
             "publicationDate": "4 years ago"
         },
         {
-            "id": "106114128116109745588",
-            "title": "Arpit Gandhi",
+            "id": "111910269800779296049",
+            "title": "Joseph Lovretovich",
             "description": null,
             "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVryWCiMOPy8zpM-dtHa-VuTVt8uNVAFJaxY4jm978XXHV3nEW2=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/106114128116109745588\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "106523743602615582526",
-            "title": "Pragnesh Rohit",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWbpiDP05MHfegLxmjPVy7zTj_U3gO7z5HY-0xRBMdwc1sM71irrQ=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/106523743602615582526\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "112303255435781376662",
-            "title": "Umang Bhanvadia",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWpyxoJ3iuXuJZTrB58UOkqg6Md9CYQopgGaiWn3-JNDPS4LWQq=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/112303255435781376662\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "105871410632259881487",
-            "title": "gauri sabhadiya",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjX-zVnjqGNYR3m9gSZQ6vNaciMaMQ3M7R0G2G3xXhTek8xSB_-t=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105871410632259881487\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "101032933206685903557",
-            "title": "Umang Gajjar",
-            "description": null,
-            "numericRatingCount": 2,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjV13dk6fXlyJbA4A6SKCbJ_MRoETt7FZdQVhICl8ES5FpDMccMQCw=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101032933206685903557\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "103387435761622991417",
-            "title": "Abhishek Tulsian",
-            "description": null,
-            "numericRatingCount": 2,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJrg0Ie6sopsZsLdWrBBxC78ge-E5kvSNzBle6JB1B6RnCjXw=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/103387435761622991417\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "110973413775956509520",
-            "title": "bhavin dobariya",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWUB778J6otGJhWw5jIllYNRrKWHsCM1cUwsqe6QVArLszAx_IY=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110973413775956509520\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "117396618856763903281",
-            "title": "Raj Panchal",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUUPWxHQ80ky7fVL_VSfkw2b2mapbMBRrrNgrxmr_Nu2VwoJdkk=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117396618856763903281\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "113608584561361644368",
-            "title": "Satyakam Pandya",
-            "description": null,
-            "numericRatingCount": 3,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVXhAKAlCXYPfgFpMTSkrDd58-HgJAbu4hHWT20wo6_MdxecWw6GQ=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113608584561361644368\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "101646058893439674148",
-            "title": "JayRam Nai",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVCxd4PJrF-nz3fJTrwnEK38XuOH9ogpukAvIZfwUa_LETV-8Du=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101646058893439674148\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "114179500592759204036",
-            "title": "Andr\u00e9 Wendt",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUM7lGtlwzt3J5r5f6u8BovuwgdtBKOWxAhS5RV2uAE0fGrmmhgbQ=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/114179500592759204036\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "113500103211984489165",
-            "title": "aayush vashishtha",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIuUs37uohXvXwaDUYq-XJ8CjF7WxzaE782pbck7CGy1IYfNQ=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113500103211984489165\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "115240654731092525567",
-            "title": "Ankit Kundariya",
-            "description": null,
-            "numericRatingCount": 1,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjU4CuGuU-yVPSPyvO6ouRNE3wrlXeWWevDB9FsoE76Riikv0d1LXg=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115240654731092525567\/reviews\/",
-            "publicationDate": "5 years ago"
-        },
-        {
-            "id": "106935293704232161894",
-            "title": "Vinay Siddhapura",
-            "description": null,
-            "numericRatingCount": 4,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVsQISFn5PlHKromdq2akmM9mTwCWECwv_RCqAOF6K3YWzsrleH9w=s40-c-rp-mo-ba5-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/106935293704232161894\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "113177464367603635937",
-            "title": "Manish Dalwadi",
-            "description": null,
-            "numericRatingCount": 3,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVoZwSG9NqtQatTOAW0HwPwUjabYAZPEcnXRMFaMs75UixvUczL=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113177464367603635937\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "109969622240595582395",
-            "title": "patel vrajesh",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIWF2gvFQBlL3XVdJ7LrFCHhSbFPQLTxUrw3vrGPCAn-awVJ66W=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/109969622240595582395\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "100657032625959609856",
-            "title": "Adarsh Patel",
-            "description": null,
-            "numericRatingCount": 3,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUKsC152xen-wSJ6jI0w7sh3CDIISLczrPSHi9UFMjKJYzwkHorTg=s40-c-rp-mo-ba4-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100657032625959609856\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "113228743857810934515",
-            "title": "Paurush Gosai",
-            "description": null,
-            "numericRatingCount": 4,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWrzrbo6bayDsdJ_q_0zwp1LyuwxmmpkQg83jhlpdIS1nFvzsSw=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113228743857810934515\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "103803312964626739069",
-            "title": "Darshan Hathaliya",
-            "description": null,
-            "numericRatingCount": 4,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJyHj_4fOMKbWMwzGPExV_1I_h3rE-7WSck70gbk0OOA1vwnC9s=s40-c-rp-mo-ba4-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/103803312964626739069\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "107193853142406922289",
-            "title": "Garvit Gupta",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKYjekf5c1mJMBd_kptRAlYw55oWng6dbdCZfdCiiZSPaiusCgt=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107193853142406922289\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "110629999938566498604",
-            "title": "Mayur Teraiya",
-            "description": null,
-            "numericRatingCount": 1,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKin91QUntupSXAYiGPIc5Dw9Fo3gErTJHObbClV7V7zTg7eEc=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110629999938566498604\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "108243481266079068716",
-            "title": "Smit Mehta",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWQ3hLYjuaz6rgyogURz8bpxAAG-egPLbKjoJ0vaWXXJHBf5caB=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108243481266079068716\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "107685397341325857160",
-            "title": "Dilip Shyani",
-            "description": null,
-            "numericRatingCount": 3,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVWytV1V9RFkIBgX9F9gJMbF9HFmv6B_PxYfaJDT6QH2IdrH6OY=s40-c-rp-mo-ba4-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107685397341325857160\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "114770441700088841897",
-            "title": "Amish Bhavsar",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocI9vDmWRViMFqAILeHS8BhHmqQsBC0nsnH2Ay-d-_vbJS_qcjFW=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/114770441700088841897\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "108937409409686967722",
-            "title": "chand prakash singh rawat",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjV6NU3jzteDcCTiqJ0lV-1gDO-p4V-bfaRKol3M-ZeD09viDNlQ=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108937409409686967722\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "110860753742534158397",
-            "title": "Pruthav Purohit",
-            "description": null,
-            "numericRatingCount": 2,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUrsPal8Hx1vgZQ7YEqfBQL9EKhs3faNOcQhVHnF6nJaaSd6bFJYw=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110860753742534158397\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "118164600590791138146",
-            "title": "NIRAV SHAH",
-            "description": null,
-            "numericRatingCount": 2,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWgN-7vMFbG6qZnTCFrue98O4KQdmTFpR_I7uk1cCiitS_TigLX=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/118164600590791138146\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "101405206209628576705",
-            "title": "Parth Adroja",
-            "description": null,
-            "numericRatingCount": 3,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUy65aQGryojtX4wEFl8JZNVEplmmrfCafDZw-Y_m4D3XMmfm0PMg=s40-c-rp-mo-ba6-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101405206209628576705\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "108799867608320357656",
-            "title": "Jeenit Khatri",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUT-Y4f1yOG2T5MMg-HNmGx2oOp7cYVcuk8TU35AZSpK79s9FQ-=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108799867608320357656\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "106742420283047113590",
-            "title": "Divyesh Mehta",
-            "description": null,
-            "numericRatingCount": 1,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjW9JmyxksT4OAozghFlQCOuKUfCSAoaJMPF0YhIadcHapYou8nd4g=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/106742420283047113590\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "102274503262415542530",
-            "title": "Raghav Satyadev",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXiWgw4GupGf9oX9HWDFVL71RGlDgNBDRN1JySjCgTOux8HfcrdZA=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102274503262415542530\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "101849652246887854802",
-            "title": "Siddharth Chauhan",
-            "description": null,
-            "numericRatingCount": 3,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUPhPbeUqmLzYYWEWv9Ycs42fE0MYc48EV7uCGN2DJ9yPLlkl3S=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101849652246887854802\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "100948914660219844698",
-            "title": "Harsh Pathak",
-            "description": null,
-            "numericRatingCount": 3,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWZ6n3JB_7QtuZhZiJs2qUxUgnQ-0rZYQEAdfPuSBrbfyGWmoHU=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100948914660219844698\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "113272982073297019949",
-            "title": "Mrudang Shah",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVMtMVGuHPtsqKFFOz2EqVTcUScVoiRBy0Dr6f4E1rNSs58_1yZEA=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113272982073297019949\/reviews\/",
-            "publicationDate": "6 years ago"
-        },
-        {
-            "id": "111964647826740597276",
-            "title": "Bhavesh K",
-            "description": null,
-            "numericRatingCount": 3,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWty6hU2TJVmaJos8WlMPtafI6z1Gy-V2LkMZR0JztLtFhmi_Wp=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111964647826740597276\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "108601068534811266691",
-            "title": "Dinesh Ravajani",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVROo8QSTuYdTfjSwjo3p0e6hSG68ja8uKaAISS-GRxoCH6J-PYbQ=s40-c-rp-mo-ba5-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108601068534811266691\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "108578025832457444364",
-            "title": "Nitin Bhosle",
-            "description": null,
-            "numericRatingCount": 4,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXJI1A-cbgA3iA2aTPGWnjJxxcHG6H7BdScICFX-7gzj-EstA4Q=s40-c-rp-mo-ba6-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/108578025832457444364\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "117998344247587607359",
-            "title": "Kishan Parmar",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIedGIdFDOazw8D1YExYvaRpbIMfvKh6DQCcEK5wIrg8lTs=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/117998344247587607359\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "107487035446942579906",
-            "title": "Bhautik Vasoya",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVmBRGogWBQRJMWJYJu22AaqcnwDY8wt7cvQPGy8a62q3hdcXb2=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107487035446942579906\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "114900322868557480435",
-            "title": "brijesh ahir",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXYMPC1cHxuj2DzeElCosukUrmMMOsCW0Ry-BpJWp-vm_tdRMkQoQ=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/114900322868557480435\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "107274420661366491472",
-            "title": "Hardik Patel",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjX77zNL-8ia-x4SwsCppVZ85dQFII7_gYWFSediO5aF2V79dRFM=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/107274420661366491472\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "115636714913550474199",
-            "title": "Sarju Kabariya",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXdEgtSYUpGqaWFwiS5bpf11oHAAyF8cvJSzfjfJYvonqizaZgk=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/115636714913550474199\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "101142641615310127106",
-            "title": "Jaldip patel",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUTXp2ZZYCAwJ_Zm9sw9ZyJVndzrDc0fd8JnRwGKEM9qgAP2VxN=s40-c-rp-mo-ba3-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101142641615310127106\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "112914301397977981966",
-            "title": "Hardik Gajjar",
-            "description": null,
-            "numericRatingCount": 4,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjU6KD0QiJWfqfE3d5KwoEH8xeQohkSo95EBbutZ29tEwohpGvUa=s40-c-rp-mo-ba4-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/112914301397977981966\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "116837904773346505737",
-            "title": "Uday Dangrecha",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocL_-B_g2HgIEqBV9JH__m3Qt2EFat1y-GJ8wP_a6bg5P57Bnw=s40-c-rp-mo-ba2-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116837904773346505737\/reviews\/",
-            "publicationDate": "7 years ago"
-        },
-        {
-            "id": "113065616828954694438",
-            "title": "Vrushti Doshi",
-            "description": null,
-            "numericRatingCount": 5,
-            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIBbp-rkxybADmRnvgvqrCPqcOZ40p43-jttuStvCdyEhblDQ=s40-c-rp-mo-br100",
-            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113065616828954694438\/reviews\/",
-            "publicationDate": "9 years ago"
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXwOvUSTqU6xmpOr1FwxURn_i4SaGNPeM4Ebjhmi_qiLbLAuA=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111910269800779296049\/reviews\/",
+            "publicationDate": "4 years ago"
         }
     ]
 }

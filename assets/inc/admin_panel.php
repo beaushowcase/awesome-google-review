@@ -62,7 +62,6 @@ function job_table() {
             jobID_final bigint(20) NOT NULL,
             term_id bigint(20) NOT NULL,
             firm_name varchar(255) NOT NULL,
-            client_ip varchar(255) NOT NULL,
             created datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
             PRIMARY KEY  (id)
             ) $charset_collate;";
@@ -84,7 +83,6 @@ function job_table() {
             id mediumint(9) NOT NULL AUTO_INCREMENT,
             review_api_key varchar(255) NOT NULL,
             review_api_key_status varchar(255) NOT NULL,
-            client_ip varchar(255) NOT NULL,
             created datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
             PRIMARY KEY  (id)           
         ) $charset_collate;";
@@ -299,6 +297,8 @@ function isIdExists($array, $idToCheck) {
 function our_google_reviews_callback() {
     $get_existing_api_key = get_existing_api_key();
     $get_api_status = get_api_key_status($get_existing_api_key);    
+
+    // ptr($get_api_status);exit;
 ?>
 <?php        
 $firm_data = get_existing_firm_data();
@@ -613,7 +613,7 @@ if (!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) {
                         <div class="submit_btn_setget twoToneCenter">
                             <button type="submit" class="submit_btn job_start btn-process"><span class="label">JOB START</span></button>
                             <button type="submit" class="submit_btn check_start_status btn-process" style="display:none;" <?php echo($get_d == 1 ? 'disabled' : '') ?>><span class="label">CHECK STATUS</span></button>
-                            <button type="submit" class="submit_btn check_start btn-process" <?php echo($jp != 1 ? 'disabled' : '') ?>><span class="label">SET</span></button>
+                            <button type="submit" class="submit_btn check_start btn-process" <?php echo($jp != 1 ? 'disabled' : '') ?>><span class="label">GET</span></button>
                             <button type="submit" class="submit_btn upload_start btn-process"><span class="label">UPLOAD</span></button>
                         </div>
                     </form>
@@ -624,7 +624,7 @@ if (!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) {
             <div class="inner-content-data">
                 <h2 class="boxtitle display_total">
                     <p class="reset status"><svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 20 20" fill="#fff" xmlns:v="https://vecta.io/nano"><path d="M5.05 14.95a1 1 0 0 1 1.414-1.414A4.98 4.98 0 0 0 10 15a5 5 0 0 0 5-5 1 1 0 1 1 2 0 7 7 0 0 1-7 7 6.98 6.98 0 0 1-4.95-2.05z"/><path d="M13.559 12.832a1 1 0 1 1-1.109-1.664l3-2a1 1 0 1 1 1.109 1.664l-3 2z"/><path d="M18.832 12.445a1 1 0 1 1-1.664 1.109l-2-3a1 1 0 0 1 1.664-1.109l2 3zm-3.975-7.594a1 1 0 0 1-1.414 1.414 4.98 4.98 0 0 0-3.536-1.464 5 5 0 0 0-5 5 1 1 0 1 1-2 0 7 7 0 0 1 7-7 6.98 6.98 0 0 1 4.95 2.05z"/><path d="M6.349 6.969a1 1 0 1 1 1.109 1.664l-3 2a1 1 0 1 1-1.109-1.664l3-2z"/><path d="M1.075 7.356a1 1 0 1 1 1.664-1.109l2 3a1 1 0 1 1-1.664 1.109l-2-3z"/></svg></p>
-                Status</h2>
+                Detail Status</h2>
                 <div class="typewriter">
                     <div class="output typing"><p><?php echo displayMessagesFromFile(); ?></p></div>
                 </div>         

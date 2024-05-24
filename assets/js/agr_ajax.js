@@ -12,14 +12,28 @@ let btnProcess_check = $("#google_review_upload_form .check_start");
 // correctSign_business.removeClass("visible");
 // correctSign_business.addClass("visible");
 
+var current_page = ajax_object.get_url_page;
+var admin_plugin_main_url = ajax_object.admin_plugin_main_url;
+
 jQuery(document).ready(function ($) {
   $('#processbar').hide();
-
   if (current_page != 'delete-review') {
     initial_check();
+    upload_done_process();
   }
-
 });
+
+
+function upload_done_process() {
+  var urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('uploaded') && urlParams.get('uploaded') === 'true' && urlParams.has('slug') && urlParams.get('slug') !== '' && urlParams.has('page') && urlParams.get('page') === 'awesome-google-review') {
+     setTimeout(function () {      
+      var newUrl = ajax_object.main_site_url + "/wp-admin/edit.php?business=" + urlParams.get('slug') + "&post_type=agr_google_review";
+      window.location.href = newUrl;
+    }, 5000);
+   
+  }
+}
 
 // jQuery(document).ready(function() {
 //   var h1 = $('.output');
@@ -66,8 +80,7 @@ $.fn.focusAtEnd = function () {
 // var pageValue = getPageParameter();
 
 
-var current_page = ajax_object.get_url_page;
-var admin_plugin_main_url = ajax_object.admin_plugin_main_url;
+
 
 
 // btnProcess_get_set.removeClass("spinning");
@@ -76,15 +89,9 @@ var admin_plugin_main_url = ajax_object.admin_plugin_main_url;
 // btnProcess_check.addClass('visible');
 // btnProcess_check.removeClass('disabled');
 
-
-
-
 // jQuery(document).ready(function(){
 
-
-
 //   let element = jQuery("#review_api_key");
-
 
 //   jQuery(element).on('input', function () {   
 //     if (jQuery(this).val() == '') {
@@ -196,7 +203,7 @@ function initial_check() {
     },
     beforeSend: function () {
       $('#loader').removeClass('hidden');
-      btnProcess_API.prop("disabled", true);
+      // btnProcess_API.prop("disabled", true);
     },
     success: function (response) {
 
@@ -207,9 +214,9 @@ function initial_check() {
       if (response.success && response.api) {
         if (sign_TRUE) {
           correctSign_API.addClass("visible");
-          $('.api_key_setting_form').addClass("showdisable");
+          // $('.api_key_setting_form').addClass("showdisable");
           BUSINESS_BOX.removeClass("hidden");
-          btnProcess_API.prop("disabled", true);
+          // btnProcess_API.prop("disabled", true);
         }
         if (sign_FALSE) {
           wrongSign_API.removeClass("visible");
@@ -218,9 +225,9 @@ function initial_check() {
       else {
         if (sign_TRUE) {
           correctSign_API.removeClass("visible");
-          $('.api_key_setting_form').removeClass("showdisable");
+          // $('.api_key_setting_form').removeClass("showdisable");
           BUSINESS_BOX.addClass("hidden");
-          btnProcess_API.prop("disabled", false);
+          // btnProcess_API.prop("disabled", false);
         }
         if (sign_FALSE) {
           wrongSign_API.addClass("visible");
@@ -231,10 +238,10 @@ function initial_check() {
 
       // start 1
       if (response.data.btn_start && !response.data.btn_check && !response.data.btn_upload) {
-        btnProcess_BUSINESS_START.hide();        
+        btnProcess_BUSINESS_START.hide();
         btnProcess_BUSINESS_UPLOAD.hide();
         $("#google_review_upload_form .btn-process.check_start_status").show();
-        btnProcess_BUSINESS_CHECK.show();        
+        btnProcess_BUSINESS_CHECK.show();
       }
       else if (response.data.btn_start && response.data.btn_check && !response.data.btn_upload) {
         btnProcess_BUSINESS_START.hide();
@@ -385,32 +392,32 @@ $(document).ready(function () {
   var initialValue = $(element).val();
   var api_status = $(element).data('apivalid');
 
-  $(element).on('input', function () {
-    var currentValue = $(this).val();
-    if (currentValue !== initialValue) {
-      button_effects_enable();
-    }
-    else {
-      button_effects_disable();
-    }
-  });
+  // $(element).on('input', function () {
+  //   var currentValue = $(this).val();
+  //   if (currentValue !== initialValue) {
+  //     button_effects_enable();
+  //   }
+  //   else {
+  //     button_effects_disable();
+  //   }
+  // });
 
   function button_effects_enable() {
     console.log("button_effects_enable!");
     if (sign_TRUE) {
       // correctSign_API.removeClass("visible");
       // wrongSign_API.removeClass("visible");
-      $('.api_key_setting_form').removeClass("showdisable");
+      // $('.api_key_setting_form').removeClass("showdisable");
     }
 
     if (jQuery('.google_review_upload_form.cont').length > 0) {
       // correctSign_API.removeClass("visible");
       // wrongSign_API.addClass("visible");
-      $('.api_key_setting_form').removeClass("showdisable");
+      // $('.api_key_setting_form').removeClass("showdisable");
     }
 
     // BUSINESS_BOX.addClass("hidden");
-    btnProcess_API.prop("disabled", false);
+    // btnProcess_API.prop("disabled", false);
     return true;
   }
 
@@ -419,11 +426,11 @@ $(document).ready(function () {
     if (jQuery('.google_review_upload_form.cont').length > 0) {
       // correctSign_API.addClass("visible");
       // wrongSign_API.removeClass("visible");
-      $('.api_key_setting_form').addClass("showdisable");
+      // $('.api_key_setting_form').addClass("showdisable");
     }
 
     // BUSINESS_BOX.removeClass("hidden");
-    btnProcess_API.prop("disabled", true);
+    // btnProcess_API.prop("disabled", true);
     return true;
   }
 });
@@ -553,7 +560,7 @@ function response_success(response) {
     showConfirmButton: false,
     allowOutsideClick: false,
     grow: false,
-    timer: 3500,
+    timer: 1500,
   });
   $('#loader').addClass('hidden');
   btnProcess_API.removeClass("spinning");
@@ -572,7 +579,7 @@ function response_fail(response) {
     showConfirmButton: false,
     allowOutsideClick: false,
     grow: false,
-    timer: 3500,
+    timer: 1500,
   });
   $('#loader').addClass('hidden');
   btnProcess_API.removeClass("spinning");
@@ -612,7 +619,7 @@ function ApiKeySave(check) {
             correctSign_API.addClass("visible");
             wrongSign_API.removeClass("visible");
             BUSINESS_BOX.removeClass("hidden");
-            setRandomFlag(flagKey, 1);
+            // setRandomFlag(flagKey, 1);
           }
         } else {
           if (check) {
@@ -633,7 +640,7 @@ function ApiKeySave(check) {
         btnProcess_API.removeClass("spinning");
         btnProcess_API.prop("disabled", false);
         location.reload();
-      }, 5000);
+      }, 3000);
     },
   });
 
@@ -651,7 +658,7 @@ $("#google_review_upload_form button.job_start").click(function (event) {
     text: "Are you certain about initiating this job? Once completed, you'll be able to upload reviews.",
     showCancelButton: false,
     showCloseButton: true,
-    confirmButtonColor: "#3085d6",
+    confirmButtonColor: "#405640",
     cancelButtonColor: "#d33",
     confirmButtonText: "Start Job",
     allowOutsideClick: false,
@@ -699,12 +706,12 @@ $("#google_review_upload_form button.job_start").click(function (event) {
 $("#google_review_upload_form button.check_start").click(function (event) {
   check = true;
   Swal.fire({
-    title: "SET",
+    title: "GET",
     html: "Let's begin gathering reviews for " + `<b>${$(FirmNameInput).val()}</b>` + " !",
     showCloseButton: true,
     allowOutsideClick: false,
     confirmButtonColor: "#405640",
-    confirmButtonText: "SET",
+    confirmButtonText: "GET",
     backdrop: 'swal2-backdrop-show',
     icon: "question",
   }).then((result) => {
@@ -721,7 +728,7 @@ function response_business_success(response) {
   let timerInterval;
   Swal.fire({
     title: "Google Reviews !",
-    html: "Checking in <b></b> milliseconds.",
+    html: "Getting in <b></b> milliseconds.",
     timer: 3500,
     timerProgressBar: true,
     allowOutsideClick: false,
@@ -804,8 +811,8 @@ function check_start(check) {
     url: ajax_object.ajax_url,
     dataType: "json",
     beforeSend: function () {
-      $('#loader').removeClass('hidden');  
-      $('#processbar').show();    
+      $('#loader').removeClass('hidden');
+      $('#processbar').show();
     },
     data: {
       action: "job_check_ajax_action",
@@ -829,7 +836,7 @@ function check_start(check) {
     },
     error: function (xhr, status, error) {
       Swal.fire({
-        position: "top-end",
+        position: 'bottom-end',
         icon: "error",
         title: response.msg,
         showConfirmButton: false,
@@ -839,7 +846,7 @@ function check_start(check) {
     },
     complete: function () {
       setTimeout(function () {
-        $('#loader').addClass('hidden');       
+        $('#loader').addClass('hidden');
       }, 3500);
     },
   });
@@ -877,7 +884,7 @@ function confirm_msg(msg, jobID) {
         grow: false,
         position: 'bottom-end',
       }).then(function () {
-        setTimeout(function () {          
+        setTimeout(function () {
           localStorage.setItem("checkval", 1);
           location.reload();
         }, 100);
@@ -929,7 +936,7 @@ function job_start(check) {
     },
     error: function (xhr, status, error) {
       Swal.fire({
-        position: "top-end",
+        position: 'bottom-end',
         icon: "error",
         title: response.msg,
         showConfirmButton: false,
@@ -1016,6 +1023,7 @@ function reset_logs_success() {
         timer: 2500,
         allowOutsideClick: false,
         grow: false,
+        position: 'bottom-end',
       }).then(function () {
         setTimeout(function () {
           location.reload();
@@ -1056,7 +1064,7 @@ function delete_start() {
     },
     error: function (xhr, status, error) {
       Swal.fire({
-        position: "top-end",
+        position: 'bottom-end',
         icon: "error",
         title: response.msg,
         showConfirmButton: false,
@@ -1098,7 +1106,7 @@ function delete_logs_start() {
     },
     error: function (xhr, status, error) {
       Swal.fire({
-        position: "top-end",
+        position: 'bottom-end',
         icon: "error",
         title: response.msg,
         showConfirmButton: false,
@@ -1251,7 +1259,7 @@ $(function () {
 $("#google_review_upload_form button.upload_start").click(function (event) {
   check = true;
   Swal.fire({
-    title: "Confirmation: Upload Job?",
+    title: "Upload Reviews?",
     html: "Initiate the uploading process for " + `<b>${$(FirmNameInput).val()}</b>` + " !",
     showCloseButton: true,
     allowOutsideClick: false,
@@ -1302,12 +1310,14 @@ function upload_process_box(check) {
       setTimeout(function () {
         if (response.success === 1) {
           if (check) {
-            response_upload_success(response.msg);
             setRandomFlag(flagKey, 1);
+            setTimeout(function () {
+              response_upload_success(response.message, response.term_slug);
+            }, 1500);
           }
         } else {
           if (check) {
-            response_business_fail(response.msg);
+            response_business_fail(response.message);
           }
         }
         $('#processbar').hide();
@@ -1315,7 +1325,7 @@ function upload_process_box(check) {
     },
     error: function (xhr, status, error) {
       // Swal.fire({
-      //   position: "top-end",
+      //   position: 'bottom-end',
       //   icon: "error",
       //   title: response.msg,
       //   showConfirmButton: false,
@@ -1335,11 +1345,11 @@ function upload_process_box(check) {
 
 
 //GMB call
-function response_upload_success(response) {
+function response_upload_success(response, termslug) {
   let timerInterval;
   Swal.fire({
     title: "Google Reviews !",
-    html: "Checking in <b></b> milliseconds.",
+    html: "Uploading in <b></b> milliseconds.",
     timer: 3500,
     timerProgressBar: true,
     allowOutsideClick: false,
@@ -1370,7 +1380,10 @@ function response_upload_success(response) {
         backdrop: 'swal2-backdrop-show',
       }).then(function () {
         setTimeout(function () {
-          location.reload();
+          var currentUrl = window.location.href;
+          // var newUrl = currentUrl + "?business=" + termslug + "&post_type=agr_google_review&uploaded=true";
+          var newUrl = currentUrl + "&slug=" + termslug + "&uploaded=true";
+          window.location.href = newUrl;
         }, 100);
       });
 
@@ -1407,7 +1420,7 @@ function getRandomFlag(rec) {
 
 function error_notify() {
   Swal.fire({
-    position: "top-end",
+    position: 'bottom-end',
     icon: "error",
     title: "please select !",
     showConfirmButton: false,
@@ -1417,14 +1430,14 @@ function error_notify() {
 
 
 //DELETE REVIEWS
-function review_delete_process(check,$this) {
+function review_delete_process(check, $this) {
   var selected_value = $this.find(":selected").val();
-  var selected_value_name  = $this.find(":selected").text();
+  var selected_value_name = $this.find(":selected").text();
   console.log(selected_value_name);
   if (selected_value == 0) {
-    error_notify(); 
+    error_notify();
   }
-  else {    
+  else {
     check = true;
     Swal.fire({
       title: "Delete Review?",
@@ -1444,16 +1457,16 @@ function review_delete_process(check,$this) {
 };
 
 
-$("#review_delete_form").submit(function (event) {  
+$("#review_delete_form").submit(function (event) {
   var $this = jQuery(this);
   event.preventDefault();
   check = true;
-  review_delete_process(check,$this);
+  review_delete_process(check, $this);
 });
 
 //delete review
 function delete_review_start(id) {
-  let current_term_id = id;  
+  let current_term_id = id;
   $.ajax({
     type: "POST",
     url: ajax_object.ajax_url,
@@ -1465,7 +1478,7 @@ function delete_review_start(id) {
     data: {
       action: "job_review_delete_ajax_action",
       current_term_id: current_term_id,
-      review_api_key: ajax_object.review_api_key,      
+      review_api_key: ajax_object.review_api_key,
     },
     success: function (response, status, error) {
       if (response.success === 1) {
@@ -1481,7 +1494,7 @@ function delete_review_start(id) {
     },
     error: function (xhr, status, error) {
       Swal.fire({
-        position: "top-end",
+        position: 'bottom-end',
         icon: "error",
         title: response.msg,
         showConfirmButton: false,
@@ -1519,7 +1532,7 @@ function delete_reviews_success() {
       clearInterval(timerInterval);
     }
   }).then((result) => {
-    
+
     if (result.dismiss === Swal.DismissReason.timer) {
       console.log("I was closed by the timer");
       Swal.fire({
@@ -1530,6 +1543,7 @@ function delete_reviews_success() {
         timer: 3500,
         allowOutsideClick: false,
         grow: false,
+        position: 'bottom-end',
       }).then(function () {
         setTimeout(function () {
           window.location.href = admin_plugin_main_url;
@@ -1544,10 +1558,10 @@ function delete_reviews_success() {
 
 
 
-$(document).ready(function(){
-  $('input[type="radio"][name="radio3"]').change(function(){
-      var selectedValue = $(this).val();
-      // alert("Selected value: " + selectedValue);
+$(document).ready(function () {
+  $('input[type="radio"][name="radio3"]').change(function () {
+    var selectedValue = $(this).val();
+    // alert("Selected value: " + selectedValue);
   });
 });
 
@@ -1567,7 +1581,7 @@ $(document).ready(function(){
 //   if(checkval == 2){    
 //     localStorage.removeItem("checkval");
 //   }
-  
+
 //   function countdown() {
 //       let seconds = 30;      
 //       const interval = setInterval(() => {
@@ -1593,7 +1607,7 @@ $(document).on('click', 'button.check_start_status', function (e) {
     html: "Checking the status !",
     showCloseButton: true,
     allowOutsideClick: false,
-    confirmButtonColor: "#008000",
+    confirmButtonColor: "#405640",
     confirmButtonText: "Check Status",
     backdrop: 'swal2-backdrop-show',
     icon: "info",
@@ -1618,7 +1632,7 @@ function check_status_update() {
     url: ajax_object.ajax_url,
     dataType: "json",
     beforeSend: function () {
-      $('#loader').removeClass('hidden');    
+      $('#loader').removeClass('hidden');
       $('#processbar').show();
     },
     data: {
@@ -1643,7 +1657,7 @@ function check_status_update() {
     },
     error: function (xhr, status, error) {
       Swal.fire({
-        position: "top-end",
+        position: 'bottom-end',
         icon: "error",
         title: response.msg,
         showConfirmButton: false,
@@ -1653,7 +1667,7 @@ function check_status_update() {
     },
     complete: function () {
       setTimeout(function () {
-        $('#loader').addClass('hidden');      
+        $('#loader').addClass('hidden');
       }, 3500);
     },
   });
@@ -1689,6 +1703,7 @@ function check_success() {
         timer: 3500,
         allowOutsideClick: false,
         grow: false,
+        position: 'bottom-end',
       }).then(function () {
         setTimeout(function () {
           localStorage.setItem("checkval", 1);
@@ -1714,8 +1729,8 @@ function check_failed(response) {
     grow: false,
     position: 'bottom-end',
   }).then(function () {
-    setTimeout(function () { 
-      localStorage.setItem("checkval",0);  
+    setTimeout(function () {
+      localStorage.setItem("checkval", 0);
       location.reload();
     }, 100);
   });

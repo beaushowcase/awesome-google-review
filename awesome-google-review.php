@@ -3,7 +3,7 @@
  * Plugin Name:       Awesome Google Review
  * Plugin URI:        https://beardog.digital/
  * Description:       Impresses with top-notch service and skilled professionals. A 5-star destination for grooming excellence!
- * Version:           1.2.4
+ * Version:           1.2.5
  * Requires PHP:      7.2
  * Author:            #beaubhavik
  * Author URI:        https://beardog.digital/
@@ -59,7 +59,7 @@ function our_load_admin_style()
         wp_enqueue_script('agr-ajax-script', plugins_url('/assets/js/agr_ajax.js', __FILE__), ['jquery'], $dynamic_version, true);
 
         // Localize Script
-        wp_localize_script('agr-ajax-script', 'ajax_object', ['ajax_url' => admin_url('admin-ajax.php'), 'admin_plugin_main_url'=> esc_url(get_admin_url(null, 'admin.php?page=awesome-google-review')), 'get_url_page' => $_GET['page'], 'plugin_url' => plugins_url('', __FILE__), 'review_api_key' => get_existing_api_key()]);
+        wp_localize_script('agr-ajax-script', 'ajax_object', ['ajax_url' => admin_url('admin-ajax.php'), 'main_site_url'=>site_url(), 'admin_plugin_main_url'=> esc_url(get_admin_url(null, 'admin.php?page=awesome-google-review')), 'get_url_page' => $_GET['page'], 'plugin_url' => plugins_url('', __FILE__), 'review_api_key' => get_existing_api_key()]);
 
         // Enqueue Custom Script with Dependencies
         wp_register_script('agr_custom', plugins_url('/assets/js/custom.js', __FILE__), ['jquery'], $dynamic_version, true);
@@ -279,7 +279,9 @@ function initial_check_api_function()
         wp_die();
     }
 
-    if (get_existing_api_key_data()->review_api_key) {        
+    // ptr(get_existing_api_key_data());exit;
+
+    if (get_existing_api_key_data()->review_api_key_status == 1) {        
         $response['api'] = true;        
     }
 
@@ -323,29 +325,27 @@ function set_table_required($tname){
 
 function save_data_to_table($table_name, $data) {
     global $wpdb;
-    if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
-        return false;
-    }    
 
-    // Check if review_api_key in the data array
-    if (isset($data['review_api_key'])) {        
-        $data['review_api_key'] = sanitize_text_field($data['review_api_key']);
-        
-    } else {        
-        $data['review_api_key'] = null;      
-    }
+    // Check if the table is empty
+    $is_table_empty = $wpdb->get_var("SELECT COUNT(*) FROM $table_name") == 0;
 
-    $existing_api_key = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE review_api_key = %s", $data['review_api_key']), ARRAY_A);    
+    $data_array = [
+        'review_api_key' => $data['review_api_key'],
+        'review_api_key_status' => $data['review_api_key_status'],
+    ];
 
-    if ($existing_api_key) {      
-        $result = $wpdb->update(
-            $table_name,
-            $data,
-            array('review_api_key' => $data['review_api_key'])
-        );
+    if ($is_table_empty) {   
+        $result = $wpdb->insert($table_name, $data_array);
         return $result !== false;
     } else {
-        $result = $wpdb->insert($table_name, $data);
+        // Get the ID of the last row
+        $last_row_id = $wpdb->get_var("SELECT MAX(id) FROM $table_name");
+
+        // Construct the WHERE clause
+        $where = ['id' => $last_row_id];
+
+        // Perform the update
+        $result = $wpdb->update($table_name, $data_array, $where);
         return $result !== false;
     }
 }
@@ -370,7 +370,7 @@ function review_api_key_ajax_action_function()
   
     // $serialized_data = serialize($data);
     if (!empty($nonce) && wp_verify_nonce($nonce, 'review_api_key')) {
-        $response_api_data = invalidApiKey($review_api_key);         
+        $response_api_data = invalidApiKey($review_api_key);   
        
         if ($response_api_data['success'] === 1) {
             
@@ -432,6 +432,8 @@ function invalidApiKey($review_api_key)
         'timeout' => 20,
     ));
 
+    
+
     if (is_wp_error($response)) {
         $api_response['data']['api'] = 0;
         $api_response['success'] = 0;
@@ -449,7 +451,6 @@ function invalidApiKey($review_api_key)
             $api_response['msg'] = isset($data['error']) ? $data['error'] : 'Invalid API key.';
         }
     }
-    
     // appendMessageToFile($api_response['msg']);
     return $api_response;
 }
@@ -848,6 +849,7 @@ function review_get_set_ajax_action_function()
     $response['job_id'] = '';
     $response['success'] = 0;
     $response['message'] = '';
+    $response['term_slug'] = '';
     $response['data'] = array();    
     $nonce = sanitize_text_field($_POST['nonce']);
     $current_job_id = sanitize_text_field($_POST['current_job_id']);
@@ -881,7 +883,8 @@ function review_get_set_ajax_action_function()
             
             if($data_stored['status'] == 1){
                 update_flag('jobID_final', 1, $current_job_id);
-                update_flag('term_id', $data_stored['term_id'], $current_job_id);                
+                update_flag('term_id', $data_stored['term_id'], $current_job_id);      
+                $response['term_slug'] = $term_slug;       
                 $response['message'] = "Data upload successfully!";
                 $response['success'] = 1;
             }
@@ -903,9 +906,6 @@ function review_get_set_ajax_action_function()
     } else {
         $response['message'] = 'Nonce is not valid !';
     }
-
-    // echo "fdafadf";ptr($response);exit;
-
 
     appendMessageToFile($response['message']);
 
@@ -1296,10 +1296,11 @@ function job_review_delete_ajax_action_function() {
             } else {          
                 $existing_termID = $wpdb->get_var(
                     $wpdb->prepare(
-                        "SELECT term_id FROM {$wpdb->prefix}jobdata WHERE term_id = %s AND client_ip = %s",
+                        "SELECT term_id FROM {$wpdb->prefix}jobdata WHERE term_id = %s",
                         $current_term_id, $c_ip
                     )
                 );
+
                 if ($existing_termID !== null) {
                     $delete = delete_reviews_by_term_id($existing_termID); 
                     $firm = get_firm_name_by_term_id($existing_termID);
@@ -1320,7 +1321,7 @@ function job_review_delete_ajax_action_function() {
                         $response['msg'] = "Database Error: Failed to update job data.";
                     }
                 } else {
-                    $response['msg'] = "Database Error: No existing jobID found for the provided client_ip.";
+                    $response['msg'] = "Database Error: No existing jobID found.";
                 }
             }
         
