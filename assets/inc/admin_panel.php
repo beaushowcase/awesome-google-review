@@ -280,6 +280,7 @@ function delete_review_callback(){ ?>
         </div>
     </div>
 </div>
+
 <?php
 }
 
@@ -400,15 +401,15 @@ if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjda
 .partition {
     display: flex;
     justify-content: space-between;
-    gap: 50px;
+    gap: 30px;
     width: 100%;
-    margin-top: 50px;
+    margin-top: 30px;
 }
 .left-box {
     flex-grow: 1;
 }
 .left-box .seo-plugin-data-info.container + .seo-plugin-data-info.container {
-    margin-top: 50px;
+    margin-top: 30px;
 }
 @media screen and (max-width:1799px){
     .container-process{
@@ -513,7 +514,7 @@ if (!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) {
     <div class="indicator-line <?php echo($get_active ? 'active' : '') ; ?>"></div>
     <div class="step step3 <?php echo($set_active ? 'active' : '') ; ?>">
         <div class="step-icon">3</div>
-      <p>SET</p>
+      <p>GET</p>
     </div>
     <div class="indicator-line <?php echo($set_active ? 'active' : '') ; ?>"></div>
     <div class="step step4 <?php echo($upload_active ? 'active' : '') ; ?>">
@@ -524,6 +525,8 @@ if (!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) {
     <!-- animation 1 = STOP -->
     <section id="processbar" style="display:none;"><span class="loader-71"> </span></section>
     <div id="loader" class="lds-dual-ring hidden overlay"></div>
+
+
     <div class="partition">
         <div class="left-box">
             <div class="seo-plugin-data-info container api_key_setting_form">
@@ -633,9 +636,30 @@ if (!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) {
         <button class="control" style="display:none;"></button>
         <canvas id="canvas"></canvas>
     </div>
+
+<div class="toggle-sec">
+    <label class="setting">
+        <span class="setting__label">Start Cron Job</span>
+        <span class="switch">
+            <input class="switch__input" type="checkbox" role="switch" name="switch3" checked>
+            <span class="switch__fill" aria-hidden="true">
+            <span class="switch__text">ON</span>
+            <span class="switch__text">OFF</span>
+        </span>
+        </span>
+    </label>
 </div>
+    
+
+</div>
+
+<!-- akash start -->
+
+
 <?php
 }
+
+// echo do_shortcode('[next_cron_run]');
 // Add custom columns to post type
 function custom_add_custom_columns($columns) {
     $new_columns = array();

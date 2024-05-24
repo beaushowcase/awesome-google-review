@@ -1321,3 +1321,203 @@ section {
         width: 190px;
     }
 }
+
+
+
+/* cron toggle CSS start */
+.toggle-sec {
+    display: inline-block;
+    margin-top: 30px;
+    box-shadow: inset 0px 0px 8px 0px rgba(255, 255, 255, .5), 7px 7px 20px 0px rgba(0, 0, 0, .1), 4px 4px 5px 0px rgba(0, 0, 0, .1);
+    padding: 20px;
+    border-radius: 8px;
+    width: 60%;
+    position: relative;
+    -webkit-transition: all 0.7s;
+    -ms-transition: all 0.7s;
+    transition: all 0.7s;
+    float: right;
+}
+.setting {
+    box-shadow: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75em 1em;
+    border-radius: 20px;
+    margin: 0;
+    pointer-events: none;
+}
+.setting__label {
+    font-size: 26px;
+    color: #ccc;
+    font-weight: 600;
+    margin: 0;
+}
+.switch,
+.switch::before,
+.switch::after {
+  display: block;
+}
+.switch {
+    background-image: linear-gradient( hsl(222.9, 10.3%, 60.2%), hsl(220, 12%, 95.1%) );
+    box-shadow: 0 0 0.125em 0.125em hsl(225, 7.7%, 89.8%) inset;
+    border-radius: 1em;
+    flex-shrink: 0;
+    position: relative;
+    width: 5em;
+    height: 2em;
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none;
+    pointer-events: auto;
+    cursor: pointer;
+}
+.switch::before,
+.switch::after {
+  border-radius: 0.75em;
+  content: "";
+  position: absolute;
+  top: 0.25em;
+  left: 0.25em;
+  width: 4.5em;
+  height: 1.5em;
+}
+.switch::before {
+  background-color: hsl(222, 9.8%, 60%);
+}
+.switch::after {
+  box-shadow: 0 0 0.5em hsl(222, 10.4%, 18.8%) inset;
+  z-index: 1;
+}
+.switch__input {
+  border-radius: 1em;
+  box-shadow: 0 0 0 0.125em hsla(223, 90%, 50%, 0);
+  cursor: pointer;
+  outline: transparent;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: box-shadow calc(0.3s / 2) cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: 2;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.switch__input::before,
+.switch__input::after {
+  border-radius: 50%;
+  content: "";
+  display: block;
+  position: absolute;
+  transition: transform 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+  cursor: pointer;
+}
+.switch__input::before {
+  background-image: linear-gradient(hsl(0, 0%, 100%), hsl(222, 9.7%, 59.6%));
+  box-shadow: 0 0 0.125em 0.0625em hsl(222, 9.9%, 39.6%),
+    0 0.25em 0.25em hsla(228, 10.6%, 9.2%, 0.4);
+  top: 0.125em;
+  left: 0.125em;
+  width: 1.75em;
+  height: 1.75em;
+}
+.switch__input::after {
+  background-image: linear-gradient(hsl(230, 9.1%, 87.1%), hsl(222, 9.8%, 80%));
+  top: 0.25em;
+  left: 0.25em;
+  width: 1.5em;
+  height: 1.5em;
+}
+input[type="checkbox"].switch__input:checked::before,
+input[type="checkbox"].switch__input:checked::after {
+  transform: translateX(3em);
+}
+.switch__input:checked::before,
+.switch__input:checked::after {
+  transform: translateX(3.5em);
+}
+.switch__fill {
+  border-radius: 0.75em;
+  overflow: hidden;
+  position: absolute;
+  top: 0.25em;
+  right: 0;
+  left: 0.25em;
+  width: 4.5em;
+  height: 1.5em;
+  z-index: 1;
+}
+.switch__text {
+  background-color: hsla(102.8, 95.3%, 50.4%, 0.5);
+  color: hsl(102.4, 91.1%, 8.8%);
+  display: block;
+  font-size: 0.95em;
+  font-weight: 700;
+  line-height: 1.7;
+  opacity: 0.6;
+  padding: 0 0.75em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-shadow: 0 0.0625rem 0 hsl(103.3, 89.7%, 54.5%);
+  transform: translateX(-6.25em);
+  transition: transform 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: -1;
+}
+.switch__text + .switch__text {
+  background-color: hsla(0, 0%, 0%, 0);
+  color: hsl(225, 9.1%, 8.6%);
+  text-shadow: 0 0.0625rem 0 hsl(226.2, 9.9%, 74.3%);
+  text-align: right;
+  transform: translateX(-20px);
+}
+.switch__input:checked + .switch__fill .switch__text {
+  transform: translateX(0);
+}
+.switch__input:checked + .switch__fill .switch__text + .switch__text {
+  transform: translateX(4em);
+}
+.setting .switch .switch__input {
+    display: block;
+    appearance: none;
+    width: 0;
+    height: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    box-shadow: none;
+}
+input[type="checkbox"].switch__input:checked::before {
+    top: 0.325em;
+    left: 0.225em;
+    width: 1.75em;
+    height: 1.75em;
+}
+@media screen and (max-width:1499px){
+    .toggle-sec{
+        width: 52%;
+    }
+}
+@media screen and (max-width:1299px){
+    .seo-plugin-data-info.container h2 {
+        font-size: 22px;
+        padding: 20px 10px;
+    }
+    .setting__label {
+        font-size: 22px;
+    }
+}
+@media screen and (max-width:991px){
+    .toggle-sec {
+        float: none;
+        display: block;
+        width: 100%;
+        margin: 50px auto 0;
+        max-width: 500px;
+    }
+}
+/* cron toggle CSS end */

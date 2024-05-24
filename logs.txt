@@ -1,4 +1,0 @@
-- Logs reset successfully !
-- Data upload successfully!
-- Data upload successfully!
-- Data upload successfully!

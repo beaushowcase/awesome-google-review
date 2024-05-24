@@ -1,57 +1,68 @@
 <?php
 
-
-// Step 1: Add custom cron schedule
 function custom_cron_schedules($schedules) {
     $schedules['every_minute'] = array(
-        'interval' => 60,
+        'interval' => 10,
         'display'  => __('Every Minute')
     );
     return $schedules;
 }
 add_filter('cron_schedules', 'custom_cron_schedules');
 
-// Step 2: Schedule the custom cron event
 if (!wp_next_scheduled('myjob')) {
     wp_schedule_event(time(), 'every_minute', 'myjob');
 }
 
-// Step 3: Create the custom cron job function
 add_action('myjob', 'myjob_function');
 function myjob_function(){
-    
-
-   
+    // display_next_cron_run();
 }
 
 
-// function to upload data
+function display_next_cron_run() {
+    $timestamp = wp_next_scheduled( 'myjob' );
 
-function get_term_id_and_firm_name() {
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'jobdata';
-    $query = $wpdb->prepare("
-        SELECT term_id, firm_name 
-        FROM $table_name 
-        WHERE jobID_json = %d 
-          AND jobID_check_status = %d 
-          AND jobID_check = %d 
-          AND jobID_final = %d
-    ", 1, 1, 1, 1);
-    $results = $wpdb->get_results($query);
+    if ( $timestamp ) {
+        $next_run_time = date( 'c', $timestamp ); // ISO 8601 format
+        $countdown = '<div id="countdown"></div>';
+        $script = "
+            <script>
+                function startCountdown(endTime) {
+                    var countDownDate = new Date(endTime).getTime();
 
-    // $results = get_term_id_and_firm_name();
-    foreach ($results as $result) {
-        echo 'Term ID: ' . $result->term_id . ', Firm Name: ' . $result->firm_name . '<br>';
+                    var x = setInterval(function() {
+                        var now = new Date().getTime();
+                        var distance = countDownDate - now;
+
+                        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                        document.getElementById('countdown').innerHTML =
+                            days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
+
+                        if (distance < 0) {
+                            clearInterval(x);
+                            document.getElementById('countdown').innerHTML = 'EXPIRED';
+                        }
+                    }, 1000);
+                }
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    startCountdown('" . $next_run_time . "');
+                });
+            </script>
+        ";
+                return alert();
+        // return '<p class="nextrun1">Next cron job run time: ' . $next_run_time . '</p>' . $countdown . $script;
+    } else {
+        return alert();
+        // return '<p class="nextrun">No cron job scheduled.</p>';
     }
-
-    // return $results;
 }
 
-// get_term_id_and_firm_name();
-
-
-
+// add_shortcode( 'next_cron_run', 'display_next_cron_run' );
 
 
 
