@@ -1497,6 +1497,20 @@ input[type="checkbox"].switch__input:checked::before {
     width: 1.75em;
     height: 1.75em;
 }
+.timer {
+    font-size: 40px;
+    color: #26f914;
+}
+@media screen and (max-width:1799px){
+    .toggle-sec {
+        width: 55%;
+    }
+}
+@media screen and (max-width:1599px){
+    .toggle-sec {
+        width: 60%;
+    }
+}
 @media screen and (max-width:1499px){
     .toggle-sec{
         width: 52%;

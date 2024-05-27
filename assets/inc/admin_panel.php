@@ -640,6 +640,7 @@ if (!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) {
 <div class="toggle-sec">
     <label class="setting">
         <span class="setting__label">Start Cron Job</span>
+        <span class="timer">00:00:00</span>
         <span class="switch">
             <input class="switch__input" type="checkbox" role="switch" name="switch3" checked>
             <span class="switch__fill" aria-hidden="true">
