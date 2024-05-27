@@ -12,6 +12,7 @@ let btnProcess_check = $("#google_review_upload_form .check_start");
 // correctSign_business.removeClass("visible");
 // correctSign_business.addClass("visible");
 
+
 var current_page = ajax_object.get_url_page;
 var admin_plugin_main_url = ajax_object.admin_plugin_main_url;
 
@@ -1088,6 +1089,7 @@ function delete_logs_start() {
     dataType: "json",
     beforeSend: function () {
       $('#loader').removeClass('hidden');
+      $('#processbar').show();
     },
     data: {
       action: "job_reset_logs_ajax_action",
@@ -1097,10 +1099,12 @@ function delete_logs_start() {
       if (response.success === 1) {
         if (check) {
           reset_logs_success();
+          $('#processbar').hide();
         }
       } else {
         if (check) {
           response_business_fail(response.msg);
+          $('#processbar').hide();
         }
       }
     },
@@ -2011,5 +2015,50 @@ $(document).ready(function () {
       setRandomFlag('api', 0);
       setRandomFlag('upload', 0);
     }
+  });
+});
+
+
+
+// CRON START CLICKED 
+let cron_switch = $("#cron_switch");
+$(cron_switch).click(function (event) {
+  const is_checked = cron_switch.is(":checked");
+  
+  $.ajax({
+    type: "POST",
+    url: ajax_object.ajax_url,
+    dataType: "json",
+    beforeSend: function () {
+      $('.toggle-sec').addClass('process');
+      $('#processbar').show();
+    },
+    data: {
+      action: "cron_is_checked_ajax_action",
+      is_checked: is_checked,
+      review_api_key: ajax_object.review_api_key,    
+    },
+    success: function (response, status, error) {
+      setTimeout(function () {
+        if (response.success === 1) {
+            console.log(response.msg);
+            $('.toggle-sec').removeClass('process');
+            $('#processbar').hide();
+        } 
+        else{
+          console.log('not done');
+          $('#processbar').hide();
+        }
+      }, 1000);
+    },
+    error: function (xhr, status, error) {
+     
+    },
+    complete: function () {
+      // setTimeout(function () {
+      //   $('#loader').addClass('hidden');
+      //   btnProcess_BUSINESS_START.removeClass("spinning");
+      // }, 3500);      
+    },
   });
 });

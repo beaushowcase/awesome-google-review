@@ -362,6 +362,8 @@ input:focus ~ label, input:valid ~ label,input:disabled ~ label {
     -webkit-transition: 0.3s;
     -ms-transition: 0.3s;
     transition: 0.3s;
+
+    /* box-shadow: 0 0 4px 1px rgba(255, 255, 255, .5), 7px 7px 20px 0px rgba(0, 0, 0, .1), 4px 4px 5px 0px rgba(0, 0, 0, .1); */
 }
 .btn-process:disabled {
     background: linear-gradient(
@@ -898,6 +900,15 @@ section {
 	display: flex;
 	align-items: center;
 }
+#processbar {
+    /* background: #dce7eb; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 30px;
+}
 .trash {
     background: #e63e32;
     width: 16px;
@@ -1296,6 +1307,7 @@ section {
     display: flex;
     padding: 5px;
     background: transparent;
+    box-shadow: 0 0 4px 1px rgba(255, 255, 255, .5), 7px 7px 20px 0px rgba(0, 0, 0, .1), 4px 4px 5px 0px rgba(0, 0, 0, .1);
 }
 @media screen and (max-width:767px){
     .delete-part {
@@ -1372,6 +1384,7 @@ section {
     transform: none;
     pointer-events: auto;
     cursor: pointer;
+    box-shadow: 0px 0px 5px 2px rgba(255, 255, 255, .5), 7px 7px 20px 0px rgb(170 205 20 / 10%), 4px 4px 5px 0px rgb(170 212 20 / 10%);
 }
 .switch::before,
 .switch::after {
@@ -1496,6 +1509,13 @@ input[type="checkbox"].switch__input:checked::before {
     left: 0.225em;
     width: 1.75em;
     height: 1.75em;
+}
+/* HTML: <div class="loader"></div> */
+.toggle-sec.process {
+    opacity: 0.4;
+}
+.toggle-sec.process .switch {
+    pointer-events: none;
 }
 .timer {
     font-size: 40px;

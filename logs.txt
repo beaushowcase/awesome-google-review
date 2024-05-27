@@ -1,4 +1,16 @@
-- Job 46 queued for scraping
+- Logs reset successfully !
+- Google Reviews Successfully Extracted.
+- Data upload successfully!
+- Job 58 queued for scraping
 - Checked successful ! Now go ahead with GET
 - Google Reviews Successfully Extracted.
 - Data upload successfully!
+- Database Error: No existing jobID found.
+- Checked successful ! Now go ahead with GET
+- Google Reviews Successfully Extracted.
+- Data upload successfully!
+- Job 68 queued for scraping
+- Checked successful ! Now go ahead with GET
+- Google Reviews Successfully Extracted.
+- Data upload successfully!
+- API key is valid

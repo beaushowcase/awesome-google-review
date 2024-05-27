@@ -60,7 +60,7 @@ function job_table() {
             jobID_check_status bigint(20) NOT NULL,
             jobID_check bigint(20) NOT NULL,            
             jobID_final bigint(20) NOT NULL,
-            term_id bigint(20) NOT NULL,
+            term_id bigint(20) NOT NULL,            
             firm_name varchar(255) NOT NULL,
             created datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
             PRIMARY KEY  (id)
@@ -83,6 +83,7 @@ function job_table() {
             id mediumint(9) NOT NULL AUTO_INCREMENT,
             review_api_key varchar(255) NOT NULL,
             review_api_key_status varchar(255) NOT NULL,
+            cron_status bigint(20) NOT NULL,
             created datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
             PRIMARY KEY  (id)           
         ) $charset_collate;";
@@ -190,6 +191,40 @@ function add_agr_google_review_meta_box() {
         'normal',
         'default'
     );
+}
+
+// check cron enable disable query
+// function check_cron_enable_or_disable() {
+//     global $wpdb;
+//     $table_name = $wpdb->prefix . 'jobdata'; 
+//     $query = $wpdb->prepare("
+//         SELECT COUNT(*) 
+//         FROM $table_name 
+//         WHERE jobID_json = %d
+//         AND jobID_check_status = %d
+//         AND jobID_check = %d         
+//         AND jobID_final = %d 
+//         AND term_id != %d
+//         AND cron_status = %d
+//     ", 1, 1, 1, 1, 0, 1);
+//     $matching_count = $wpdb->get_var($query);
+//     $total_count = $wpdb->get_var("SELECT COUNT(*) FROM $table_name");
+//     return $matching_count == $total_count;
+// }
+
+// check cron enable disable query
+function check_cron_enable_or_disable() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'jobapi'; 
+    $query = $wpdb->get_row($wpdb->prepare(
+        "SELECT cron_status FROM $table_name WHERE review_api_key_status = 1 AND review_api_key != ''",
+        ARRAY_A // Return the row as an associative array
+    ));
+    $cron_status = '';
+    if ($query) {
+        $cron_status = $query->cron_status;        
+    }   
+    return $cron_status;
 }
 
 // Allow radio button instead of checkboxes for hierarchical taxonomies
@@ -500,6 +535,7 @@ if (!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) {
 }
 ?>
 <?php //echo($upload_active ? 'active' : '') ; ?>
+
 <div class="container-process">
     <div class="step-indicator">
       <div class="step step1 <?php echo($start_active ? 'active' : '') ; ?>">
@@ -640,9 +676,9 @@ if (!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) {
 <div class="toggle-sec">
     <label class="setting">
         <span class="setting__label">Start Cron Job</span>
-        <span class="timer">00:00:00</span>
+        <div class="timer">00:00:00</div>
         <span class="switch">
-            <input class="switch__input" type="checkbox" role="switch" name="switch3" checked>
+            <input id="cron_switch" class="switch__input" type="checkbox" role="switch" name="switch3" <?php echo (check_cron_enable_or_disable() == 1) ? 'checked' : ''; ?>>
             <span class="switch__fill" aria-hidden="true">
             <span class="switch__text">ON</span>
             <span class="switch__text">OFF</span>
