@@ -1518,7 +1518,7 @@ input[type="checkbox"].switch__input:checked::before {
     pointer-events: none;
 }
 .timer {
-    font-size: 40px;
+    font-size: 30px;
     color: #26f914;
 }
 @media screen and (max-width:1799px){

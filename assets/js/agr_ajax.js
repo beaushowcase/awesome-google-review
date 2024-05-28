@@ -1325,7 +1325,7 @@ function upload_process_box(check) {
           }
         }
         $('#processbar').hide();
-      }, 3500);
+      }, 2500);
     },
     error: function (xhr, status, error) {
       // Swal.fire({
@@ -1378,7 +1378,7 @@ function response_upload_success(response, termslug) {
         title: "Completed",
         html: display_msg,
         showConfirmButton: false,
-        timer: 3500,
+        timer: 2500,
         allowOutsideClick: false,
         grow: false,
         backdrop: 'swal2-backdrop-show',
@@ -2041,6 +2041,7 @@ $(cron_switch).click(function (event) {
     success: function (response, status, error) {
       setTimeout(function () {
         if (response.success === 1) {
+            $('.toggle-sec .timer').html(response.cron_next_run);
             console.log(response.msg);
             $('.toggle-sec').removeClass('process');
             $('#processbar').hide();

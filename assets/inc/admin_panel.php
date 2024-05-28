@@ -675,8 +675,15 @@ if (!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) {
 
 <div class="toggle-sec">
     <label class="setting">
-        <span class="setting__label">Start Cron Job</span>
-        <div class="timer">00:00:00</div>
+        <span class="setting__label">Cron Schedule on : </span>
+        <?php
+            $cron_timer = get_cron_next_run();
+            $display_time = '00:00:00';
+            if(!empty($cron_timer) || $cron_timer != NULL){               
+                $display_time = date("Y-m-d h:i A", strtotime(get_cron_next_run()));
+            }
+        ?>
+        <div class="timer"><?php echo $display_time; ?></div>
         <span class="switch">
             <input id="cron_switch" class="switch__input" type="checkbox" role="switch" name="switch3" <?php echo (check_cron_enable_or_disable() == 1) ? 'checked' : ''; ?>>
             <span class="switch__fill" aria-hidden="true">
@@ -713,6 +720,7 @@ function custom_add_custom_columns($columns) {
     }
     return $new_columns;
 }
+
 add_filter('manage_agr_google_review_posts_columns', 'custom_add_custom_columns');
 // Display custom meta values in the custom columns
 function custom_display_custom_columns($column, $post_id) {

@@ -30,7 +30,7 @@ $myUpdateChecker->getVcsApi()->enableReleaseAssets();
 // PLUGIN CHECKER = STOP
 
 // Require cron job event
-include 'assets/inc/cron.php';
+// include 'assets/inc/cron.php';
 
 function get_dynamic_version()
 {
@@ -1627,34 +1627,98 @@ function my_footer_shh()
 
 
 
+function update_cron_next_run($rows_affected_id) {
+    global $wpdb;
+
+    // $query = $wpdb->prepare("
+    //             UPDATE wp_jobapi
+    //             SET cron_next_run = DATE_ADD(NOW(), INTERVAL 1 HOUR)
+    //             WHERE id = %d", $rows_affected_id);
+    // $wpdb->query($query);
+
+    $query = $wpdb->prepare("
+        UPDATE wp_jobapi
+        SET cron_next_run = DATE_ADD(NOW(), INTERVAL 1 MINUTE)
+        WHERE id = %d", $rows_affected_id);
+    $wpdb->query($query);
+}
+
+function update_cron_next_run_null($rows_affected_id) {   
+    global $wpdb;    
+    $query = $wpdb->prepare("
+            UPDATE wp_jobapi
+            SET cron_next_run = NULL
+            WHERE id = %d", $rows_affected_id);
+    $wpdb->query($query);
+}
+
+function get_cron_next_run() {
+    global $wpdb;    
+    $query = "SELECT cron_next_run
+              FROM wp_jobapi
+              WHERE review_api_key IS NOT NULL
+              AND review_api_key_status = 1
+              AND cron_status = 1
+              ORDER BY id DESC
+              LIMIT 1;";
+    $cron_next_run = $wpdb->get_var($query);
+    return $cron_next_run;
+}
+
+
 // cron is checked action
 add_action('wp_ajax_cron_is_checked_ajax_action', 'cron_is_checked_ajax_action_function');
 add_action('wp_ajax_nopriv_cron_is_checked_ajax_action', 'cron_is_checked_ajax_action_function');
 
 function cron_is_checked_ajax_action_function()
 {
+
+    // include 'assets/inc/cron.php';   
+
     $response = array(
         'success' => 0,
         'data'    => array('api' => ''),
+        'cron_next_run'     => '',
         'msg'     => array('')
     );
     $is_checked = isset($_POST['is_checked']) ? sanitize_text_field($_POST['is_checked']) : '';
-
 
     if (!empty($is_checked)) {
         global $wpdb;
         $table_name = $wpdb->prefix . 'jobapi';
         $cron_status = ($is_checked === 'true') ? 1 : 0;
 
-        if ($cron_status === 1) {
-            // $start_cron = start_CRON_RUN();
-        }
-
         $result = $wpdb->query($wpdb->prepare(
             "UPDATE $table_name SET cron_status = $cron_status WHERE review_api_key_status = 1 AND review_api_key != ''"            
         ));
 
+        $rows_affected_id = $wpdb->rows_affected;
+
         if ($result !== false) {
+            if ($cron_status === 1) {
+                // $start_cron = start_CRON_RUN();   
+                update_cron_next_run($rows_affected_id);
+                $cron_timer = get_cron_next_run();      
+
+                
+                require_once __DIR__ . '/assets/inc/cron.php';
+
+                $display_time = '00:00:00';
+                if(!empty($cron_timer) || $cron_timer != NULL){                
+                    $display_time = date("Y-m-d h:i A", strtotime($cron_timer));
+                }                
+                $response['cron_next_run'] = $display_time;                         
+            }
+            else{
+                update_cron_next_run_null($rows_affected_id);
+
+                $cron_timer = get_cron_next_run();                
+                $display_time = '00:00:00';
+                if(!empty($cron_timer) || $cron_timer != NULL){                
+                    $display_time = date("Y-m-d h:i A", strtotime(get_cron_next_run()));
+                }                
+                $response['cron_next_run'] = $display_time;  
+            }            
             $response['success'] = 1;
             $response['msg'] = ($cron_status === 1) ? 'Updated to enabled cron!' : 'Updated to disabled cron!';
         } else {
@@ -1665,30 +1729,24 @@ function cron_is_checked_ajax_action_function()
     wp_die();
 }
 
-//AUTOMATICALLY HIT START BUTTON
+//Automatically run START process by CRON
 function start_CRON_RUN()
 {
-
-    // Initialize response array
     $response = array(
         'success' => 0,
         'data'    => array('jobID' => ''),
         'msg'     => ''
     );
     $all_executed_firm_datas = get_all_executed_firm_names();
-
+    // ptr($all_executed_firm_datas);exit;
     global $wpdb;
-    $review_api_key = function_exists('get_existing_api_key') ? get_existing_api_key() : '';
-    $firm_name = '';
+    $review_api_key = function_exists('get_existing_api_key') ? get_existing_api_key() : '';   
 
     foreach ($all_executed_firm_datas as $firm_data) {
         $firm_name = sanitize_text_field($firm_data['firm_name']);
         $firm_name_jobID = sanitize_text_field($firm_data['jobID']);
 
         if (!empty($firm_name)) {
-
-            // $existing_jobID = $wpdb->get_var($wpdb->prepare("SELECT jobID FROM {$wpdb->prefix}jobdata WHERE jobID = %s", $firm_name_jobID));
-            // ptr($existing_jobID);exit;
 
             $response_api_data = job_start_at_api($review_api_key, $firm_name);
 
@@ -1705,17 +1763,10 @@ function start_CRON_RUN()
                         'jobID_json' => 1,
                         'jobID_check_status' => 0,
                         'jobID_check' => 0,
-                        'jobID_final' => 0,
-                        // 'term_id' => 0,
-                        'cron_status' => 1,
+                        'jobID_final' => 0,                                                
                         'firm_name' => $firm_name,
                         'created' => current_time('mysql')
-                    );
-
-                    // $where = array('jobID' => $firm_name_jobID);
-                    // $result = $wpdb->update($wpdb->prefix . 'jobdata', $data, $where, array('%d'), array('%s'));
-
-                    // Prepare data for updating
+                    );                    
                     $data_to_update = array();
                     foreach ($data as $column => $value) {
                         $data_to_update[$column] = $value;
@@ -1724,16 +1775,62 @@ function start_CRON_RUN()
                     $where = array('jobID' => $firm_name_jobID);
                     $updated = $wpdb->update($table_name_data, $data_to_update, $where);
 
+                    if ($updated  !== false) {
+                        $response['data']['jobID'] = $firm_name_jobID;
+                        $response['success'] = 1;
+                        $response['msg'] = $response_api_data['msg'];
+                    } else {
+                        $response['msg'] = "Database Error: Failed to insert/update job data.";
+                    }
+                }
+            } else {
+                $response['msg'] = "API Error: " . $response_api_data['msg'];
+            }
+        }
+    }
+    return $response;
+}
 
-                    // $existing_jobID = $wpdb->get_var($wpdb->prepare("SELECT jobID FROM {$wpdb->prefix}jobdata WHERE jobID = %s", $jobID));
-                    // if ($existing_jobID !== null) {
-                    //     $where = array('jobID' => $firm_name_jobID);
-                    //     $result = $wpdb->update($wpdb->prefix . 'jobdata', $data, $where, array('%d'), array('%s'));
-                    // } else {
-                    //     $where = array('jobID' => $firm_name_jobID);
-                    //     $result = $wpdb->update($wpdb->prefix . 'jobdata', $data, $where, array('%d'), array('%s'));
-                    // }
+//Automatically run CHECK STATUS process by CRON
+function check_CRON_RUN()
+{
+    $response = array(
+        'success' => 0,
+        'data'    => array('jobID' => ''),
+        'msg'     => ''
+    );
+    $get_all_executed_firm_names_by_check = get_all_executed_firm_names_by_check();    
+    global $wpdb;
+    $review_api_key = function_exists('get_existing_api_key') ? get_existing_api_key() : '';   
 
+    foreach ($get_all_executed_firm_names_by_check as $firm_data) {
+        $firm_name = sanitize_text_field($firm_data['firm_name']);
+        $firm_name_jobID = sanitize_text_field($firm_data['jobID']);
+
+        if (!empty($firm_name)) {
+
+            $response_api_data = job_check_status_at_api($review_api_key, $firm_name_jobID);
+
+            if ($response_api_data['success']) {
+                $jobID = $response_api_data['data']['jobID'];
+                $table_name = $wpdb->prefix . 'jobapi';
+                $table_name_data = $wpdb->prefix . 'jobdata';
+                if ($wpdb->last_error) {
+                    $response['msg'] = "Database Error: " . $wpdb->last_error;
+                } else {
+                    $data = array(   
+                        'jobID_json' => 1,
+                        'jobID_check_status' => 1,
+                        'jobID_check' => 0,
+                        'jobID_final' => 0
+                    );                    
+                    $data_to_update = array();
+                    foreach ($data as $column => $value) {
+                        $data_to_update[$column] = $value;
+                    }
+
+                    $where = array('jobID' => $firm_name_jobID);
+                    $updated = $wpdb->update($table_name_data, $data_to_update, $where);
 
                     if ($updated  !== false) {
                         $response['data']['jobID'] = $firm_name_jobID;
@@ -1772,12 +1869,44 @@ function get_all_executed_firm_names()
         }
     }
     $where_clause = implode(' AND ', $where_conditions);
-    $query = "SELECT firm_name,jobID FROM {$wpdb->prefix}jobdata WHERE {$where_clause}";
+    $query = "SELECT term_id,firm_name,jobID FROM {$wpdb->prefix}jobdata WHERE {$where_clause}";
     $results = $wpdb->get_results($query, ARRAY_A);
     $firm_names = array();
     foreach ($results as $key => $result) {
         $firm_names[$key]['firm_name'] = $result['firm_name'];
         $firm_names[$key]['jobID'] = $result['jobID'];
+        $firm_names[$key]['term_id'] = $result['term_id'];
+    }
+
+    return $firm_names;
+}
+
+function get_all_executed_firm_names_by_check()
+{
+    global $wpdb;
+    $conditions = array(
+        'jobID_json' => 1,
+        'jobID_check' => 0,
+        'jobID_check_status' => 0,
+        'jobID_final' => 0,
+        'term_id' => array('!=', 0)
+    );
+    $where_conditions = array();
+    foreach ($conditions as $key => $value) {
+        if (is_array($value)) {
+            $where_conditions[] = "{$key} {$value[0]} '{$value[1]}'";
+        } else {
+            $where_conditions[] = "{$key} = '{$value}'";
+        }
+    }
+    $where_clause = implode(' AND ', $where_conditions);
+    $query = "SELECT term_id,firm_name,jobID FROM {$wpdb->prefix}jobdata WHERE {$where_clause}";
+    $results = $wpdb->get_results($query, ARRAY_A);
+    $firm_names = array();
+    foreach ($results as $key => $result) {
+        $firm_names[$key]['firm_name'] = $result['firm_name'];
+        $firm_names[$key]['jobID'] = $result['jobID'];
+        $firm_names[$key]['term_id'] = $result['term_id'];
     }
 
     return $firm_names;
