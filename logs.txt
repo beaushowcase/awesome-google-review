@@ -10,3 +10,5 @@
 - Google Reviews Successfully Extracted.
 - Checked successful ! Now go ahead with GET
 - Google Reviews Successfully Extracted.
+- Database Error: No existing jobID found.
+- Deleted data of beardog digital.

@@ -19,6 +19,16 @@ function our_google_reviews_add_menu_page() {
         'delete-review', // Menu slug
         'delete_review_callback' // Callback function
     );
+
+    // Add submenu item
+    add_submenu_page(
+        'awesome-google-review', // Parent slug
+        'Cron Setting', // Page title
+        'Cron Setting', // Menu title
+        'manage_options', // Capability
+        'review-cron-job', // Menu slug
+        'cron_job_callback' // Callback function
+    );
 }
 add_action('admin_menu', 'our_google_reviews_add_menu_page');
 
@@ -281,6 +291,71 @@ function render_agr_google_review_meta_box($post) {
     echo '<tr><th>' . __('Description:', 'awesome-google-review') . '</th><td><textarea readonly id="text" name="text" rows="4" cols="23">' . esc_textarea($text) . '</textarea></td></tr>';
     echo '<tr><th>' . __('Publish Date:', 'awesome-google-review') . '</th><td><input readonly type="text" id="publish_date" name="publish_date" value="' . esc_attr($publish_date) . '" /></td></tr>';
     echo '</table>';
+}
+
+
+function cron_job_callback(){ ?>
+
+
+
+<div class="toggle-sec">
+<label class="setting">
+    <span class="setting__label">Cron Setting : </span>
+    <?php
+        // $cron_timer = get_cron_next_run();
+        // $display_time = '00:00:00';
+        // if(!empty($cron_timer) || $cron_timer != NULL){               
+        //     $display_time = date("Y-m-d h:i A", strtotime(get_cron_next_run()));
+        // }
+    ?>             
+    <!-- <div class="timer"><?php echo display_countdown_timer(); ?></div> -->
+    
+    <span class="switch">
+        <input id="cron_switch" class="switch__input" type="checkbox" role="switch" name="switch3" <?php echo (check_cron_enable_or_disable() == 1) ? 'checked' : ''; ?>>
+        <span class="switch__fill" aria-hidden="true">
+        <span class="switch__text">ON</span>
+        <span class="switch__text">OFF</span>
+    </span>
+    </span>
+</label>
+</div>
+
+
+<?php 
+if(check_cron_enable_or_disable() == 1){
+    $first_function_next_run = wp_next_scheduled( 'first_daily_data' );
+    $second_function_next_run = wp_next_scheduled( 'second_daily_data' );
+    ?>
+<section id="processbar" style="display:none;"><span class="loader-71"> </span></section>
+    <div class="toggle-sec" id="show_cron">
+        <label class="setting">
+            <span class="setting__label"></span>
+            <table class="widefat">
+                    <thead>
+                        <tr>
+                            <th>CRON</th>
+                            <th>NEXT RUN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Scrapping Cron</td>
+                            <td class="first_cron"><?php echo $first_function_next_run ? date( 'Y-m-d h:i:s A', $first_function_next_run ) : 'Not scheduled'; ?></td>
+                        </tr>
+                        <tr>
+                            <td>Uploading Cron</td>
+                            <td class="second_cron"><?php echo $second_function_next_run ? date( 'Y-m-d h:i:s A', $second_function_next_run ) : 'Not scheduled'; ?></td>
+                        </tr>
+                    </tbody>
+                </table>   
+        </label>
+    </div>
+<?php } ?>
+
+
+
+
+<?php
 }
 
 function delete_review_callback(){ ?>
@@ -672,29 +747,6 @@ if (!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) {
         <button class="control" style="display:none;"></button>
         <canvas id="canvas"></canvas>
     </div>
-
-<div class="toggle-sec">
-    <label class="setting">
-        <span class="setting__label">Cron Schedule on : </span>
-        <?php
-            $cron_timer = get_cron_next_run();
-            $display_time = '00:00:00';
-            if(!empty($cron_timer) || $cron_timer != NULL){               
-                $display_time = date("Y-m-d h:i A", strtotime(get_cron_next_run()));
-            }
-        ?>
-        <div class="timer"><?php echo $display_time; ?></div>
-        <span class="switch">
-            <input id="cron_switch" class="switch__input" type="checkbox" role="switch" name="switch3" <?php echo (check_cron_enable_or_disable() == 1) ? 'checked' : ''; ?>>
-            <span class="switch__fill" aria-hidden="true">
-            <span class="switch__text">ON</span>
-            <span class="switch__text">OFF</span>
-        </span>
-        </span>
-    </label>
-</div>
-    
-
 </div>
 
 <!-- akash start -->

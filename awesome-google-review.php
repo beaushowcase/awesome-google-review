@@ -31,6 +31,7 @@ $myUpdateChecker->getVcsApi()->enableReleaseAssets();
 
 // Require cron job event
 // include 'assets/inc/cron.php';
+require_once __DIR__ . '/assets/inc/cron.php';
 
 function get_dynamic_version()
 {
@@ -40,7 +41,7 @@ function get_dynamic_version()
 function our_load_admin_style()
 {
     global $pagenow;
-    if ($pagenow == 'admin.php' && isset($_GET['page']) && ($_GET['page'] == 'awesome-google-review' || $_GET['page'] == 'delete-review')) {
+    if ($pagenow == 'admin.php' && isset($_GET['page']) && ($_GET['page'] == 'awesome-google-review' || $_GET['page'] == 'delete-review' || $_GET['page'] == 'review-cron-job')) {
         // Enqueue jQuery
         wp_enqueue_script('jquery');
 
@@ -1612,7 +1613,7 @@ function display_fun()
 
 
 //remove unused assets backend
-if ($pagenow == 'admin.php' && isset($_GET['page']) && ($_GET['page'] == 'awesome-google-review' || $_GET['page'] == 'delete-review')) {
+if ($pagenow == 'admin.php' && isset($_GET['page']) && ($_GET['page'] == 'awesome-google-review' || $_GET['page'] == 'delete-review' || $_GET['page'] == 'review-cron-job')) {
     add_action('admin_menu', 'my_footer_shh');
     add_filter('admin_footer_text', 'remove_footer_admin');
 }
@@ -1665,69 +1666,6 @@ function get_cron_next_run() {
     return $cron_next_run;
 }
 
-
-// cron is checked action
-add_action('wp_ajax_cron_is_checked_ajax_action', 'cron_is_checked_ajax_action_function');
-add_action('wp_ajax_nopriv_cron_is_checked_ajax_action', 'cron_is_checked_ajax_action_function');
-
-function cron_is_checked_ajax_action_function()
-{
-
-    // include 'assets/inc/cron.php';   
-
-    $response = array(
-        'success' => 0,
-        'data'    => array('api' => ''),
-        'cron_next_run'     => '',
-        'msg'     => array('')
-    );
-    $is_checked = isset($_POST['is_checked']) ? sanitize_text_field($_POST['is_checked']) : '';
-
-    if (!empty($is_checked)) {
-        global $wpdb;
-        $table_name = $wpdb->prefix . 'jobapi';
-        $cron_status = ($is_checked === 'true') ? 1 : 0;
-
-        $result = $wpdb->query($wpdb->prepare(
-            "UPDATE $table_name SET cron_status = $cron_status WHERE review_api_key_status = 1 AND review_api_key != ''"            
-        ));
-
-        $rows_affected_id = $wpdb->rows_affected;
-
-        if ($result !== false) {
-            if ($cron_status === 1) {
-                // $start_cron = start_CRON_RUN();   
-                update_cron_next_run($rows_affected_id);
-                $cron_timer = get_cron_next_run();      
-
-                
-                require_once __DIR__ . '/assets/inc/cron.php';
-
-                $display_time = '00:00:00';
-                if(!empty($cron_timer) || $cron_timer != NULL){                
-                    $display_time = date("Y-m-d h:i A", strtotime($cron_timer));
-                }                
-                $response['cron_next_run'] = $display_time;                         
-            }
-            else{
-                update_cron_next_run_null($rows_affected_id);
-
-                $cron_timer = get_cron_next_run();                
-                $display_time = '00:00:00';
-                if(!empty($cron_timer) || $cron_timer != NULL){                
-                    $display_time = date("Y-m-d h:i A", strtotime(get_cron_next_run()));
-                }                
-                $response['cron_next_run'] = $display_time;  
-            }            
-            $response['success'] = 1;
-            $response['msg'] = ($cron_status === 1) ? 'Updated to enabled cron!' : 'Updated to disabled cron!';
-        } else {
-            $response['msg'] = 'Failed to update cron status!';
-        }
-    }
-    wp_send_json($response);
-    wp_die();
-}
 
 //Automatically run START process by CRON
 function start_CRON_RUN()
@@ -1910,4 +1848,199 @@ function get_all_executed_firm_names_by_check()
     }
 
     return $firm_names;
+}
+
+
+function first_cron() {
+    $next_first_event_timestamp = wp_next_scheduled( 'first_daily_data' );
+    $output = array('scheduled' => false, 'timestamp' => 0);
+    if ( $next_first_event_timestamp ) {
+        $date = gmdate( 'd-M-Y', $next_first_event_timestamp );
+        $time = gmdate( 'h:i:s A', $next_first_event_timestamp );
+        $output = array(
+            'scheduled' => true,
+            'date' => $date,
+            'time' => $time,
+            'timestamp' => $next_first_event_timestamp
+        );
+    }
+    return json_encode($output);
+}
+
+function second_cron() {
+    $next_second_event_timestamp = wp_next_scheduled( 'second_daily_data' );
+    $output = array('scheduled' => false, 'timestamp' => 0);    
+    if ( $next_second_event_timestamp ) {
+        $date = gmdate( 'd-M-Y', $next_second_event_timestamp );
+        $time = gmdate( 'h:i:s A', $next_second_event_timestamp );
+        $output = array(
+            'scheduled' => true,
+            'date' => $date,
+            'time' => $time,
+            'timestamp' => $next_second_event_timestamp
+        );
+    }
+    return json_encode($output);
+}
+
+function display_countdown_timer() {
+    $cron_data = first_cron();
+    $cron_data = json_decode($cron_data, true);
+
+    ob_start();
+    ?>
+    <div id="countdown-timer" data-timestamp="<?php echo esc_attr($cron_data['timestamp']); ?>">
+        <?php if ($cron_data['scheduled']): ?>            
+            <div class="timer"><span id="time-remaining"></span></div>
+        <?php else: ?>
+            <p>first_daily_data is not scheduled.</p>
+        <?php endif; ?>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var countdownElement = document.getElementById('countdown-timer');
+            var timestamp = countdownElement.getAttribute('data-timestamp');
+            var countdownDisplay = document.getElementById('time-remaining');
+
+            if (timestamp) {
+                function updateCountdown() {
+                    var now = Math.floor(Date.now() / 1000);
+                    var secondsRemaining = timestamp - now;
+
+                    if (secondsRemaining > 0) {
+                        var hours = Math.floor(secondsRemaining / 3600);
+                        var minutes = Math.floor((secondsRemaining % 3600) / 60);
+                        var seconds = secondsRemaining % 60;
+
+                        countdownDisplay.innerText = hours + 'h ' + minutes + 'm ' + seconds + 's';
+                    } else {
+                        countdownDisplay.innerText = 'The event has started or ended.';
+                    }
+                }
+
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
+            }
+        });
+    </script>
+    <?php
+    return ob_get_clean();
+}
+
+
+function display_second_countdown_timer() {
+    $cron_data = second_cron();
+    $cron_data = json_decode($cron_data, true);
+
+    ob_start();
+    ?>
+    <div id="second-countdown-timer" data-timestamp="<?php echo esc_attr($cron_data['timestamp']); ?>">
+        <?php if ($cron_data['scheduled']): ?>
+            <p>Next event is scheduled for: <?php echo esc_html($cron_data['date'] . ' ' . $cron_data['time']); ?></p>
+            <p>Time remaining: <span id="second-time-remaining"></span></p>
+        <?php else: ?>
+            <p>second_daily_data is not scheduled.</p>
+        <?php endif; ?>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var countdownElement = document.getElementById('second-countdown-timer');
+            var timestamp = countdownElement.getAttribute('data-timestamp');
+            var countdownDisplay = document.getElementById('second-time-remaining');
+
+            if (timestamp) {
+                function updateCountdown() {
+                    var now = Math.floor(Date.now() / 1000);
+                    var secondsRemaining = timestamp - now;
+
+                    if (secondsRemaining > 0) {
+                        var hours = Math.floor(secondsRemaining / 3600);
+                        var minutes = Math.floor((secondsRemaining % 3600) / 60);
+                        var seconds = secondsRemaining % 60;
+
+                        countdownDisplay.innerText = hours + 'h ' + minutes + 'm ' + seconds + 's';
+                    } else {
+                        countdownDisplay.innerText = 'The event has started or ended.';
+                    }
+                }
+
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
+            }
+        });
+    </script>
+    <?php
+    return ob_get_clean();
+}
+
+
+// cron is checked action
+add_action('wp_ajax_cron_is_checked_ajax_action', 'cron_is_checked_ajax_action_function');
+add_action('wp_ajax_nopriv_cron_is_checked_ajax_action', 'cron_is_checked_ajax_action_function');
+
+function cron_is_checked_ajax_action_function()
+{
+
+    // include 'assets/inc/cron.php';   
+
+    $response = array(
+        'success' => 0,
+        'data'    => array('api' => ''),
+        'cron_next_run_first'     => '',
+        'cron_next_run_second'     => '',
+        'msg'     => array('')
+    );
+    $is_checked = isset($_POST['is_checked']) ? sanitize_text_field($_POST['is_checked']) : '';
+
+    if (!empty($is_checked)) {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'jobapi';
+        $cron_status = ($is_checked === 'true') ? 1 : 0;
+
+        $result = $wpdb->query($wpdb->prepare(
+            "UPDATE $table_name SET cron_status = $cron_status WHERE review_api_key_status = 1 AND review_api_key != ''"            
+        ));
+
+        $rows_affected_id = $wpdb->rows_affected;
+
+        if ($result !== false) {
+            if ($cron_status === 1) {
+                // $start_cron = start_CRON_RUN();   
+                update_cron_next_run($rows_affected_id);
+                $cron_timer = get_cron_next_run();
+                
+                // require_once __DIR__ . '/assets/inc/cron.php';
+
+                $first_function_next_run = wp_next_scheduled( 'first_daily_data' );
+                $second_function_next_run = wp_next_scheduled( 'second_daily_data' );
+
+                $first = $first_function_next_run ? date( 'Y-m-d h:i:s A', $first_function_next_run ) : 'Not scheduled';
+                $second = $second_function_next_run ? date( 'Y-m-d h:i:s A', $second_function_next_run ) : 'Not scheduled';
+
+                // $display_time = '00:00:00';
+                // if(!empty($cron_timer) || $cron_timer != NULL){                
+                //     $display_time = date("Y-m-d h:i A", strtotime($cron_timer));
+                // }  
+
+                $response['cron_next_run_first'] = $first;                         
+                $response['cron_next_run_second'] = $second;                         
+            }
+            else{
+                update_cron_next_run_null($rows_affected_id);
+
+                // $cron_timer = get_cron_next_run();                
+                // $display_time = '00:00:00';
+                // if(!empty($cron_timer) || $cron_timer != NULL){                
+                //     $display_time = date("Y-m-d h:i A", strtotime(get_cron_next_run()));
+                // }                
+                // $response['cron_next_run'] = $display_time;  
+            }            
+            $response['success'] = 1;
+            $response['msg'] = ($cron_status === 1) ? 'Updated to enabled cron!' : 'Updated to disabled cron!';
+        } else {
+            $response['msg'] = 'Failed to update cron status!';
+        }
+    }
+    wp_send_json($response);
+    wp_die();
 }

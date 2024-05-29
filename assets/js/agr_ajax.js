@@ -17,11 +17,14 @@ var current_page = ajax_object.get_url_page;
 var admin_plugin_main_url = ajax_object.admin_plugin_main_url;
 
 jQuery(document).ready(function ($) {
-  $('#processbar').hide();
-  if (current_page != 'delete-review') {
+  $('#processbar').hide();  
+  if (current_page != 'delete-review' && current_page != 'review-cron-job') {
+    console.log(current_page);
     initial_check();
     upload_done_process();
   }
+  
+  
 });
 
 
@@ -2023,8 +2026,7 @@ $(document).ready(function () {
 // CRON START CLICKED 
 let cron_switch = $("#cron_switch");
 $(cron_switch).click(function (event) {
-  const is_checked = cron_switch.is(":checked");
-  
+  const is_checked = cron_switch.is(":checked");    
   $.ajax({
     type: "POST",
     url: ajax_object.ajax_url,
@@ -2032,6 +2034,10 @@ $(cron_switch).click(function (event) {
     beforeSend: function () {
       $('.toggle-sec').addClass('process');
       $('#processbar').show();
+      if(is_checked != true){
+        $('.toggle-sec#show_cron').fadeOut();
+      }
+          
     },
     data: {
       action: "cron_is_checked_ajax_action",
@@ -2041,16 +2047,23 @@ $(cron_switch).click(function (event) {
     success: function (response, status, error) {
       setTimeout(function () {
         if (response.success === 1) {
-            $('.toggle-sec .timer').html(response.cron_next_run);
+            $('#show_cron .first_cron').html(response.cron_next_run_first);
+            $('#show_cron .second_cron').html(response.cron_next_run_second);
             console.log(response.msg);
             $('.toggle-sec').removeClass('process');
             $('#processbar').hide();
         } 
         else{
           console.log('not done');
-          $('#processbar').hide();
+          $('#processbar').hide();          
+        }
+
+        if(is_checked == true){
+          $('.toggle-sec#show_cron').fadeIn();
         }
       }, 1000);
+      
+      
     },
     error: function (xhr, status, error) {
      
