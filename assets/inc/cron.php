@@ -5,7 +5,7 @@ date_default_timezone_set('Asia/Kolkata');
 add_filter('cron_schedules', 'my_custom_cron_intervals');
 function my_custom_cron_intervals($schedules) {
     $schedules['every_minute'] = array(
-        'interval' => 180,
+        'interval' => 120,
         'display' => __('Every Minute', 'textdomain'),
     );
     return $schedules;
@@ -35,6 +35,9 @@ function first_update()
     $g_op = get_option('myfirst');
     $g_op = $g_op + 1;
     $st = update_option('myfirst', $g_op);
+
+    cron_step_1();
+
     return $st;
 }
 
@@ -43,6 +46,11 @@ function second_update()
     $sss = get_option('mysecond');
     $g_fdfdf = $sss + 1;
     $stss = update_option('mysecond', $g_fdfdf);
+
+    cron_step_2();
+
+
     return $stss;
 }
+
 

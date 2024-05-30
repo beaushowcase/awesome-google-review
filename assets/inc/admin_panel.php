@@ -398,12 +398,16 @@ $j_term_id = isset($firm_data['term_id']) ? $firm_data['term_id'] : '';
 $client_ip = $_SERVER['REMOTE_ADDR'];
 $jp = check_prepared_job_status($get_existing_api_key);
 $getjdata = get_job_data_by_api_key($get_existing_api_key);
+
+
+
 $jflag = 0;
-if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 0 || $getjdata['jobID_check'] == 0 || $getjdata['jobID_final'] == 0)){
+if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 0 || $getjdata['jobID_check'] == 0 || $getjdata['jobID_final'] == 0) && $getjdata['term_id'] == 0){
     $jflag = 1;
 }
+
 $step = false;
-if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 0 || $getjdata['jobID_check'] == 0 || $getjdata['jobID_final'] == 0)){
+if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 0 || $getjdata['jobID_check'] == 0 || $getjdata['jobID_final'] == 0) && $getjdata['term_id'] == 0){
     $step = true;
 }
 ?>
@@ -948,7 +952,7 @@ function get_job_data_by_api_key($review_api_key) {
         "SELECT data.jobID_json, data.jobID_check_status, data.jobID_check, data.jobID_final
         FROM $table_data AS data
         INNER JOIN $table_api AS api ON data.review_api_key = api.review_api_key 
-        WHERE data.review_api_key = %s 
+        WHERE data.review_api_key = %s AND data.term_id = 0
         ORDER BY data.id DESC
         LIMIT 1",
         $review_api_key

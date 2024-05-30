@@ -1,0 +1,188 @@
+{
+    "success": 1,
+    "firm_name": "Mira Cinema Char Rasta",
+    "message": "Google Reviews Successfully Extracted.",
+    "totalCount": 20,
+    "reviews": [
+        {
+            "id": "101772000977045520199",
+            "title": "Adnan Khan",
+            "description": "\ud83d\udea6 Signal is not working it is very difficult to cross the road !",
+            "numericRatingCount": 1,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUiNEuJSRCfz8zzpYYKCFHhBm__vzPyFUBwY6aV2kIEpI1jYiDS=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101772000977045520199\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "113947262503986554362",
+            "title": "Nagori Yasar barkatali",
+            "description": "Nice and use full place",
+            "numericRatingCount": 3,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjURER95G1S1YNmhI1IhuqWpr5WLkZxh5el2O_D8mVKFcSadwSzS=s40-c-rp-mo-ba5-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113947262503986554362\/reviews\/",
+            "publicationDate": "8 months ago"
+        },
+        {
+            "id": "111475580528666328283",
+            "title": "Vijaykumar Awati",
+            "description": "Most dirty and bad people in there don't if u having free tickets",
+            "numericRatingCount": 1,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWX4LF_bnf3Nauo-AAq8avlLJ45GkkViKfE1AXYUmBLyTiVSf8h=s40-c-rp-mo-ba5-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/111475580528666328283\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "100658848068570587643",
+            "title": "Sahil Ali",
+            "description": "No one follows traffic here and, there's no traffic police here",
+            "numericRatingCount": 2,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUsx3lVFx9dbQyWZ2sRjol-Ku_iPGXBHlOi4BDfM29s9AoAQWVA=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/100658848068570587643\/reviews\/",
+            "publicationDate": "3 years ago"
+        },
+        {
+            "id": "105610754401865430568",
+            "title": "Sagar Shah",
+            "description": "As works as its name..Rapid transport service..And its really RAPID.",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUBxcK8SyGvPZnzwIn28FZocQ7O4U9Ag9VXmrOGM4D0A-MaTf9fcw=s40-c-rp-mo-ba5-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105610754401865430568\/reviews\/",
+            "publicationDate": "7 years ago"
+        },
+        {
+            "id": "116087248201766468047",
+            "title": "Sunil Thakore",
+            "description": "Road has been dug for long..",
+            "numericRatingCount": 3,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVbMLLPSpVZ5T4S2xiQ3C2rKig63JvXjvznrAOdz57mAL08tdZj=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116087248201766468047\/reviews\/",
+            "publicationDate": "2 years ago"
+        },
+        {
+            "id": "110234200354883157302",
+            "title": "Sunil makwana",
+            "description": "It's good",
+            "numericRatingCount": 4,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjV_0kHZw39DGERA1ClqCliEl9nK2V0Ud3rYL7cB09F2AzqIBAN2=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/110234200354883157302\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "114984183909956629878",
+            "title": "DHARMESH PARMAR",
+            "description": "Very nice",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWTydGDYDoxtZYYFnL7ZN_4lkzjxWrFPjXgLRYgHcddZSJrReQ=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/114984183909956629878\/reviews\/",
+            "publicationDate": "5 years ago"
+        },
+        {
+            "id": "105488498784157179879",
+            "title": "Rajendrasinh Chauhan",
+            "description": "Nice",
+            "numericRatingCount": 3,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjUEgjnuQxovUdQJJc4OA5iAdr5fDKG7AQoAUb7txHqXuMdpxrlr=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105488498784157179879\/reviews\/",
+            "publicationDate": "7 years ago"
+        },
+        {
+            "id": "102497526878347715590",
+            "title": "sourav khanna",
+            "description": "Dirty",
+            "numericRatingCount": 3,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXLUzjqiWAZR7zfyEGOi6WOz3nsgQcWZs1xldiFqVCIdFmsv3kZcw=s40-c-rp-mo-ba4-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102497526878347715590\/reviews\/",
+            "publicationDate": "7 years ago"
+        },
+        {
+            "id": "113856663056779168815",
+            "title": "ad Home health care",
+            "description": "Good local aria",
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjXAMjS2x8HY2cO-dK3NKLmP_U81wh-cZZxXLYMowtmts_YkUsE=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113856663056779168815\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "101726551506919715890",
+            "title": "Revasiya Ahesanali",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocJl-gDwsW86QLbZfD1GZirJhEL_ePYOJX8Vkp7AXtkVMVNJKBQ=s40-c-rp-mo-ba4-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/101726551506919715890\/reviews\/",
+            "publicationDate": "2 months ago"
+        },
+        {
+            "id": "116126091333479701484",
+            "title": "Krunal gohil",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocIEw2r8SQfP5oXBsCMD7udjglseNJ1lrdySjxLA-RE3zAYesYM=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/116126091333479701484\/reviews\/",
+            "publicationDate": "5 months ago"
+        },
+        {
+            "id": "106623949061499835095",
+            "title": "Jigar Chaudhary",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocI1J61rvnWK0Ts2iXYRpAOC2j_QOJUL27IK6M3-EjOAKtNEztpi=s40-c-rp-mo-ba4-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/106623949061499835095\/reviews\/",
+            "publicationDate": "a year ago"
+        },
+        {
+            "id": "112471989062104217679",
+            "title": "Vishal Devipujak",
+            "description": null,
+            "numericRatingCount": 3,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjW5Ff0HSHrmEuNV9JuuzcQfk2-FKD1zguQ4MYW0xZtDV1SpjLfw=s40-c-rp-mo-ba2-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/112471989062104217679\/reviews\/",
+            "publicationDate": "3 years ago"
+        },
+        {
+            "id": "114776417608354664587",
+            "title": "Binita gajjar",
+            "description": null,
+            "numericRatingCount": 3,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocI6HtSUWH2hZ655QEM2C3DNrR5gK9xelE_j_ZXRp0WCdaWcUA=s40-c-rp-mo-ba4-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/114776417608354664587\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "102845451601563842701",
+            "title": "Priyank Raval",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjWB2XpaygWWTQOkBc_zVAODj1Y5fc-zdYLqk7tkSFbj0KDYcdQf9g=s40-c-rp-mo-ba5-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102845451601563842701\/reviews\/",
+            "publicationDate": "4 years ago"
+        },
+        {
+            "id": "113012687522360294304",
+            "title": "Pandya Bhargav",
+            "description": null,
+            "numericRatingCount": 4,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjVHzAzzRj8fkvRbK6pzjYQA3Om1IdL3glQsw-LKEp-WyBI33gJYtw=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/113012687522360294304\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "105986037178778053365",
+            "title": "NAVRATANMAL KOTHARI",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a\/ACg8ocKDy8WUoPLwgFrPtjdqFmeMgrPaIt9w39oyk6P7AmniJ4XizA=s40-c-rp-mo-ba3-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/105986037178778053365\/reviews\/",
+            "publicationDate": "6 years ago"
+        },
+        {
+            "id": "102778617464555508599",
+            "title": "Noman Munshi",
+            "description": null,
+            "numericRatingCount": 5,
+            "reviewerPictureUrl": "https:\/\/lh3.googleusercontent.com\/a-\/ALV-UjV-h0-4BYs8ogpdxtXNFtalf1xcpgUlzSnBld2TzIKiLJYOONk=s40-c-rp-mo-br100",
+            "reviewerUrl": "https:\/\/www.google.com\/maps\/contrib\/102778617464555508599\/reviews\/",
+            "publicationDate": "7 years ago"
+        }
+    ]
+}
