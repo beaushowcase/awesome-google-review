@@ -17,7 +17,7 @@ var current_page = ajax_object.get_url_page;
 var admin_plugin_main_url = ajax_object.admin_plugin_main_url;
 
 jQuery(document).ready(function ($) {
-  $('#processbar').hide();  
+  // $('#processbar').hide();  
   if (current_page != 'delete-review' && current_page != 'review-cron-job') {
     console.log(current_page);
     initial_check();
@@ -2032,12 +2032,11 @@ $(cron_switch).click(function (event) {
     url: ajax_object.ajax_url,
     dataType: "json",
     beforeSend: function () {
-      $('.toggle-sec').addClass('process');
       $('#processbar').show();
+      $('.toggle-sec').addClass('process');      
       if(is_checked != true){
-        $('.toggle-sec#show_cron').fadeOut();
-      }
-          
+        $('.toggle-sec#show_cron').hide();
+      }          
     },
     data: {
       action: "cron_is_checked_ajax_action",
@@ -2046,33 +2045,63 @@ $(cron_switch).click(function (event) {
     },
     success: function (response, status, error) {
       setTimeout(function () {
-        if (response.success === 1) {
-            $('#show_cron .first_cron').html(response.cron_next_run_first);
-            $('#show_cron .second_cron').html(response.cron_next_run_second);
-            console.log(response.msg);
-            $('.toggle-sec').removeClass('process');
-            $('#processbar').hide();
+        if (response.success === 1) {        
+            $('.toggle-sec').removeClass('process');   
+            $('#processbar').show();
+            $('.toggle-sec#show_cron').hide();          
         } 
         else{
-          console.log('not done');
-          $('#processbar').hide();          
+          console.log('not done'); 
+          $('#processbar').hide();                 
         }
-
+       
         if(is_checked == true){
-          $('.toggle-sec#show_cron').fadeIn();
+          $('.toggle-sec#show_cron').show();
+          localStorage.setItem('testcron',1);
         }
-      }, 1000);
-      
-      
+        location.reload();  
+      }, 100);
+
     },
     error: function (xhr, status, error) {
-     
+      $('#processbar').hide();
     },
     complete: function () {
       // setTimeout(function () {
       //   $('#loader').addClass('hidden');
       //   btnProcess_BUSINESS_START.removeClass("spinning");
-      // }, 3500);      
+      // }, 3500);
+      // $('#processbar').hide(); 
+      
     },
   });
+});
+
+var testcron = localStorage.getItem('testcron');
+jQuery(document).ready(function(){  
+  if(testcron == 1){
+    $.ajax({
+      type: "POST",
+      url: ajax_object.ajax_url,
+      dataType: "json",      
+      data: {
+          action: "schedule_second_daily_data_ajax_action"
+      },
+      success: function (response) {
+          $('.toggle-sec').removeClass('process');   
+          $('#processbar').show();
+          $('.toggle-sec#show_cron').show(); 
+          localStorage.setItem('testcron',0);         
+          location.reload();  
+      },
+      error: function (xhr, status, error) {
+          console.error("Error scheduling second daily data:", error);
+      },
+      complete: function () {
+        setTimeout(function () {
+          $('#processbar').hide(); 
+        }, 100);
+      },
+    });
+  }
 });

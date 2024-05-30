@@ -29,9 +29,38 @@ $myUpdateChecker->setBranch('main');
 $myUpdateChecker->getVcsApi()->enableReleaseAssets();
 // PLUGIN CHECKER = STOP
 
-// Require cron job event
-// include 'assets/inc/cron.php';
-require_once __DIR__ . '/assets/inc/cron.php';
+// check cron enable disable query
+function check_cron_enable_or_disable() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'jobapi'; 
+    $query = $wpdb->get_row($wpdb->prepare(
+        "SELECT cron_status FROM $table_name WHERE review_api_key_status = 1 AND review_api_key != ''",
+        ARRAY_A 
+    ));
+    $cron_status = '';
+    if ($query) {
+        $cron_status = $query->cron_status;        
+    }   
+    return $cron_status;
+}
+
+$check_cron = check_cron_enable_or_disable();
+
+if($check_cron == 1){
+    require_once __DIR__ . '/assets/inc/cron.php';
+}
+else{
+    // REMOVE CRON
+    $timestamp1 = wp_next_scheduled( 'first_daily_data' );
+    if ( $timestamp1 ) {
+        wp_unschedule_event( $timestamp1, 'first_daily_data' );
+    }
+    $timestamp2 = wp_next_scheduled( 'second_daily_data' );
+    if ( $timestamp2 ) {
+        wp_unschedule_event( $timestamp2, 'second_daily_data' );
+    }
+}
+
 
 function get_dynamic_version()
 {
@@ -1626,47 +1655,6 @@ function my_footer_shh()
     remove_filter('update_footer', 'core_update_footer');
 }
 
-
-
-function update_cron_next_run($rows_affected_id) {
-    global $wpdb;
-
-    // $query = $wpdb->prepare("
-    //             UPDATE wp_jobapi
-    //             SET cron_next_run = DATE_ADD(NOW(), INTERVAL 1 HOUR)
-    //             WHERE id = %d", $rows_affected_id);
-    // $wpdb->query($query);
-
-    $query = $wpdb->prepare("
-        UPDATE wp_jobapi
-        SET cron_next_run = DATE_ADD(NOW(), INTERVAL 1 MINUTE)
-        WHERE id = %d", $rows_affected_id);
-    $wpdb->query($query);
-}
-
-function update_cron_next_run_null($rows_affected_id) {   
-    global $wpdb;    
-    $query = $wpdb->prepare("
-            UPDATE wp_jobapi
-            SET cron_next_run = NULL
-            WHERE id = %d", $rows_affected_id);
-    $wpdb->query($query);
-}
-
-function get_cron_next_run() {
-    global $wpdb;    
-    $query = "SELECT cron_next_run
-              FROM wp_jobapi
-              WHERE review_api_key IS NOT NULL
-              AND review_api_key_status = 1
-              AND cron_status = 1
-              ORDER BY id DESC
-              LIMIT 1;";
-    $cron_next_run = $wpdb->get_var($query);
-    return $cron_next_run;
-}
-
-
 //Automatically run START process by CRON
 function start_CRON_RUN()
 {
@@ -1974,20 +1962,15 @@ function display_second_countdown_timer() {
 }
 
 
+
 // cron is checked action
 add_action('wp_ajax_cron_is_checked_ajax_action', 'cron_is_checked_ajax_action_function');
 add_action('wp_ajax_nopriv_cron_is_checked_ajax_action', 'cron_is_checked_ajax_action_function');
 
 function cron_is_checked_ajax_action_function()
 {
-
-    // include 'assets/inc/cron.php';   
-
     $response = array(
         'success' => 0,
-        'data'    => array('api' => ''),
-        'cron_next_run_first'     => '',
-        'cron_next_run_second'     => '',
         'msg'     => array('')
     );
     $is_checked = isset($_POST['is_checked']) ? sanitize_text_field($_POST['is_checked']) : '';
@@ -2000,43 +1983,9 @@ function cron_is_checked_ajax_action_function()
         $result = $wpdb->query($wpdb->prepare(
             "UPDATE $table_name SET cron_status = $cron_status WHERE review_api_key_status = 1 AND review_api_key != ''"            
         ));
-
-        $rows_affected_id = $wpdb->rows_affected;
-
         if ($result !== false) {
-            if ($cron_status === 1) {
-                // $start_cron = start_CRON_RUN();   
-                update_cron_next_run($rows_affected_id);
-                $cron_timer = get_cron_next_run();
-                
-                // require_once __DIR__ . '/assets/inc/cron.php';
-
-                $first_function_next_run = wp_next_scheduled( 'first_daily_data' );
-                $second_function_next_run = wp_next_scheduled( 'second_daily_data' );
-
-                $first = $first_function_next_run ? date( 'Y-m-d h:i:s A', $first_function_next_run ) : 'Not scheduled';
-                $second = $second_function_next_run ? date( 'Y-m-d h:i:s A', $second_function_next_run ) : 'Not scheduled';
-
-                // $display_time = '00:00:00';
-                // if(!empty($cron_timer) || $cron_timer != NULL){                
-                //     $display_time = date("Y-m-d h:i A", strtotime($cron_timer));
-                // }  
-
-                $response['cron_next_run_first'] = $first;                         
-                $response['cron_next_run_second'] = $second;                         
-            }
-            else{
-                update_cron_next_run_null($rows_affected_id);
-
-                // $cron_timer = get_cron_next_run();                
-                // $display_time = '00:00:00';
-                // if(!empty($cron_timer) || $cron_timer != NULL){                
-                //     $display_time = date("Y-m-d h:i A", strtotime(get_cron_next_run()));
-                // }                
-                // $response['cron_next_run'] = $display_time;  
-            }            
             $response['success'] = 1;
-            $response['msg'] = ($cron_status === 1) ? 'Updated to enabled cron!' : 'Updated to disabled cron!';
+            $response['msg'] = ($cron_status === 1) ? 'Updated to enabled cron!' : 'Updated to disabled cron!';            
         } else {
             $response['msg'] = 'Failed to update cron status!';
         }
@@ -2044,3 +1993,10 @@ function cron_is_checked_ajax_action_function()
     wp_send_json($response);
     wp_die();
 }
+
+add_action('wp_ajax_schedule_second_daily_data_ajax_action', 'schedule_second_daily_data_callback');
+function schedule_second_daily_data_callback() {    
+    wp_send_json_success("Second daily data scheduled successfully.");
+}
+
+//LATEST BEAU

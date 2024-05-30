@@ -222,20 +222,7 @@ function add_agr_google_review_meta_box() {
 //     return $matching_count == $total_count;
 // }
 
-// check cron enable disable query
-function check_cron_enable_or_disable() {
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'jobapi'; 
-    $query = $wpdb->get_row($wpdb->prepare(
-        "SELECT cron_status FROM $table_name WHERE review_api_key_status = 1 AND review_api_key != ''",
-        ARRAY_A // Return the row as an associative array
-    ));
-    $cron_status = '';
-    if ($query) {
-        $cron_status = $query->cron_status;        
-    }   
-    return $cron_status;
-}
+
 
 // Allow radio button instead of checkboxes for hierarchical taxonomies
 function term_radio_checklist( $args ) {
@@ -300,16 +287,7 @@ function cron_job_callback(){ ?>
 
 <div class="toggle-sec">
 <label class="setting">
-    <span class="setting__label">Cron Setting : </span>
-    <?php
-        // $cron_timer = get_cron_next_run();
-        // $display_time = '00:00:00';
-        // if(!empty($cron_timer) || $cron_timer != NULL){               
-        //     $display_time = date("Y-m-d h:i A", strtotime(get_cron_next_run()));
-        // }
-    ?>             
-    <!-- <div class="timer"><?php echo display_countdown_timer(); ?></div> -->
-    
+    <span class="setting__label">Cron Setting : </span>    
     <span class="switch">
         <input id="cron_switch" class="switch__input" type="checkbox" role="switch" name="switch3" <?php echo (check_cron_enable_or_disable() == 1) ? 'checked' : ''; ?>>
         <span class="switch__fill" aria-hidden="true">
