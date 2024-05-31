@@ -32,6 +32,29 @@ function our_google_reviews_add_menu_page() {
 }
 add_action('admin_menu', 'our_google_reviews_add_menu_page');
 
+
+function delete_all_agr_google_reviews2() {
+    global $wpdb;
+
+    // Define the post type to be deleted
+    $post_type = 'agr_google_review';
+
+    // Get all posts of the specified post type
+    $posts = get_posts(array(
+        'post_type'      => $post_type,
+        'post_status'    => 'any',
+        'numberposts'    => -1,
+        'fields'         => 'ids',
+    ));
+
+    // Loop through each post and delete it
+    foreach ($posts as $post_id) {
+        wp_delete_post($post_id, true); // true parameter ensures the post is permanently deleted
+    }
+}
+
+// add_action('admin_init', 'delete_all_agr_google_reviews2');
+
 // Setting Link at plugin
 function add_settings_link($links, $file) {
     if (strpos($file, 'awesome-google-review/awesome-google-review.php') !== false) {
@@ -49,6 +72,8 @@ function awesome_google_review_plugin_activate() {
     add_agr_google_review_post_type();    
     flush_rewrite_rules();
 }
+
+
 
 // Function to create table
 function job_table() {
@@ -103,40 +128,6 @@ function job_table() {
         
         maybe_create_table( $table_name1, $sql );
     }
-}
-
-function remove_custom_tables() {
-    global $wpdb;
-
-    // Define table names
-    $table_names = [
-        $wpdb->prefix . 'jobdata',
-        $wpdb->prefix . 'jobapi'
-    ];
-
-    // Remove tables
-    foreach ($table_names as $table_name) {
-        $wpdb->query("DROP TABLE IF EXISTS $table_name");
-    }
-}
-
-// Hide post type on deactivation
-register_deactivation_hook(__FILE__, 'awesome_google_review_plugin_deactivate');
-function awesome_google_review_plugin_deactivate() {
-
-    remove_custom_tables();
-
-    unregister_post_type('agr_google_review');
-    flush_rewrite_rules();
-}
-
-// Remove data on deletion
-register_uninstall_hook(__FILE__, 'awesome_google_review_plugin_uninstall');
-function awesome_google_review_plugin_uninstall() {
-    // delete_option('firm_name');
-    // delete_option('review_api_key_status');
-    // delete_option('business_valid');
-    // delete_option('review_api_key');
 }
 
 add_action('init', 'add_agr_google_review_post_type');

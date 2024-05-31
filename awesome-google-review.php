@@ -4,7 +4,7 @@
  * Plugin URI:        https://beardog.digital/
  * Description:       Impresses with top-notch service and skilled professionals. A 5-star destination for grooming excellence!
  * Version:           1.2.6
- * Requires PHP:      7.2
+ * Requires PHP:      7.0
  * Author:            #beaubhavik
  * Author URI:        https://beardog.digital/
  * Text Domain:       awesome-google-review
@@ -12,6 +12,42 @@
 
 define('AGR_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('AGR_PLUGIN_URL', plugin_dir_url(__FILE__));
+
+include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+
+register_deactivation_hook(__FILE__, 'agr_deactivation_cron_clear');
+
+register_uninstall_hook(__FILE__, 'agr_uninstall_data');
+
+function agr_uninstall_data(){
+    remove_custom_tables();
+    flush_rewrite_rules();
+}
+
+function agr_deactivation_cron_clear()
+{   
+    unregister_post_type('agr_google_review');
+    wp_clear_scheduled_hook('first_daily_data');
+    wp_clear_scheduled_hook('second_daily_data');
+    flush_rewrite_rules();
+}
+
+function remove_custom_tables()
+{
+    global $wpdb;
+
+    // Define table names
+    $table_names = [
+        $wpdb->prefix . 'jobdata',
+        $wpdb->prefix . 'jobapi'
+    ];
+
+    // Remove tables
+    foreach ($table_names as $table_name) {
+        $wpdb->query("DROP TABLE IF EXISTS $table_name");
+    }
+}
+
 
 global $pagenow;
 
@@ -30,34 +66,34 @@ $myUpdateChecker->getVcsApi()->enableReleaseAssets();
 // PLUGIN CHECKER = STOP
 
 // check cron enable disable query
-function check_cron_enable_or_disable() {
+function check_cron_enable_or_disable()
+{
     global $wpdb;
-    $table_name = $wpdb->prefix . 'jobapi'; 
+    $table_name = $wpdb->prefix . 'jobapi';
     $query = $wpdb->get_row($wpdb->prepare(
         "SELECT cron_status FROM $table_name WHERE review_api_key_status = 1 AND review_api_key != ''",
-        ARRAY_A 
+        ARRAY_A
     ));
     $cron_status = '';
     if ($query) {
-        $cron_status = $query->cron_status;        
-    }   
+        $cron_status = $query->cron_status;
+    }
     return $cron_status;
 }
 
 $check_cron = check_cron_enable_or_disable();
 
-if($check_cron == 1){
+if ($check_cron == 1) {
     require_once __DIR__ . '/assets/inc/cron.php';
-}
-else{
+} else {
     // REMOVE CRON
-    $timestamp1 = wp_next_scheduled( 'first_daily_data' );
-    if ( $timestamp1 ) {
-        wp_unschedule_event( $timestamp1, 'first_daily_data' );
+    $timestamp1 = wp_next_scheduled('first_daily_data');
+    if ($timestamp1) {
+        wp_unschedule_event($timestamp1, 'first_daily_data');
     }
-    $timestamp2 = wp_next_scheduled( 'second_daily_data' );
-    if ( $timestamp2 ) {
-        wp_unschedule_event( $timestamp2, 'second_daily_data' );
+    $timestamp2 = wp_next_scheduled('second_daily_data');
+    if ($timestamp2) {
+        wp_unschedule_event($timestamp2, 'second_daily_data');
     }
 }
 
@@ -104,7 +140,8 @@ function get_existing_firm_data()
     global $wpdb;
     $table_name = $wpdb->prefix . 'jobapi';
     $table_name2 = $wpdb->prefix . 'jobdata';
-    $firm_data = $wpdb->get_row($wpdb->prepare(        "
+    $firm_data = $wpdb->get_row($wpdb->prepare(
+        "
         SELECT j.firm_name, j.jobID, j.term_id
         FROM $table_name2 AS j
         INNER JOIN $table_name AS s ON j.review_api_key = s.review_api_key
@@ -1661,29 +1698,39 @@ function get_all_executed_firm_names($step)
 {
     global $wpdb;
     $conditions = array();
-    if($step == 1){
+    if ($step == 1) {
         $conditions = array(
             'jobID_json' => 1,
-            'jobID_check' => 1,
             'jobID_check_status' => 1,
+            'jobID_check' => 1,
             'jobID_final' => 1,
             'term_id' => array('!=', 0)
         );
     }
-    if($step == 2){
+    if ($step == 2) {
         $conditions = array(
             'jobID_json' => 1,
-            'jobID_check' => 0,
             'jobID_check_status' => 0,
+            'jobID_check' => 0,
             'jobID_final' => 0,
             'term_id' => array('!=', 0)
         );
     }
-    if($step == 3){
+    if ($step == 3) {
         $conditions = array(
             'jobID_json' => 1,
+            'jobID_check_status' => 1,
+            'jobID_check' => 0,
+            'jobID_final' => 0,
+            'term_id' => array('!=', 0)
+        );
+    }
+
+    if ($step == 4) {
+        $conditions = array(
+            'jobID_json' => 1,
+            'jobID_check_status' => 1,
             'jobID_check' => 1,
-            'jobID_check_status' => 0,
             'jobID_final' => 0,
             'term_id' => array('!=', 0)
         );
@@ -1742,12 +1789,13 @@ function get_all_executed_firm_names($step)
 // }
 
 
-function first_cron() {
-    $next_first_event_timestamp = wp_next_scheduled( 'first_daily_data' );
+function first_cron()
+{
+    $next_first_event_timestamp = wp_next_scheduled('first_daily_data');
     $output = array('scheduled' => false, 'timestamp' => 0);
-    if ( $next_first_event_timestamp ) {
-        $date = gmdate( 'd-M-Y', $next_first_event_timestamp );
-        $time = gmdate( 'h:i:s A', $next_first_event_timestamp );
+    if ($next_first_event_timestamp) {
+        $date = gmdate('d-M-Y', $next_first_event_timestamp);
+        $time = gmdate('h:i:s A', $next_first_event_timestamp);
         $output = array(
             'scheduled' => true,
             'date' => $date,
@@ -1758,12 +1806,13 @@ function first_cron() {
     return json_encode($output);
 }
 
-function second_cron() {
-    $next_second_event_timestamp = wp_next_scheduled( 'second_daily_data' );
-    $output = array('scheduled' => false, 'timestamp' => 0);    
-    if ( $next_second_event_timestamp ) {
-        $date = gmdate( 'd-M-Y', $next_second_event_timestamp );
-        $time = gmdate( 'h:i:s A', $next_second_event_timestamp );
+function second_cron()
+{
+    $next_second_event_timestamp = wp_next_scheduled('second_daily_data');
+    $output = array('scheduled' => false, 'timestamp' => 0);
+    if ($next_second_event_timestamp) {
+        $date = gmdate('d-M-Y', $next_second_event_timestamp);
+        $time = gmdate('h:i:s A', $next_second_event_timestamp);
         $output = array(
             'scheduled' => true,
             'date' => $date,
@@ -1774,16 +1823,17 @@ function second_cron() {
     return json_encode($output);
 }
 
-function display_countdown_timer() {
+function display_countdown_timer()
+{
     $cron_data = first_cron();
     $cron_data = json_decode($cron_data, true);
 
     ob_start();
-    ?>
+?>
     <div id="countdown-timer" data-timestamp="<?php echo esc_attr($cron_data['timestamp']); ?>">
-        <?php if ($cron_data['scheduled']): ?>            
+        <?php if ($cron_data['scheduled']) : ?>
             <div class="timer"><span id="time-remaining"></span></div>
-        <?php else: ?>
+        <?php else : ?>
             <p>first_daily_data is not scheduled.</p>
         <?php endif; ?>
     </div>
@@ -1814,22 +1864,23 @@ function display_countdown_timer() {
             }
         });
     </script>
-    <?php
+<?php
     return ob_get_clean();
 }
 
 
-function display_second_countdown_timer() {
+function display_second_countdown_timer()
+{
     $cron_data = second_cron();
     $cron_data = json_decode($cron_data, true);
 
     ob_start();
-    ?>
+?>
     <div id="second-countdown-timer" data-timestamp="<?php echo esc_attr($cron_data['timestamp']); ?>">
-        <?php if ($cron_data['scheduled']): ?>
+        <?php if ($cron_data['scheduled']) : ?>
             <p>Next event is scheduled for: <?php echo esc_html($cron_data['date'] . ' ' . $cron_data['time']); ?></p>
             <p>Time remaining: <span id="second-time-remaining"></span></p>
-        <?php else: ?>
+        <?php else : ?>
             <p>second_daily_data is not scheduled.</p>
         <?php endif; ?>
     </div>
@@ -1860,7 +1911,7 @@ function display_second_countdown_timer() {
             }
         });
     </script>
-    <?php
+<?php
     return ob_get_clean();
 }
 
@@ -1884,11 +1935,11 @@ function cron_is_checked_ajax_action_function()
         $cron_status = ($is_checked === 'true') ? 1 : 0;
 
         $result = $wpdb->query($wpdb->prepare(
-            "UPDATE $table_name SET cron_status = $cron_status WHERE review_api_key_status = 1 AND review_api_key != ''"            
+            "UPDATE $table_name SET cron_status = $cron_status WHERE review_api_key_status = 1 AND review_api_key != ''"
         ));
         if ($result !== false) {
             $response['success'] = 1;
-            $response['msg'] = ($cron_status === 1) ? 'Updated to enabled cron!' : 'Updated to disabled cron!';            
+            $response['msg'] = ($cron_status === 1) ? 'Updated to enabled cron!' : 'Updated to disabled cron!';
         } else {
             $response['msg'] = 'Failed to update cron status!';
         }
@@ -1898,12 +1949,7 @@ function cron_is_checked_ajax_action_function()
 }
 
 add_action('wp_ajax_schedule_second_daily_data_ajax_action', 'schedule_second_daily_data_callback');
-function schedule_second_daily_data_callback() {    
+function schedule_second_daily_data_callback()
+{
     wp_send_json_success("Second daily data scheduled successfully.");
-}
-
-
-// CRON AUTO FUNCTIONS
-if($check_cron == 1){
-    require_once __DIR__ . '/assets/inc/cron_functions.php';
 }
