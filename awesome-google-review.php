@@ -616,12 +616,14 @@ function job_start_ajax_action_function()
     // Sanitize input data
     $nonce         = isset($_POST['nonce']) ? sanitize_text_field($_POST['nonce']) : '';
     $review_api_key = isset($_POST['review_api_key']) ? sanitize_text_field($_POST['review_api_key']) : '';
-    $firm_name     = isset($_POST['firm_name']) ? sanitize_text_field($_POST['firm_name']) : '';
+    $encoded_firm = $_POST['firm_name'];
+    $decoded_firm_name = urldecode($_POST['firm_name']);    
+    $firm_name     = isset($decoded_firm_name) ? $decoded_firm_name : '';
 
     // Verify nonce
     if (!empty($nonce) && wp_verify_nonce($nonce, 'get_set_trigger')) {
         // Call API to start job
-        $response_api_data = job_start_at_api($review_api_key, $firm_name);
+        $response_api_data = job_start_at_api($review_api_key, $encoded_firm);
 
         // Check API response
         if ($response_api_data['success']) {

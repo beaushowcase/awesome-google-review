@@ -1,0 +1,45 @@
+- Job 283 queued for scraping
+- Checked successful ! Now go ahead with GET
+- Google Reviews Successfully Extracted.
+- Data upload successfully!
+- Job 294 queued for scraping
+- Reset and deleted data successfully 
+- Job 295 queued for scraping
+- Reset and deleted data successfully 
+- Job 305 queued for scraping
+- Check Again !
+- Check Again !
+- Check Again !
+- Reset and deleted data successfully 
+- Job 306 queued for scraping
+- Reset and deleted data successfully 
+- Job 307 queued for scraping
+- Reset and deleted data successfully 
+- Job 310 queued for scraping
+- Reset and deleted data successfully 
+- Job 312 queued for scraping
+- Job 313 queued for scraping
+- Job 314 queued for scraping
+- API Error: Internal server error
+- API Error: Internal server error
+- API Error: Internal server error
+- API Error: Internal server error
+- Job 315 queued for scraping
+- API Error: Internal server error
+- Job 316 queued for scraping
+- Job 317 queued for scraping
+- Job 318 queued for scraping
+- Job 319 queued for scraping
+- Job 320 queued for scraping
+- Job 321 queued for scraping
+- Job 322 queued for scraping
+- Job 323 queued for scraping
+- Job 324 queued for scraping
+- Job 325 queued for scraping
+- Checked successful ! Now go ahead with GET
+- Google Reviews Successfully Extracted.
+- Data upload successfully!
+- Job 326 queued for scraping
+- Checked successful ! Now go ahead with GET
+- Google Reviews Successfully Extracted.
+- Data upload successfully!

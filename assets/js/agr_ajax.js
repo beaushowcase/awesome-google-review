@@ -900,7 +900,9 @@ function confirm_msg(msg, jobID) {
 
 
 function job_start(check) {
-  const firm_name = FirmNameInput.val();
+  // const firm_name = FirmNameInput.val();
+  const firm_name = encodeURIComponent(FirmNameInput.val());
+  console.log('firm_name ===' +firm_name);
   const nonce = $("#get_set_trigger_nonce").val();
 
   $.ajax({
