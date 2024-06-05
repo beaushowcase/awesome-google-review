@@ -13,6 +13,9 @@
 define('AGR_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('AGR_PLUGIN_URL', plugin_dir_url(__FILE__));
 
+// define('CUSTOM_HOST_URL', 'http://localhost:3000');
+define('CUSTOM_HOST_URL', 'https://api.spiderdunia.com:3000');
+
 include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 
 register_deactivation_hook(__FILE__, 'agr_deactivation_cron_clear');
@@ -146,14 +149,12 @@ function get_existing_firm_data()
         FROM $table_name2 AS j
         INNER JOIN $table_name AS s ON j.review_api_key = s.review_api_key
         WHERE s.review_api_key_status = %d AND j.term_id = 0
-        ORDER BY j.jobID DESC
+        ORDER BY j.created DESC
         LIMIT 1",
         1
     ), ARRAY_A);
     return $firm_data;
 }
-
-// ptr(get_existing_firm_data());exit;
 
 
 
@@ -326,7 +327,7 @@ function get_job_data($job_id)
     $table_name = $wpdb->prefix . 'jobdata';
     $where = array(
         'jobID' => $job_id
-    );
+    );    
     $row = $wpdb->get_row($wpdb->prepare("SELECT jobID_json, jobID_check, jobID_check_status, jobID_final FROM $table_name WHERE jobID = %d", $job_id), ARRAY_A);
     if ($row) {
         return $row;
@@ -496,8 +497,8 @@ function invalidApiKey($review_api_key)
         'data'    => array('api' => 0),
         'msg'     => array('')
     );
-    $api_url = 'https://api.spiderdunia.com:3000/validateApiKey'; // Assuming your Express.js server is running locally on port 3000
-    // $api_url = 'https://api.spiderdunia.com:3001/api/free-google-reviews'; // Uncomment this line if the Express.js server is running on a different host/port
+    $api_endpoint = '/validateApiKey';
+    $api_url = CUSTOM_HOST_URL . $api_endpoint;   
     $headers = array(
         'Content-Type' => 'application/json', // Update content type to JSON
     );
@@ -689,8 +690,10 @@ function job_start_at_api($review_api_key, $firm_name)
         'success' => 0,
         'data'    => array('jobID' => 0),
         'msg'     => ''
-    );
-    $api_url = 'https://api.spiderdunia.com:3000/scrape';
+    );    
+    $api_endpoint = '/scrape';
+    $api_url = CUSTOM_HOST_URL . $api_endpoint;
+    
     $headers = array(
         'Content-Type' => 'application/json',
     );
@@ -732,8 +735,9 @@ function job_check_at_api($review_api_key, $current_job_id)
         'success' => 0,
         'data'    => array('jobID' => 0),
         'msg'     => array('')
-    );
-    $api_url = 'https://api.spiderdunia.com:3000/events';
+    );    
+    $api_endpoint = '/events';
+    $api_url = CUSTOM_HOST_URL . $api_endpoint;
     $headers = array(
         'Content-Type' => 'application/json', // Update content type to JSON
     );
@@ -1572,7 +1576,10 @@ function job_check_status_at_api($review_api_key, $current_job_id)
         'msg'     => array(''),
         'state'     => 0,
     );
-    $api_url = 'https://api.spiderdunia.com:3000/job/status';
+
+    $api_endpoint = '/job/status';
+    $api_url = CUSTOM_HOST_URL . $api_endpoint;
+
     $headers = array(
         'Content-Type' => 'application/json', // Update content type to JSON
     );

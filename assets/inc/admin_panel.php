@@ -380,7 +380,8 @@ function our_google_reviews_callback() {
 
     // ptr($get_api_status);exit;
 ?>
-<?php        
+<?php     
+   
 $firm_data = get_existing_firm_data();
 $firm_name_data = isset($firm_data['firm_name']) ? $firm_data['firm_name'] : '';
 $job_id_data = isset($firm_data['jobID']) ? $firm_data['jobID'] : '';
