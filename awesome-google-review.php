@@ -3,7 +3,7 @@
  * Plugin Name:       Awesome Google Review
  * Plugin URI:        https://beardog.digital/
  * Description:       Impresses with top-notch service and skilled professionals. A 5-star destination for grooming excellence!
- * Version:           1.3
+ * Version:           1.3.1
  * Requires PHP:      7.0
  * Author:            #beaubhavik
  * Author URI:        https://beardog.digital/
@@ -26,6 +26,8 @@ function agr_uninstall_data(){
     remove_custom_tables();
     flush_rewrite_rules();
 }
+
+// if any changes in this plugin
 
 function agr_deactivation_cron_clear()
 {   
