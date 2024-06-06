@@ -23,19 +23,19 @@ jQuery(document).ready(function ($) {
     initial_check();
     upload_done_process();
   }
-  
-  
+
+
 });
 
 
 function upload_done_process() {
   var urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has('uploaded') && urlParams.get('uploaded') === 'true' && urlParams.has('slug') && urlParams.get('slug') !== '' && urlParams.has('page') && urlParams.get('page') === 'awesome-google-review') {
-     setTimeout(function () {      
+    setTimeout(function () {
       var newUrl = ajax_object.main_site_url + "/wp-admin/edit.php?business=" + urlParams.get('slug') + "&post_type=agr_google_review";
       window.location.href = newUrl;
     }, 5000);
-   
+
   }
 }
 
@@ -168,6 +168,7 @@ $.fn.focusAtEnd = function () {
 
 // correctSign_BUSINESS.removeClass("visible");
 
+
 // FOR API BOX
 let sign_TRUE = false;
 let sign_FALSE = false;
@@ -260,6 +261,8 @@ function initial_check() {
         btnProcess_BUSINESS_START.show();
         btnProcess_BUSINESS_CHECK.hide();
       }
+
+
 
 
 
@@ -902,7 +905,7 @@ function confirm_msg(msg, jobID) {
 function job_start(check) {
   // const firm_name = FirmNameInput.val();
   const firm_name = encodeURIComponent(FirmNameInput.val());
-  console.log('firm_name ===' +firm_name);
+  console.log('firm_name ===' + firm_name);
   const nonce = $("#get_set_trigger_nonce").val();
 
   $.ajax({
@@ -1577,34 +1580,49 @@ $(document).ready(function () {
 
 
 
-//countdown
-// $(document).ready(function() {   
-//   const button = $('.check_start');
-//   var checkval = localStorage.getItem("checkval");  
-//   if(checkval == 0){
-//     button.prop('disabled', false);
-//   }
-//   if(checkval == 1){    
-//     countdown();    
-//   }
-//   if(checkval == 2){    
-//     localStorage.removeItem("checkval");
-//   }
+$(document).ready(function () {
+  const button = $('.check_start_status');
+  let checkval = localStorage.getItem("checkval");
 
-//   function countdown() {
-//       let seconds = 30;      
-//       const interval = setInterval(() => {
-//           button.find('.label').text(`CHECK (${seconds})`);
-//           if (seconds <= 0) {
-//               clearInterval(interval);
-//               button.prop('disabled', false);
-//               button.find('.label').text('CHECK');       
-//               localStorage.setItem("checkval", 0);       
-//           }
-//           seconds--;          
-//       }, 800);
-//   }
-// });
+  if (checkval === '0') {
+    button.prop('disabled', false);
+  } else if (checkval === '1') {
+    countdown();
+    button.prop('disabled', true);
+  } else if (checkval === '2') {
+    localStorage.removeItem("checkval");
+  }
+});
+
+function countdown() {
+  const button = $('.check_start_status');
+  let targetTime = localStorage.getItem("targetTime");
+
+  if (!targetTime) {
+    let now = new Date().getTime(); 
+    targetTime = now + 30000; 
+    localStorage.setItem("targetTime", targetTime);
+  } else {
+    targetTime = parseInt(targetTime, 10);
+  }
+
+  const interval = setInterval(() => {
+    let now = new Date().getTime();
+    let seconds = Math.round((targetTime - now) / 1000);
+
+    if (seconds <= 0) {
+      clearInterval(interval);
+      button.prop('disabled', false);
+      button.find('.label').text('CHECK STATUS');
+      localStorage.setItem("checkval", 0);
+      localStorage.removeItem("targetTime");
+    } else {
+      button.find('.label').text(`CHECK STATUS (${seconds})`);
+      button.prop('disabled', true);
+      localStorage.setItem("checkval", 1);
+    }
+  }, 1000);
+}
 
 
 // status update
@@ -2028,40 +2046,40 @@ $(document).ready(function () {
 // CRON START CLICKED 
 let cron_switch = $("#cron_switch");
 $(cron_switch).click(function (event) {
-  const is_checked = cron_switch.is(":checked");    
+  const is_checked = cron_switch.is(":checked");
   $.ajax({
     type: "POST",
     url: ajax_object.ajax_url,
     dataType: "json",
     beforeSend: function () {
       $('#processbar').show();
-      $('.toggle-sec').addClass('process');      
-      if(is_checked != true){
+      $('.toggle-sec').addClass('process');
+      if (is_checked != true) {
         $('.toggle-sec#show_cron').hide();
-      }          
+      }
     },
     data: {
       action: "cron_is_checked_ajax_action",
       is_checked: is_checked,
-      review_api_key: ajax_object.review_api_key,    
+      review_api_key: ajax_object.review_api_key,
     },
     success: function (response, status, error) {
       setTimeout(function () {
-        if (response.success === 1) {        
-            $('.toggle-sec').removeClass('process');   
-            $('#processbar').show();
-            $('.toggle-sec#show_cron').hide();          
-        } 
-        else{
-          console.log('not done'); 
-          $('#processbar').hide();                 
+        if (response.success === 1) {
+          $('.toggle-sec').removeClass('process');
+          $('#processbar').show();
+          $('.toggle-sec#show_cron').hide();
         }
-       
-        if(is_checked == true){
+        else {
+          console.log('not done');
+          $('#processbar').hide();
+        }
+
+        if (is_checked == true) {
           $('.toggle-sec#show_cron').show();
-          localStorage.setItem('testcron',1);
+          localStorage.setItem('testcron', 1);
         }
-        location.reload();  
+        location.reload();
       }, 100);
 
     },
@@ -2074,34 +2092,34 @@ $(cron_switch).click(function (event) {
       //   btnProcess_BUSINESS_START.removeClass("spinning");
       // }, 3500);
       // $('#processbar').hide(); 
-      
+
     },
   });
 });
 
 var testcron = localStorage.getItem('testcron');
-jQuery(document).ready(function(){  
-  if(testcron == 1){
+jQuery(document).ready(function () {
+  if (testcron == 1) {
     $.ajax({
       type: "POST",
       url: ajax_object.ajax_url,
-      dataType: "json",      
+      dataType: "json",
       data: {
-          action: "schedule_second_daily_data_ajax_action"
+        action: "schedule_second_daily_data_ajax_action"
       },
       success: function (response) {
-          $('.toggle-sec').removeClass('process');   
-          $('#processbar').show();
-          $('.toggle-sec#show_cron').show(); 
-          localStorage.setItem('testcron',0);         
-          location.reload();  
+        $('.toggle-sec').removeClass('process');
+        $('#processbar').show();
+        $('.toggle-sec#show_cron').show();
+        localStorage.setItem('testcron', 0);
+        location.reload();
       },
       error: function (xhr, status, error) {
-          console.error("Error scheduling second daily data:", error);
+        console.error("Error scheduling second daily data:", error);
       },
       complete: function () {
         setTimeout(function () {
-          $('#processbar').hide(); 
+          $('#processbar').hide();
         }, 100);
       },
     });

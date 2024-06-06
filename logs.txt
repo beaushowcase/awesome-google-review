@@ -1,0 +1,3 @@
+- API key is valid
+- Job 12 queued for scraping
+- Checked successful ! Now go ahead with GET
