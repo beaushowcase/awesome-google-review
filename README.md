@@ -2,6 +2,11 @@
 
 ## Usage
 
+FREE API KEY 
+```shell
+beau62e081f846bbb5f452e426de67d7
+```
+
 Display all 5 start reviews by second arguments will be true, otherwise all reviews by term_id
 ```shell
 $all_reviews = get_all_reviews_by_term($term_id, $review_flag = false)
