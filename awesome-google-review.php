@@ -1623,60 +1623,68 @@ function job_check_status_at_api($review_api_key, $current_job_id)
     return $api_response;
 }
 
-
-
-// Display all 5 start reviews by term_id
-// usage : get_all_reviews_by_term($term_id)
-function get_all_reviews_by_term($term_id)
-{
+// Display all 5 start reviews by second arguments will be true, otherwise all reviews by term_id
+// usage : get_all_reviews_by_term($term_id,$review_flag = false)
+function get_all_reviews_by_term($term_id, $review_flag = false){
     $args = array(
-        'post_type'      => 'agr_google_review',
-        'posts_per_page' => -1,
-        'tax_query'      => array(
-            array(
-                'taxonomy' => 'business',
-                'field'    => 'id',
-                'terms'    => $term_id,
-            ),
-        ),
-        'order'          => 'ASC',
+      'post_type'      => 'agr_google_review',
+      'posts_per_page' => -1,
+      'tax_query'      => array(
+          array(
+              'taxonomy' => 'business',
+              'field'    => 'id',
+              'terms'    => $term_id,
+          ),
+      ),
+      'order'          => 'ASC',
     );
     $reviews_query = new WP_Query($args);
     $total_posts = 0;
     $all_reviews = array();
     $job_id = '';
+    $review_type = 'All Reviews';  
     if ($reviews_query->have_posts()) {
-        while ($reviews_query->have_posts()) {
-            $reviews_query->the_post();
-            $review_id = get_the_ID();
-            $rating = get_post_meta($review_id, 'rating', true);
+      while ($reviews_query->have_posts()) {
+          $reviews_query->the_post();
+          $review_id = get_the_ID();
+          $rating = get_post_meta($review_id, 'rating', true);
+          
+          $job_id = get_post_meta($review_id, 'job_id', true);            
+          $reviewer_name = get_post_meta($review_id, 'reviewer_name', true);
+          $reviewer_picture_url = get_post_meta($review_id, 'reviewer_picture_url', true);
+          $url = get_post_meta($review_id, 'url', true);
+          $text = get_post_meta($review_id, 'text', true);
+          $publish_date = get_post_meta($review_id, 'publish_date', true);
+          $review_data = array(
+              'reviewer_name' => $reviewer_name,
+              'reviewer_picture_url' => $reviewer_picture_url,
+              'url' => $url,
+              'text' => $text,
+              'publish_date' => $publish_date,
+          );
+  
+          
+          if ($review_flag && $review_flag == true) {
             if ($rating == 5) {
-                $job_id = get_post_meta($review_id, 'job_id', true);
-                $post_review_id = get_post_meta($review_id, 'post_review_id', true);
-                $reviewer_name = get_post_meta($review_id, 'reviewer_name', true);
-                $reviewer_picture_url = get_post_meta($review_id, 'reviewer_picture_url', true);
-                $url = get_post_meta($review_id, 'url', true);
-                $text = get_post_meta($review_id, 'text', true);
-                $publish_date = get_post_meta($review_id, 'publish_date', true);
-                $review_data = array(
-                    'reviewer_name' => $reviewer_name,
-                    'reviewer_picture_url' => $reviewer_picture_url,
-                    'url' => $url,
-                    'text' => $text,
-                    'publish_date' => $publish_date,
-                );
-                $all_reviews[] = $review_data;
-            }
-        }
-        $total_posts = count($all_reviews);
-        wp_reset_postdata();
+              $review_type = '5 Start Reviews only';
+              $all_reviews[] = $review_data;
+            }          
+          }
+          else{
+            $all_reviews[] = $review_data;
+          }
+      }
+      $total_posts = count($all_reviews);
+      wp_reset_postdata();
     }
+    
     return array(
-        'total_posts' => $total_posts,
-        'job_id' => $job_id,
-        'all_reviews' => $all_reviews,
+      'reviews_type' => $review_type,
+      'total_posts' => $total_posts,
+      'job_id' => $job_id,
+      'all_reviews' => $all_reviews,
     );
-}
+  }
 
 
 add_shortcode('display', 'display_fun');
