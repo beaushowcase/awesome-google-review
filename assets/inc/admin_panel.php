@@ -130,6 +130,20 @@ function job_table() {
     }
 }
 
+function expose_all_meta_fields_in_rest($response, $post, $request) {
+    if ($post->post_type === 'agr_google_review') {
+        $meta = get_post_meta($post->ID);
+        // Sanitize meta data
+        $sanitized_meta = array_map(function($meta_value) {
+            return is_array($meta_value) ? array_map('sanitize_text_field', $meta_value) : sanitize_text_field($meta_value);
+        }, $meta);
+        $response->data['meta'] = $sanitized_meta;
+    }
+    return $response;
+}
+add_filter('rest_prepare_agr_google_review', 'expose_all_meta_fields_in_rest', 10, 3);
+
+
 add_action('init', 'add_agr_google_review_post_type');
 function add_agr_google_review_post_type() {
     $labels = array(
@@ -163,7 +177,7 @@ function add_agr_google_review_post_type() {
         'hierarchical'       => false,
         'menu_position'      => null,
         'show_in_rest'       => true,
-        'supports'           => array(''),
+        'supports' => array( 'title', 'editor', 'custom-fields' ),
     );
 
     register_post_type('agr_google_review', $args);
