@@ -658,28 +658,31 @@ $("#google_review_upload_form").submit(function (event) {
 });
 
 // JOB START CLICKED 
-$("#google_review_upload_form button.job_start").click(function (event) {
-  check = true;
-  Swal.fire({
-    title: "Confirmation: Initiate Job?",
-    text: "Are you certain about initiating this job? Once completed, you'll be able to upload reviews.",
-    showCancelButton: false,
-    showCloseButton: true,
-    confirmButtonColor: "#405640",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Start Job",
-    allowOutsideClick: false,
-    backdrop: 'swal2-backdrop-show',
-    icon: 'question',
-    color: "#716add",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      job_start(check);
-    } else if (result.isDenied) {
-      Swal.fire("Changes are not saved", "", "info");
-    }
-  });
-  $("#google_review_upload_form").submit(); // Manually submit the form
+$("#google_review_upload_form button.job_start").click(function (event) { 
+  var firm_name = $(FirmNameInput).val();
+  if (firm_name.trim() != '') {
+    check = true;
+    Swal.fire({
+      title: "Confirmation: Initiate Job?",
+      text: "Are you certain about initiating this job? Once completed, you'll be able to upload reviews.",
+      showCancelButton: false,
+      showCloseButton: true,
+      confirmButtonColor: "#405640",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Start Job",
+      allowOutsideClick: false,
+      backdrop: 'swal2-backdrop-show',
+      icon: 'question',
+      color: "#716add",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        job_start(check);
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+    $("#google_review_upload_form").submit();
+  }
 });
 
 
@@ -1599,8 +1602,8 @@ function countdown() {
   let targetTime = localStorage.getItem("targetTime");
 
   if (!targetTime) {
-    let now = new Date().getTime(); 
-    targetTime = now + 30000; 
+    let now = new Date().getTime();
+    targetTime = now + 30000;
     localStorage.setItem("targetTime", targetTime);
   } else {
     targetTime = parseInt(targetTime, 10);

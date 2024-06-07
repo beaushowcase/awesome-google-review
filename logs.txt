@@ -6,3 +6,6 @@
 - Checked successful ! Now go ahead with GET
 - Google Reviews Successfully Extracted.
 - Data upload successfully!
+- API Error: Search term is required
+- Unauthorized: Invalid API key
+- API key is valid

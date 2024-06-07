@@ -943,6 +943,7 @@ function check_prepared_job_status($review_api_key) {
 
 
 
+
 // Get job data by client IP
 function get_job_data_by_api_key($review_api_key) {
     global $wpdb;
