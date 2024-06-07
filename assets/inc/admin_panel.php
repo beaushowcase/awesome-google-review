@@ -162,6 +162,7 @@ function add_agr_google_review_post_type() {
         'menu_icon'          => 'dashicons-google',
         'hierarchical'       => false,
         'menu_position'      => null,
+        'show_in_rest'       => true,
         'supports'           => array(''),
     );
 
@@ -394,14 +395,10 @@ $getjdata = get_job_data_by_api_key($get_existing_api_key);
 
 
 $jflag = 0;
-if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 0 || $getjdata['jobID_check'] == 0 || $getjdata['jobID_final'] == 0) && $getjdata['term_id'] == 0){
+if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 0 || $getjdata['jobID_check'] == 0 || $getjdata['jobID_final'] == 0) && @$getjdata['term_id'] == 0){
     $jflag = 1;
 }
 
-$step = false;
-if((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 0 || $getjdata['jobID_check'] == 0 || $getjdata['jobID_final'] == 0) && $getjdata['term_id'] == 0){
-    $step = true;
-}
 ?>
 <!-- fieldset -->
 <!-- <input list="great" placeholder="Enter Business">
