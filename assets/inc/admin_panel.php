@@ -422,8 +422,6 @@ function our_google_reviews_callback()
     $jp = check_prepared_job_status($get_existing_api_key);
     $getjdata = get_job_data_by_api_key($get_existing_api_key);
 
-
-
     $jflag = 0;
     if ((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 0 || $getjdata['jobID_check'] == 0 || $getjdata['jobID_final'] == 0) && @$getjdata['term_id'] == 0) {
         $jflag = 1;
@@ -767,6 +765,8 @@ function our_google_reviews_callback()
                             if ((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 1) && ($getjdata['jobID_check'] == 0 && $getjdata['jobID_final'] == 0)) {
                                 $get_d = 1;
                             } 
+
+                            
                             ?>
                             <div class="submit_btn_setget twoToneCenter">
                                 <button type="submit" class="submit_btn job_start btn-process" disabled><span class="label">JOB START</span></button>
@@ -1035,21 +1035,24 @@ function get_job_data_by_api_key($review_api_key)
 {
     global $wpdb;
 
+    // Table names should not be part of the prepared statement
     $table_data = $wpdb->prefix . 'jobdata';
     $table_api = $wpdb->prefix . 'jobapi';
 
-    // Query to retrieve job data
-    $query = $wpdb->prepare(
-        "SELECT data.jobID_json, data.jobID_check_status, data.jobID_check, data.jobID_final
+    // Prepare the SQL statement with placeholders
+    $sql = "
+        SELECT data.jobID_json, data.jobID_check_status, data.jobID_check, data.jobID_final
         FROM $table_data AS data
         INNER JOIN $table_api AS api ON data.review_api_key = api.review_api_key 
-        WHERE data.review_api_key = %s AND data.term_id = 0
+        WHERE data.review_api_key = %s
         ORDER BY data.id DESC
-        LIMIT 1",
-        $review_api_key
-    );
+        LIMIT 1
+    ";
 
-    // Retrieve job data from the database
+    // Use the prepare method to safely insert the review_api_key
+    $query = $wpdb->prepare($sql, $review_api_key);
+
+    // Execute the query and fetch the result
     $job_data = $wpdb->get_row($query, ARRAY_A);
 
     return $job_data;

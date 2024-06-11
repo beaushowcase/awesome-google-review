@@ -1,1 +1,5 @@
 - Logs reset successfully !
+- Job 48 queued for scraping
+- Checked successful ! Now go ahead with GET
+- Google Reviews Successfully Extracted.
+- Data upload successfully!
