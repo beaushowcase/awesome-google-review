@@ -37,6 +37,7 @@ function agr_deactivation_cron_clear()
     flush_rewrite_rules();
 }
 
+
 function remove_custom_tables()
 {
     global $wpdb;
