@@ -28,6 +28,8 @@ jQuery(document).ready(function ($) {
 });
 
 
+
+
 function upload_done_process() {
   var urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has('uploaded') && urlParams.get('uploaded') === 'true' && urlParams.has('slug') && urlParams.get('slug') !== '' && urlParams.has('page') && urlParams.get('page') === 'awesome-google-review') {
@@ -215,6 +217,11 @@ function initial_check() {
       // console.log('start = '+response.data.btn_start);
       // console.log('check = '+response.data.btn_check);
       // console.log('upload = '+response.data.btn_upload);
+
+      if(response.data.btn_check ==0 && response.data.btn_check_status == 1 && response.data.btn_start == 1 && response.data.btn_upload == 0){
+        // localStorage.removeItem("checkval");
+        $('.check_start_status').prop('disabled', true);
+      }
 
       if (response.success && response.api) {
         if (sign_TRUE) {
@@ -654,11 +661,182 @@ function ApiKeySave(check) {
 }
 
 $("#google_review_upload_form").submit(function (event) {
-  event.preventDefault(); // Prevent the default form submission behavior
+  event.preventDefault(); // Prevent the default form submission behavior  
+});
+
+var spinnerSVG = `<svg class="svg-loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" xml:space="preserve"><path fill="#fff" d="M10 40v-3.2c0-.3.1-.6.1-.9.1-.6.1-1.4.2-2.1.2-.8.3-1.6.5-2.5.2-.9.6-1.8.8-2.8.3-1 .8-1.9 1.2-3 .5-1 1.1-2 1.7-3.1.7-1 1.4-2.1 2.2-3.1 1.6-2.1 3.7-3.9 6-5.6 2.3-1.7 5-3 7.9-4.1.7-.2 1.5-.4 2.2-.7.7-.3 1.5-.3 2.3-.5.8-.2 1.5-.3 2.3-.4l1.2-.1.6-.1h.6c1.5 0 2.9-.1 4.5.2.8.1 1.6.1 2.4.3.8.2 1.5.3 2.3.5 3 .8 5.9 2 8.5 3.6 2.6 1.6 4.9 3.4 6.8 5.4 1 1 1.8 2.1 2.7 3.1.8 1.1 1.5 2.1 2.1 3.2.6 1.1 1.2 2.1 1.6 3.1.4 1 .9 2 1.2 3 .3 1 .6 1.9.8 2.7.2.9.3 1.6.5 2.4.1.4.1.7.2 1 0 .3.1.6.1.9.1.6.1 1 .1 1.4.4 1 .4 1.4.4 1.4.2 2.2-1.5 4.1-3.7 4.3s-4.1-1.5-4.3-3.7V37.2c0-.2-.1-.5-.1-.8-.1-.6-.1-1.2-.2-1.9s-.3-1.4-.4-2.2c-.2-.8-.5-1.6-.7-2.4-.3-.8-.7-1.7-1.1-2.6-.5-.9-.9-1.8-1.5-2.7-.6-.9-1.2-1.8-1.9-2.7-1.4-1.8-3.2-3.4-5.2-4.9-2-1.5-4.4-2.7-6.9-3.6-.6-.2-1.3-.4-1.9-.6-.7-.2-1.3-.3-1.9-.4-1.2-.3-2.8-.4-4.2-.5h-2c-.7 0-1.4.1-2.1.1-.7.1-1.4.1-2 .3-.7.1-1.3.3-2 .4-2.6.7-5.2 1.7-7.5 3.1-2.2 1.4-4.3 2.9-6 4.7-.9.8-1.6 1.8-2.4 2.7-.7.9-1.3 1.9-1.9 2.8-.5 1-1 1.9-1.4 2.8-.4.9-.8 1.8-1 2.6-.3.9-.5 1.6-.7 2.4-.2.7-.3 1.4-.4 2.1-.1.3-.1.6-.2.9 0 .3-.1.6-.1.8 0 .5-.1.9-.1 1.3-.2.7-.2 1.1-.2 1.1z"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 40 40" to="360 40 40" dur="0.8s" repeatCount="indefinite"/></path><path fill="#fff" d="M62 40.1s0 .2-.1.7c0 .2 0 .5-.1.8v.5c0 .2-.1.4-.1.7-.1.5-.2 1-.3 1.6-.2.5-.3 1.1-.5 1.8-.2.6-.5 1.3-.7 1.9-.3.7-.7 1.3-1 2.1-.4.7-.9 1.4-1.4 2.1-.5.7-1.1 1.4-1.7 2-1.2 1.3-2.7 2.5-4.4 3.6-1.7 1-3.6 1.8-5.5 2.4-2 .5-4 .7-6.2.7-1.9-.1-4.1-.4-6-1.1-1.9-.7-3.7-1.5-5.2-2.6s-2.9-2.3-4-3.7c-.6-.6-1-1.4-1.5-2-.4-.7-.8-1.4-1.2-2-.3-.7-.6-1.3-.8-2l-.6-1.8c-.1-.6-.3-1.1-.4-1.6-.1-.5-.1-1-.2-1.4-.1-.9-.1-1.5-.1-2v-.7s0 .2.1.7c.1.5 0 1.1.2 2 .1.4.2.9.3 1.4.1.5.3 1 .5 1.6.2.6.4 1.1.7 1.8.3.6.6 1.2.9 1.9.4.6.8 1.3 1.2 1.9.5.6 1 1.3 1.6 1.8 1.1 1.2 2.5 2.3 4 3.2 1.5.9 3.2 1.6 5 2.1 1.8.5 3.6.6 5.6.6 1.8-.1 3.7-.4 5.4-1 1.7-.6 3.3-1.4 4.7-2.4 1.4-1 2.6-2.1 3.6-3.3.5-.6.9-1.2 1.3-1.8.4-.6.7-1.2 1-1.8.3-.6.6-1.2.8-1.8.2-.6.4-1.1.5-1.7l.3-1.5c.1-.4.1-.8.1-1.2 0-.2 0-.4.1-.5v-2c0-1.1.9-2 2-2s2 .9 2 2c.1-.1.1 0 .1 0z"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 40 40" to="-360 40 40" dur="0.6s" repeatCount="indefinite"/></path></svg>`;
+
+$("#google_review_upload_form button.search_btn").click(function (event) {
+  $('.submit_btn_setget button.job_start').prop("disabled", true);
+  var firm_name = $(FirmNameInput).val();
+
+  // $('.google_review_upload_form span.correct-sign').removeClass('firm_area_sign');
+  // $('.google_review_upload_form span.wrong-sign').removeClass('firm_area_sign');
+
+  $('.submit_btn.job_start.btn-process').removeClass('next_highlight');
+
+  if (firm_name.trim() != '') {
+    $.ajax({
+      url: 'https://api.spiderdunia.com:3000/search/',
+      // url: 'http://localhost:3000/search/',
+      type: 'GET',
+      data: {
+        api_key: ajax_object.review_api_key,
+        businessName: firm_name
+      },
+      beforeSend: function () {        
+        var search_box = `<div class="search--txt">${spinnerSVG}</div>`;
+        $('.search-result').empty().append(search_box);
+        $('#processbar').show();
+        $('.search_btn').prop("disabled", true);
+      },
+      success: function (response) {
+        console.log('API Call Successful:', response);        
+        if (response.success === 1) {
+          $('.search-result').empty().show();
+          var result_html = `          
+          <div class="search--txt" onclick="selectbusiness()">
+            <div class="close-button" onclick="closePopup()">x</div>
+                                      <p><strong>Title</strong>: ${response.data.businessTitle}</p>
+                                      <p><strong>Address</strong>: ${response.data.businessAddress}</p>
+                                      <p><strong>Total</strong>: ${response.data.totalReviews}</p>
+                                  </div>`;
+          $('.search-result').empty().append(result_html);
+          $('.submit_btn_setget button.job_start').prop("disabled", false);
+          $('.google_review_upload_form span.wrong-sign').addClass('firm_area_sign').hide();
+          $('.google_review_upload_form span.correct-sign').addClass('firm_area_sign').show();
+          notify_success('Select and go ahead');
+          $('.submit_btn.job_start.btn-process').addClass('next_highlight');         
+        } else {
+          $('.search-result').empty().show();
+          $('.search-result').empty().append(`<div class="search--txt">No results found <div class="close-button" onclick="closePopup()">x</div></div>`);          
+          $('.google_review_upload_form span.correct-sign').addClass('firm_area_sign').hide();
+          $('.google_review_upload_form span.wrong-sign').addClass('firm_area_sign').show();
+          $('.submit_btn.job_start.btn-process').removeClass('next_highlight');
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error('API Call Failed:', status, error);
+        if(error === 'Too Many Requests'){
+          error = 'Too Many Requests , please try after 60 seconds.';
+        }
+        $('.search-result').empty().append(`<div class="search--txt">API Call Failed: ${error}</div>`);
+      },
+      complete: function () {
+        $('#processbar').hide();
+        $('.search_btn').prop("disabled", false);
+      }
+    });
+
+  }
+
+});
+
+function closePopup() {
+  $('.search-result').hide(); // Assuming you want to hide the entire search-result container
+}
+
+function notify_success(msg){
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "bottom-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
+  Toast.fire({
+    icon: "success",
+    title: msg
+  });
+}
+
+
+
+function selectbusiness() {
+  // var title = $('.search--txt').find('p[data-title]').attr('data-title');
+  // $('.search_btn').hide();
+  // $('.reset_btn').show();
+  $('.search-result').empty().hide();
+  $('.submit_btn_setget button.job_start').prop("disabled", false);
+}
+
+// $("#google_review_upload_form button.reset_btn").click(function (event) {
+//   $('#google_review_upload_form')[0].reset();
+//   $('.reset_btn').hide();
+//   $('.search_btn').show();
+//   $('.search-result').empty().hide();
+//   $('.submit_btn_setget button.job_start').prop("disabled", false);
+// });
+
+
+// JOB START CLICKED 
+$("#google_review_upload_form button.search_btnsss").click(function (event) {
+  var firm_name = $(FirmNameInput).val();
+  if (firm_name.trim() != '') {
+    check = true;
+    const nonce = $("#get_set_trigger_nonce").val();
+    $.ajax({
+      type: "POST",
+      url: ajax_object.ajax_url,
+      dataType: "json",
+      beforeSend: function () {
+        var spinnerSVG = `<svg class="svg-loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" xml:space="preserve"><path fill="#fff" d="M10 40v-3.2c0-.3.1-.6.1-.9.1-.6.1-1.4.2-2.1.2-.8.3-1.6.5-2.5.2-.9.6-1.8.8-2.8.3-1 .8-1.9 1.2-3 .5-1 1.1-2 1.7-3.1.7-1 1.4-2.1 2.2-3.1 1.6-2.1 3.7-3.9 6-5.6 2.3-1.7 5-3 7.9-4.1.7-.2 1.5-.4 2.2-.7.7-.3 1.5-.3 2.3-.5.8-.2 1.5-.3 2.3-.4l1.2-.1.6-.1h.6c1.5 0 2.9-.1 4.5.2.8.1 1.6.1 2.4.3.8.2 1.5.3 2.3.5 3 .8 5.9 2 8.5 3.6 2.6 1.6 4.9 3.4 6.8 5.4 1 1 1.8 2.1 2.7 3.1.8 1.1 1.5 2.1 2.1 3.2.6 1.1 1.2 2.1 1.6 3.1.4 1 .9 2 1.2 3 .3 1 .6 1.9.8 2.7.2.9.3 1.6.5 2.4.1.4.1.7.2 1 0 .3.1.6.1.9.1.6.1 1 .1 1.4.4 1 .4 1.4.4 1.4.2 2.2-1.5 4.1-3.7 4.3s-4.1-1.5-4.3-3.7V37.2c0-.2-.1-.5-.1-.8-.1-.6-.1-1.2-.2-1.9s-.3-1.4-.4-2.2c-.2-.8-.5-1.6-.7-2.4-.3-.8-.7-1.7-1.1-2.6-.5-.9-.9-1.8-1.5-2.7-.6-.9-1.2-1.8-1.9-2.7-1.4-1.8-3.2-3.4-5.2-4.9-2-1.5-4.4-2.7-6.9-3.6-.6-.2-1.3-.4-1.9-.6-.7-.2-1.3-.3-1.9-.4-1.2-.3-2.8-.4-4.2-.5h-2c-.7 0-1.4.1-2.1.1-.7.1-1.4.1-2 .3-.7.1-1.3.3-2 .4-2.6.7-5.2 1.7-7.5 3.1-2.2 1.4-4.3 2.9-6 4.7-.9.8-1.6 1.8-2.4 2.7-.7.9-1.3 1.9-1.9 2.8-.5 1-1 1.9-1.4 2.8-.4.9-.8 1.8-1 2.6-.3.9-.5 1.6-.7 2.4-.2.7-.3 1.4-.4 2.1-.1.3-.1.6-.2.9 0 .3-.1.6-.1.8 0 .5-.1.9-.1 1.3-.2.7-.2 1.1-.2 1.1z"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 40 40" to="360 40 40" dur="0.8s" repeatCount="indefinite"/></path><path fill="#fff" d="M62 40.1s0 .2-.1.7c0 .2 0 .5-.1.8v.5c0 .2-.1.4-.1.7-.1.5-.2 1-.3 1.6-.2.5-.3 1.1-.5 1.8-.2.6-.5 1.3-.7 1.9-.3.7-.7 1.3-1 2.1-.4.7-.9 1.4-1.4 2.1-.5.7-1.1 1.4-1.7 2-1.2 1.3-2.7 2.5-4.4 3.6-1.7 1-3.6 1.8-5.5 2.4-2 .5-4 .7-6.2.7-1.9-.1-4.1-.4-6-1.1-1.9-.7-3.7-1.5-5.2-2.6s-2.9-2.3-4-3.7c-.6-.6-1-1.4-1.5-2-.4-.7-.8-1.4-1.2-2-.3-.7-.6-1.3-.8-2l-.6-1.8c-.1-.6-.3-1.1-.4-1.6-.1-.5-.1-1-.2-1.4-.1-.9-.1-1.5-.1-2v-.7s0 .2.1.7c.1.5 0 1.1.2 2 .1.4.2.9.3 1.4.1.5.3 1 .5 1.6.2.6.4 1.1.7 1.8.3.6.6 1.2.9 1.9.4.6.8 1.3 1.2 1.9.5.6 1 1.3 1.6 1.8 1.1 1.2 2.5 2.3 4 3.2 1.5.9 3.2 1.6 5 2.1 1.8.5 3.6.6 5.6.6 1.8-.1 3.7-.4 5.4-1 1.7-.6 3.3-1.4 4.7-2.4 1.4-1 2.6-2.1 3.6-3.3.5-.6.9-1.2 1.3-1.8.4-.6.7-1.2 1-1.8.3-.6.6-1.2.8-1.8.2-.6.4-1.1.5-1.7l.3-1.5c.1-.4.1-.8.1-1.2 0-.2 0-.4.1-.5v-2c0-1.1.9-2 2-2s2 .9 2 2c.1-.1.1 0 .1 0z"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 40 40" to="-360 40 40" dur="0.6s" repeatCount="indefinite"/></path></svg>`;
+        var search_box = `<div class="search--txt">${spinnerSVG}</div>`;
+        $('.search-result').append(search_box);
+        $('#processbar').show();
+        $('.search_btn').prop("disabled", true);
+      },
+      data: {
+        action: "search_result_ajax_action",
+        firm_name: firm_name,
+        review_api_key: ajax_object.review_api_key,
+        nonce: nonce,
+      },
+      success: function (response, status, error) {
+        console.log(response);
+        return false;
+
+        setTimeout(function () {
+          if (response.success === 1) {
+            if (check) {
+              response_business_success(response.msg);
+            }
+          } else {
+            if (check) {
+              response_business_fail(response.msg);
+            }
+          }
+          $('#processbar').hide();
+        }, 3500);
+      },
+      error: function (xhr, status, error) {
+        Swal.fire({
+          position: 'bottom-end',
+          icon: "error",
+          title: response.msg,
+          showConfirmButton: false,
+          timer: 3500
+        });
+        $('#processbar').hide();
+      },
+      complete: function () {
+        setTimeout(function () {
+          $('#loader').addClass('hidden');
+        }, 3500);
+      },
+    });
+
+
+
+  }
 });
 
 // JOB START CLICKED 
-$("#google_review_upload_form button.job_start").click(function (event) { 
+$("#google_review_upload_form button.job_start").click(function (event) {
   var firm_name = $(FirmNameInput).val();
   if (firm_name.trim() != '') {
     check = true;
@@ -996,6 +1174,7 @@ function reset_success() {
         grow: false,
       }).then(function () {
         setTimeout(function () {
+          localStorage.removeItem("checkval");
           location.reload();
         }, 100);
       });
@@ -1583,49 +1762,6 @@ $(document).ready(function () {
 
 
 
-$(document).ready(function () {
-  const button = $('.check_start_status');
-  let checkval = localStorage.getItem("checkval");
-
-  if (checkval === '0') {
-    button.prop('disabled', false);
-  } else if (checkval === '1') {
-    countdown();
-    button.prop('disabled', true);
-  } else if (checkval === '2') {
-    localStorage.removeItem("checkval");
-  }
-});
-
-function countdown() {
-  const button = $('.check_start_status');
-  let targetTime = localStorage.getItem("targetTime");
-
-  if (!targetTime) {
-    let now = new Date().getTime();
-    targetTime = now + 30000;
-    localStorage.setItem("targetTime", targetTime);
-  } else {
-    targetTime = parseInt(targetTime, 10);
-  }
-
-  const interval = setInterval(() => {
-    let now = new Date().getTime();
-    let seconds = Math.round((targetTime - now) / 1000);
-
-    if (seconds <= 0) {
-      clearInterval(interval);
-      button.prop('disabled', false);
-      button.find('.label').text('CHECK STATUS');
-      localStorage.setItem("checkval", 0);
-      localStorage.removeItem("targetTime");
-    } else {
-      button.find('.label').text(`CHECK STATUS (${seconds})`);
-      button.prop('disabled', true);
-      localStorage.setItem("checkval", 1);
-    }
-  }, 1000);
-}
 
 
 // status update
@@ -1736,7 +1872,7 @@ function check_success() {
         position: 'bottom-end',
       }).then(function () {
         setTimeout(function () {
-          localStorage.setItem("checkval", 1);
+          localStorage.setItem("checkval", 0);
           location.reload();
         }, 100);
       });
@@ -2128,3 +2264,48 @@ jQuery(document).ready(function () {
     });
   }
 });
+
+
+$(document).ready(function () {
+  const button = $('.check_start_status');
+  let checkval = localStorage.getItem("checkval");
+
+  if (!checkval || checkval == '0') {    
+    button.prop('disabled', false);
+  } else if (checkval == '1') {
+    countdown();
+    button.prop('disabled', true);    
+  } else if (checkval == '2') {
+    localStorage.removeItem("checkval");
+  }
+});
+
+function countdown() {
+  const button = $('.check_start_status');
+  let targetTime = localStorage.getItem("targetTime");
+
+  if (!targetTime) {
+    let now = new Date().getTime();
+    targetTime = now + 30000;
+    localStorage.setItem("targetTime", targetTime);
+  } else {
+    targetTime = parseInt(targetTime, 10);
+  }
+
+  const interval = setInterval(() => {
+    let now = new Date().getTime();
+    let seconds = Math.round((targetTime - now) / 1000);
+
+    if (seconds <= 0) {
+      clearInterval(interval);
+      button.prop('disabled', false);
+      button.find('.label').text('CHECK STATUS');
+      localStorage.setItem("checkval", 0);
+      localStorage.removeItem("targetTime");
+    } else {
+      button.find('.label').text(`CHECK STATUS (${seconds})`);
+      button.prop('disabled', true);
+      localStorage.setItem("checkval", 1);
+    }
+  }, 1000);
+}
