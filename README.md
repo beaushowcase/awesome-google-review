@@ -78,6 +78,7 @@ Yes, the plugin uses cron jobs to periodically fetch and update the reviews disp
 3. https://api.spiderdunia.com/example-of-reviews-displayed-on-a-website.png
 
 == Changelog ==
+
 = 1.4.2 =
 
 SVG star code updated.
