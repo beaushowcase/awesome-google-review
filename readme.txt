@@ -1,83 +1,72 @@
-██████  ███████  █████  ██████  ██████   ██████   ██████      ██████  ██  ██████  ██ ████████  █████  ██      
-██   ██ ██      ██   ██ ██   ██ ██   ██ ██    ██ ██           ██   ██ ██ ██       ██    ██    ██   ██ ██      
-██████  █████   ███████ ██████  ██   ██ ██    ██ ██   ███     ██   ██ ██ ██   ███ ██    ██    ███████ ██      
-██   ██ ██      ██   ██ ██   ██ ██   ██ ██    ██ ██    ██     ██   ██ ██ ██    ██ ██    ██    ██   ██ ██      
-██████  ███████ ██   ██ ██   ██ ██████   ██████   ██████      ██████  ██  ██████  ██    ██    ██   ██ ███████
-                                                                                                                
-=== Plugin Name ===
-Contributors: (this should be a list of wordpress.org userid's)
-Donate link: (OPTIONAL) a link to your donation page
-Tags: (1 to 12 comma separated terms that describe the plugin)
-Requires at least: (the minimum WordPress version required to run the plugin)
-Tested up to: (the latest WordPress version that the plugin has been tested against)
-Stable tag: (the version number of the latest stable release of the plugin)
-Requires PHP: (the minimum PHP version required to run the plugin)
-License: (the license under which the plugin is released, e.g. GPLv2 or later)
-License URI: (a link to the license text)
+=== Awesome Google Review ===
+Contributors: spiderdunia
+Tags: Tags: awesome, reviews, awesomeness, googlereview, googlereviews, reviewgoogle, upload
+Requires at least: 6.0
+Tested up to: 6.4
+Requires PHP: 7.4
+Stable tag: 1.4.1
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Here is a short description of the plugin. This should be no more than 150 characters. No markup here.
+Display and manage Google Reviews effortlessly with Awesome Google Review. Enhance your sites credibility with real-time customer feedback.
+
 
 == Description ==
+Awesome Google Review is a powerful and user-friendly plugin designed to showcase your business Google Reviews on your WordPress site. With seamless integration and easy configuration, this plugin helps you enhance your sites credibility and attract more customers by displaying authentic customer feedback.
 
-Here is a longer description of the plugin. This is the main section of the readme file, and should explain in detail what the plugin does, how it works, and why it is useful. You can use markdown syntax here, such as headings, lists, links, images, etc. You can also use shortcodes, such as [wpvideo] or [youtube], to embed videos from VideoPress or YouTube. This section will be displayed on the main plugin page.
+### Key Features:
+- **Automated Review Import**: Automatically fetch and display the latest Google Reviews for your business.
+- **Customizable Display**: Choose from various layout options to match your sites design.
+- **Shortcode Support**: Easily embed reviews anywhere on your site using shortcodes.
+- **Cron Job Management**: Efficiently manage the cron jobs responsible for fetching and updating reviews.
+- **Admin Panel**: User-friendly admin interface for managing settings and viewing review data.
+- **Secure and Reliable**: Ensures data integrity and security while interacting with Google APIs.
+- **Responsive Design**: Fully responsive, ensuring your reviews look great on all devices.
+- **Free API Key**: Get started easily with a free API key included: beau62e081f846bbb5f452e426de67d7.
+
+Whether you run a small local business or a large enterprise, Awesome Google Review is the perfect solution to leverage customer testimonials and build trust with your audience.
+
+== Usage ==
+
+To display all reviews for a specific term, use the following function in your theme or plugin:
+
+$all_reviews = get_all_reviews_by_term($term_id, $review_flag = false);
+$term_id: The ID of the term for which you want to fetch reviews.
+$review_flag: Set to true to display only 5-star reviews. Set to false to display all reviews.
+
 
 == Installation ==
+1. Upload the `awesome-google-review` folder to the `/wp-content/plugins/` directory.
+2. Activate the plugin through the 'Plugins' menu in WordPress.
+3. Configure the plugin settings in the admin panel.
+4. Use the included free API key: `beau62e081f846bbb5f452e426de67d7`.
 
-Here you can provide instructions on how to install and activate the plugin. You can also include any additional steps or requirements that the user needs to follow, such as creating a folder, setting permissions, configuring settings, etc. You can use markdown syntax here as well, such as code blocks, lists, etc. This section will be displayed on a separate tab on the plugin page.
 
 == Frequently Asked Questions ==
+= How do I get started with Awesome Google Review? =
 
-Here you can answer some common questions that users might have about the plugin. Each question should be on a new line, starting with a `=`, followed by the question, and ending with a `=`. The answer should be on the next line, indented with a tab. You can use markdown syntax here as well, such as code blocks, lists, links, etc. This section will be displayed on a separate tab on the plugin page.
+Simply install and activate the plugin, then navigate to the settings page in the WordPress admin panel to configure your Google API key and other settings.
 
-= How do I use the plugin? =
+= Can I customize the appearance of the reviews? =
 
-    To use the plugin, you need to ...
+Yes, the plugin offers multiple layout options and customization settings to match your sites design.
 
-= What are the plugin settings? =
+= Does the plugin automatically update the reviews? =
 
-    The plugin settings are ...
+Yes, the plugin uses cron jobs to periodically fetch and update the reviews displayed on your site.
 
-= How do I get support? =
-
-    If you have any issues or questions, please visit the plugin support forum at ...
 
 == Screenshots ==
-
-Here you can include screenshots of the plugin in action. Each screenshot should be a numbered image file (e.g. screenshot-1.png, screenshot-2.png, etc.) placed in the /assets folder of your plugin. The screenshot captions should be on a new line, starting with a number, followed by a dot and a space, and ending with the caption text. You can use markdown syntax here as well, such as bold, italic, etc. This section will be displayed on a separate tab on the plugin page.
-
-1. This is the first screenshot of the plugin.
-2. This is the second screenshot of the plugin.
-3. This is the third screenshot of the plugin.
+1. https://api.spiderdunia.com/admin-panel-settings-page.png
+2. https://api.spiderdunia.com/review-display-options.png
+3. https://api.spiderdunia.com/example-of-reviews-displayed-on-a-website.png
 
 == Changelog ==
 
-Here you can list the changes made in each version of the plugin. Each version should be on a new line, starting with a `=`, followed by the version number, a dash, and the release date, and ending with a `=`. The changes should be on the next line, indented with a tab, and using a list format. You can use markdown syntax here as well, such as code blocks, links, etc. This section will be displayed on a separate tab on the plugin page.
+= 1.4.2 =
 
-= 1.0 - 2024-01-18 =
-    * Initial release of the plugin.
-    * Added feature X, Y, and Z.
+SVG star code updated.
 
-= 0.9 - 2023-12-31 =
-    * Beta version of the plugin.
-    * Fixed bug A, B, and C.
+= 1.4.1 =
 
-== Upgrade Notice ==
-
-Here you can provide a brief message to the users who have an older version of the plugin installed, informing them of any important changes or requirements in the new version. Each version should be on a new line, starting with a `=`, followed by the version number, and ending with a `=`. The message should be on the next line, indented with a tab. You can use markdown syntax here as well, such as bold, italic, etc. This section will be displayed on the main plugin page, above the description.
-
-= 1.0 =
-    * This is the first stable release of the plugin. Please update to enjoy the full functionality and features.
-    * This version requires WordPress 4.7 or higher, and PHP 7.0 or higher.
-
-= 0.9 =
-    * This is a beta version of the plugin. Please test it and report any issues or feedback.
-    * This version may have some bugs or compatibility issues.
-
-== Additional Info One (Optional) ==
-
-Here you can add any additional information that you want to share with the users, such as acknowledgements, credits, resources, etc. This is an optional section, and you can name it whatever you want. You can use markdown syntax here as well, such as headings, lists, links, etc. This section will be displayed on a separate tab on the plugin page.
-
-== More Additional Info Two (Optional) ==
-
-Here you can add more additional information that you want to share with the users, such as FAQs, tips, tricks, etc. This is another optional section, and you can name it whatever you want. You can use markdown syntax here as well, such as headings, lists, links, etc. This section will be displayed on a separate tab on the plugin page.
-                                                                                                          
+Initial release of Awesome Google Review. Please upgrade to enjoy the latest features and improvements.

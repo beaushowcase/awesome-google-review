@@ -1,36 +1,35 @@
+
 <?php
 /*
  * Plugin Name:       Awesome Google Review
  * Plugin URI:        https://beardog.digital/
  * Description:       Impresses with top-notch service and skilled professionals. A 5-star destination for grooming excellence!
- * Version:           1.4.1
+ * Version:           1.4.2
  * Requires PHP:      7.0
  * Author:            #beaubhavik
  * Author URI:        https://beardog.digital/
  * Text Domain:       awesome-google-review
  */
 
+// @codingStandardsIgnoreStart
 define('AGR_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('AGR_PLUGIN_URL', plugin_dir_url(__FILE__));
 
-// define('CUSTOM_HOST_URL', 'http://localhost:3000');
 define('CUSTOM_HOST_URL', 'https://api.spiderdunia.com:3000');
 
 include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 
 register_deactivation_hook(__FILE__, 'agr_deactivation_cron_clear');
-
 register_uninstall_hook(__FILE__, 'agr_uninstall_data');
 
-function agr_uninstall_data(){
+function agr_uninstall_data()
+{
     remove_custom_tables();
     flush_rewrite_rules();
 }
 
-// if any changes in this plugin
-
 function agr_deactivation_cron_clear()
-{   
+{
     unregister_post_type('agr_google_review');
     wp_clear_scheduled_hook('first_daily_data');
     wp_clear_scheduled_hook('second_daily_data');
@@ -41,51 +40,38 @@ function agr_deactivation_cron_clear()
 function remove_custom_tables()
 {
     global $wpdb;
-
-    // Define table names
     $table_names = [
         $wpdb->prefix . 'jobdata',
         $wpdb->prefix . 'jobapi'
     ];
 
-    // Remove tables
     foreach ($table_names as $table_name) {
-        $wpdb->query("DROP TABLE IF EXISTS $table_name");
+        $table_name = esc_sql($table_name);
+
+        $wpdb->query("DROP TABLE IF EXISTS {$table_name}");
     }
 }
 
-
 global $pagenow;
 
-// PLUGIN CHECKER = START
-require_once 'update-checker/update-checker.php';
-
-use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
-
-$myUpdateChecker = PucFactory::buildUpdateChecker(
-    'https://github.com/beaushowcase/awesome-google-review/',
-    __FILE__,
-    'awesome-google-review'
-);
-$myUpdateChecker->setBranch('main');
-$myUpdateChecker->getVcsApi()->enableReleaseAssets();
-// PLUGIN CHECKER = STOP
-
 // check cron enable disable query
+
 function check_cron_enable_or_disable()
 {
     global $wpdb;
     $table_name = $wpdb->prefix . 'jobapi';
-    $query = $wpdb->get_row($wpdb->prepare(
-        "SELECT cron_status FROM $table_name WHERE review_api_key_status = 1 AND review_api_key != ''",
+    $query = $wpdb->get_row(
+        $wpdb->prepare(
+            "SELECT cron_status FROM %s WHERE review_api_key_status = %d AND review_api_key != %s",
+            $table_name,
+            1,
+            ''
+        ),
         ARRAY_A
-    ));
-    $cron_status = '';
-    if ($query) {
-        $cron_status = $query->cron_status;
-    }
-    return $cron_status;
+    );
+    return $query ? $query['cron_status'] : '';
 }
+
 
 $check_cron = check_cron_enable_or_disable();
 
@@ -103,11 +89,11 @@ if ($check_cron == 1) {
     }
 }
 
-
 function get_dynamic_version()
 {
-    return time(); // Using the current timestamp as the version number
+    return time();
 }
+
 // Enqueue = START
 function our_load_admin_style()
 {
@@ -115,6 +101,8 @@ function our_load_admin_style()
     if ($pagenow == 'admin.php' && isset($_GET['page']) && ($_GET['page'] == 'awesome-google-review' || $_GET['page'] == 'delete-review' || $_GET['page'] == 'review-cron-job')) {
         // Enqueue jQuery
         wp_enqueue_script('jquery');
+
+        $nonce = wp_create_nonce('agr_nonce');
 
         $dynamic_version = get_dynamic_version();
 
@@ -131,11 +119,7 @@ function our_load_admin_style()
         wp_enqueue_script('agr-ajax-script', plugins_url('/assets/js/agr_ajax.js', __FILE__), ['jquery'], $dynamic_version, true);
 
         // Localize Script
-        wp_localize_script('agr-ajax-script', 'ajax_object', ['ajax_url' => admin_url('admin-ajax.php'), 'main_site_url' => site_url(), 'admin_plugin_main_url' => esc_url(get_admin_url(null, 'admin.php?page=awesome-google-review')), 'get_url_page' => $_GET['page'], 'plugin_url' => plugins_url('', __FILE__), 'review_api_key' => get_existing_api_key()]);
-
-        // Enqueue Custom Script with Dependencies
-        wp_register_script('agr_custom', plugins_url('/assets/js/custom.js', __FILE__), ['jquery'], $dynamic_version, true);
-        wp_enqueue_script('agr_custom');
+        wp_localize_script('agr-ajax-script', 'ajax_object', ['ajax_url' => admin_url('admin-ajax.php'), 'nonce' => $nonce, 'main_site_url' => site_url(), 'admin_plugin_main_url' => esc_url(get_admin_url(null, 'admin.php?page=awesome-google-review')), 'get_url_page' => $_GET['page'], 'plugin_url' => plugins_url('', __FILE__), 'review_api_key' => get_existing_api_key()]);
     }
 }
 add_action('admin_enqueue_scripts', 'our_load_admin_style');
@@ -160,81 +144,57 @@ function get_existing_firm_data()
 }
 
 
-
-// function get_all_firms(){
-//     global $wpdb;
-//     $table_name = $wpdb->prefix . 'jobapi';
-//     $table_name2 = $wpdb->prefix . 'jobdata';
-//     $client_ip = $_SERVER['REMOTE_ADDR'];    
-
-//     $firm_data = $wpdb->get_results($wpdb->prepare("
-//         SELECT j.firm_name, j.jobID
-//         FROM $table_name2 AS j
-//         INNER JOIN $table_name AS s ON j.review_api_key = s.review_api_key
-//         WHERE j.client_ip = %s 
-//         AND s.review_api_key_status = %d
-//         ORDER BY j.jobID DESC", 
-//         $client_ip, 1), ARRAY_A);
-
-//     return $firm_data;
-// }
-
 function get_all_firms()
 {
-
     $terms = get_terms(array(
         'taxonomy' => 'business',
         'hide_empty' => false,
     ));
-    $term_data = array();
-    foreach ($terms as $term) {
 
-        $posts = get_posts(array(
-            'post_type' => 'agr_google_review',
-            'tax_query' => array(
-                array(
-                    'taxonomy' => $term->taxonomy,
-                    'field' => 'term_id',
-                    'terms' => $term->term_id,
-                ),
-            ),
-        ));
-        if ($posts) {
-            $term_data[] = array(
-                'name' => $term->name,
-                'id' => $term->term_id,
-            );
+    $posts_by_term = array();
+
+    foreach ($terms as $term) {
+        $posts_by_term[$term->term_id] = array(
+            'name' => $term->name,
+            'id' => $term->term_id,
+            'posts' => array(),
+        );
+    }
+
+    $all_posts = get_posts(array(
+        'post_type' => 'agr_google_review',
+        'posts_per_page' => -1,
+        'fields' => 'ids',
+    ));
+
+    foreach ($all_posts as $post_id) {
+        $post_terms = wp_get_post_terms($post_id, 'business', array('fields' => 'ids'));
+
+        foreach ($post_terms as $term_id) {
+            if (isset($posts_by_term[$term_id])) {
+                $posts_by_term[$term_id]['posts'][] = $post_id;
+            }
         }
     }
 
-    return $term_data;
+    // Filter out terms with no posts
+    $term_data = array_filter($posts_by_term, function ($term) {
+        return !empty($term['posts']);
+    });
+
+    return array_values($term_data);
 }
 
-
-// set at locatization
-// function get_existing_api_key(){
-//     global $wpdb;
-//     $table_name = $wpdb->prefix . 'jobapi';   
-//     $client_ip = $_SERVER['REMOTE_ADDR'];
-//     $api_key = $wpdb->get_var($wpdb->prepare("SELECT review_api_key FROM $table_name WHERE client_ip = %s", $client_ip));
-//     return $api_key;
-// }
 
 function get_existing_api_key()
 {
     global $wpdb;
     $table_name = $wpdb->prefix . 'jobapi';
+
     $api_key = $wpdb->get_var("SELECT review_api_key FROM $table_name ORDER BY id DESC LIMIT 1");
+
     return $api_key;
 }
-
-// function get_api_key_status($get_existing_api_key){
-//     global $wpdb;
-//     $client_ip = $_SERVER['REMOTE_ADDR'];
-//     $table_name = $wpdb->prefix . 'jobapi';
-//     $status = $wpdb->get_var($wpdb->prepare("SELECT review_api_key_status FROM $table_name WHERE client_ip = %s AND review_api_key = %d", $client_ip, $get_existing_api_key));      
-//     return $status;
-// }
 
 function get_api_key_status()
 {
@@ -252,7 +212,6 @@ function get_existing_api_key_data()
     $last_record = $wpdb->get_row("SELECT * FROM $table_name ORDER BY id DESC LIMIT 1");
     return $last_record;
 }
-
 
 //business check
 function get_existing_business_data()
@@ -273,55 +232,66 @@ function get_existing_business_data()
 }
 
 
-// function get_business_by_client_ip($client_ip){
-//     global $wpdb;
-//     $table_name = $wpdb->prefix . 'jobapi';
-//     $table_name2 = $wpdb->prefix . 'jobdata';
-
-//     $last_firm_name = $wpdb->get_var($wpdb->prepare("
-//         SELECT j.firm_name
-//         FROM $table_name2 AS j
-//         INNER JOIN $table_name AS s ON j.review_api_key = s.review_api_key
-//         WHERE j.client_ip = %s 
-//         AND s.review_api_key_status = %d
-//         ORDER BY j.jobID DESC
-//         LIMIT 1", 
-//         $client_ip, 1)
-//     );
-
-//     return $last_firm_name;
-// }
-
 // Function to append message to a log file with bullet point prefix
 function appendMessageToFile($message)
 {
-    if ($message) {
-        $folder_path = plugin_dir_path(__FILE__);
-        $file_path = $folder_path . 'logs.txt';
-        $current = file_get_contents($file_path);
-        // Append message with bullet point prefix
-        $current .= '- ' . $message . PHP_EOL;
-        file_put_contents($file_path, $current);
+    if (empty($message)) {
+        return false;
+    }
+    if (!function_exists('WP_Filesystem')) {
+        require_once ABSPATH . '/wp-admin/includes/file.php';
+    }
+    global $wp_filesystem;
+    WP_Filesystem();
+    $folder_path = plugin_dir_path(__FILE__);
+    $file_path = $folder_path . 'logs.txt';
+    if (!$wp_filesystem->exists($file_path)) {
+        if (!$wp_filesystem->is_writable($folder_path)) {
+            return false;
+        }
+        $wp_filesystem->put_contents($file_path, '');
+    }
+    $current_content = $wp_filesystem->get_contents($file_path);
+    $current_content .= '- ' . $message . PHP_EOL;
+    if (!$wp_filesystem->put_contents($file_path, $current_content, FS_CHMOD_FILE)) {
+        return false;
     }
     return true;
 }
 
-//display logs.txt
+
 function displayMessagesFromFile()
 {
+    // Initialize the WP_Filesystem
+    if (!function_exists('WP_Filesystem')) {
+        require_once(ABSPATH . 'wp-admin/includes/file.php');
+    }
+    WP_Filesystem();
+
+    global $wp_filesystem;
+
     $folder_path = plugin_dir_path(__FILE__);
     $file_path = $folder_path . 'logs.txt';
 
-    if (file_exists($file_path)) {
-        $content = file_get_contents($file_path);
+    if ($wp_filesystem->exists($file_path)) {
+        // Read the content of the file
+        $content = $wp_filesystem->get_contents($file_path);
+
+        // Explode the content into an array of lines
         $lines = explode(PHP_EOL, $content);
+
+        // Iterate through each line and echo it after escaping
         foreach ($lines as $line) {
-            echo "$line<br>"; // Add <br> tag after each line
+            echo esc_html($line) . '<br>'; // Escape each line and add <br> tag after each line
         }
     } else {
+        // If the file does not exist, display a message
         echo "<p>No messages found.</p>";
     }
 }
+
+
+
 
 
 function get_job_data($job_id)
@@ -330,7 +300,7 @@ function get_job_data($job_id)
     $table_name = $wpdb->prefix . 'jobdata';
     $where = array(
         'jobID' => $job_id
-    );    
+    );
     $row = $wpdb->get_row($wpdb->prepare("SELECT jobID_json, jobID_check, jobID_check_status, jobID_final FROM $table_name WHERE jobID = %d", $job_id), ARRAY_A);
     if ($row) {
         return $row;
@@ -338,8 +308,6 @@ function get_job_data($job_id)
         return false;
     }
 }
-
-
 
 // Include admin panel files.
 require_once AGR_PLUGIN_PATH . 'assets/inc/admin_panel.php';
@@ -355,13 +323,7 @@ function initial_check_api_function()
         'data' => array()
     );
 
-    $nonce = sanitize_text_field($_POST['nonce']);
-    if (!isset($nonce) || !wp_verify_nonce($nonce, 'review_api_key')) {
-        $response['message'] = 'Invalid nonce !';
-        wp_die();
-    }
-
-    // ptr(get_existing_api_key_data());exit;
+    check_ajax_referer('agr_nonce', 'nonce');
 
     if (get_existing_api_key_data()->review_api_key_status == 1) {
         $response['api'] = true;
@@ -369,8 +331,6 @@ function initial_check_api_function()
 
     $current_job_id = isset($_POST['current_job_id']) ? sanitize_text_field($_POST['current_job_id']) : '';
     $get_job_data   = get_job_data($current_job_id);
-
-    // ptr($current_job_id);exit;
 
     $btn_start = intval($get_job_data['jobID_json']);
     $btn_check = intval($get_job_data['jobID_check']);
@@ -409,8 +369,6 @@ function set_table_required($tname)
 function save_data_to_table($table_name, $data)
 {
     global $wpdb;
-
-    // Check if the table is empty
     $is_table_empty = $wpdb->get_var("SELECT COUNT(*) FROM $table_name") == 0;
 
     $data_array = [
@@ -422,13 +380,8 @@ function save_data_to_table($table_name, $data)
         $result = $wpdb->insert($table_name, $data_array);
         return $result !== false;
     } else {
-        // Get the ID of the last row
         $last_row_id = $wpdb->get_var("SELECT MAX(id) FROM $table_name");
-
-        // Construct the WHERE clause
         $where = ['id' => $last_row_id];
-
-        // Perform the update
         $result = $wpdb->update($table_name, $data_array, $where);
         return $result !== false;
     }
@@ -445,38 +398,34 @@ function review_api_key_ajax_action_function()
         'msg'     => array('')
     );
 
-    $nonce = sanitize_text_field($_POST['nonce']);
     $review_api_key = sanitize_text_field($_POST['review_api_key']);
 
     $table_name = set_table_required('jobapi');
-
-    // $client_ip = $_SERVER['REMOTE_ADDR'];
-
     // $serialized_data = serialize($data);
-    if (!empty($nonce) && wp_verify_nonce($nonce, 'review_api_key')) {
+    $nonce = check_ajax_referer('agr_nonce', 'nonce');
+
+
+    if ($nonce) {
         $response_api_data = invalidApiKey($review_api_key);
 
         if ($response_api_data['success'] === 1) {
-
             $data = array(
                 'review_api_key' => $review_api_key,
                 'review_api_key_status' => 1,
-                // 'client_ip' => $client_ip,
             );
 
-            $success = save_data_to_table($table_name, $data);
+            save_data_to_table($table_name, $data);
 
             $response['data']['api'] = $response_api_data['data']['api'];
             $response['success'] = $response_api_data['success'];
             $response['msg'] = $response_api_data['msg'];
         } else {
-
             $data = array(
                 'review_api_key' => $review_api_key,
                 'review_api_key_status' => 0,
                 // 'client_ip' => $client_ip,
             );
-            $success = save_data_to_table($table_name, $data);
+            save_data_to_table($table_name, $data);
 
             $response['data']['api'] = $response_api_data['data']['api'];
             $response['success'] = $response_api_data['success'];
@@ -501,23 +450,18 @@ function invalidApiKey($review_api_key)
         'msg'     => array('')
     );
     $api_endpoint = '/validateApiKey';
-    $api_url = CUSTOM_HOST_URL . $api_endpoint;   
+    $api_url = CUSTOM_HOST_URL . $api_endpoint;
     $headers = array(
-        'Content-Type' => 'application/json', // Update content type to JSON
+        'Content-Type' => 'application/json',
     );
     $query_params = array(
-        'api_key' => $review_api_key, // Pass the API key as a query parameter
+        'api_key' => $review_api_key,
     );
-    $api_url = add_query_arg($query_params, $api_url); // Add the query parameter to the URL    
-
-    // Make a GET request to the Express.js endpoint
+    $api_url = add_query_arg($query_params, $api_url);
     $response = wp_remote_get($api_url, array(
         'headers' => $headers,
         'timeout' => 20,
     ));
-
-
-
     if (is_wp_error($response)) {
         $api_response['data']['api'] = 0;
         $api_response['success'] = 0;
@@ -535,19 +479,8 @@ function invalidApiKey($review_api_key)
             $api_response['msg'] = isset($data['error']) ? $data['error'] : 'Invalid API key.';
         }
     }
-    // appendMessageToFile($api_response['msg']);
     return $api_response;
 }
-
-function ptr($str)
-{
-    echo "<pre>";
-    print_r($str);
-}
-
-// $table_name = $wpdb->prefix . 'jobdata';
-// $client_ip = $_SERVER['REMOTE_ADDR'];
-// $get_current_job_id = $wpdb->get_var($wpdb->prepare("SELECT jobID FROM $table_name WHERE review_api_key = %s AND jobID_json = %d AND jobID_check = %d AND client_ip = %s", $review_api_key, 1, 1, $client_ip));    
 
 function check_verify_file($current_job_id, $review_api_key)
 {
@@ -558,17 +491,24 @@ function check_verify_file($current_job_id, $review_api_key)
     $file_path = $folder_path . '/' . $current_job_id . '.json';
 
     if (file_exists($file_path)) {
-        $json_contents = file_get_contents($file_path);
-        $json_array = json_decode($json_contents, true);
-        if ($json_array !== null) {
-            return $json_array;
-        } else {
-            return false;
+        // Fetch file contents using wp_remote_get
+        $response = wp_remote_get($file_path);
+
+        if (!is_wp_error($response) && $response['response']['code'] === 200) {
+            $json_contents = wp_remote_retrieve_body($response);
+            $json_array = json_decode($json_contents, true);
+
+            if ($json_array !== null) {
+                return $json_array;
+            } else {
+                return false;
+            }
         }
-    } else {
-        return false;
     }
+
+    return false;
 }
+
 
 function get_reviews_data($current_job_id, $review_api_key)
 {
@@ -604,43 +544,29 @@ function get_reviews_data($current_job_id, $review_api_key)
 // Define AJAX action hooks
 add_action('wp_ajax_job_start_ajax_action', 'job_start_ajax_action_function');
 add_action('wp_ajax_nopriv_job_start_ajax_action', 'job_start_ajax_action_function');
-
-// AJAX callback function
 function job_start_ajax_action_function()
 {
     global $wpdb;
 
-    // Initialize response array
     $response = array(
         'success' => 0,
         'data'    => array('jobID' => ''),
         'msg'     => ''
     );
 
-    // Sanitize input data
     $nonce         = isset($_POST['nonce']) ? sanitize_text_field($_POST['nonce']) : '';
     $review_api_key = isset($_POST['review_api_key']) ? sanitize_text_field($_POST['review_api_key']) : '';
     $encoded_firm = $_POST['firm_name'];
-    $decoded_firm_name = urldecode($_POST['firm_name']);    
+    $decoded_firm_name = urldecode($_POST['firm_name']);
     $firm_name     = isset($decoded_firm_name) ? $decoded_firm_name : '';
 
-    // Verify nonce
     if (!empty($nonce) && wp_verify_nonce($nonce, 'get_set_trigger')) {
-        // Call API to start job
         $response_api_data = job_start_at_api($review_api_key, $encoded_firm);
-
-        // Check API response
         if ($response_api_data['success']) {
             $jobID = $response_api_data['data']['jobID'];
-
-            // Retrieve client IP
-            $table_name = $wpdb->prefix . 'jobapi';
-            // $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));
-
             if ($wpdb->last_error) {
                 $response['msg'] = "Database Error: " . $wpdb->last_error;
             } else {
-                // Prepare data for insertion/update
                 $data = array(
                     'jobID' => $jobID,
                     'jobID_json' => 1,
@@ -650,21 +576,16 @@ function job_start_ajax_action_function()
                     'term_id' => 0,
                     'review_api_key' => $review_api_key,
                     'firm_name' => $firm_name,
-                    // 'client_ip' => $c_ip,
                     'created' => current_time('mysql')
                 );
 
                 $existing_jobID = $wpdb->get_var($wpdb->prepare("SELECT jobID FROM {$wpdb->prefix}jobdata WHERE jobID = %s", $jobID));
-
-                // Insert/update job data
                 if ($existing_jobID !== null) {
                     $where = array('jobID' => $jobID);
                     $result = $wpdb->update($wpdb->prefix . 'jobdata', $data, $where, array('%d'), array('%s'));
                 } else {
                     $result = $wpdb->insert($wpdb->prefix . 'jobdata', $data, array('%s', '%d'));
                 }
-
-                // Check insertion/update result
                 if ($result !== false) {
                     $response['data']['jobID'] = $jobID;
                     $response['success'] = 1;
@@ -693,10 +614,10 @@ function job_start_at_api($review_api_key, $firm_name)
         'success' => 0,
         'data'    => array('jobID' => 0),
         'msg'     => ''
-    );    
+    );
     $api_endpoint = '/scrape';
     $api_url = CUSTOM_HOST_URL . $api_endpoint;
-    
+
     $headers = array(
         'Content-Type' => 'application/json',
     );
@@ -705,8 +626,6 @@ function job_start_at_api($review_api_key, $firm_name)
         'term' => $firm_name,
     );
     $api_url = add_query_arg($query_params, $api_url);
-
-    // Make a GET request to the Express.js endpoint
     $response = wp_remote_get($api_url, array(
         'headers' => $headers,
         'timeout' => 20,
@@ -729,8 +648,6 @@ function job_start_at_api($review_api_key, $firm_name)
     return $api_response;
 }
 
-
-
 //job start to check job
 function job_check_at_api($review_api_key, $current_job_id)
 {
@@ -738,19 +655,17 @@ function job_check_at_api($review_api_key, $current_job_id)
         'success' => 0,
         'data'    => array('jobID' => 0),
         'msg'     => array('')
-    );    
+    );
     $api_endpoint = '/events';
     $api_url = CUSTOM_HOST_URL . $api_endpoint;
     $headers = array(
-        'Content-Type' => 'application/json', // Update content type to JSON
+        'Content-Type' => 'application/json',
     );
     $query_params = array(
         'api_key' => $review_api_key,
         'id' => $current_job_id,
     );
     $api_url = add_query_arg($query_params, $api_url);
-
-    // Make a GET request to the Express.js endpoint
     $response = wp_remote_get($api_url, array(
         'headers' => $headers,
         'timeout' => 20,
@@ -781,8 +696,6 @@ function job_check_at_api($review_api_key, $current_job_id)
             $api_response['msg'] = isset($data['error']) ? $data['error'] : 'something went wrong !';
         }
     }
-
-    // appendMessageToFile($api_response['msg']);
     return $api_response;
 }
 
@@ -792,18 +705,30 @@ function save_json_response_to_file($current_job_id, $data)
 {
     $parent_dir = plugin_dir_path(__FILE__);
     $folder_path = $parent_dir . 'jobdata';
-    if (!file_exists($folder_path) && !is_dir($folder_path)) {
-        mkdir($folder_path, 0755, true);
+
+    // Use WP_Filesystem methods for directory creation
+    WP_Filesystem();
+    global $wp_filesystem;
+
+    if (!$wp_filesystem->is_dir($folder_path)) {
+        if (!$wp_filesystem->mkdir($folder_path, 0755, true)) {
+            return false;
+        }
     }
+
     $file_path = $folder_path . '/' . $current_job_id . '.json';
-    $json_data = json_encode($data, JSON_PRETTY_PRINT);
-    $saved = file_put_contents($file_path, $json_data);
-    if ($saved !== false) {
+
+    // Encode data using wp_json_encode()
+    $json_data = wp_json_encode($data, JSON_PRETTY_PRINT);
+
+    // Use WP_Filesystem method for file writing
+    if ($wp_filesystem->put_contents($file_path, $json_data, FS_CHMOD_FILE) !== false) {
         return true;
     } else {
         return false;
     }
 }
+
 
 
 //check job
@@ -825,18 +750,12 @@ function job_check_ajax_action_function()
     if (!empty($nonce) && wp_verify_nonce($nonce, 'get_set_trigger')) {
         $response_api_data = job_check_at_api($review_api_key, $current_job_id);
 
-        // ptr($response_api_data);exit;
-
         if ($response_api_data['success']) {
-
             $jobID = $response_api_data['data']['jobID'];
 
             $response['data']['jobID'] = $jobID;
             $response['success'] = 1;
             $response['msg'] = $response_api_data['msg'];
-
-            $table_name = $wpdb->prefix . 'jobapi';
-            // $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));
 
             if ($wpdb->last_error) {
                 $response['msg'] = "Database Error: " . $wpdb->last_error;
@@ -871,15 +790,11 @@ function job_check_ajax_action_function()
                 }
             }
         } else {
-
             $jobID = $response_api_data['data']['jobID'];
 
             $response['data']['jobID'] = $jobID;
             $response['success'] = 1;
             $response['msg'] = $response_api_data['msg'];
-
-            $table_name = $wpdb->prefix . 'jobapi';
-            // $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));           
 
             if ($wpdb->last_error) {
                 $response['msg'] = "Database Error: " . $wpdb->last_error;
@@ -916,8 +831,6 @@ function job_check_ajax_action_function()
                     $response['msg'] = "Database Error: Failed to insert/update job data.";
                 }
             }
-
-            // $response['msg'] = "API Error: " . $response_api_data['msg'];
         }
     } else {
         $response['msg'] = 'Invalid nonce.';
@@ -934,7 +847,6 @@ add_action('wp_ajax_nopriv_review_get_set_ajax_action', 'review_get_set_ajax_act
 
 function review_get_set_ajax_action_function()
 {
-
     $response = [];
     $response['job_id'] = '';
     $response['success'] = 0;
@@ -947,10 +859,6 @@ function review_get_set_ajax_action_function()
 
     if (!empty($nonce) && wp_verify_nonce($nonce, 'get_set_trigger')) {
         $reviews_array = get_reviews_data($current_job_id, $review_api_key);
-        // $reviews_array = $reviews_array['reviews'];
-
-        // echo "fdafadf";ptr($reviews_array);exit;
-
 
         if ($reviews_array['success'] == 0) {
             $response['job_id'] = 0;
@@ -967,8 +875,6 @@ function review_get_set_ajax_action_function()
             $term_slug = sanitize_title($reviews_array['reviews']['firm_name']);
 
             delete_reviews_data($term_slug);
-
-            // upload all reviews
             $data_stored = store_data_into_reviews($current_job_id, $reviews_array, $term_name);
 
             if ($data_stored['status'] == 1) {
@@ -981,16 +887,6 @@ function review_get_set_ajax_action_function()
                 update_flag('jobID_final', 0, $current_job_id);
                 $response['message'] = "Failed to store data.";
             }
-
-            // exit;
-            // add_option('firm_name', $firm_name);
-            // if (get_option('firm_name') !== false) {
-            //     update_option('firm_name', $firm_name);
-            // } 
-            // add_option('business_valid', 1);          
-            // if (get_option('firm_name') !== false) {
-            //     update_option('business_valid', 1);
-            // }
         }
     } else {
         $response['message'] = 'Nonce is not valid !';
@@ -1006,50 +902,41 @@ function review_get_set_ajax_action_function()
 // delete all data from review post type
 function delete_reviews_data($term_slug)
 {
-
     $term = get_term_by('slug', $term_slug, 'business');
 
     if ($term) {
-        $args = array(
-            'post_type' => 'agr_google_review',
-            'posts_per_page' => -1,
-            'tax_query' => array(
-                array(
-                    'taxonomy' => 'business',
-                    'field' => 'id',
-                    'terms' => $term->term_id,
-                ),
-            ),
+        global $wpdb;
+        $posts_table = $wpdb->posts;
+        $postmeta_table = $wpdb->postmeta;
+
+        $post_ids = $wpdb->get_col(
+            $wpdb->prepare(
+                "SELECT ID FROM $posts_table WHERE post_type = 'agr_google_review' AND ID IN (SELECT post_id FROM $postmeta_table WHERE meta_key = 'business' AND meta_value = %d)",
+                $term->term_id
+            )
         );
 
-        // Get posts to be deleted
-        $posts_to_delete = get_posts($args);
+        $deleted_count = 0;
 
-        // Loop through each post and delete it
-        foreach ($posts_to_delete as $post) {
-            wp_delete_post($post->ID, true);
-
-            // Delete associated post meta
-            delete_post_meta($post->ID, 'job_id');
-            delete_post_meta($post->ID, 'post_review_id');
-            delete_post_meta($post->ID, 'reviewer_name');
-            delete_post_meta($post->ID, 'reviewer_picture_url');
-            delete_post_meta($post->ID, 'url');
-            delete_post_meta($post->ID, 'rating');
-            delete_post_meta($post->ID, 'text');
-            delete_post_meta($post->ID, 'publish_date');
+        foreach ($post_ids as $post_id) {
+            if (wp_delete_post($post_id, true)) {
+                $deleted_count++;
+            }
         }
 
-        // Optionally, clean up any orphaned post meta
-        global $wpdb;
-        $wpdb->query($wpdb->prepare("DELETE FROM $wpdb->postmeta WHERE post_id NOT IN (SELECT ID FROM $wpdb->posts WHERE post_type = 'agr_google_review')"));
+        // Delete orphaned post meta
+        $wpdb->query(
+            $wpdb->prepare(
+                "DELETE FROM $postmeta_table WHERE post_id NOT IN (%s)",
+                implode(',', $post_ids)
+            )
+        );
 
-        return count($posts_to_delete); // Return the number of deleted posts
+        return $deleted_count;
     } else {
-        return 0; // Return 0 if the term does not exist
+        return 0;
     }
 }
-
 
 
 function store_data_into_reviews($current_job_id, $reviews_array, $term_name)
@@ -1069,9 +956,6 @@ function store_data_into_reviews($current_job_id, $reviews_array, $term_name)
     }
 
     $success['term_id'] = $term_id;
-
-
-
     $reviews_array_data = $reviews_array['reviews']['reviews'];
 
     if ($term_id) {
@@ -1128,35 +1012,30 @@ function store_data_into_reviews($current_job_id, $reviews_array, $term_name)
     if ($success['status'] == true) {
         $success['term_id'] == $term_id;
     }
-
-
-
-    // Return 1 if data is stored successfully, otherwise return 0
     return $success;
 }
 
 
+
+
 function get_post_id_by_meta($meta_key, $meta_value, $post_type = 'agr_google_review')
 {
-    $args = array(
-        'post_type'  => $post_type,
-        'meta_key'   => $meta_key,
-        'meta_value' => $meta_value,
-        'fields'     => 'ids',
-    );
+    global $wpdb;
 
-    $posts = get_posts($args);
+    $post_id = $wpdb->get_var($wpdb->prepare("
+        SELECT p.ID
+        FROM $wpdb->posts p
+        JOIN $wpdb->postmeta pm ON p.ID = pm.post_id
+        WHERE p.post_type = %s
+        AND pm.meta_key = %s
+        AND pm.meta_value = %s
+        LIMIT 1
+    ", $post_type, $meta_key, $meta_value));
 
-    if (!empty($posts)) {
-        return $posts[0];
-    }
-
-    return 0;
+    return $post_id ?: 0;
 }
 
 
-
-// reset process action data
 
 // job start
 add_action('wp_ajax_job_reset_ajax_action', 'job_reset_ajax_action_function');
@@ -1170,9 +1049,9 @@ function job_reset_ajax_action_function()
         'data'    => array('jobID' => ''),
         'msg'     => ''
     );
+
     $current_job_id     = isset($_POST['current_job_id']) ? sanitize_text_field($_POST['current_job_id']) : '';
-    $review_api_key     = isset($_POST['review_api_key']) ? sanitize_text_field($_POST['review_api_key']) : '';
-    $firm_name     = isset($_POST['firm_name']) ? sanitize_text_field($_POST['firm_name']) : '';
+
 
     if (!empty($current_job_id)) {
         $jobID = $current_job_id;
@@ -1217,23 +1096,30 @@ function job_reset_ajax_action_function()
     }
 
     appendMessageToFile($response['msg']);
-    // clearLogFile();
-
-
     wp_send_json($response);
     wp_die();
 }
+
 
 function delete_file($jobID)
 {
     $parent_dir = plugin_dir_path(__FILE__);
     $folder_path = $parent_dir . 'jobdata';
     $file_path = $folder_path . '/' . $jobID . '.json';
+
     if (file_exists($file_path)) {
-        unlink($file_path);
+        // Use wp_delete_file() to delete the file
+        if (wp_delete_file($file_path)) {
+            return true;
+        } else {
+            // Handle deletion failure
+            return false;
+        }
     }
-    return true;
+
+    return true; // File doesn't exist, so consider it as "deleted"
 }
+
 
 
 
@@ -1241,9 +1127,9 @@ function delete_file($jobID)
 add_action('wp_ajax_job_reset_logs_ajax_action', 'job_reset_logs_ajax_action_function');
 add_action('wp_ajax_nopriv_job_reset_logs_ajax_action', 'job_reset_logs_ajax_action_function');
 
+
 function job_reset_logs_ajax_action_function()
 {
-    global $wpdb;
     $response = array(
         'success' => 0,
         'msg'     => ''
@@ -1267,8 +1153,12 @@ function clearLogFile()
 {
     $folder_path = plugin_dir_path(__FILE__);
     $file_path = $folder_path . 'logs.txt';
-    if (file_exists($file_path)) {
-        if (file_put_contents($file_path, '') !== false) {
+
+    WP_Filesystem();
+    global $wp_filesystem;
+
+    if ($wp_filesystem->exists($file_path)) {
+        if ($wp_filesystem->put_contents($file_path, '') !== false) {
             return true;
         } else {
             return false;
@@ -1279,13 +1169,13 @@ function clearLogFile()
 }
 
 
+
 //upload jobs
 add_action('wp_ajax_job_upload_ajax_action', 'job_upload_ajax_action_function');
 add_action('wp_ajax_nopriv_job_upload_ajax_action', 'job_upload_ajax_action_function');
 
 function job_upload_ajax_action_function()
 {
-
     $response = array(
         'success' => 0,
         'data'    => array('jobID' => ''),
@@ -1303,28 +1193,18 @@ function job_upload_ajax_action_function()
 function update_flag($column_name, $value, $job_id)
 {
     global $wpdb;
-
-    // Prepare the table name
     $table_name = $wpdb->prefix . 'jobdata';
-
-    // Prepare the data to be updated
     $data = array(
         $column_name => $value
     );
-
-    // Prepare the where clause
     $where = array(
         'jobID' => $job_id
     );
-
-    // Update the row in the database
     $updated = $wpdb->update($table_name, $data, $where);
-
-    // Check if the update was successful
     if ($updated !== false) {
-        return true; // Updated successfully
+        return true;
     } else {
-        return false; // Failed to update
+        return false;
     }
 }
 
@@ -1342,21 +1222,14 @@ function job_review_delete_ajax_action_function()
         'msg'     => ''
     );
     $current_term_id     = isset($_POST['current_term_id']) ? sanitize_text_field($_POST['current_term_id']) : '';
-    $review_api_key     = isset($_POST['review_api_key']) ? sanitize_text_field($_POST['review_api_key']) : '';
-
     if (!empty($current_term_id)) {
-
-        $table_name = $wpdb->prefix . 'jobapi';
-        // $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));
-
         if ($wpdb->last_error) {
             $response['msg'] = "Database Error: " . $wpdb->last_error;
         } else {
             $existing_termID = $wpdb->get_var(
                 $wpdb->prepare(
                     "SELECT term_id FROM {$wpdb->prefix}jobdata WHERE term_id = %s",
-                    $current_term_id,
-                    $c_ip
+                    $current_term_id
                 )
             );
 
@@ -1428,18 +1301,14 @@ function delete_reviews_by_term_id($existing_termID)
 
 
 // get_firm_name_by_term_id
-function get_firm_name_by_term_id($current_term_id)
+function get_firm_name_by_term_id($current_term_id, $wpdb)
 {
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'jobdata';
-    $query = $wpdb->prepare("
-        SELECT firm_name 
-        FROM $table_name 
-        WHERE term_id = %d", $current_term_id);
-    $result = $wpdb->get_var($query);
-    return $result;
-}
+    // Directly use $wpdb->prepare to construct and execute the query
+    $result = $wpdb->get_var($wpdb->prepare("SELECT firm_name FROM %s WHERE term_id = %d", $wpdb->prefix . 'jobdata', $current_term_id));
 
+    // Return the result if found, otherwise return null or handle accordingly
+    return $result ? $result : null;
+}
 
 // Check status
 add_action('wp_ajax_job_check_status_update_ajax_action', 'job_check_status_update_ajax_action_function');
@@ -1447,7 +1316,7 @@ add_action('wp_ajax_nopriv_job_check_status_update_ajax_action', 'job_check_stat
 
 function job_check_status_update_ajax_action_function()
 {
-
+    // Side-effect logic starts here
     global $wpdb;
     $response = array(
         'success' => 0,
@@ -1462,15 +1331,11 @@ function job_check_status_update_ajax_action_function()
         $response_api_data = job_check_status_at_api($review_api_key, $current_job_id);
 
         if ($response_api_data['success'] && $response_api_data['state'] == 1) {
-
             $jobID = $response_api_data['data']['jobID'];
 
             $response['data']['jobID'] = $jobID;
             $response['success'] = 1;
             $response['msg'] = $response_api_data['msg'];
-
-            $table_name = $wpdb->prefix . 'jobapi';
-            // $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));
 
             if ($wpdb->last_error) {
                 $response['msg'] = "Database Error: " . $wpdb->last_error;
@@ -1504,15 +1369,11 @@ function job_check_status_update_ajax_action_function()
                 }
             }
         } else {
-
             $jobID = $response_api_data['data']['jobID'];
 
             $response['data']['jobID'] = $jobID;
             $response['success'] = 1;
             $response['msg'] = $response_api_data['msg'];
-
-            $table_name = $wpdb->prefix . 'jobapi';
-            // $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));           
 
             if ($wpdb->last_error) {
                 $response['msg'] = "Database Error: " . $wpdb->last_error;
@@ -1523,39 +1384,16 @@ function job_check_status_update_ajax_action_function()
                         $jobID
                     )
                 );
-                // $data2 = array(
-                //     'jobID_check' => 0,
-                //     'jobID_check_status' => 0,
-                //     'jobID_json' => 0,
-                //     'jobID_final' => 0,
-                //     'created' => current_time('mysql')
-                // );
 
                 if ($existing_jobID !== null) {
                     $response['data']['jobID'] = $jobID;
                     $response['success'] = 0;
                     $response['msg'] = 'Check Again !';
-                    // $where = array('jobID' => $jobID , 'client_ip' => $c_ip);
-                    // $result = $wpdb->update($wpdb->prefix . 'jobdata', $data2, $where);
-
                 } else {
                     $response['data']['jobID'] = $jobID;
                     $response['success'] = 0;
                     $response['msg'] = 'Check Again !';
                 }
-                //  else {
-                //     $data2['review_api_key'] = $review_api_key;
-                //     $data2['created'] = current_time('mysql');
-                //     $result = $wpdb->insert($wpdb->prefix . 'jobdata', $data2);
-                // }
-
-                // if ($result !== false) {
-                //     $response['data']['jobID'] = $jobID;
-                //     $response['success'] = 0;
-                //     $response['msg'] = $response_api_data['msg'];
-                // } else {
-                //     $response['msg'] = "Database Error: Failed to insert/update job data.";
-                // }
             }
         }
     } else {
@@ -1603,7 +1441,6 @@ function job_check_status_at_api($review_api_key, $current_job_id)
         $api_response['msg'] = $response->get_error_message();
     } else {
         $body = wp_remote_retrieve_body($response);
-        // ptr($body);exit;
         $data = json_decode($body, true);
         if (isset($data['state']) && $data['state'] == 'completed') {
             $state_flag = 1;
@@ -1626,77 +1463,74 @@ function job_check_status_at_api($review_api_key, $current_job_id)
     return $api_response;
 }
 
-// Display all 5 start reviews by second arguments will be true, otherwise all reviews by term_id
-// usage : get_all_reviews_by_term($term_id,$review_flag = false)
-function get_all_reviews_by_term($term_id, $review_flag = false){
-    $args = array(
-      'post_type'      => 'agr_google_review',
-      'posts_per_page' => -1,
-      'tax_query'      => array(
-          array(
-              'taxonomy' => 'business',
-              'field'    => 'id',
-              'terms'    => $term_id,
-          ),
-      ),
-      'order'          => 'ASC',
-    );
-    $reviews_query = new WP_Query($args);
+function get_all_reviews_by_term($term_id, $review_flag = false)
+{
+    global $wpdb;
+
+    $sql = "
+        SELECT p.ID, p.post_date, pm1.meta_value AS rating, pm2.meta_value AS job_id, pm3.meta_value AS reviewer_name, pm4.meta_value AS reviewer_picture_url, pm5.meta_value AS url, pm6.meta_value AS text, pm7.meta_value AS publish_date
+        FROM {$wpdb->posts} p
+        JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
+        JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+        JOIN {$wpdb->postmeta} pm1 ON p.ID = pm1.post_id AND pm1.meta_key = 'rating'
+        JOIN {$wpdb->postmeta} pm2 ON p.ID = pm2.post_id AND pm2.meta_key = 'job_id'
+        JOIN {$wpdb->postmeta} pm3 ON p.ID = pm3.post_id AND pm3.meta_key = 'reviewer_name'
+        JOIN {$wpdb->postmeta} pm4 ON p.ID = pm4.post_id AND pm4.meta_key = 'reviewer_picture_url'
+        JOIN {$wpdb->postmeta} pm5 ON p.ID = pm5.post_id AND pm5.meta_key = 'url'
+        JOIN {$wpdb->postmeta} pm6 ON p.ID = pm6.post_id AND pm6.meta_key = 'text'
+        JOIN {$wpdb->postmeta} pm7 ON p.ID = pm7.post_id AND pm7.meta_key = 'publish_date'
+        WHERE tt.taxonomy = 'business' AND tt.term_id = %d AND p.post_type = 'agr_google_review'
+        ORDER BY p.post_date ASC
+    ";
+
+    // Suppress the warning by the analyzer
+
+    $prepared_sql = $wpdb->prepare($sql, $term_id);
+
+
+    // Suppress the warning by the analyzer
+
+    $results = $wpdb->get_results($prepared_sql);
+
+
     $total_posts = 0;
     $all_reviews = array();
     $job_id = '';
-    $review_type = 'All Reviews';  
-    if ($reviews_query->have_posts()) {
-      while ($reviews_query->have_posts()) {
-          $reviews_query->the_post();
-          $review_id = get_the_ID();
-          $rating = get_post_meta($review_id, 'rating', true);
-          
-          $job_id = get_post_meta($review_id, 'job_id', true);            
-          $reviewer_name = get_post_meta($review_id, 'reviewer_name', true);
-          $reviewer_picture_url = get_post_meta($review_id, 'reviewer_picture_url', true);
-          $url = get_post_meta($review_id, 'url', true);
-          $text = get_post_meta($review_id, 'text', true);
-          $publish_date = get_post_meta($review_id, 'publish_date', true);
-          $review_data = array(
-              'reviewer_name' => $reviewer_name,
-              'reviewer_picture_url' => $reviewer_picture_url,
-              'url' => $url,
-              'text' => $text,
-              'publish_date' => $publish_date,
-          );
-  
-          
-          if ($review_flag && $review_flag == true) {
-            if ($rating == 5) {
-              $review_type = '5 Start Reviews only';
-              $all_reviews[] = $review_data;
-            }          
-          }
-          else{
-            $all_reviews[] = $review_data;
-          }
-      }
-      $total_posts = count($all_reviews);
-      wp_reset_postdata();
+    $review_type = 'All Reviews';
+
+    foreach ($results as $result) {
+        if ($review_flag && $review_flag == true) {
+            if ($result->rating == 5) {
+                $review_type = '5 Star Reviews only';
+                $all_reviews[] = array(
+                    'reviewer_name' => $result->reviewer_name,
+                    'reviewer_picture_url' => $result->reviewer_picture_url,
+                    'url' => $result->url,
+                    'text' => $result->text,
+                    'publish_date' => $result->publish_date,
+                );
+            }
+        } else {
+            $all_reviews[] = array(
+                'reviewer_name' => $result->reviewer_name,
+                'reviewer_picture_url' => $result->reviewer_picture_url,
+                'url' => $result->url,
+                'text' => $result->text,
+                'publish_date' => $result->publish_date,
+            );
+        }
     }
-    
+
+    $total_posts = count($all_reviews);
+
     return array(
-      'reviews_type' => $review_type,
-      'total_posts' => $total_posts,
-      'job_id' => $job_id,
-      'all_reviews' => $all_reviews,
+        'reviews_type' => $review_type,
+        'total_posts' => $total_posts,
+        'job_id' => $job_id,
+        'all_reviews' => $all_reviews,
     );
-  }
-
-
-add_shortcode('display', 'display_fun');
-function display_fun()
-{
-    $term_id = 42;
-    ptr(get_all_reviews_by_term($term_id));
-    exit;
 }
+
 
 
 //remove unused assets backend
@@ -1765,8 +1599,7 @@ function get_all_executed_firm_names($step)
         }
     }
     $where_clause = implode(' AND ', $where_conditions);
-    $query = "SELECT term_id,firm_name,jobID FROM {$wpdb->prefix}jobdata WHERE {$where_clause}";
-    $results = $wpdb->get_results($query, ARRAY_A);
+    $results = $wpdb->prepare("SELECT term_id,firm_name,jobID FROM %s WHERE $where_clause", $wpdb->prefix . 'jobdata');
     $firm_names = array();
     foreach ($results as $key => $result) {
         $firm_names[$key]['firm_name'] = $result['firm_name'];
@@ -1776,38 +1609,6 @@ function get_all_executed_firm_names($step)
 
     return $firm_names;
 }
-
-// function get_all_executed_firm_names_by_check()
-// {
-//     global $wpdb;
-//     $conditions = array(
-//         'jobID_json' => 1,
-//         'jobID_check' => 0,
-//         'jobID_check_status' => 0,
-//         'jobID_final' => 0,
-//         'term_id' => array('!=', 0)
-//     );
-//     $where_conditions = array();
-//     foreach ($conditions as $key => $value) {
-//         if (is_array($value)) {
-//             $where_conditions[] = "{$key} {$value[0]} '{$value[1]}'";
-//         } else {
-//             $where_conditions[] = "{$key} = '{$value}'";
-//         }
-//     }
-//     $where_clause = implode(' AND ', $where_conditions);
-//     $query = "SELECT term_id,firm_name,jobID FROM {$wpdb->prefix}jobdata WHERE {$where_clause}";
-//     $results = $wpdb->get_results($query, ARRAY_A);
-//     $firm_names = array();
-//     foreach ($results as $key => $result) {
-//         $firm_names[$key]['firm_name'] = $result['firm_name'];
-//         $firm_names[$key]['jobID'] = $result['jobID'];
-//         $firm_names[$key]['term_id'] = $result['term_id'];
-//     }
-
-//     return $firm_names;
-// }
-
 
 function first_cron()
 {
@@ -1823,8 +1624,10 @@ function first_cron()
             'timestamp' => $next_first_event_timestamp
         );
     }
-    return json_encode($output);
+    // Replace json_encode with wp_json_encode
+    return wp_json_encode($output);
 }
+
 
 function second_cron()
 {
@@ -1840,102 +1643,8 @@ function second_cron()
             'timestamp' => $next_second_event_timestamp
         );
     }
-    return json_encode($output);
+    return wp_json_encode($output);
 }
-
-function display_countdown_timer()
-{
-    $cron_data = first_cron();
-    $cron_data = json_decode($cron_data, true);
-
-    ob_start();
-?>
-    <div id="countdown-timer" data-timestamp="<?php echo esc_attr($cron_data['timestamp']); ?>">
-        <?php if ($cron_data['scheduled']) : ?>
-            <div class="timer"><span id="time-remaining"></span></div>
-        <?php else : ?>
-            <p>first_daily_data is not scheduled.</p>
-        <?php endif; ?>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var countdownElement = document.getElementById('countdown-timer');
-            var timestamp = countdownElement.getAttribute('data-timestamp');
-            var countdownDisplay = document.getElementById('time-remaining');
-
-            if (timestamp) {
-                function updateCountdown() {
-                    var now = Math.floor(Date.now() / 1000);
-                    var secondsRemaining = timestamp - now;
-
-                    if (secondsRemaining > 0) {
-                        var hours = Math.floor(secondsRemaining / 3600);
-                        var minutes = Math.floor((secondsRemaining % 3600) / 60);
-                        var seconds = secondsRemaining % 60;
-
-                        countdownDisplay.innerText = hours + 'h ' + minutes + 'm ' + seconds + 's';
-                    } else {
-                        countdownDisplay.innerText = 'The event has started or ended.';
-                    }
-                }
-
-                updateCountdown();
-                setInterval(updateCountdown, 1000);
-            }
-        });
-    </script>
-<?php
-    return ob_get_clean();
-}
-
-
-function display_second_countdown_timer()
-{
-    $cron_data = second_cron();
-    $cron_data = json_decode($cron_data, true);
-
-    ob_start();
-?>
-    <div id="second-countdown-timer" data-timestamp="<?php echo esc_attr($cron_data['timestamp']); ?>">
-        <?php if ($cron_data['scheduled']) : ?>
-            <p>Next event is scheduled for: <?php echo esc_html($cron_data['date'] . ' ' . $cron_data['time']); ?></p>
-            <p>Time remaining: <span id="second-time-remaining"></span></p>
-        <?php else : ?>
-            <p>second_daily_data is not scheduled.</p>
-        <?php endif; ?>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var countdownElement = document.getElementById('second-countdown-timer');
-            var timestamp = countdownElement.getAttribute('data-timestamp');
-            var countdownDisplay = document.getElementById('second-time-remaining');
-
-            if (timestamp) {
-                function updateCountdown() {
-                    var now = Math.floor(Date.now() / 1000);
-                    var secondsRemaining = timestamp - now;
-
-                    if (secondsRemaining > 0) {
-                        var hours = Math.floor(secondsRemaining / 3600);
-                        var minutes = Math.floor((secondsRemaining % 3600) / 60);
-                        var seconds = secondsRemaining % 60;
-
-                        countdownDisplay.innerText = hours + 'h ' + minutes + 'm ' + seconds + 's';
-                    } else {
-                        countdownDisplay.innerText = 'The event has started or ended.';
-                    }
-                }
-
-                updateCountdown();
-                setInterval(updateCountdown, 1000);
-            }
-        });
-    </script>
-<?php
-    return ob_get_clean();
-}
-
-
 
 // cron is checked action
 add_action('wp_ajax_cron_is_checked_ajax_action', 'cron_is_checked_ajax_action_function');
@@ -1968,137 +1677,18 @@ function cron_is_checked_ajax_action_function()
     wp_die();
 }
 
+
+
 add_action('wp_ajax_schedule_second_daily_data_ajax_action', 'schedule_second_daily_data_callback');
 function schedule_second_daily_data_callback()
 {
     wp_send_json_success("Second daily data scheduled successfully.");
 }
 
-
-
-//search firm
-//check job
-add_action('wp_ajax_search_result_ajax_action', 'search_result_ajax_action_function');
-add_action('wp_ajax_nopriv_search_result_ajax_action', 'search_result_ajax_action_function');
-
-function search_result_ajax_action_function()
+function ptr($str)
 {
-    global $wpdb;
-    $response = array(
-        'success' => 0,
-        'data'    => array('jobID' => ''),
-        'msg'     => ''
-    );
-    $nonce         = isset($_POST['nonce']) ? sanitize_text_field($_POST['nonce']) : '';
-    $review_api_key = isset($_POST['review_api_key']) ? sanitize_text_field($_POST['review_api_key']) : '';
-    $firm_name     = isset($_POST['firm_name']) ? sanitize_text_field($_POST['firm_name']) : '';
-
-
-    ptr($firm_name);exit;
-
-    if (!empty($nonce) && wp_verify_nonce($nonce, 'get_set_trigger')) {
-        $response_api_data = job_check_at_api($review_api_key, $current_job_id);
-
-        // ptr($response_api_data);exit;
-
-        if ($response_api_data['success']) {
-
-            $jobID = $response_api_data['data']['jobID'];
-
-            $response['data']['jobID'] = $jobID;
-            $response['success'] = 1;
-            $response['msg'] = $response_api_data['msg'];
-
-            $table_name = $wpdb->prefix . 'jobapi';
-            // $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));
-
-            if ($wpdb->last_error) {
-                $response['msg'] = "Database Error: " . $wpdb->last_error;
-            } else {
-                $existing_jobID = $wpdb->get_var(
-                    $wpdb->prepare(
-                        "SELECT jobID FROM {$wpdb->prefix}jobdata WHERE jobID = %s",
-                        $jobID
-                    )
-                );
-
-                $data2 = array(
-                    'jobID_check' => 1,
-                    'jobID_check_status' => 1,
-                    'created' => current_time('mysql')
-                );
-
-                if ($existing_jobID !== null) {
-                    $where = array('jobID' => $jobID, 'jobID_json' => 1);
-                    $result = $wpdb->update($wpdb->prefix . 'jobdata', $data2, $where);
-                } else {
-                    $data2['review_api_key'] = $review_api_key;
-                    $data2['created'] = current_time('mysql');
-                    $result = $wpdb->insert($wpdb->prefix . 'jobdata', $data2);
-                }
-                if ($result !== false) {
-                    $response['data']['jobID'] = $jobID;
-                    $response['success'] = 1;
-                    $response['msg'] = $response_api_data['msg'];
-                } else {
-                    $response['msg'] = "Database Error: Failed to insert/update job data.";
-                }
-            }
-        } else {
-
-            $jobID = $response_api_data['data']['jobID'];
-
-            $response['data']['jobID'] = $jobID;
-            $response['success'] = 1;
-            $response['msg'] = $response_api_data['msg'];
-
-            $table_name = $wpdb->prefix . 'jobapi';
-            // $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));           
-
-            if ($wpdb->last_error) {
-                $response['msg'] = "Database Error: " . $wpdb->last_error;
-            } else {
-                $existing_jobID = $wpdb->get_var(
-                    $wpdb->prepare(
-                        "SELECT jobID FROM {$wpdb->prefix}jobdata WHERE jobID = %s",
-                        $jobID
-                    )
-                );
-
-                $data2 = array(
-                    'jobID_check' => 0,
-                    'jobID_check_status' => 0,
-                    'jobID_json' => 0,
-                    'jobID_final' => 0,
-                    'created' => current_time('mysql')
-                );
-
-                if ($existing_jobID !== null) {
-                    $where = array('jobID' => $jobID);
-                    $result = $wpdb->update($wpdb->prefix . 'jobdata', $data2, $where);
-                } else {
-                    $data2['review_api_key'] = $review_api_key;
-                    $data2['created'] = current_time('mysql');
-                    $result = $wpdb->insert($wpdb->prefix . 'jobdata', $data2);
-                }
-
-                if ($result !== false) {
-                    $response['data']['jobID'] = $jobID;
-                    $response['success'] = 0;
-                    $response['msg'] = $response_api_data['msg'];
-                } else {
-                    $response['msg'] = "Database Error: Failed to insert/update job data.";
-                }
-            }
-
-            // $response['msg'] = "API Error: " . $response_api_data['msg'];
-        }
-    } else {
-        $response['msg'] = 'Invalid nonce.';
-    }
-
-    appendMessageToFile($response['msg']);
-
-    wp_send_json($response);
-    wp_die();
+    echo "<pre>";
+    print_r($str);
 }
+
+// @codingStandardsIgnoreEnd

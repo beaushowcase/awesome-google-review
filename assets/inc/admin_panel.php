@@ -1,5 +1,6 @@
 <?php
-// Add a setting page
+
+// @codingStandardsIgnoreStart
 function our_google_reviews_add_menu_page()
 {
     add_menu_page(
@@ -10,52 +11,24 @@ function our_google_reviews_add_menu_page()
         'our_google_reviews_callback',
         'dashicons-google'
     );
-
-    // Add submenu item
     add_submenu_page(
-        'awesome-google-review', // Parent slug
-        'Delete Reviews', // Page title
-        'Delete Reviews', // Menu title
-        'manage_options', // Capability
-        'delete-review', // Menu slug
-        'delete_review_callback' // Callback function
+        'awesome-google-review',
+        'Delete Reviews',
+        'Delete Reviews',
+        'manage_options',
+        'delete-review',
+        'delete_review_callback'
     );
-
-    // Add submenu item
     add_submenu_page(
-        'awesome-google-review', // Parent slug
-        'Cron Setting', // Page title
-        'Cron Setting', // Menu title
-        'manage_options', // Capability
-        'review-cron-job', // Menu slug
-        'cron_job_callback' // Callback function
+        'awesome-google-review',
+        'Cron Setting',
+        'Cron Setting',
+        'manage_options',
+        'review-cron-job',
+        'cron_job_callback'
     );
 }
 add_action('admin_menu', 'our_google_reviews_add_menu_page');
-
-
-function delete_all_agr_google_reviews2()
-{
-    global $wpdb;
-
-    // Define the post type to be deleted
-    $post_type = 'agr_google_review';
-
-    // Get all posts of the specified post type
-    $posts = get_posts(array(
-        'post_type'      => $post_type,
-        'post_status'    => 'any',
-        'numberposts'    => -1,
-        'fields'         => 'ids',
-    ));
-
-    // Loop through each post and delete it
-    foreach ($posts as $post_id) {
-        wp_delete_post($post_id, true); // true parameter ensures the post is permanently deleted
-    }
-}
-
-// add_action('admin_init', 'delete_all_agr_google_reviews2');
 
 function add_settings_link($links, $file)
 {
@@ -68,7 +41,7 @@ function add_settings_link($links, $file)
 add_filter('plugin_action_links_awesome-google-review-main/awesome-google-review.php', 'add_settings_link', 10, 2);
 add_filter('plugin_action_links_awesome-google-review/awesome-google-review.php', 'add_settings_link', 10, 2);
 
-// Create post type on activation
+
 register_activation_hook(__FILE__, 'awesome_google_review_plugin_activate');
 
 function awesome_google_review_plugin_activate()
@@ -77,69 +50,102 @@ function awesome_google_review_plugin_activate()
     flush_rewrite_rules();
 }
 
-
-
-// Function to create table
 function job_table()
 {
     global $wpdb;
 
     $table_name = $wpdb->prefix . 'jobdata';
     $table_name1 = $wpdb->prefix . 'jobapi';
-
-    // Check if the table exists already
-    if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
-
-        $charset_collate = $wpdb->get_charset_collate();
-
-        $sql = "CREATE TABLE $table_name (
-            id mediumint(9) NOT NULL AUTO_INCREMENT,
-            review_api_key varchar(255) NOT NULL,
-            jobID bigint(20) NOT NULL,
-            jobID_json bigint(20) NOT NULL,
-            jobID_check_status bigint(20) NOT NULL,
-            jobID_check bigint(20) NOT NULL,            
-            jobID_final bigint(20) NOT NULL,
-            term_id bigint(20) NOT NULL,            
-            firm_name varchar(255) NOT NULL,
-            created datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
-            PRIMARY KEY  (id)
-            ) $charset_collate;";
-
-        // Include upgrade.php for dbDelta
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-
-        // Create the table
-        maybe_create_table($table_name, $sql);
+    $cache_key = 'table_exists_' . md5($table_name);
+    $exists = get_transient($cache_key);
+    if (!$exists) {
+        $exists = table_exists($table_name);
+        set_transient($cache_key, $exists, HOUR_IN_SECONDS); // Cache for 1 hour
     }
 
+    if (!$exists) {
+        create_table_if_not_exists($table_name);
+    }
 
-    // Check if the table exists already
-    if ($wpdb->get_var("SHOW TABLES LIKE '$table_name1'") != $table_name1) {
+    // Repeat the process for the second table
+    $cache_key = 'table_exists_' . md5($table_name1);
+    $exists = get_transient($cache_key);
 
-        $charset_collate = $wpdb->get_charset_collate();
+    if (!$exists) {
+        $exists = table_exists($table_name1);
+        set_transient($cache_key, $exists, HOUR_IN_SECONDS); // Cache for 1 hour
+    }
 
-        $sql = "CREATE TABLE $table_name1 (
-            id mediumint(9) NOT NULL AUTO_INCREMENT,
-            review_api_key varchar(255) NOT NULL,
-            review_api_key_status varchar(255) NOT NULL,
-            cron_status bigint(20) NOT NULL,
-            created datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
-            PRIMARY KEY  (id)           
-        ) $charset_collate;";
-
-        // Include upgrade.php for dbDelta
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-
-        maybe_create_table($table_name1, $sql);
+    if (!$exists) {
+        create_table_if_not_exists($table_name1);
     }
 }
+
+function table_exists($table_name)
+{
+    global $wpdb;
+
+    // Generate a unique cache key based on the table name
+    $cache_key = 'table_exists_' . md5($table_name);
+
+    // Attempt to retrieve the cached value
+    $cached_value = wp_cache_get($cache_key, 'table_exists_cache');
+
+    // If the cached value does not exist, perform the database query
+    if (false === $cached_value) {
+        $tables = $wpdb->tables('all');
+
+        // Check if the table exists in the array of existing tables
+        $result = in_array($wpdb->prefix . $table_name, $tables);
+
+        // Store the result in the cache for future use
+        wp_cache_set($cache_key, $result, 'table_exists_cache', HOUR_IN_SECONDS); // Cache for 1 hour
+        $cached_value = $result;
+    }
+
+    return $cached_value;
+}
+
+// Helper function to create a table if it doesn't exist
+function create_table_if_not_exists($table_name)
+{
+    global $wpdb;
+    $charset_collate = $wpdb->get_charset_collate();
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+        review_api_key varchar(255) NOT NULL,
+        jobID bigint(20) NOT NULL,
+        jobID_json bigint(20) NOT NULL,
+        jobID_check_status bigint(20) NOT NULL,
+        jobID_check bigint(20) NOT NULL,
+        jobID_final bigint(20) NOT NULL,
+        term_id bigint(20) NOT NULL,
+        firm_name varchar(255) NOT NULL,
+        created datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        PRIMARY KEY  (id)
+    ) $charset_collate;";
+
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql); // Use dbDelta for creating/updating tables safely
+}
+
+// Example usage of Transients API for caching
+function get_cached_data($key, $data)
+{
+    $transient = get_transient($key);
+    if (false === $transient) {
+        set_transient($key, $data, DAY_IN_SECONDS); // Set transient with data and expiration
+    }
+    return $transient;
+}
+
+
 
 function expose_all_meta_fields_in_rest($response, $post, $request)
 {
     if ($post->post_type === 'agr_google_review') {
         $meta = get_post_meta($post->ID);
-        // Sanitize meta data
+
         $sanitized_meta = array_map(function ($meta_value) {
             return is_array($meta_value) ? array_map('sanitize_text_field', $meta_value) : sanitize_text_field($meta_value);
         }, $meta);
@@ -217,27 +223,6 @@ function add_agr_google_review_meta_box()
     );
 }
 
-// check cron enable disable query
-// function check_cron_enable_or_disable() {
-//     global $wpdb;
-//     $table_name = $wpdb->prefix . 'jobdata'; 
-//     $query = $wpdb->prepare("
-//         SELECT COUNT(*) 
-//         FROM $table_name 
-//         WHERE jobID_json = %d
-//         AND jobID_check_status = %d
-//         AND jobID_check = %d         
-//         AND jobID_final = %d 
-//         AND term_id != %d
-//         AND cron_status = %d
-//     ", 1, 1, 1, 1, 0, 1);
-//     $matching_count = $wpdb->get_var($query);
-//     $total_count = $wpdb->get_var("SELECT COUNT(*) FROM $table_name");
-//     return $matching_count == $total_count;
-// }
-
-
-
 // Allow radio button instead of checkboxes for hierarchical taxonomies
 function term_radio_checklist($args)
 {
@@ -246,7 +231,7 @@ function term_radio_checklist($args)
             if (!class_exists('term_radio_checklist')) {
                 class term_radio_checklist extends Walker_Category_Checklist
                 {
-                    function walk($elements, $max_depth, ...$args)
+                    public function walk($elements, $max_depth, ...$args)
                     {
                         $output = parent::walk($elements, $max_depth, ...$args);
                         $output = str_replace(
@@ -260,7 +245,7 @@ function term_radio_checklist($args)
                 }
             }
 
-            $args['walker'] = new term_radio_checklist;
+            $args['walker'] = new term_radio_checklist();
         }
     }
 
@@ -283,27 +268,25 @@ function render_agr_google_review_meta_box($post)
 
     // Output the second table for Place ID on the right side
     echo '<table class="form-table" style="border-bottom:1px solid #c3c4c7">';
-    echo '<tr><th>' . __('Job ID:', 'awesome-google-review') . '</th><td><input style="background:#ccc;" readonly type="text" id="job_id" name="job_id" value="' . esc_attr($job_id) . '" /></td></tr>';
-    echo '<tr><th>' . __('Unique ID:', 'awesome-google-review') . '</th><td><input style="background:#ccc;" readonly type="text" id="post_review_id" name="post_review_id" value="' . esc_attr($id) . '" /></td></tr>';
+    echo '<tr><th>' . esc_html__('Job ID:', 'awesome-google-review') . '</th><td><input style="background:#ccc;" readonly type="text" id="job_id" name="job_id" value="' . esc_attr($job_id) . '" /></td></tr>';
+    echo '<tr><th>' . esc_html__('Unique ID:', 'awesome-google-review') . '</th><td><input style="background:#ccc;" readonly type="text" id="post_review_id" name="post_review_id" value="' . esc_attr($id) . '" /></td></tr>';
     echo '</table>';
 
     // Output a table
     echo '<table class="form-table" style="width:auto">';
-    echo '<tr><th>' . __('Reviewer Name:', 'awesome-google-review') . '</th><td><input readonly type="text" id="reviewer_name" name="reviewer_name" value="' . esc_attr($reviewer_name) . '" /></td></tr>';
-    echo '<tr><th>' . __('Reviewer Picture URL:', 'awesome-google-review') . '</th><td><input readonly type="text" id="reviewer_picture_url" name="reviewer_picture_url" value="' . esc_url($reviewer_picture_url) . '" /></td></tr>';
-    echo '<tr><th>' . __('Read More URL:', 'awesome-google-review') . '</th><td><input readonly type="text" id="url" name="url" value="' . esc_url($url) . '" /></td></tr>';
-    echo '<tr><th>' . __('Rating:', 'awesome-google-review') . '</th><td><input readonly type="number" id="rating" name="rating" value="' . esc_attr($rating) . '" /></td></tr>';
-    echo '<tr><th>' . __('Description:', 'awesome-google-review') . '</th><td><textarea readonly id="text" name="text" rows="4" cols="23">' . esc_textarea($text) . '</textarea></td></tr>';
-    echo '<tr><th>' . __('Publish Date:', 'awesome-google-review') . '</th><td><input readonly type="text" id="publish_date" name="publish_date" value="' . esc_attr($publish_date) . '" /></td></tr>';
+    echo '<tr><th>' . esc_html__('Reviewer Name:', 'awesome-google-review') . '</th><td><input readonly type="text" id="reviewer_name" name="reviewer_name" value="' . esc_attr($reviewer_name) . '" /></td></tr>';
+    echo '<tr><th>' . esc_html__('Reviewer Picture URL:', 'awesome-google-review') . '</th><td><input readonly type="text" id="reviewer_picture_url" name="reviewer_picture_url" value="' . esc_url($reviewer_picture_url) . '" /></td></tr>';
+    echo '<tr><th>' . esc_html__('Read More URL:', 'awesome-google-review') . '</th><td><input readonly type="text" id="url" name="url" value="' . esc_url($url) . '" /></td></tr>';
+    echo '<tr><th>' . esc_html__('Rating:', 'awesome-google-review') . '</th><td><input readonly type="number" id="rating" name="rating" value="' . esc_attr($rating) . '" /></td></tr>';
+    echo '<tr><th>' . esc_html__('Description:', 'awesome-google-review') . '</th><td><textarea readonly id="text" name="text" rows="4" cols="23">' . esc_textarea($text) . '</textarea></td></tr>';
+    echo '<tr><th>' . esc_html__('Publish Date:', 'awesome-google-review') . '</th><td><input readonly type="text" id="publish_date" name="publish_date" value="' . esc_attr($publish_date) . '" /></td></tr>';
     echo '</table>';
 }
 
 
+
 function cron_job_callback()
 { ?>
-
-
-
     <div class="toggle-sec">
         <label class="setting">
             <span class="setting__label">Cron Setting : </span>
@@ -317,12 +300,10 @@ function cron_job_callback()
         </label>
     </div>
 
-
     <?php
     if (check_cron_enable_or_disable() == 1) {
         $first_function_next_run = wp_next_scheduled('first_daily_data');
-        $second_function_next_run = wp_next_scheduled('second_daily_data');
-    ?>
+        $second_function_next_run = wp_next_scheduled('second_daily_data'); ?>
         <section id="processbar" style="display:none;"><span class="loader-71"> </span></section>
         <div class="toggle-sec" id="show_cron">
             <label class="setting">
@@ -337,21 +318,18 @@ function cron_job_callback()
                     <tbody>
                         <tr>
                             <td>Scrapping Cron</td>
-                            <td class="first_cron"><?php echo $first_function_next_run ? date('Y-m-d h:i:s A', $first_function_next_run) : 'Not scheduled'; ?></td>
+                            <td class="first_cron"><?php echo $first_function_next_run ? esc_html(gmdate('Y-m-d h:i:s A', $first_function_next_run)) : 'Not scheduled'; ?></td>
                         </tr>
                         <tr>
                             <td>Uploading Cron</td>
-                            <td class="second_cron"><?php echo $second_function_next_run ? date('Y-m-d h:i:s A', $second_function_next_run) : 'Not scheduled'; ?></td>
+                            <td class="second_cron"><?php echo $second_function_next_run ? esc_html(gmdate('Y-m-d h:i:s A', $second_function_next_run)) : 'Not scheduled'; ?></td>
                         </tr>
                     </tbody>
                 </table>
             </label>
         </div>
-    <?php } ?>
-
-
-
-
+    <?php
+    } ?>
 <?php
 }
 
@@ -371,8 +349,9 @@ function delete_review_callback()
                                 $all_firms = get_all_firms();
                                 foreach ($all_firms as $firm) {
                                 ?>
-                                    <option class="select_business" value="<?php echo $firm['id']; ?>"><?php echo $firm['name']; ?></option>
-                                <?php } ?>
+                                    <option class="select_business" value="<?php echo esc_attr($firm['id']); ?>"><?php echo esc_attr($firm['name']); ?></option>
+                                <?php
+                                } ?>
                             </select>
                             <div class="del-btn">
                                 <button type="submit" class="custom-btn btn-16">
@@ -407,10 +386,7 @@ function isIdExists($array, $idToCheck)
 function our_google_reviews_callback()
 {
     $get_existing_api_key = get_existing_api_key();
-    $get_api_status = get_api_key_status($get_existing_api_key);
-
-    // ptr($get_api_status);exit;
-?>
+    $get_api_status = get_api_key_status($get_existing_api_key); ?>
     <?php
 
     $firm_data = get_existing_firm_data();
@@ -418,22 +394,13 @@ function our_google_reviews_callback()
     $job_id_data = isset($firm_data['jobID']) ? $firm_data['jobID'] : '';
     $j_term_id = isset($firm_data['term_id']) ? $firm_data['term_id'] : '';
 
-    $client_ip = $_SERVER['REMOTE_ADDR'];
     $jp = check_prepared_job_status($get_existing_api_key);
     $getjdata = get_job_data_by_api_key($get_existing_api_key);
 
     $jflag = 0;
     if ((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 0 || $getjdata['jobID_check'] == 0 || $getjdata['jobID_final'] == 0) && @$getjdata['term_id'] == 0) {
         $jflag = 1;
-    }
-
-    ?>
-    <!-- fieldset -->
-    <!-- <input list="great" placeholder="Enter Business">
-<datalist id="great">            
-    <option>San Marino</option>
-    <option>Holy See</option>
-</datalist> -->
+    } ?>
     <!-- animation 1 = START -->
     <style>
         .container-process {
@@ -457,8 +424,6 @@ function our_google_reviews_callback()
             position: relative;
             margin-top: 50px;
             padding-top: 25px;
-            /* max-width: 1500px; */
-            /* margin: 50px auto 0; */
         }
 
         .step {
@@ -635,10 +600,7 @@ function our_google_reviews_callback()
                 }
             }
         }
-    }
-    ?>
-    <?php //echo($upload_active ? 'active' : '') ; 
-    ?>
+    } ?>
 
     <div class="container-process">
         <div class="step-indicator">
@@ -662,7 +624,7 @@ function our_google_reviews_callback()
                 <p>UPLOAD</p>
             </div>
         </div>
-        <!-- animation 1 = STOP -->
+
         <section id="processbar" style="display:none;"><span class="loader-71"> </span></section>
         <div id="loader" class="lds-dual-ring hidden overlay"></div>
 
@@ -673,10 +635,9 @@ function our_google_reviews_callback()
                     <div class="inner-content-data">
                         <h2 class="boxtitle ">API Key Setting</h2>
                         <form id="api_key_setting_form" method="post" autocomplete="off">
-                            <?php wp_nonce_field('review_api_key', 'review_api_key_nonce'); ?>
                             <div class="field_container">
                                 <div class="input-field">
-                                    <input type="text" required id="review_api_key" data-apiValid="<?php echo ($get_api_status ? $get_api_status : 0) ?>" spellcheck="false" value="<?php echo ($get_existing_api_key ? $get_existing_api_key : '') ?>">
+                                    <input type="text" required id="review_api_key" data-apiValid="<?php echo esc_attr($get_api_status ? $get_api_status : 0) ?>" spellcheck="false" value="<?php echo esc_attr($get_existing_api_key ? $get_existing_api_key : '') ?>">
                                     <label>API Key</label>
                                     <span class="correct-sign">✓</span>
                                     <span class="wrong-sign">×</span>
@@ -688,33 +649,6 @@ function our_google_reviews_callback()
                         </form>
                     </div>
                 </div>
-
-
-                <?php
-                /*
-            <div class="selection_box container">
-                <div class="inner-content-data">
-                    <div class="container_selection_box">    
-                        <div class="form cf">
-                            <section class="payment-type cf">                            
-                            <?php 
-                            $all_firms = get_all_firms();
-                            $checked = false;                            
-                            foreach ($all_firms as $firm) {                                
-                                if($firm['id'] == $j_term_id){
-                                    $checked = true;
-                                }                        
-                            ?>
-                                <input <?php echo ($checked && $firm['id'] == $j_term_id ? 'checked' : ''); ?> type="radio" name="radio3" id="<?php echo $firm['id']; ?>" value="<?php echo $firm['id']; ?>"><label class="paypal-label four col" for="<?php echo $firm['id']; ?>"><?php echo $firm['name']; ?></label>
-                                <?php } ?> 
-                            </section>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            */ ?>
-
-
 
                 <div class="seo-plugin-data-info container google_review_upload_form cont hidden">
                     <?php
@@ -732,8 +666,7 @@ function our_google_reviews_callback()
                             </svg>
                         </p>
                     <?php
-                    }
-                    ?>
+                    } ?>
                     <div class="inner-content-data">
                         <h2 class="boxtitle ">Google Reviews Upload</h2>
                         <span class="correct-sign firm_area_sign" style="display:none">✓</span>
@@ -742,49 +675,29 @@ function our_google_reviews_callback()
                             <?php wp_nonce_field('get_set_trigger', 'get_set_trigger_nonce'); ?>
                             <div class="field_container">
                                 <div class="input-field">
-                                    <input <?php echo ($jflag ? 'disabled' : '') ?> type="text" id="firm_name" data-termID="<?php echo ($j_term_id ? $j_term_id : 0) ?>" data-jobid="<?php echo esc_attr($job_id_data ? $job_id_data : ''); ?>" required spellcheck="false" value="<?php echo esc_attr($firm_name_data ? $firm_name_data : ''); ?>">
-                                    <label>Firm Name</label>                                   
-                                    <button <?php echo ($jflag ? 'disabled' : '') ?>  type="submit" class="search_btn <?php echo ($jflag ? 'pointer_none' : '') ?> "><span class="material-icons">Search</span></button>
-                                    <!-- <button type="submit" class="reset_btn" style="display:none;"><span class="material-icons">Reset</span></button> -->
+                                    <input <?php echo ($jflag ? 'disabled' : '') ?> type="text" id="firm_name" data-termID="<?php echo esc_attr($j_term_id ? $j_term_id : 0) ?>" data-jobid="<?php echo esc_attr($job_id_data ? $job_id_data : ''); ?>" required spellcheck="false" value="<?php echo esc_attr($firm_name_data ? $firm_name_data : ''); ?>">
+                                    <label>Firm Name</label>
+                                    <button <?php echo ($jflag ? 'disabled' : '') ?> type="submit" class="search_btn <?php echo ($jflag ? 'pointer_none' : '') ?> "><span class="material-icons">Search</span></button>
                                 </div>
                                 <div class="search-result">
-                                    <!-- <div class="search--txt">
-
-                                    </div> -->
-
-                                    <!-- <div class="search--txt">No results found</div>
-                                    <div class="search--txt">
-                                        <p><strong>Title</strong>: Screen N Spice</p>
-                                        <p><strong>Address</strong>: Armieda, Ground Floor, Sindhu Bhavan Marg, Off, Sarkhej - Gandhinagar Hwy, Bodakdev, Ahmedabad, Gujarat 380059</p>
-                                        <p><strong>Total</strong>: 136 Google reviews</p>
-                                    </div> -->                                    
                                 </div>
                             </div>
                             <?php
                             $get_d = 0;
                             if ((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 1) && ($getjdata['jobID_check'] == 0 && $getjdata['jobID_final'] == 0)) {
                                 $get_d = 1;
-                            } 
-
-                            
-                            ?>
+                            } ?>
                             <div class="submit_btn_setget twoToneCenter">
                                 <button type="submit" class="submit_btn job_start btn-process" disabled><span class="label">JOB START</span></button>
-                                <button type="submit" class="submit_btn check_start_status btn-process" style="display:none;" ><span class="label">CHECK STATUS</span></button>
+                                <button type="submit" class="submit_btn check_start_status btn-process" style="display:none;"><span class="label">CHECK STATUS</span></button>
                                 <button type="submit" class="submit_btn check_start btn-process" <?php echo ($jp != 1 ? 'disabled' : '') ?>><span class="label">GET</span></button>
                                 <button type="submit" class="submit_btn upload_start btn-process"><span class="label">UPLOAD</span></button>
                             </div>
                         </form>
                     </div>
                 </div>
-
-
-                
             </div>
-
-
             <div class="right-box">
-
                 <div class="inner-content-data">
                     <h2 class="boxtitle display_total">
                         <p class="reset status"><svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 20 20" fill="#fff" xmlns:v="https://vecta.io/nano">
@@ -798,35 +711,24 @@ function our_google_reviews_callback()
                     </h2>
                     <div class="typewriter">
                         <div class="output typing">
-                            <p><?php echo displayMessagesFromFile(); ?></p>
+                            <p><?php echo esc_html(displayMessagesFromFile()); ?></p>
                         </div>
                     </div>
                 </div>
-
-                
             </div>
-
-
             <button class="control" style="display:none;"></button>
             <canvas id="canvas"></canvas>
         </div>
     </div>
-
-    <!-- akash start -->
-
-
 <?php
 }
 
-// echo do_shortcode('[next_cron_run]');
-// Add custom columns to post type
 function custom_add_custom_columns($columns)
 {
     $new_columns = array();
     foreach ($columns as $key => $value) {
         $new_columns[$key] = $value;
         if ($key === 'title') {
-            // Add the custom columns after the title
             $new_columns['rating'] = '<span style="display: block; text-align: center;">Rating</span>';
             $new_columns['read_more'] = '<span style="display: block; text-align: center;">URL</span>';
             $new_columns['publish_date'] = '<span style="display: block; text-align: center;">Review Date</span>';
@@ -838,7 +740,6 @@ function custom_add_custom_columns($columns)
 }
 
 add_filter('manage_agr_google_review_posts_columns', 'custom_add_custom_columns');
-// Display custom meta values in the custom columns
 function custom_display_custom_columns($column, $post_id)
 {
     switch ($column) {
@@ -847,14 +748,12 @@ function custom_display_custom_columns($column, $post_id)
             $stars_html = '<div style="text-align: center;">'; // Centering div
             for ($i = 0; $i < 5; $i++) {
                 if ($i < $rating_count) {
-                    // Fill star
                     $stars_html .= '<svg width="24px" height="24px" enable-background="new 0 0 64 64" version="1.0" viewBox="0 0 64 64" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">	<path d="m63.893 24.277c-0.238-0.711-0.854-1.229-1.595-1.343l-19.674-3.006-8.815-18.778c-0.33-0.702-1.036-1.15-1.811-1.15s-1.48 0.448-1.811 1.15l-8.815 18.778-19.674 3.007c-0.741 0.113-1.356 0.632-1.595 1.343-0.238 0.71-0.059 1.494 0.465 2.031l14.294 14.657-3.378 20.704c-0.124 0.756 0.195 1.517 0.822 1.957 0.344 0.243 0.747 0.366 1.151 0.366 0.332 0 0.666-0.084 0.968-0.25l17.572-9.719 17.572 9.719c0.302 0.166 0.636 0.25 0.968 0.25 0.404 0 0.808-0.123 1.151-0.366 0.627-0.44 0.946-1.201 0.822-1.957l-3.378-20.704 14.294-14.657c0.525-0.538 0.705-1.322 0.467-2.032z" fill="#2271b1"/></svg>';
                 } else {
-                    // Not-fill star
                     $stars_html .= '<svg width="24px" height="24px" enable-background="new 0 0 64 64" version="1.0" viewBox="0 0 64 64" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"><path d="m32.001 2.484c0.279 0 0.463 0.509 0.463 0.509l8.806 18.759 20.729 3.167-14.999 15.38 3.541 21.701-18.54-10.254-18.54 10.254 3.541-21.701-14.999-15.38 20.729-3.167 8.798-18.743s0.192-0.525 0.471-0.525m0-2.477c-0.775 0-1.48 0.448-1.811 1.15l-8.815 18.778-19.674 3.006c-0.741 0.113-1.356 0.632-1.595 1.343-0.238 0.71-0.059 1.494 0.465 2.031l14.294 14.657-3.378 20.704c-0.124 0.756 0.195 1.517 0.822 1.957 0.344 0.244 0.748 0.367 1.152 0.367 0.332 0 0.666-0.084 0.968-0.25l17.572-9.719 17.572 9.719c0.302 0.166 0.636 0.25 0.968 0.25 0.404 0 0.808-0.123 1.151-0.366 0.627-0.44 0.946-1.201 0.822-1.957l-3.378-20.704 14.294-14.657c0.523-0.537 0.703-1.321 0.465-2.031-0.238-0.711-0.854-1.229-1.595-1.343l-19.674-3.006-8.814-18.779c-0.331-0.702-1.036-1.15-1.811-1.15z" fill="#231F20"/></svg>';
                 }
             }
-            $stars_html .= '</div>'; // Closing centering div
+            $stars_html .= '</div>';
             echo $stars_html;
             break;
         case 'read_more':
@@ -873,16 +772,12 @@ function custom_display_custom_columns($column, $post_id)
             break;
 
         case 'business':
-            // Get the taxonomy terms associated with the post
             $terms = get_the_terms($post_id, 'business');
-            // Check if terms exist
             if ($terms && !is_wp_error($terms)) {
                 $term_names = array();
                 foreach ($terms as $term) {
-                    // Get term names
                     $term_names[] = $term->name;
                 }
-                // Output the term names separated by commas
                 echo '<div>' . esc_html(implode(', ', $term_names)) . '</div>';
             } else {
                 echo '<div>' . esc_html__('No Term', 'google-reviews') . '</div>';
@@ -892,15 +787,13 @@ function custom_display_custom_columns($column, $post_id)
 }
 add_action('manage_agr_google_review_posts_custom_column', 'custom_display_custom_columns', 16, 2);
 
-// Make the Review Date column sortable
 function custom_sortable_columns($columns)
 {
-    $columns['publish_date'] = 'publish_date'; // 'publish_date' is the ID of the column
+    $columns['publish_date'] = 'publish_date';
     return $columns;
 }
 add_filter('manage_edit-agr_google_review_sortable_columns', 'custom_sortable_columns');
 
-// Custom sorting logic for the Review Date column
 function custom_orderby($query)
 {
     if (!is_admin() || !$query->is_main_query()) {
@@ -908,152 +801,174 @@ function custom_orderby($query)
     }
 
     if ($query->get('orderby') == 'publish_date') {
-        // Modify the query to sort by your custom field (e.g., meta_key)
         $query->set('meta_key', 'publish_date'); // Replace 'your_meta_key_here' with your actual meta key for the review date
         $query->set('orderby', 'meta_value'); // Change 'meta_value' to 'meta_value_num' if your date is stored as a timestamp
-
     }
 }
 add_action('pre_get_posts', 'custom_orderby');
 
 
-
-// CHECK BTN STATUS
 function check_job_status($client_ip)
 {
     global $wpdb;
 
     $table_data = $wpdb->prefix . 'jobdata';
-    $table_api = $wpdb->prefix . 'jobapi';
+    $table_api  = $wpdb->prefix . 'jobapi';
 
-    // Check if the last record with the client_ip exists in both tables with specific conditions
-    $result = $wpdb->get_row($wpdb->prepare(
-        "SELECT COUNT(*) AS count 
-        FROM (
-            SELECT data.jobID_json, data.jobID_check, data.jobID_check_status, data.jobID_final
-            FROM $table_data AS data
-            INNER JOIN $table_api AS api ON data.client_ip = api.client_ip 
-            WHERE data.client_ip = %s 
-            ORDER BY data.id DESC
-            LIMIT 1
-        ) AS last_record
-        WHERE last_record.jobID_json = 1",
-        $client_ip
-    ));
+    // Generate a unique cache key based on the client IP
+    $cache_key = 'job_status_' . md5($client_ip);
 
-    return $result->count == 1 ? true : false;
+    // Attempt to retrieve the cached value
+    $cached_result = wp_cache_get($cache_key, 'job_status_cache');
+
+    // If the cached value does not exist, perform the database query
+    if (false === $cached_result) {
+        // Prepare the SQL query with a placeholder
+        $sql = "
+            SELECT COUNT(*)
+            FROM (
+                SELECT data.jobID_json, data.jobID_check, data.jobID_check_status, data.jobID_final
+                FROM {$table_data} AS data
+                INNER JOIN {$table_api} AS api ON data.client_ip = api.client_ip
+                WHERE data.client_ip = %s
+                ORDER BY data.id DESC
+                LIMIT 1
+            ) AS last_record
+            WHERE last_record.jobID_json = 1
+        ";
+
+
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        $prepared_query = $wpdb->prepare($sql, $client_ip);
+
+
+        $results = $wpdb->get_var($prepared_query);
+
+        wp_cache_set($cache_key, $results, 'job_status_cache', HOUR_IN_SECONDS);
+        $cached_result = $results;
+    }
+
+    return (bool) $cached_result;
 }
 
-// UPLOAD BTN STATUS
+
+
+
+
 function check_upload_job_status($client_ip)
 {
     global $wpdb;
 
+    $cache_key = 'upload_job_status_' . md5($client_ip);
+    $cache_group = 'upload_job_status';
+    $cached_result = wp_cache_get($cache_key, $cache_group);
+
+    if ($cached_result !== false) {
+        return $cached_result;
+    }
+
     $table_data = $wpdb->prefix . 'jobdata';
     $table_api = $wpdb->prefix . 'jobapi';
 
-    // Check if the last record with the client_ip exists in both tables with specific conditions
+
     $result = $wpdb->get_row($wpdb->prepare(
-        "SELECT COUNT(*) AS count 
+        "SELECT COUNT(*) AS count
         FROM (
             SELECT data.jobID_json, data.jobID_check, data.jobID_check_status, data.jobID_final
-            FROM $table_data AS data
-            INNER JOIN $table_api AS api ON data.client_ip = api.client_ip 
-            WHERE data.client_ip = %s 
+            FROM %s AS data
+            INNER JOIN %s AS api ON data.client_ip = api.client_ip
+            WHERE data.client_ip = %s
             ORDER BY data.id DESC
             LIMIT 1
         ) AS last_record
         WHERE last_record.jobID_json = 1 AND last_record.jobID_check = 1 AND last_record.jobID_check_status = 1 AND last_record.jobID_final = 1",
+        $table_data,
+        $table_api,
         $client_ip
     ));
 
-    return $result->count == 1 ? true : false;
+
+    $is_valid = $result->count == 1 ? true : false;
+
+    wp_cache_set($cache_key, $is_valid, $cache_group, HOUR_IN_SECONDS);
+
+    return $is_valid;
 }
 
-/**
- * Function to delete all data of a specific post type and taxonomy.
- */
-
-// add_action( 'admin_init', 'delete_all_agr_google_reviews' );
-function delete_all_agr_google_reviews()
-{
-    global $wpdb;
-    $post_type = 'agr_google_review';
-    $taxonomy = 'business';
-    $wpdb->query(
-        $wpdb->prepare(
-            "DELETE FROM {$wpdb->posts} WHERE post_type = %s",
-            $post_type
-        )
-    );
-    $wpdb->query(
-        $wpdb->prepare(
-            "DELETE FROM {$wpdb->term_taxonomy} WHERE taxonomy = %s",
-            $taxonomy
-        )
-    );
-    $wpdb->query(
-        $wpdb->prepare(
-            "DELETE FROM {$wpdb->term_relationships} WHERE term_taxonomy_id NOT IN (SELECT term_taxonomy_id FROM {$wpdb->term_taxonomy}) AND object_id NOT IN (SELECT ID FROM {$wpdb->posts} WHERE post_type = %s)",
-            $post_type
-        )
-    );
-}
 
 // check job status
 function check_prepared_job_status($review_api_key)
 {
-
     global $wpdb;
+
+    $cache_key = 'prepared_job_status_' . md5($review_api_key);
+    $cache_group = 'prepared_job_status';
+    $cached_result = wp_cache_get($cache_key, $cache_group);
+
+    if ($cached_result !== false) {
+        return $cached_result;
+    }
 
     $table_data = $wpdb->prefix . 'jobdata';
     $table_api = $wpdb->prefix . 'jobapi';
 
-    // Check if the last record with the review_api_key exists in both tables with specific conditions
+
     $result = $wpdb->get_row($wpdb->prepare(
-        "SELECT COUNT(*) AS count 
+        "SELECT COUNT(*) AS count
         FROM (
             SELECT data.jobID_json, data.jobID_check, data.jobID_check_status, data.jobID_final
-            FROM $table_data AS data
-            INNER JOIN $table_api AS api ON data.review_api_key = api.review_api_key 
-            WHERE data.review_api_key = %s 
+            FROM %s AS data
+            INNER JOIN %s AS api ON data.review_api_key = api.review_api_key
+            WHERE data.review_api_key = %s
             ORDER BY data.id DESC
             LIMIT 1
         ) AS last_record
         WHERE last_record.jobID_json = 1 AND last_record.jobID_check_status = 1 AND last_record.jobID_check = 0 AND last_record.jobID_final = 0",
+        $table_data,
+        $table_api,
         $review_api_key
     ));
 
-    return $result->count == 1 ? true : false;
+
+    $is_valid = $result !== null && $result->count == 1 ? true : false;
+
+    wp_cache_set($cache_key, $is_valid, $cache_group, HOUR_IN_SECONDS);
+
+    return $is_valid;
 }
 
 
-
-
-// Get job data by client IP
 function get_job_data_by_api_key($review_api_key)
 {
     global $wpdb;
 
-    // Table names should not be part of the prepared statement
-    $table_data = $wpdb->prefix . 'jobdata';
-    $table_api = $wpdb->prefix . 'jobapi';
+    $cache_key = 'job_data_' . md5($review_api_key);
+    $cache_group = 'job_data';
+    $cached_data = wp_cache_get($cache_key, $cache_group);
 
-    // Prepare the SQL statement with placeholders
-    $sql = "
+    if ($cached_data !== false) {
+        return $cached_data;
+    }
+
+    $table_data = esc_sql($wpdb->prefix . 'jobdata');
+    $table_api = esc_sql($wpdb->prefix . 'jobapi');
+
+
+
+    $query = $wpdb->prepare("
         SELECT data.jobID_json, data.jobID_check_status, data.jobID_check, data.jobID_final
         FROM $table_data AS data
-        INNER JOIN $table_api AS api ON data.review_api_key = api.review_api_key 
+        INNER JOIN $table_api AS api ON data.review_api_key = api.review_api_key
         WHERE data.review_api_key = %s
         ORDER BY data.id DESC
         LIMIT 1
-    ";
+    ", $review_api_key);
 
-    // Use the prepare method to safely insert the review_api_key
-    $query = $wpdb->prepare($sql, $review_api_key);
-
-    // Execute the query and fetch the result
     $job_data = $wpdb->get_row($query, ARRAY_A);
+
+
+    wp_cache_set($cache_key, $job_data, $cache_group, HOUR_IN_SECONDS);
 
     return $job_data;
 }
+// @codingStandardsIgnoreEnd

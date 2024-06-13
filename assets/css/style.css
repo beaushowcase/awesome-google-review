@@ -11,7 +11,7 @@
     font-size: 17px;
 }
 .inner-content-data .form-group {
-    margin-bottom: 21px; 
+    margin-bottom: 21px;
 }
 .inner-content-data .form-group input.checkbox-data {
     margin-top: 5px;
@@ -383,11 +383,11 @@ input:focus ~ label, input:valid ~ label,input:disabled ~ label {
 }
 /* button.btn-process:not(:disabled) {
      box-shadow: 1px 1px 5px rgba(255, 255, 65, 0.2);
-} 
+}
 .btn-process:hover{
     pointer-events: none;
     cursor: not-allowed;
-} 
+}
 .btn-process:hover {
     box-shadow: 0 0 10px #080808 inset, 0px 1px 0 #3B3B3B;
     color: #F3F3F3;
@@ -527,7 +527,7 @@ input:focus ~ label, input:valid ~ label,input:disabled ~ label {
     outline: none;
     padding: 10px 20px;
     line-height: 1.4;
-    background: #212121;   
+    background: #212121;
     border-radius: 4px;
     border: 1px solid black;
     color: #DADADA;
@@ -896,11 +896,11 @@ center {
     width: 100%;
 }
 section {
-	/* background: #dce7eb; */
-	width: 100%;
-	height: 100%;
-	display: flex;
-	align-items: center;
+    /* background: #dce7eb; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 #processbar {
     /* background: #dce7eb; */
@@ -993,10 +993,10 @@ section {
     border-radius: 5px;
 }
 .btn-16:hover .trash span {
-	-webkit-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
     -ms-transform: rotate(-45deg);
     transform: rotate(-45deg);
-	-webkit-transition: transform 250ms;
+    -webkit-transition: transform 250ms;
     -ms-transition: transform 250ms;
     transition: transform 250ms;
 }
@@ -1083,7 +1083,7 @@ section {
     transform: rotateX(360deg);
 }
 .container_selection_box{
-    box-shadow: 0px 3px 7px rgba(132, 168, 201, 0.4);  
+    box-shadow: 0px 3px 7px rgba(132, 168, 201, 0.4);
     background: rgba(0, 86, 179, 0.1);
     padding: 20px;
     border-radius: 6px;
@@ -1182,45 +1182,45 @@ section {
 }
 /* new switch */
 @property --border-angle-1 {
-	syntax: "<angle>";
-	inherits: true;
-	initial-value: 0deg;
+    syntax: "<angle>";
+    inherits: true;
+    initial-value: 0deg;
 }
 @property --border-angle-2 {
-	syntax: "<angle>";
-	inherits: true;
-	initial-value: 90deg;
+    syntax: "<angle>";
+    inherits: true;
+    initial-value: 90deg;
 }
 @property --border-angle-3 {
-	syntax: "<angle>";
-	inherits: true;
-	initial-value: 180deg;
+    syntax: "<angle>";
+    inherits: true;
+    initial-value: 180deg;
 }
 :root {
-	--bright-blue: rgb(0, 100, 255);
-	--bright-green: rgb(0, 255, 0);
-	--bright-red: rgb(255, 0, 0);
-	--background: black;
-	--foreground: white;
-	--border-size: 2px;
-	--border-radius: 0.75em;
+    --bright-blue: rgb(0, 100, 255);
+    --bright-green: rgb(0, 255, 0);
+    --bright-red: rgb(255, 0, 0);
+    --background: black;
+    --foreground: white;
+    --border-size: 2px;
+    --border-radius: 0.75em;
 }
 @supports (color: color(display-p3 1 1 1)) {
-	:root {
-		--bright-blue: color(display-p3 0 0.2 1);
-		--bright-green: color(display-p3 0.4 1 0);
-		--bright-red: color(display-p3 1 0 0);
-	}
+    :root {
+        --bright-blue: color(display-p3 0 0.2 1);
+        --bright-green: color(display-p3 0.4 1 0);
+        --bright-red: color(display-p3 1 0 0);
+    }
 }
 @keyframes rotateBackground {
-	to { --border-angle-1: 360deg; }
+    to { --border-angle-1: 360deg; }
 }
 
 @keyframes rotateBackground2 {
-	to { --border-angle-2: -270deg; }
+    to { --border-angle-2: -270deg; }
 }
 @keyframes rotateBackground3 {
-	to { --border-angle-3: 540deg; }
+    to { --border-angle-3: 540deg; }
 }
 .regular_btn {
     --border-angle-1: 0deg;
@@ -1300,7 +1300,7 @@ section {
 .reset.status{
     position: absolute;
 }
-.reset.new{  
+.reset.new{
     border: 1px solid #ccc;
     border-radius: 50px;
     vertical-align: middle;
@@ -1631,7 +1631,7 @@ input[type="checkbox"].switch__input:checked::before {
     height: 30px;
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
-    transform: translateY(-50%);    
+    transform: translateY(-50%);
     border-radius: 4px;
     border: 1px solid black;
     color: #dadada;
