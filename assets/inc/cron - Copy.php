@@ -3,10 +3,12 @@
 date_default_timezone_set('Asia/Kolkata');
 
 $api_records = get_existing_api_key_data();
-
 $api_record_recurrence = $api_records->recurrence;
 $api_record_timeslot = $api_records->timeslot;
-$timeslot_second = $api_records->timeslot_second;
+// $api_record_timeslot_addition = strtotime($api_record_timeslot) + strtotime('00:30:00');
+
+$api_record_timestamp = strtotime($api_record_timeslot);
+$api_record_timeslot_addition = $api_record_timestamp + 300;
 
 $selected_recurrence = 86400;
 if ($api_record_recurrence == 'hourly') {
@@ -43,9 +45,7 @@ add_action('first_daily_data', 'my_first_function');
 function my_first_function()
 {
     first_update();
-    $api_records = get_existing_api_key_data();
-    $timeslot_second = $api_records->timeslot_second;
-    $scheduled_time_first = strtotime($timeslot_second);
+    $scheduled_time_first = $api_record_timeslot_addition;
     if ($scheduled_time_first < time()) {
         $scheduled_time_first += $selected_recurrence;
     }
@@ -67,7 +67,6 @@ function first_update()
     $g_op = get_option('myfirst');
     $g_op = $g_op + 1;
     $st = update_option('myfirst', $g_op);
-
     cron_step_1(1);
     return $st;
 }

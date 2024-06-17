@@ -1686,3 +1686,45 @@ input[type="checkbox"].switch__input:checked::before {
     background: linear-gradient(to bottom, #545454 0%, #474747 50%, #141414 51%, #1b1b1b 100%);
     box-shadow: none;
   } */
+
+
+  /* cron box  */
+
+
+  .review-settings_page_review-cron-job div:where(.swal2-icon){
+    border-color: #8cc213;
+  }
+
+  .wp-core-ui select:focus{
+    color: #fff !important;
+    border-color: #fff;
+  }
+
+.wp-core-ui select:hover {
+    color: #fff !important;
+  }
+
+
+.cron_confirm_btn {
+    box-shadow: 0 0 0 1px #19191a, 0 0 0 3px rgba(138, 176, 213, 0.5);
+}
+
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+.control {
+    position: absolute;
+    z-index: 1;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}

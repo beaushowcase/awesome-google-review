@@ -24,7 +24,6 @@ jQuery(document).ready(function ($) {
     upload_done_process();
   }
 
-
 });
 
 
@@ -755,6 +754,43 @@ function notify_success(msg){
 }
 
 
+function notify_failed(msg){
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "bottom-end",
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
+  Toast.fire({
+    icon: "error",
+    title: msg
+  });
+}
+
+function notify_success_cron(msg){
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "bottom-end",
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
+  Toast.fire({
+    icon: "success",
+    title: msg
+  });
+}
+
+
 
 function selectbusiness() {
   // var title = $('.search--txt').find('p[data-title]').attr('data-title');
@@ -773,67 +809,6 @@ function selectbusiness() {
 // });
 
 
-// JOB START CLICKED 
-$("#google_review_upload_form button.search_btnsss").click(function (event) {
-  var firm_name = $(FirmNameInput).val();
-  if (firm_name.trim() != '') {
-    check = true;
-    const nonce = $("#get_set_trigger_nonce").val();
-    $.ajax({
-      type: "POST",
-      url: ajax_object.ajax_url,
-      dataType: "json",
-      beforeSend: function () {
-        var spinnerSVG = `<svg class="svg-loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" xml:space="preserve"><path fill="#fff" d="M10 40v-3.2c0-.3.1-.6.1-.9.1-.6.1-1.4.2-2.1.2-.8.3-1.6.5-2.5.2-.9.6-1.8.8-2.8.3-1 .8-1.9 1.2-3 .5-1 1.1-2 1.7-3.1.7-1 1.4-2.1 2.2-3.1 1.6-2.1 3.7-3.9 6-5.6 2.3-1.7 5-3 7.9-4.1.7-.2 1.5-.4 2.2-.7.7-.3 1.5-.3 2.3-.5.8-.2 1.5-.3 2.3-.4l1.2-.1.6-.1h.6c1.5 0 2.9-.1 4.5.2.8.1 1.6.1 2.4.3.8.2 1.5.3 2.3.5 3 .8 5.9 2 8.5 3.6 2.6 1.6 4.9 3.4 6.8 5.4 1 1 1.8 2.1 2.7 3.1.8 1.1 1.5 2.1 2.1 3.2.6 1.1 1.2 2.1 1.6 3.1.4 1 .9 2 1.2 3 .3 1 .6 1.9.8 2.7.2.9.3 1.6.5 2.4.1.4.1.7.2 1 0 .3.1.6.1.9.1.6.1 1 .1 1.4.4 1 .4 1.4.4 1.4.2 2.2-1.5 4.1-3.7 4.3s-4.1-1.5-4.3-3.7V37.2c0-.2-.1-.5-.1-.8-.1-.6-.1-1.2-.2-1.9s-.3-1.4-.4-2.2c-.2-.8-.5-1.6-.7-2.4-.3-.8-.7-1.7-1.1-2.6-.5-.9-.9-1.8-1.5-2.7-.6-.9-1.2-1.8-1.9-2.7-1.4-1.8-3.2-3.4-5.2-4.9-2-1.5-4.4-2.7-6.9-3.6-.6-.2-1.3-.4-1.9-.6-.7-.2-1.3-.3-1.9-.4-1.2-.3-2.8-.4-4.2-.5h-2c-.7 0-1.4.1-2.1.1-.7.1-1.4.1-2 .3-.7.1-1.3.3-2 .4-2.6.7-5.2 1.7-7.5 3.1-2.2 1.4-4.3 2.9-6 4.7-.9.8-1.6 1.8-2.4 2.7-.7.9-1.3 1.9-1.9 2.8-.5 1-1 1.9-1.4 2.8-.4.9-.8 1.8-1 2.6-.3.9-.5 1.6-.7 2.4-.2.7-.3 1.4-.4 2.1-.1.3-.1.6-.2.9 0 .3-.1.6-.1.8 0 .5-.1.9-.1 1.3-.2.7-.2 1.1-.2 1.1z"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 40 40" to="360 40 40" dur="0.8s" repeatCount="indefinite"/></path><path fill="#fff" d="M62 40.1s0 .2-.1.7c0 .2 0 .5-.1.8v.5c0 .2-.1.4-.1.7-.1.5-.2 1-.3 1.6-.2.5-.3 1.1-.5 1.8-.2.6-.5 1.3-.7 1.9-.3.7-.7 1.3-1 2.1-.4.7-.9 1.4-1.4 2.1-.5.7-1.1 1.4-1.7 2-1.2 1.3-2.7 2.5-4.4 3.6-1.7 1-3.6 1.8-5.5 2.4-2 .5-4 .7-6.2.7-1.9-.1-4.1-.4-6-1.1-1.9-.7-3.7-1.5-5.2-2.6s-2.9-2.3-4-3.7c-.6-.6-1-1.4-1.5-2-.4-.7-.8-1.4-1.2-2-.3-.7-.6-1.3-.8-2l-.6-1.8c-.1-.6-.3-1.1-.4-1.6-.1-.5-.1-1-.2-1.4-.1-.9-.1-1.5-.1-2v-.7s0 .2.1.7c.1.5 0 1.1.2 2 .1.4.2.9.3 1.4.1.5.3 1 .5 1.6.2.6.4 1.1.7 1.8.3.6.6 1.2.9 1.9.4.6.8 1.3 1.2 1.9.5.6 1 1.3 1.6 1.8 1.1 1.2 2.5 2.3 4 3.2 1.5.9 3.2 1.6 5 2.1 1.8.5 3.6.6 5.6.6 1.8-.1 3.7-.4 5.4-1 1.7-.6 3.3-1.4 4.7-2.4 1.4-1 2.6-2.1 3.6-3.3.5-.6.9-1.2 1.3-1.8.4-.6.7-1.2 1-1.8.3-.6.6-1.2.8-1.8.2-.6.4-1.1.5-1.7l.3-1.5c.1-.4.1-.8.1-1.2 0-.2 0-.4.1-.5v-2c0-1.1.9-2 2-2s2 .9 2 2c.1-.1.1 0 .1 0z"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 40 40" to="-360 40 40" dur="0.6s" repeatCount="indefinite"/></path></svg>`;
-        var search_box = `<div class="search--txt">${spinnerSVG}</div>`;
-        $('.search-result').append(search_box);
-        $('#processbar').show();
-        $('.search_btn').prop("disabled", true);
-      },
-      data: {
-        action: "search_result_ajax_action",
-        firm_name: firm_name,
-        review_api_key: ajax_object.review_api_key,
-        nonce: nonce,
-      },
-      success: function (response, status, error) {
-        console.log(response);
-        return false;
-
-        setTimeout(function () {
-          if (response.success === 1) {
-            if (check) {
-              response_business_success(response.msg);
-            }
-          } else {
-            if (check) {
-              response_business_fail(response.msg);
-            }
-          }
-          $('#processbar').hide();
-        }, 3500);
-      },
-      error: function (xhr, status, error) {
-        Swal.fire({
-          position: 'bottom-end',
-          icon: "error",
-          title: response.msg,
-          showConfirmButton: false,
-          timer: 3500
-        });
-        $('#processbar').hide();
-      },
-      complete: function () {
-        setTimeout(function () {
-          $('#loader').addClass('hidden');
-        }, 3500);
-      },
-    });
-
-
-
-  }
-});
 
 // JOB START CLICKED 
 $("#google_review_upload_form button.job_start").click(function (event) {
@@ -1904,9 +1879,8 @@ function check_failed(response) {
 
 
 
-
+// upload celebration = START
 // celebration effect
-
 (function () {
   // globals
   var canvas;
@@ -2015,12 +1989,23 @@ function check_failed(response) {
 
   function SetGlobals() {
     canvas = document.getElementById("canvas");
+    // console.log("Canvas element:", canvas); // Debug log
+    if (!canvas) {
+        // console.error("Canvas element not found.");
+        return;
+    }
     ctx = canvas.getContext("2d");
+    // console.log("Canvas context:", ctx); // Debug log
+    if (!ctx) {
+        // console.error("Failed to get 2D context from canvas.");
+        return;
+    }
     W = window.innerWidth;
     H = window.innerHeight;
     canvas.width = W;
     canvas.height = H;
-  }
+}
+
 
   function InitializeConfetti() {
     particles = [];
@@ -2154,11 +2139,6 @@ function check_failed(response) {
 })();
 
 
-// $(document).ready(function () {
-//   $("button.control").click();
-// });
-
-
 function success_celebration() {
   $("button.control").click();
   setTimeout(function () {
@@ -2181,90 +2161,10 @@ $(document).ready(function () {
 });
 
 
+// upload celebration = END
 
-// CRON START CLICKED 
-let cron_switch = $("#cron_switch");
-$(cron_switch).click(function (event) {
-  const is_checked = cron_switch.is(":checked");
-  $.ajax({
-    type: "POST",
-    url: ajax_object.ajax_url,
-    dataType: "json",
-    beforeSend: function () {
-      $('#processbar').show();
-      $('.toggle-sec').addClass('process');
-      if (is_checked != true) {
-        $('.toggle-sec#show_cron').hide();
-      }
-    },
-    data: {
-      action: "cron_is_checked_ajax_action",
-      is_checked: is_checked,
-      review_api_key: ajax_object.review_api_key,
-    },
-    success: function (response, status, error) {
-      setTimeout(function () {
-        if (response.success === 1) {
-          $('.toggle-sec').removeClass('process');
-          $('#processbar').show();
-          $('.toggle-sec#show_cron').hide();
-        }
-        else {
-          console.log('not done');
-          $('#processbar').hide();
-        }
 
-        if (is_checked == true) {
-          $('.toggle-sec#show_cron').show();
-          localStorage.setItem('testcron', 1);
-        }
-        location.reload();
-      }, 100);
-
-    },
-    error: function (xhr, status, error) {
-      $('#processbar').hide();
-    },
-    complete: function () {
-      // setTimeout(function () {
-      //   $('#loader').addClass('hidden');
-      //   btnProcess_BUSINESS_START.removeClass("spinning");
-      // }, 3500);
-      // $('#processbar').hide(); 
-
-    },
-  });
-});
-
-var testcron = localStorage.getItem('testcron');
-jQuery(document).ready(function () {
-  if (testcron == 1) {
-    $.ajax({
-      type: "POST",
-      url: ajax_object.ajax_url,
-      dataType: "json",
-      data: {
-        action: "schedule_second_daily_data_ajax_action"
-      },
-      success: function (response) {
-        $('.toggle-sec').removeClass('process');
-        $('#processbar').show();
-        $('.toggle-sec#show_cron').show();
-        localStorage.setItem('testcron', 0);
-        location.reload();
-      },
-      error: function (xhr, status, error) {
-        console.error("Error scheduling second daily data:", error);
-      },
-      complete: function () {
-        setTimeout(function () {
-          $('#processbar').hide();
-        }, 100);
-      },
-    });
-  }
-});
-
+// check start status 
 
 $(document).ready(function () {
   const button = $('.check_start_status');
@@ -2309,3 +2209,225 @@ function countdown() {
     }
   }, 1000);
 }
+
+
+
+
+
+
+// CRON START CLICKED 
+let recurrence = 0;
+let timeSlot = 0;
+let cron_switch = $("#cron_switch");
+
+$(cron_switch).change(function() {  
+  let is_checked = $(this).is(':checked');
+  if (is_checked) {
+    box_for_schedule(is_checked, recurrence);
+  } else {    
+    fire_cron(recurrence, timeSlot, is_checked);
+  }
+});
+
+function box_for_schedule(is_checked, selectedRecurrence){
+  Swal.fire({
+    title: "Recurrence",
+    iconHtml: '<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"><i class="fa fa-cog fa-spin" style="color: rgb(140, 194, 19); font-size: 40px; text-shadow: rgb(0, 0, 0) 0px 0px 4px; box-sizing: content-box; line-height: 72px; text-align: center; width: 72px; height: 72px; display: inline-block; overflow: hidden; border-radius: 50%; border-color: rgb(255, 255, 255); border-style: solid; border-width: 1px;"></i>',
+    input: "select",
+    inputOptions: {      
+        norepeat: "-- Select Recurrence --",
+        hourly: "Once Hourly (hourly)",
+        twicedaily: "Twice Daily (twicedaily)",
+        daily: "Once Daily (daily)",
+        weekly: "Once Weekly (weekly)",
+    },
+    inputValue: selectedRecurrence || "norepeat",
+    customClass: {     
+      confirmButton: 'cron_confirm_btn',     
+    },
+    showCancelButton: false,
+    showCloseButton: true,
+    confirmButtonColor: "#405640",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Next",
+    allowOutsideClick: false,
+    backdrop: 'swal2-backdrop-show',
+    icon: 'question',
+    color: "#716add",
+    animation: true,
+    didClose: () => {
+      // location.reload();
+    },
+    inputValidator: (value) => {      
+      return new Promise((resolve) => {
+        if (value != "norepeat") {
+          resolve();          
+        } else {
+          resolve("You need to select Recurrence !");
+        }
+      });
+    }
+  }).then((result) => {    
+    if (result.isConfirmed) {
+      recurrence = result.value;   
+      show_time_slot_selection(is_checked, recurrence);
+    }
+    else{
+      if (result.isDismissed) {
+        location.reload();
+      }
+    }
+  });
+}
+
+function show_time_slot_selection(is_checked, selectedRecurrence) {
+  const timeMapping = {
+    "1:00 AM": "01:00:00",
+    "1:30 AM": "01:30:00",
+    "2:00 AM": "02:00:00",
+    "2:30 AM": "02:30:00",
+    "3:00 AM": "03:00:00",
+    "3:30 AM": "03:30:00",
+    "4:00 AM": "04:00:00",
+    "4:30 AM": "04:30:00",
+    "5:00 AM": "05:00:00",
+    "5:30 AM": "05:30:00",
+    "6:00 AM": "06:00:00",
+    "6:30 AM": "06:30:00",
+    "7:00 AM": "07:00:00",
+    "7:30 AM": "07:30:00",
+    "8:00 AM": "08:00:00",
+    "8:30 AM": "08:30:00",
+    "9:00 AM": "09:00:00",
+    "9:30 AM": "09:30:00",
+    "10:00 AM": "10:00:00",
+    "10:30 AM": "10:30:00",
+    "11:00 AM": "11:00:00",
+    "11:30 AM": "11:30:00",
+    "12:00 PM": "12:00:00",
+    "12:30 PM": "12:30:00",
+    "1:00 PM": "13:00:00",
+    "1:30 PM": "13:30:00",
+    "2:00 PM": "14:00:00",
+    "2:30 PM": "14:30:00",
+    "3:00 PM": "15:00:00",
+    "3:30 PM": "15:30:00",
+    "4:00 PM": "16:00:00",
+    "4:30 PM": "16:30:00",
+    "5:00 PM": "17:00:00",
+    "5:30 PM": "17:30:00",
+    "6:00 PM": "18:00:00",
+    "6:30 PM": "18:30:00",
+    "7:00 PM": "19:00:00",
+    "7:30 PM": "19:30:00",
+    "8:00 PM": "20:00:00",
+    "8:30 PM": "20:30:00",
+    "9:00 PM": "21:00:00",
+    "9:30 PM": "21:30:00",
+    "10:00 PM": "22:00:00",
+    "10:30 PM": "22:30:00",
+    "11:00 PM": "23:00:00",
+    "11:30 PM": "23:30:00"
+  };
+
+  Swal.fire({
+    title: "Select Time Slot",
+    input: "select",
+    inputOptions: {
+      "": "-- Select time slot --",
+      ...Object.fromEntries(Object.entries(timeMapping).map(([key, value]) => [key, key]))
+    },
+    inputValue: timeSlot,
+    customClass: {     
+      confirmButton: 'cron_confirm_btn',     
+    },
+    showCancelButton: true,
+    showCloseButton: true,
+    confirmButtonColor: "#405640",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Save Setting",
+    cancelButtonText: "Back",
+    allowOutsideClick: false,
+    didClose: () => {
+      // location.reload();
+    },
+    inputValidator: (value) => {
+      return new Promise((resolve) => {
+        if (value) {
+          resolve();
+        } else {
+          resolve("You need to select a time slot!");
+        }
+      });
+    }
+  }).then((result) => {    
+    if (result.isConfirmed) {
+      const selectedTime = timeMapping[result.value];
+      timeSlot = selectedTime;
+      fire_cron(selectedRecurrence, timeSlot, is_checked);
+    } else if (result.dismiss === Swal.DismissReason.cancel) {      
+      box_for_schedule(is_checked, selectedRecurrence);
+    } else if (result.isDismissed) {
+      location.reload();
+    }
+  });
+}
+
+
+function fire_cron(recurrence, timeSlot, is_checked) {    
+  $.ajax({
+    type: "POST",
+    url: ajax_object.ajax_url,
+    dataType: "json",
+    beforeSend: function () {
+      $('#processbar').show();
+      $('.toggle-sec').addClass('process');
+      if (is_checked != true) {
+        $('.toggle-sec#show_cron').hide();
+      }
+    },
+    data: {
+      action: "cron_is_checked_ajax_action",
+      is_checked: is_checked,
+      recurrence: recurrence,
+      timeSlot: timeSlot,
+      review_api_key: ajax_object.review_api_key,
+    },
+    success: function (response, status, error) {
+      setTimeout(function () {
+        if (response.success === 1) {
+          $('.toggle-sec').removeClass('process');
+          $('#processbar').show();
+          $('.toggle-sec#show_cron').hide();
+          setTimeout(function () {    
+            location.reload();            
+          }, 1500); 
+          notify_success_cron(response.msg);          
+        } else {
+          $('#processbar').hide(); 
+          setTimeout(function () {    
+            location.reload();
+          }, 1500); 
+          notify_failed(response.msg);         
+        }
+        // if (is_checked == true) {
+        //   $('.toggle-sec#show_cron').show();
+        //   localStorage.setItem('testcron', 1);
+        // }              
+      }, 600);
+    },
+    error: function (xhr, status, error) {
+      $('#processbar').hide();
+    },
+    complete: function () {
+    },
+  });
+}
+
+
+
+
+
+// $(document).ready(function () {
+//   success_celebration();
+// });

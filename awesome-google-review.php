@@ -3,7 +3,7 @@
  * Plugin Name:       Awesome Google Review
  * Plugin URI:        https://beardog.digital/
  * Description:       Impresses with top-notch service and skilled professionals. A 5-star destination for grooming excellence!
- * Version:           1.5.1
+ * Version:           1.6.0
  * Requires PHP:      7.0
  * Author:            #beaubhavik
  * Author URI:        https://beardog.digital/
@@ -79,18 +79,42 @@ function check_cron_enable_or_disable()
 {
     global $wpdb;
     $table_name = $wpdb->prefix . 'jobapi';
-    $query = $wpdb->get_row($wpdb->prepare(
-        "SELECT cron_status FROM $table_name WHERE review_api_key_status = 1 AND review_api_key != ''",
-        ARRAY_A
-    ));
-    $cron_status = '';
-    if ($query) {
-        $cron_status = $query->cron_status;
+
+    // Check if the table exists
+    if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+        return 'Table does not exist';
     }
+
+    $query = $wpdb->get_row(
+        $wpdb->prepare(
+            "SELECT cron_status FROM $table_name 
+            WHERE review_api_key_status = %d 
+            AND review_api_key != %s 
+            AND (recurrence != %d OR recurrence != %s)
+            AND (timeslot != %s OR timeslot IS NOT NULL)",
+            1,
+            '',
+            0,
+            '',
+            '00:00:00'
+        ),
+        ARRAY_A
+    );
+
+    // Initialize cron_status to an empty string
+    $cron_status = '';
+
+    // If query returned a result, get the cron_status
+    if ($query) {
+        $cron_status = $query['cron_status'];
+    }
+
     return $cron_status;
 }
 
+
 $check_cron = check_cron_enable_or_disable();
+
 
 if ($check_cron == 1) {
     require_once __DIR__ . '/assets/inc/cron.php';
@@ -1938,171 +1962,78 @@ function display_second_countdown_timer()
     return ob_get_clean();
 }
 
+function show_invalid_api_key_notice()
+{
+?>
+    <div class="notice notice-error">
+        <p><?php _e('The API key is not valid. Please update it to access the Review Cron Job page.', 'text-domain'); ?></p>
+    </div>
+<?php
+}
 
-
-// cron is checked action
 add_action('wp_ajax_cron_is_checked_ajax_action', 'cron_is_checked_ajax_action_function');
 add_action('wp_ajax_nopriv_cron_is_checked_ajax_action', 'cron_is_checked_ajax_action_function');
 
 function cron_is_checked_ajax_action_function()
 {
+
     $response = array(
         'success' => 0,
-        'msg'     => array('')
+        'msg'     => ''
     );
-    $is_checked = isset($_POST['is_checked']) ? sanitize_text_field($_POST['is_checked']) : '';
 
-    if (!empty($is_checked)) {
-        global $wpdb;
-        $table_name = $wpdb->prefix . 'jobapi';
-        $cron_status = ($is_checked === 'true') ? 1 : 0;
+    $is_checked = isset($_POST['is_checked']) ? $_POST['is_checked'] : '';
+    $recurrence = isset($_POST['recurrence']) ? sanitize_text_field($_POST['recurrence']) : '0';
+    $timeSlot = isset($_POST['timeSlot']) ? sanitize_text_field($_POST['timeSlot']) : '0';
 
-        $result = $wpdb->query($wpdb->prepare(
-            "UPDATE $table_name SET cron_status = $cron_status WHERE review_api_key_status = 1 AND review_api_key != ''"
-        ));
-        if ($result !== false) {
-            $response['success'] = 1;
-            $response['msg'] = ($cron_status === 1) ? 'Updated to enabled cron!' : 'Updated to disabled cron!';
-        } else {
-            $response['msg'] = 'Failed to update cron status!';
-        }
+    $timeSlot_second = 0;
+    if ($timeSlot != 0) {
+        $dateTime = new DateTime($timeSlot);
+        $dateTime->modify('+5 minutes');
+        $timeSlot_second = $dateTime->format('H:i:s');
     }
+
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'jobapi';
+    $cron_status = ($is_checked === 'true') ? 1 : 0;
+
+    if ((!empty($is_checked) && !empty($recurrence) && !empty($timeSlot))) {
+        if (get_existing_api_key_data()->review_api_key_status == 1) {
+            $result = $wpdb->query($wpdb->prepare(
+                "UPDATE $table_name SET cron_status = %d, recurrence = %s, timeSlot = %s, timeslot_second = %s WHERE review_api_key_status = 1 AND review_api_key != ''",
+                $cron_status,
+                $recurrence,
+                $timeSlot,
+                $timeSlot_second
+            ));
+            if ($result !== false) {
+                $response['success'] = 1;
+                $response['msg'] = ($cron_status === 1) ? 'Enabled Cron !' : 'Updated to disabled cron!';
+            } else {
+                $response['msg'] = 'Failed to update cron status!';
+            }
+        } else {
+            $response['msg'] = 'Invalid API key !';
+        }
+    } else {
+        $result = $wpdb->query($wpdb->prepare(
+            "UPDATE $table_name SET cron_status = %d, recurrence = %s, timeSlot = %s, timeslot_second = %s WHERE review_api_key_status = 1 AND review_api_key != ''",
+            $cron_status,
+            0,
+            0,
+            0
+        ));
+        $response['msg'] = 'Disabled Cron !';
+    }
+    // Return JSON response
     wp_send_json($response);
     wp_die();
 }
+
+
 
 add_action('wp_ajax_schedule_second_daily_data_ajax_action', 'schedule_second_daily_data_callback');
 function schedule_second_daily_data_callback()
 {
     wp_send_json_success("Second daily data scheduled successfully.");
-}
-
-
-
-//search firm
-//check job
-add_action('wp_ajax_search_result_ajax_action', 'search_result_ajax_action_function');
-add_action('wp_ajax_nopriv_search_result_ajax_action', 'search_result_ajax_action_function');
-
-function search_result_ajax_action_function()
-{
-    global $wpdb;
-    $response = array(
-        'success' => 0,
-        'data'    => array('jobID' => ''),
-        'msg'     => ''
-    );
-    $nonce         = isset($_POST['nonce']) ? sanitize_text_field($_POST['nonce']) : '';
-    $review_api_key = isset($_POST['review_api_key']) ? sanitize_text_field($_POST['review_api_key']) : '';
-    $firm_name     = isset($_POST['firm_name']) ? sanitize_text_field($_POST['firm_name']) : '';
-
-
-    ptr($firm_name);
-    exit;
-
-    if (!empty($nonce) && wp_verify_nonce($nonce, 'get_set_trigger')) {
-        $response_api_data = job_check_at_api($review_api_key, $current_job_id);
-
-        // ptr($response_api_data);exit;
-
-        if ($response_api_data['success']) {
-
-            $jobID = $response_api_data['data']['jobID'];
-
-            $response['data']['jobID'] = $jobID;
-            $response['success'] = 1;
-            $response['msg'] = $response_api_data['msg'];
-
-            $table_name = $wpdb->prefix . 'jobapi';
-            // $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));
-
-            if ($wpdb->last_error) {
-                $response['msg'] = "Database Error: " . $wpdb->last_error;
-            } else {
-                $existing_jobID = $wpdb->get_var(
-                    $wpdb->prepare(
-                        "SELECT jobID FROM {$wpdb->prefix}jobdata WHERE jobID = %s",
-                        $jobID
-                    )
-                );
-
-                $data2 = array(
-                    'jobID_check' => 1,
-                    'jobID_check_status' => 1,
-                    'created' => current_time('mysql')
-                );
-
-                if ($existing_jobID !== null) {
-                    $where = array('jobID' => $jobID, 'jobID_json' => 1);
-                    $result = $wpdb->update($wpdb->prefix . 'jobdata', $data2, $where);
-                } else {
-                    $data2['review_api_key'] = $review_api_key;
-                    $data2['created'] = current_time('mysql');
-                    $result = $wpdb->insert($wpdb->prefix . 'jobdata', $data2);
-                }
-                if ($result !== false) {
-                    $response['data']['jobID'] = $jobID;
-                    $response['success'] = 1;
-                    $response['msg'] = $response_api_data['msg'];
-                } else {
-                    $response['msg'] = "Database Error: Failed to insert/update job data.";
-                }
-            }
-        } else {
-
-            $jobID = $response_api_data['data']['jobID'];
-
-            $response['data']['jobID'] = $jobID;
-            $response['success'] = 1;
-            $response['msg'] = $response_api_data['msg'];
-
-            $table_name = $wpdb->prefix . 'jobapi';
-            // $c_ip = $wpdb->get_var($wpdb->prepare("SELECT client_ip FROM $table_name WHERE review_api_key = %s AND review_api_key_status = %d", $review_api_key, 1));           
-
-            if ($wpdb->last_error) {
-                $response['msg'] = "Database Error: " . $wpdb->last_error;
-            } else {
-                $existing_jobID = $wpdb->get_var(
-                    $wpdb->prepare(
-                        "SELECT jobID FROM {$wpdb->prefix}jobdata WHERE jobID = %s",
-                        $jobID
-                    )
-                );
-
-                $data2 = array(
-                    'jobID_check' => 0,
-                    'jobID_check_status' => 0,
-                    'jobID_json' => 0,
-                    'jobID_final' => 0,
-                    'created' => current_time('mysql')
-                );
-
-                if ($existing_jobID !== null) {
-                    $where = array('jobID' => $jobID);
-                    $result = $wpdb->update($wpdb->prefix . 'jobdata', $data2, $where);
-                } else {
-                    $data2['review_api_key'] = $review_api_key;
-                    $data2['created'] = current_time('mysql');
-                    $result = $wpdb->insert($wpdb->prefix . 'jobdata', $data2);
-                }
-
-                if ($result !== false) {
-                    $response['data']['jobID'] = $jobID;
-                    $response['success'] = 0;
-                    $response['msg'] = $response_api_data['msg'];
-                } else {
-                    $response['msg'] = "Database Error: Failed to insert/update job data.";
-                }
-            }
-
-            // $response['msg'] = "API Error: " . $response_api_data['msg'];
-        }
-    } else {
-        $response['msg'] = 'Invalid nonce.';
-    }
-
-    appendMessageToFile($response['msg']);
-
-    wp_send_json($response);
-    wp_die();
 }

@@ -123,7 +123,10 @@ function job_table()
             id mediumint(9) NOT NULL AUTO_INCREMENT,
             review_api_key varchar(255) NOT NULL,
             review_api_key_status varchar(255) NOT NULL,
-            cron_status bigint(20) NOT NULL,
+            cron_status bigint(20) NOT NULL,                        
+            recurrence varchar(255) NOT NULL,
+            timeslot time DEFAULT NULL,
+            timeslot_second time DEFAULT NULL,
             created datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
             PRIMARY KEY  (id)           
         ) $charset_collate;";
@@ -301,9 +304,6 @@ function render_agr_google_review_meta_box($post)
 
 function cron_job_callback()
 { ?>
-
-
-
     <div class="toggle-sec">
         <label class="setting">
             <span class="setting__label">Cron Setting : </span>
@@ -322,31 +322,42 @@ function cron_job_callback()
     if (check_cron_enable_or_disable() == 1) {
         $first_function_next_run = wp_next_scheduled('first_daily_data');
         $second_function_next_run = wp_next_scheduled('second_daily_data');
+        $cron_record_recurrence = wp_get_schedule('first_daily_data');
     ?>
         <section id="processbar" style="display:none;"><span class="loader-71"> </span></section>
-        <div class="toggle-sec" id="show_cron">
-            <label class="setting">
-                <span class="setting__label"></span>
-                <table class="widefat">
-                    <thead>
-                        <tr>
-                            <th>CRON</th>
-                            <th>NEXT RUN</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Scrapping Cron</td>
-                            <td class="first_cron"><?php echo $first_function_next_run ? date('Y-m-d h:i:s A', $first_function_next_run) : 'Not scheduled'; ?></td>
-                        </tr>
-                        <tr>
-                            <td>Uploading Cron</td>
-                            <td class="second_cron"><?php echo $second_function_next_run ? date('Y-m-d h:i:s A', $second_function_next_run) : 'Not scheduled'; ?></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </label>
-        </div>
+        <?php if ($first_function_next_run) {
+        ?>
+            <div class="toggle-sec" id="show_cron">
+                <label class="setting">
+                    <span class="setting__label"></span>
+                    <table class="widefat">
+                        <thead>
+                            <tr>
+                                <th>CRON</th>
+                                <th>NEXT RUN</th>
+                                <th>RECURRENCE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Scrapping Cron</td>
+                                <td class="first_cron"><?php echo $first_function_next_run ? date('Y-m-d h:i:s A', $first_function_next_run) : 'Not scheduled'; ?></td>
+                                <td><?php echo ucfirst($cron_record_recurrence); ?></td>
+                            </tr>
+
+                            <tr>
+                                <td>Uploading Cron</td>
+                                <td class="second_cron"><?php echo $second_function_next_run ? date('Y-m-d h:i:s A', $second_function_next_run) : 'Not scheduled'; ?></td>
+                                <td><?php echo ucfirst($cron_record_recurrence); ?></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </label>
+            </div>
+        <?php } ?>
+
+
     <?php } ?>
 
 
@@ -743,8 +754,8 @@ function our_google_reviews_callback()
                             <div class="field_container">
                                 <div class="input-field">
                                     <input <?php echo ($jflag ? 'disabled' : '') ?> type="text" id="firm_name" data-termID="<?php echo ($j_term_id ? $j_term_id : 0) ?>" data-jobid="<?php echo esc_attr($job_id_data ? $job_id_data : ''); ?>" required spellcheck="false" value="<?php echo esc_attr($firm_name_data ? $firm_name_data : ''); ?>">
-                                    <label>Firm Name</label>                                   
-                                    <button <?php echo ($jflag ? 'disabled' : '') ?>  type="submit" class="search_btn <?php echo ($jflag ? 'pointer_none' : '') ?> "><span class="material-icons">Search</span></button>
+                                    <label>Firm Name</label>
+                                    <button <?php echo ($jflag ? 'disabled' : '') ?> type="submit" class="search_btn <?php echo ($jflag ? 'pointer_none' : '') ?> "><span class="material-icons">Search</span></button>
                                     <!-- <button type="submit" class="reset_btn" style="display:none;"><span class="material-icons">Reset</span></button> -->
                                 </div>
                                 <div class="search-result">
@@ -757,20 +768,20 @@ function our_google_reviews_callback()
                                         <p><strong>Title</strong>: Screen N Spice</p>
                                         <p><strong>Address</strong>: Armieda, Ground Floor, Sindhu Bhavan Marg, Off, Sarkhej - Gandhinagar Hwy, Bodakdev, Ahmedabad, Gujarat 380059</p>
                                         <p><strong>Total</strong>: 136 Google reviews</p>
-                                    </div> -->                                    
+                                    </div> -->
                                 </div>
                             </div>
                             <?php
                             $get_d = 0;
                             if ((!empty($getjdata['jobID_json']) && $getjdata['jobID_json'] == 1) && ($getjdata['jobID_check_status'] == 1) && ($getjdata['jobID_check'] == 0 && $getjdata['jobID_final'] == 0)) {
                                 $get_d = 1;
-                            } 
+                            }
 
-                            
+
                             ?>
                             <div class="submit_btn_setget twoToneCenter">
                                 <button type="submit" class="submit_btn job_start btn-process" disabled><span class="label">JOB START</span></button>
-                                <button type="submit" class="submit_btn check_start_status btn-process" style="display:none;" ><span class="label">CHECK STATUS</span></button>
+                                <button type="submit" class="submit_btn check_start_status btn-process" style="display:none;"><span class="label">CHECK STATUS</span></button>
                                 <button type="submit" class="submit_btn check_start btn-process" <?php echo ($jp != 1 ? 'disabled' : '') ?>><span class="label">GET</span></button>
                                 <button type="submit" class="submit_btn upload_start btn-process"><span class="label">UPLOAD</span></button>
                             </div>
@@ -779,7 +790,7 @@ function our_google_reviews_callback()
                 </div>
 
 
-                
+
             </div>
 
 
@@ -803,7 +814,7 @@ function our_google_reviews_callback()
                     </div>
                 </div>
 
-                
+
             </div>
 
 
@@ -830,7 +841,7 @@ function custom_add_custom_columns($columns)
             $new_columns['rating'] = '<span style="display: block; text-align: center;">Rating</span>';
             $new_columns['read_more'] = '<span style="display: block; text-align: center;">URL</span>';
             $new_columns['publish_date'] = '<span style="display: block; text-align: center;">Review Date</span>';
-            $new_columns['job_id'] = '<span style="display: block; text-align: left;">Job ID</span>';
+            $new_columns['img'] = '<span style="display: block; text-align: left;">Picture</span>';
             $new_columns['business'] = '<span style="display: block; text-align: center;">Business</span>';
         }
     }
@@ -867,9 +878,9 @@ function custom_display_custom_columns($column, $post_id)
             echo '<div>' . esc_html($publish_date) . '</div>';
             break;
 
-        case 'job_id':
-            $publish_date = get_post_meta($post_id, 'job_id', true);
-            echo '<div>' . esc_html($publish_date) . '</div>';
+        case 'img':
+            $reviewer_picture_url = get_post_meta($post_id, 'reviewer_picture_url', true);
+            echo '<img src="' . $reviewer_picture_url . '"</img>';
             break;
 
         case 'business':
