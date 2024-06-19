@@ -321,3 +321,10 @@ function cron_step_4($step)
     }
     return $response;
 }
+
+
+// add_action("init", "clear_crons_left");
+// function clear_crons_left()
+// {
+//     wp_clear_scheduled_hook("manual_cron_step_2_hook");
+// }

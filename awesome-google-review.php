@@ -3,7 +3,7 @@
  * Plugin Name:       Awesome Google Review
  * Plugin URI:        https://beardog.digital/
  * Description:       Impresses with top-notch service and skilled professionals. A 5-star destination for grooming excellence!
- * Version:           1.6.2
+ * Version:           1.6.3
  * Requires PHP:      7.0
  * Author:            #beaubhavik
  * Author URI:        https://beardog.digital/
@@ -2037,3 +2037,300 @@ function schedule_second_daily_data_callback()
 {
     wp_send_json_success("Second daily data scheduled successfully.");
 }
+
+// cron column in taxonomy
+// Add a custom column to the taxonomy table
+function add_business_custom_columns($columns)
+{
+    $columns['run_cron'] = __('Run Cron', 'textdomain');
+    return $columns;
+}
+add_filter('manage_edit-business_columns', 'add_business_custom_columns');
+
+// Display content in the custom column
+function manage_business_custom_columns($content, $column_name, $term_id)
+{
+    if ($column_name == 'run_cron') {
+        $url = wp_nonce_url(admin_url('admin-ajax.php?action=run_business_cron&term_id=' . $term_id), 'run_business_cron_' . $term_id);
+        $content = '<a href="' . $url . '" class="button button-primary">Update Reviews</a>';
+    }
+    return $content;
+}
+add_filter('manage_business_custom_column', 'manage_business_custom_columns', 10, 3);
+
+// Handle the cron job action and set admin notice
+function handle_run_business_cron()
+{
+    if (!isset($_GET['term_id']) || !isset($_GET['_wpnonce'])) {
+        wp_die(__('Invalid request', 'awesome-google-review'));
+    }
+
+    $term_id = intval($_GET['term_id']);
+    $nonce = $_GET['_wpnonce'];
+
+    if (!wp_verify_nonce($nonce, 'run_business_cron_' . $term_id)) {
+        wp_die(__('Invalid nonce', 'awesome-google-review'));
+    }
+
+    $response = manual_cron_step_1($term_id);
+    $firm_name = $response['data']['firm_name'];
+    $firm_name_jobID = $response['data']['firm_name_jobID'];
+    $review_api_key = $response['review_api_key'];
+
+    if (isset($response['success']) && $response['success'] == 1) {
+        date_default_timezone_set('Asia/Kolkata');
+
+        set_transient('cron_success_message', sprintf(__('Cron job successfully executed. %s updated reviews will be uploaded automatically within 1 minute.', 'awesome-google-review'), '<span style="font-weight: bold;">' . $firm_name . '</span>'), 5);
+
+        if (!wp_next_scheduled('manual_cron_step_2_hook', array($term_id, $firm_name, $firm_name_jobID, $review_api_key))) {
+            wp_schedule_single_event(time() + 60, 'manual_cron_step_2_hook', array($term_id, $firm_name, $firm_name_jobID, $review_api_key));
+        }
+    }
+
+    wp_safe_redirect(add_query_arg('message', 'success', wp_get_referer()));
+    exit;
+}
+add_action('wp_ajax_run_business_cron', 'handle_run_business_cron');
+
+add_action('admin_notices', function () {
+    if (isset($_GET['message']) && $_GET['message'] === 'success') {
+        $message = get_transient('cron_success_message');
+        if ($message) {
+            echo '<div class="notice notice-success is-dismissible"><p>' . wp_kses_post($message) . '</p></div>';
+            delete_transient('cron_success_message');
+        }
+    }
+});
+
+function manual_cron_step_1($term_id)
+{
+    global $wpdb;
+    $response = array(
+        'success' => 0,
+        'review_api_key' => '',
+        'data'    => array('jobID' => '', 'firm_name' => '', 'firm_name_jobID' => ''),
+        'msg'     => ''
+    );
+
+    $query = "SELECT firm_name, jobID FROM {$wpdb->prefix}jobdata WHERE term_id = {$term_id}";
+    $result = $wpdb->get_row($query, ARRAY_A);
+
+    $review_api_key = function_exists('get_existing_api_key') ? get_existing_api_key() : '';
+
+    $firm_name = sanitize_text_field($result['firm_name']);
+    $firm_name_jobID = sanitize_text_field($result['jobID']);
+
+    if (!empty($firm_name)) {
+        $response_api_data = job_start_at_api($review_api_key, $firm_name);
+        $jobID = $response_api_data['data']['jobID'];
+        if ($response_api_data['success']) {
+            $table_name_data = $wpdb->prefix . 'jobdata';
+            if ($wpdb->last_error) {
+                $response['msg'] = "Database Error: " . $wpdb->last_error;
+            } else {
+                $data = array(
+                    'jobID' => $jobID,
+                    'jobID_json' => 1,
+                    'jobID_check_status' => 0,
+                    'jobID_check' => 0,
+                    'jobID_final' => 0
+                );
+                $data_to_update = array();
+                foreach ($data as $column => $value) {
+                    $data_to_update[$column] = $value;
+                }
+
+                $where = array('jobID' => $firm_name_jobID);
+                $updated = $wpdb->update($table_name_data, $data_to_update, $where);
+
+                if ($updated  !== false) {
+                    $response['data']['jobID'] = $firm_name_jobID;
+                    $response['data']['firm_name'] = $firm_name;
+                    $response['data']['firm_name_jobID'] = $firm_name_jobID;
+                    $response['success'] = 1;
+                    $response['review_api_key'] = $review_api_key;
+                    $response['msg'] = $response_api_data['msg'];
+                } else {
+                    $response['msg'] = "Database Error: Failed to insert/update job data.";
+                }
+            }
+        } else {
+            $response['msg'] = "API Error: " . $response_api_data['msg'];
+        }
+    }
+    return $response;
+}
+
+// Hook for manual_cron_step_2
+add_action('manual_cron_step_2_hook', 'manual_cron_step_2_function', 10, 4);
+function manual_cron_step_2_function($term_id, $firm_name, $firm_name_jobID, $review_api_key)
+{
+    manual_cron_step_2($term_id, $firm_name, $firm_name_jobID, $review_api_key);
+    manual_cron_step_3($term_id, $firm_name, $firm_name_jobID, $review_api_key);
+    manual_cron_step_4($term_id, $firm_name, $firm_name_jobID, $review_api_key);
+}
+
+function manual_cron_step_2($term_id, $firm_name, $firm_name_jobID, $review_api_key)
+{
+    global $wpdb;
+    $response = array(
+        'success' => 0,
+        'review_api_key' => '',
+        'data'    => array('jobID' => ''),
+        'msg'     => ''
+    );
+
+    $query = "SELECT firm_name, jobID FROM {$wpdb->prefix}jobdata WHERE term_id = {$term_id}";
+    $result = $wpdb->get_row($query, ARRAY_A);
+
+    $firm_name = sanitize_text_field($result['firm_name']);
+    $firm_name_jobID = sanitize_text_field($result['jobID']);
+
+    if (!empty($firm_name)) {
+        $job_check_status_at_api = job_check_status_at_api($review_api_key, $firm_name_jobID);
+
+        $jobID = $job_check_status_at_api['data']['jobID'];
+
+        if ($job_check_status_at_api['success']) {
+            $table_name_data = $wpdb->prefix . 'jobdata';
+            if ($wpdb->last_error) {
+                $response['msg'] = "Database Error: " . $wpdb->last_error;
+            } else {
+                $data = array(
+                    'jobID' => $jobID,
+                    'jobID_json' => 1,
+                    'jobID_check_status' => 1,
+                    'jobID_check' => 0,
+                    'jobID_final' => 0
+                );
+                $data_to_update = array();
+                foreach ($data as $column => $value) {
+                    $data_to_update[$column] = $value;
+                }
+
+                $where = array('jobID' => $firm_name_jobID);
+                $updated = $wpdb->update($table_name_data, $data_to_update, $where);
+
+                if ($updated  !== false) {
+                    $response['data']['jobID'] = $firm_name_jobID;
+                    $response['success'] = 1;
+                    $response['msg'] = $job_check_status_at_api['msg'];
+                } else {
+                    $response['msg'] = "Database Error: Failed to insert/update job data.";
+                }
+            }
+        } else {
+            $response['msg'] = "API Error: " . $job_check_status_at_api['msg'];
+        }
+    }
+    return $response;
+}
+
+function manual_cron_step_3($term_id, $firm_name, $firm_name_jobID, $review_api_key)
+{
+    global $wpdb;
+    $response = array(
+        'success' => 0,
+        'review_api_key' => '',
+        'data'    => array('jobID' => '', 'firm_name' => '', 'firm_name_jobID' => ''),
+        'msg'     => ''
+    );
+
+    $query = "SELECT firm_name, jobID FROM {$wpdb->prefix}jobdata WHERE term_id = {$term_id}";
+    $result = $wpdb->get_row($query, ARRAY_A);
+
+    $firm_name = sanitize_text_field($result['firm_name']);
+    $firm_name_jobID = sanitize_text_field($result['jobID']);
+
+    if (!empty($firm_name)) {
+
+        $response_api_data = job_check_at_api($review_api_key, $firm_name_jobID);
+
+        if ($response_api_data['success']) {
+            $table_name_data = $wpdb->prefix . 'jobdata';
+            $jobID = $response_api_data['data']['jobID'];
+            if ($wpdb->last_error) {
+                $response['msg'] = "Database Error: " . $wpdb->last_error;
+            } else {
+                $data = array(
+                    'jobID' => $jobID,
+                    'jobID_json' => 1,
+                    'jobID_check_status' => 1,
+                    'jobID_check' => 1,
+                    'jobID_final' => 0
+                );
+                $data_to_update = array();
+                foreach ($data as $column => $value) {
+                    $data_to_update[$column] = $value;
+                }
+
+                $where = array('jobID' => $firm_name_jobID);
+                $updated = $wpdb->update($table_name_data, $data_to_update, $where);
+
+                if ($updated  !== false) {
+                    $response['data']['jobID'] = $firm_name_jobID;
+                    $response['success'] = 1;
+                    $response['msg'] = $response_api_data['msg'];
+                } else {
+                    $response['msg'] = "Database Error: Failed to insert/update job data.";
+                }
+            }
+        } else {
+            $response['msg'] = "API Error: " . $response_api_data['msg'];
+        }
+    }
+
+    return $response;
+}
+
+function manual_cron_step_4($term_id, $firm_name, $firm_name_jobID, $review_api_key)
+{
+    global $wpdb;
+    $response = array(
+        'success' => 0,
+        'review_api_key' => '',
+        'data'    => array('jobID' => '', 'firm_name' => '', 'firm_name_jobID' => ''),
+        'msg'     => ''
+    );
+
+    $query = "SELECT firm_name, jobID FROM {$wpdb->prefix}jobdata WHERE term_id = {$term_id}";
+    $result = $wpdb->get_row($query, ARRAY_A);
+
+    $firm_name = sanitize_text_field($result['firm_name']);
+    $firm_name_jobID = sanitize_text_field($result['jobID']);
+
+    if (!empty($firm_name)) {
+        $reviews_array = get_reviews_data($firm_name_jobID, $review_api_key);
+        if ($reviews_array['success'] == 0) {
+            $response['job_id'] = 0;
+            $response['message'] = $reviews_array['message'];
+        } else {
+            $reviews_data = $reviews_array['reviews'];
+            $response['job_id'] = $firm_name_jobID;
+            $response['data'] = $reviews_data['reviews'];
+            $term_name = $reviews_array['reviews']['firm_name'];
+            $term_slug = sanitize_title($reviews_array['reviews']['firm_name']);
+            delete_reviews_data($term_slug);
+            $data_stored = store_data_into_reviews($firm_name_jobID, $reviews_array, $term_name);
+
+            if ($data_stored['status'] == 1) {
+                update_flag('jobID_final', 1, $firm_name_jobID);
+                update_flag('term_id', $data_stored['term_id'], $firm_name_jobID);
+                $response['term_slug'] = $term_slug;
+                $response['message'] = "Data upload successfully!";
+                $response['success'] = 1;
+            } else {
+                update_flag('jobID_final', 0, $firm_name_jobID);
+                $response['message'] = "Failed to store data.";
+            }
+        }
+    }
+
+    return $response;
+}
+
+// add_action("init", "clear_crons_left");
+// function clear_crons_left()
+// {
+//     wp_clear_scheduled_hook("manual_cron_step_2_hook");
+// }
