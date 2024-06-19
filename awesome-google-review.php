@@ -1989,7 +1989,7 @@ function cron_is_checked_ajax_action_function()
     $timeSlot_second = 0;
     if ($timeSlot != 0) {
         $dateTime = new DateTime($timeSlot);
-        $dateTime->modify('+5 minutes');
+        $dateTime->modify('+300 minutes');
         $timeSlot_second = $dateTime->format('H:i:s');
     }
 
