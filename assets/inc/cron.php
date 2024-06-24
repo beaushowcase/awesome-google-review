@@ -17,7 +17,6 @@ if ($api_record_recurrence == 'hourly') {
     $selected_recurrence = 604800;
 }
 
-// Add a custom cron interval for daily schedules
 add_filter('cron_schedules', 'my_custom_cron_intervals');
 function my_custom_cron_intervals($schedules)
 {
@@ -28,8 +27,6 @@ function my_custom_cron_intervals($schedules)
     return $schedules;
 }
 
-
-// Schedule the first daily data event if not already scheduled
 if (!wp_next_scheduled('first_daily_data')) {
     $scheduled_time_main = strtotime($api_record_timeslot);
     if ($scheduled_time_main < time()) {
@@ -38,7 +35,6 @@ if (!wp_next_scheduled('first_daily_data')) {
     wp_schedule_event($scheduled_time_main, $api_record_recurrence, 'first_daily_data');
 }
 
-// Add action hook for the first daily data event
 add_action('first_daily_data', 'my_first_function');
 function my_first_function()
 {
@@ -54,60 +50,31 @@ function my_first_function()
     }
 }
 
-// Add action hook for the second daily data event
 add_action('second_daily_data', 'my_second_function');
 function my_second_function()
 {
     second_update();
 }
 
-// Define the first update function
 function first_update()
 {
-    $g_op = get_option('myfirst');
-    $g_op = $g_op + 1;
-    $st = update_option('myfirst', $g_op);
-
     cron_step_1(1);
-    return $st;
 }
-
-// Define the second update function
 function second_update()
 {
-    $sss = get_option('mysecond');
-    $g_fdfdf = $sss + 1;
-    update_option('mysecond', $g_fdfdf);
-
     cron_step_2(2);
-
-    $third = get_option('mythird');
-    $g_third = $third + 1;
-    $sthird = update_option('mythird', $g_third);
-
     cron_step_3(3);
-
-    $myfourth = get_option('myfourth');
-    $g_myfourth = $myfourth + 1;
-    $sg_myfourth = update_option('myfourth', $g_myfourth);
-
     cron_step_4(4);
-
-    return $sg_myfourth;
 }
-
-
-// BELOW FUNCTIONS WHICH WILL AUTOMATICALLY CALL BY CRON JOBS RUN
-
-// STEP 1 = START JOB
-// 1. jobID_json = job_start_ajax_action
 function cron_step_1($step)
 {
 
+    update_option('cron1',1);
+
     $response = array(
         'success' => 0,
-        'data'    => array('jobID' => ''),
-        'msg'     => ''
+        'data' => array('jobID' => ''),
+        'msg' => ''
     );
     $step1 = get_all_executed_firm_names($step);
 
@@ -143,7 +110,7 @@ function cron_step_1($step)
                     $where = array('jobID' => $firm_name_jobID);
                     $updated = $wpdb->update($table_name_data, $data_to_update, $where);
 
-                    if ($updated  !== false) {
+                    if ($updated !== false) {
                         $response['data']['jobID'] = $firm_name_jobID;
                         $response['success'] = 1;
                         $response['msg'] = $response_api_data['msg'];
@@ -158,17 +125,14 @@ function cron_step_1($step)
     }
     return $response;
 }
-
-
-// STEP 2 = CHECK STATUS OF JOB
-// 2. jobID_check_status = job_check_status_update_ajax_action
 function cron_step_2($step)
 {
+    update_option('cron2',1);
 
     $response = array(
         'success' => 0,
-        'data'    => array('jobID' => ''),
-        'msg'     => ''
+        'data' => array('jobID' => ''),
+        'msg' => ''
     );
     $step2 = get_all_executed_firm_names($step);
     global $wpdb;
@@ -203,7 +167,7 @@ function cron_step_2($step)
                     $where = array('jobID' => $firm_name_jobID);
                     $updated = $wpdb->update($table_name_data, $data_to_update, $where);
 
-                    if ($updated  !== false) {
+                    if ($updated !== false) {
                         $response['data']['jobID'] = $firm_name_jobID;
                         $response['success'] = 1;
                         $response['msg'] = $response_api_data['msg'];
@@ -218,15 +182,12 @@ function cron_step_2($step)
     }
     return $response;
 }
-
-// STEP 3 = GET REVIEWS FROM SERVER
-// 3. jobID_check = job_check_ajax_action
 function cron_step_3($step)
 {
     $response = array(
         'success' => 0,
-        'data'    => array('jobID' => ''),
-        'msg'     => ''
+        'data' => array('jobID' => ''),
+        'msg' => ''
     );
     $step3 = get_all_executed_firm_names($step);
     global $wpdb;
@@ -261,7 +222,7 @@ function cron_step_3($step)
                     $where = array('jobID' => $firm_name_jobID);
                     $updated = $wpdb->update($table_name_data, $data_to_update, $where);
 
-                    if ($updated  !== false) {
+                    if ($updated !== false) {
                         $response['data']['jobID'] = $firm_name_jobID;
                         $response['success'] = 1;
                         $response['msg'] = $response_api_data['msg'];
@@ -276,15 +237,12 @@ function cron_step_3($step)
     }
     return $response;
 }
-
-// STEP 4 = UPLOAD REVIEWS
-// 4. jobID_final = review_get_set_ajax_action
 function cron_step_4($step)
 {
     $response = array(
         'success' => 0,
-        'data'    => array('jobID' => ''),
-        'msg'     => ''
+        'data' => array('jobID' => ''),
+        'msg' => ''
     );
     $step4 = get_all_executed_firm_names($step);
     global $wpdb;
@@ -321,10 +279,3 @@ function cron_step_4($step)
     }
     return $response;
 }
-
-
-// add_action("init", "clear_crons_left");
-// function clear_crons_left()
-// {
-//     wp_clear_scheduled_hook("manual_cron_step_2_hook");
-// }

@@ -4,14 +4,7 @@ let check = false;
 let reviewApiKeyInput = $("#review_api_key");
 let FirmNameInput = $("#firm_name");
 
-// let btnProcess_get_set = $("#google_review_upload_form .btn-process");
 let btnProcess_check = $("#google_review_upload_form .check_start");
-
-
-// let correctSign_business = $("#google_review_upload_form .correct-sign");
-// correctSign_business.removeClass("visible");
-// correctSign_business.addClass("visible");
-
 
 var current_page = ajax_object.get_url_page;
 var admin_plugin_main_url = ajax_object.admin_plugin_main_url;
@@ -23,11 +16,7 @@ jQuery(document).ready(function ($) {
     initial_check();
     upload_done_process();
   }
-
 });
-
-
-
 
 function upload_done_process() {
   var urlParams = new URLSearchParams(window.location.search);
@@ -39,27 +28,6 @@ function upload_done_process() {
 
   }
 }
-
-// jQuery(document).ready(function() {
-//   var h1 = $('.output');
-//   if (h1.hasClass('output')) {
-//       // Load the text file
-//       let file_path = ajax_object.plugin_url + '/logs.txt';      
-//       $.get(file_path, function(data) {         
-//           // Split data by newline characters and create <p> elements
-//           let lines = data.split('\n');
-//           let paragraphs = lines.map(function(line) {
-//               return '<p>' + line + '</p>';
-//           });
-//           // Join the paragraphs and set as HTML content of h1
-//           h1.html(paragraphs.join(''));
-//           // h1.addClass('display');
-//       })
-//       .fail(function(error) {
-//           console.error('Error:', error);
-//       });
-//   }
-// });
 
 $("#api_key_setting_form").submit(function (event) {
   event.preventDefault();
@@ -75,99 +43,6 @@ $.fn.focusAtEnd = function () {
     input.setSelectionRange(textLength, textLength);
   });
 };
-
-// Get the value of 'page' parameter from the URL query string
-// function getPageParameter() {
-//   var queryString = window.location.search;
-//   var urlParams = new URLSearchParams(queryString);
-//   return urlParams.get('page');
-// }
-// var pageValue = getPageParameter();
-
-
-
-
-
-// btnProcess_get_set.removeClass("spinning");
-// btnProcess_get_set.prop("disabled", true);
-// btnProcess_get_set.addClass('disabled');
-// btnProcess_check.addClass('visible');
-// btnProcess_check.removeClass('disabled');
-
-// jQuery(document).ready(function(){
-
-//   let element = jQuery("#review_api_key");
-
-//   jQuery(element).on('input', function () {   
-//     if (jQuery(this).val() == '') {
-//       console.log('blank');
-//       // Check to see if there is any text entered
-//       // If there is no text within the input then disable the button
-//       // jQuery(".submit_btn.save.btn-process").prop('disabled', true);
-//       btnProcess.removeClass('disabledapi');
-//       btnProcess.prop("disabled", false);  
-//       btnProcess_check.addClass('visible');  
-//     } else {
-//       console.log('not blank');
-//       // If there is text in the input, then enable the button
-//       jQuery(".submit_btn.save.btn-process").prop('disabled', false);
-//     }
-//   });
-
-// });
-
-// jQuery(element).bind("focus blur", function (event) {
-//   event.stopPropagation();
-//   if (event.type == "focus") {
-//     btnProcess.removeClass('disabledapi');
-//     btnProcess.prop("disabled", false);  
-//     btnProcess_check.addClass('visible');  
-//     console.log("focus in !");
-//   }
-
-//   else if (event.type == "blur") {
-//     console.log("focus out !");
-//   }
-// });
-
-
-// let element_business = jQuery("#firm_name");
-// jQuery(element_business).bind("focus blur", function (event) {
-//   event.stopPropagation();
-//   if (event.type == "focus") {
-//     btnProcess_get_set.prop("disabled", true);
-//     btnProcess_get_set.addClass('disabled');
-//     btnProcess_check.addClass('visible');
-//     btnProcess_check.removeClass('disabled');  
-//     console.log("focus in !");
-//   }
-
-//   else if (event.type == "blur") {
-//     handleInputKeyUp();
-//     console.log("focus out !");
-//   }
-// });
-
-
-// function handleInputKeyUp() {
-//   $(element_business).on('keyup', function () {
-//     if (this.value.length > 1) {
-//       btnProcess_get_set.prop("disabled", false);
-//       btnProcess_get_set.removeClass('disabled');
-//       btnProcess_check.removeClass('visible');
-//       btnProcess_check.addClass('disabled');
-//     }
-//   });
-// }
-
-
-
-// const correctSign_BUSINESS = $("#google_review_upload_form .correct-sign");
-// const wrongSign_API = $("#api_key_setting_form .wrong-sign");
-
-// wrongSign_API.removeClass("visible");
-
-// correctSign_BUSINESS.removeClass("visible");
 
 
 // FOR API BOX
@@ -212,22 +87,14 @@ function initial_check() {
       // btnProcess_API.prop("disabled", true);
     },
     success: function (response) {
-
-      // console.log('start = '+response.data.btn_start);
-      // console.log('check = '+response.data.btn_check);
-      // console.log('upload = '+response.data.btn_upload);
-
-      if(response.data.btn_check ==0 && response.data.btn_check_status == 1 && response.data.btn_start == 1 && response.data.btn_upload == 0){
-        // localStorage.removeItem("checkval");
+      if (response.data.btn_check == 0 && response.data.btn_check_status == 1 && response.data.btn_start == 1 && response.data.btn_upload == 0) {
         $('.check_start_status').prop('disabled', true);
       }
 
       if (response.success && response.api) {
         if (sign_TRUE) {
           correctSign_API.addClass("visible");
-          // $('.api_key_setting_form').addClass("showdisable");
           BUSINESS_BOX.removeClass("hidden");
-          // btnProcess_API.prop("disabled", true);
         }
         if (sign_FALSE) {
           wrongSign_API.removeClass("visible");
@@ -236,9 +103,7 @@ function initial_check() {
       else {
         if (sign_TRUE) {
           correctSign_API.removeClass("visible");
-          // $('.api_key_setting_form').removeClass("showdisable");
           BUSINESS_BOX.addClass("hidden");
-          // btnProcess_API.prop("disabled", false);
         }
         if (sign_FALSE) {
           wrongSign_API.addClass("visible");
@@ -246,7 +111,6 @@ function initial_check() {
       }
 
       //business CHECK
-
       // start 1
       if (response.data.btn_start && !response.data.btn_check && !response.data.btn_upload) {
         btnProcess_BUSINESS_START.hide();
@@ -267,112 +131,6 @@ function initial_check() {
         btnProcess_BUSINESS_START.show();
         btnProcess_BUSINESS_CHECK.hide();
       }
-
-
-
-
-
-
-      // check 1
-      // if(response.data.btn_check){
-      //   console.log('check 1');
-      // }
-      // else{
-
-      // }
-
-      // // upload 1
-      // if(response.data.btn_upload){
-      //   console.log('upload 1');
-      // }
-      // else{
-
-      // }
-
-
-      // // START SHOW ONLY
-      // if (response.data.btn_start && !response.data.btn_check) {
-      //   if (response.data.btn_start && !response.data.btn_check && !response.data.btn_upload) {
-      //     btnProcess_BUSINESS_CHECK.hide();
-      //     btnProcess_BUSINESS_UPLOAD.hide();
-
-      //     //start show only
-      //     btnProcess_BUSINESS_START.show();
-      //   }
-      // }
-
-
-      // else if (response.data.btn_start && response.data.btn_check) {
-      //   //CHECK SHOW
-      //   if (response.data.btn_start && response.data.btn_check && !response.data.btn_upload) {
-      //     btnProcess_BUSINESS_START.hide();
-      //     btnProcess_BUSINESS_UPLOAD.hide();
-
-      //     //check show
-      //     btnProcess_BUSINESS_CHECK.show();
-      //   }
-
-      //   //UPLOAD SHOW
-      //   else if (response.data.btn_start && response.data.btn_check && response.data.btn_upload) {
-      //     btnProcess_BUSINESS_START.hide();
-      //     btnProcess_BUSINESS_CHECK.hide();
-
-      //     //upload show          
-      //     btnProcess_BUSINESS_UPLOAD.show();
-      //   }
-      // }
-
-
-      // btnProcess_BUSINESS_START.show();
-      // btnProcess_BUSINESS_CHECK.hide();
-
-      // else if (response.success_api && response.success_business && response.btn_upload == false) {
-
-      // }
-
-      // //business UPLOAD
-      // if (response.success_api && response.success_business && response.success_check == true) {
-      //   btnProcess_BUSINESS_START.hide();                
-      //   btnProcess_BUSINESS_CHECK.hide();        
-      //   btnProcess_BUSINESS_UPLOAD.show();
-      // }     
-
-
-      //business CHECK
-      // if (response.success_api == 1 && response.success_business == 1 ) {
-      //   btnProcess_BUSINESS_START.hide();
-      //   btnProcess_BUSINESS_CHECK.hide();
-      //   btnProcess_BUSINESS_UPLOAD.show();
-      // }
-      // else {
-      //   btnProcess_BUSINESS_START.show();
-      //   btnProcess_BUSINESS_CHECK.show();
-      //   btnProcess_BUSINESS_UPLOAD.hide();
-      // }
-
-
-      // //business UPLOAD
-      // if (response.success_check == 1) {     
-      //   btnProcess_BUSINESS_START.hide();
-      //   btnProcess_BUSINESS_CHECK.hide();
-      //   btnProcess_BUSINESS_UPLOAD.show();
-      // }
-      // else {        
-      //   btnProcess_BUSINESS_START.show();
-      //   btnProcess_BUSINESS_CHECK.show();
-      //   btnProcess_BUSINESS_UPLOAD.hide();
-      // }
-
-
-
-      // if (response.success_api == 1 && response.success_business == 1) {
-      //   // btnProcess_BUSINESS_START.prop("disabled", true);
-      //   btnProcess_BUSINESS_CHECK.addClass("visible");
-      // }
-      // else {
-      //   // btnProcess_BUSINESS_START.prop("disabled", false);
-      //   btnProcess_BUSINESS_CHECK.removeClass("visible");
-      // }
     },
     error: function () {
       response_fail('Something went wrong !');
@@ -385,184 +143,8 @@ function initial_check() {
     },
   });
 }
-
-
-// $(document).ready(function(){
-//   $('#review_api_key').focusin(function(){
-//       console.log('Input field focused');
-
-//   });
-
-//   $('#review_api_key').focusout(function(){
-//       console.log('Input field focus lost');
-
-//   });
-// });
-
 // key up check API KEY
 let element = jQuery("#review_api_key");
-$(document).ready(function () {
-  var initialValue = $(element).val();
-  var api_status = $(element).data('apivalid');
-
-  // $(element).on('input', function () {
-  //   var currentValue = $(this).val();
-  //   if (currentValue !== initialValue) {
-  //     button_effects_enable();
-  //   }
-  //   else {
-  //     button_effects_disable();
-  //   }
-  // });
-
-  function button_effects_enable() {
-    console.log("button_effects_enable!");
-    if (sign_TRUE) {
-      // correctSign_API.removeClass("visible");
-      // wrongSign_API.removeClass("visible");
-      // $('.api_key_setting_form').removeClass("showdisable");
-    }
-
-    if (jQuery('.google_review_upload_form.cont').length > 0) {
-      // correctSign_API.removeClass("visible");
-      // wrongSign_API.addClass("visible");
-      // $('.api_key_setting_form').removeClass("showdisable");
-    }
-
-    // BUSINESS_BOX.addClass("hidden");
-    // btnProcess_API.prop("disabled", false);
-    return true;
-  }
-
-  function button_effects_disable() {
-    console.log("button_effects_disable!");
-    if (jQuery('.google_review_upload_form.cont').length > 0) {
-      // correctSign_API.addClass("visible");
-      // wrongSign_API.removeClass("visible");
-      // $('.api_key_setting_form').addClass("showdisable");
-    }
-
-    // BUSINESS_BOX.removeClass("hidden");
-    // btnProcess_API.prop("disabled", true);
-    return true;
-  }
-});
-
-
-// key up check BUSINESS TERM
-
-// $(document).ready(function () {
-//   var initialValue = $(business_term).val(); 
-//   $(business_term).on('input', function () {    
-//     var currentValue = $(this).val();
-//     if (currentValue !== initialValue) {
-//       button_effects_business_enable();
-//     }
-//     else {
-//       button_effects_business_disable();
-//     }
-//   });  
-// });
-
-
-// function button_effects_business_enable() { 
-//   btnProcess_BUSINESS_START.prop("disabled", false);
-//   btnProcess_BUSINESS_CHECK.hide(500);
-//   return true;
-// }
-// function button_effects_business_disable() {  
-//   btnProcess_BUSINESS_START.prop("disabled", true);
-//   btnProcess_BUSINESS_CHECK.show(500);
-//   return true;
-// }
-
-
-
-//new function
-// key up check BUSINESS TERM
-// let business_term = jQuery("#firm_name");
-// $(document).ready(function(){
-//   btnProcess_BUSINESS_CHECK.show();
-//   $(business_term).on('input', function () {
-//     button_effects_business_enable();
-//   });
-
-//   $(business_term).on('blur', function () {
-//     button_effects_business_disable();
-//   });
-
-//   function button_effects_business_enable() {
-//     console.log("button_effects_business_enable!");
-//     // if (sign_TRUE) {
-//     //   correctSign_BUSINESS_BOX.removeClass("visible");
-//     //   wrongSign_BUSINESS_BOX.removeClass("visible");
-//     // }
-
-//     // if (jQuery('.google_review_upload_form.cont').length > 0) {
-//     //   correctSign_BUSINESS_BOX.removeClass("visible");
-//     //   wrongSign_BUSINESS_BOX.addClass("visible");
-//     // }
-
-//     // BUSINESS_BOX.addClass("hidden");
-//     btnProcess_BUSINESS_START.prop("disabled", false);
-//     btnProcess_BUSINESS_CHECK.hide();
-//     return true;
-//   }
-//   function button_effects_business_disable() {
-//     // console.log("button_effects_business_disable!");
-//     // if (jQuery('.google_review_upload_form.cont').length > 0) {
-//     //   correctSign_BUSINESS_BOX.addClass("visible");
-//     //   wrongSign_BUSINESS_BOX.removeClass("visible");
-//     // }
-
-//     // BUSINESS_BOX.removeClass("hidden");
-//     btnProcess_BUSINESS_START.prop("disabled", false);
-//     btnProcess_BUSINESS_CHECK.show();
-//     return true;
-//   }
-// });
-
-
-// let business_term = jQuery("#firm_name");
-// $(document).ready(function () {
-//   var initialValue = $(business_term).val();
-//   $(business_term).on('input focus', function () {
-//     var currentValue = $(this).val();
-//     if (currentValue !== initialValue) {
-//       button_effects_business_enable();
-//     }
-//     else {
-//       button_effects_business_disable();
-//     }
-//   });
-//   function button_effects_business_enable() {
-//     console.log("button_effects_business_enable!");
-//     // if (sign_TRUE) {
-//     //   correctSign_BUSINESS_BOX.removeClass("visible");
-//     //   wrongSign_BUSINESS_BOX.removeClass("visible");
-//     // }
-
-//     // if (jQuery('.google_review_upload_form.cont').length > 0) {
-//     //   correctSign_BUSINESS_BOX.removeClass("visible");
-//     //   wrongSign_BUSINESS_BOX.addClass("visible");
-//     // }
-
-//     // BUSINESS_BOX.addClass("hidden");
-//     btnProcess_BUSINESS_START.prop("disabled", false);
-//     return true;
-//   }
-//   function button_effects_business_disable() {
-//     // console.log("button_effects_business_disable!");
-//     // if (jQuery('.google_review_upload_form.cont').length > 0) {
-//     //   correctSign_BUSINESS_BOX.addClass("visible");
-//     //   wrongSign_BUSINESS_BOX.removeClass("visible");
-//     // }
-
-//     // BUSINESS_BOX.removeClass("hidden");
-//     btnProcess_BUSINESS_START.prop("disabled", true);
-//     return true;
-//   }
-// });
 
 //api save call
 function response_success(response) {
@@ -599,10 +181,6 @@ function response_fail(response) {
   btnProcess_API.prop("disabled", false);
   return true;
 }
-
-
-
-
 
 function ApiKeySave(check) {
   let flagKey = 'api';
@@ -668,12 +246,7 @@ var spinnerSVG = `<svg class="svg-loader" xmlns="http://www.w3.org/2000/svg" vie
 $("#google_review_upload_form button.search_btn").click(function (event) {
   $('.submit_btn_setget button.job_start').prop("disabled", true);
   var firm_name = $(FirmNameInput).val();
-
-  // $('.google_review_upload_form span.correct-sign').removeClass('firm_area_sign');
-  // $('.google_review_upload_form span.wrong-sign').removeClass('firm_area_sign');
-
   $('.submit_btn.job_start.btn-process').removeClass('next_highlight');
-
   if (firm_name.trim() != '') {
     $.ajax({
       url: 'https://api.spiderdunia.com:3000/search/',
@@ -683,14 +256,14 @@ $("#google_review_upload_form button.search_btn").click(function (event) {
         api_key: ajax_object.review_api_key,
         businessName: firm_name
       },
-      beforeSend: function () {        
+      beforeSend: function () {
         var search_box = `<div class="search--txt">${spinnerSVG}</div>`;
         $('.search-result').empty().append(search_box);
         $('#processbar').show();
         $('.search_btn').prop("disabled", true);
       },
       success: function (response) {
-        console.log('API Call Successful:', response);        
+        console.log('API Call Successful:', response);
         if (response.success === 1) {
           $('.search-result').empty().show();
           var result_html = `          
@@ -704,11 +277,11 @@ $("#google_review_upload_form button.search_btn").click(function (event) {
           $('.submit_btn_setget button.job_start').prop("disabled", false);
           $('.google_review_upload_form span.wrong-sign').addClass('firm_area_sign').hide();
           $('.google_review_upload_form span.correct-sign').addClass('firm_area_sign').show();
-          notify_success('Select and go ahead');
-          $('.submit_btn.job_start.btn-process').addClass('next_highlight');         
+          notify_success('Ready. Please proceed.');
+          $('.submit_btn.job_start.btn-process').addClass('next_highlight');
         } else {
           $('.search-result').empty().show();
-          $('.search-result').empty().append(`<div class="search--txt">No results found <div class="close-button" onclick="closePopup()">x</div></div>`);          
+          $('.search-result').empty().append(`<div class="search--txt">No results found <div class="close-button" onclick="closePopup()">x</div></div>`);
           $('.google_review_upload_form span.correct-sign').addClass('firm_area_sign').hide();
           $('.google_review_upload_form span.wrong-sign').addClass('firm_area_sign').show();
           $('.submit_btn.job_start.btn-process').removeClass('next_highlight');
@@ -716,7 +289,7 @@ $("#google_review_upload_form button.search_btn").click(function (event) {
       },
       error: function (xhr, status, error) {
         console.error('API Call Failed:', status, error);
-        if(error === 'Too Many Requests'){
+        if (error === 'Too Many Requests') {
           error = 'Too Many Requests , please try after 60 seconds.';
         }
         $('.search-result').empty().append(`<div class="search--txt">API Call Failed: ${error}</div>`);
@@ -735,7 +308,7 @@ function closePopup() {
   $('.search-result').hide(); // Assuming you want to hide the entire search-result container
 }
 
-function notify_success(msg){
+function notify_success(msg) {
   const Toast = Swal.mixin({
     toast: true,
     position: "bottom-end",
@@ -754,7 +327,7 @@ function notify_success(msg){
 }
 
 
-function notify_failed(msg){
+function notify_failed(msg) {
   const Toast = Swal.mixin({
     toast: true,
     position: "bottom-end",
@@ -772,7 +345,7 @@ function notify_failed(msg){
   });
 }
 
-function notify_success_cron(msg){
+function notify_success_cron(msg) {
   const Toast = Swal.mixin({
     toast: true,
     position: "bottom-end",
@@ -793,23 +366,9 @@ function notify_success_cron(msg){
 
 
 function selectbusiness() {
-  // var title = $('.search--txt').find('p[data-title]').attr('data-title');
-  // $('.search_btn').hide();
-  // $('.reset_btn').show();
   $('.search-result').empty().hide();
   $('.submit_btn_setget button.job_start').prop("disabled", false);
 }
-
-// $("#google_review_upload_form button.reset_btn").click(function (event) {
-//   $('#google_review_upload_form')[0].reset();
-//   $('.reset_btn').hide();
-//   $('.search_btn').show();
-//   $('.search-result').empty().hide();
-//   $('.submit_btn_setget button.job_start').prop("disabled", false);
-// });
-
-
-
 // JOB START CLICKED 
 $("#google_review_upload_form button.job_start").click(function (event) {
   var firm_name = $(FirmNameInput).val();
@@ -837,33 +396,6 @@ $("#google_review_upload_form button.job_start").click(function (event) {
     $("#google_review_upload_form").submit();
   }
 });
-
-
-// JOB UPLOAD CLICKED 
-// $("#google_review_upload_form button.upload_start ").click(function (event) {  
-//   let firm_name_display = $(FirmNameInput).val();
-//   check = true;
-//   Swal.fire({
-//     title: `Confirmation: Upload ?`,
-//     html: `Upload your reviews now and let your voice be heard about <strong>${firm_name_display}</strong>`,
-//     showCancelButton: false,
-//     confirmButtonColor: "#405640",
-//     cancelButtonColor: "#d33",
-//     confirmButtonText: "Upload",
-//     allowOutsideClick: false,
-//     backdrop: 'swal2-backdrop-show',
-//     showCloseButton: true,
-//     icon: 'question',
-//     color: "#716add",
-//   }).then((result) => {
-//     if (result.isConfirmed) {
-//       job_start(check);
-//     } else if (result.isDenied) {
-//       Swal.fire("Changes are not saved", "", "info");
-//     }
-//   });
-//   // $("#google_review_upload_form").submit(); // Manually submit the form
-// });
 
 // Assuming ".get" is the class of the button you want to trigger the form submission
 $("#google_review_upload_form button.check_start").click(function (event) {
@@ -906,9 +438,7 @@ function response_business_success(response) {
       clearInterval(timerInterval);
     }
   }).then((result) => {
-    /* Read more about handling dismissals below */
     if (result.dismiss === Swal.DismissReason.timer) {
-      // let display_msg = "" + `<b>${$(FirmNameInput).val()} = 250 Reviews</b>` + " !";
       let display_msg = response;
       console.log("I was closed by the timer");
       Swal.fire({
@@ -926,12 +456,6 @@ function response_business_success(response) {
           location.reload();
         }, 100);
       });
-
-      // btnProcess_BUSINESS_START.hide();
-      // btnProcess_BUSINESS_CHECK.hide();
-      // btnProcess_BUSINESS_UPLOAD.addClass('visible');
-      // btnProcess_BUSINESS_START.prop("disabled", true);
-      // btnProcess_BUSINESS_CHECK.prop("disabled", true);      
     }
   });
   return true;
@@ -966,7 +490,6 @@ function check_start(check) {
   console.log('check = ' + check);
 
   let current_job_id = FirmNameInput.attr('data-jobid');
-  // const firm_name = FirmNameInput.val();
   const nonce = $("#get_set_trigger_nonce").val();
 
   $.ajax({
@@ -1056,10 +579,7 @@ function confirm_msg(msg, jobID) {
   });
 }
 
-
-
 function job_start(check) {
-  // const firm_name = FirmNameInput.val();
   const firm_name = encodeURIComponent(FirmNameInput.val());
   console.log('firm_name ===' + firm_name);
   const nonce = $("#get_set_trigger_nonce").val();
@@ -1070,7 +590,6 @@ function job_start(check) {
     dataType: "json",
     beforeSend: function () {
       $('#loader').removeClass('hidden');
-      // btnProcess_BUSINESS_START.addClass("spinning");
       $('#processbar').show();
     },
     data: {
@@ -1085,15 +604,11 @@ function job_start(check) {
           if (check) {
             confirm_msg(response.msg, response.data.jobID);
             $('#processbar').hide();
-            // btnProcess_BUSINESS_START.prop("disabled", true);
-            // btnProcess_BUSINESS_CHECK.addClass("visible");            
           }
         } else {
           if (check) {
             response_fail(response.msg);
             $('#processbar').hide();
-            // btnProcess_BUSINESS_START.prop("disabled", false);
-            // btnProcess_BUSINESS_CHECK.removeClass("visible");
           }
 
         }
@@ -1109,10 +624,6 @@ function job_start(check) {
       });
     },
     complete: function () {
-      // setTimeout(function () {
-      //   $('#loader').addClass('hidden');
-      //   btnProcess_BUSINESS_START.removeClass("spinning");
-      // }, 3500);      
     },
   });
 }
@@ -1290,9 +801,7 @@ function delete_logs_start() {
   });
 }
 
-
 $(function () {
-  // reset review
   $(document).on('click', 'p.reset', function (e) {
     e.preventDefault();
     check = true;
@@ -1311,8 +820,6 @@ $(function () {
       }
     });
   });
-
-
   //reset logs
   $(document).on('click', 'p.reset.status', function (e) {
     e.preventDefault();
@@ -1331,100 +838,10 @@ $(function () {
         delete_logs_start(check);
       }
     });
-
-
   });
-
-
-
 });
 
-
-
-// var typingtext = $('.output.typing').find('p').html();
-// var speed = 35;
-
-// function typeWriter(typingtext, i, fnCallback) {
-//   if (i < typingtext.length) {
-//     $('.typing p').html(typingtext.substring(0, i + 1));
-//     setTimeout(function () {
-//       typeWriter(typingtext, i + 1, fnCallback)
-//     }, speed);
-//   } else if (typeof fnCallback == 'function') {
-//     setTimeout(fnCallback, 700);
-//   }
-// }
-
-// // start typing animation
-// $(document).ready(function () {
-//   typeWriter(typingtext, 0, function () {
-//     console.log('Typing complete');
-//   });
-// });
-
-
-
-
-
-
-
-// function GetAndSet(check) {
-//   // const firm_name = FirmNameInput.val().replace(/\s/g, "");
-//   const firm_name = FirmNameInput.val();
-//   const nonce = $("#get_set_trigger_nonce").val();
-//   btnProcess_get_set.html("Loading").addClass("spinning");
-//   btnProcess_get_set.prop("disabled", true);
-//   btnProcess.prop("disabled", true);
-//   $.ajax({
-//     type: "POST",
-//     url: ajax_object.ajax_url,
-//     dataType: "json",
-//     beforeSend: function () { },
-//     data: {
-//       action: "review_get_set_ajax_action2222222222",
-//       firm_name: firm_name,
-//       review_api_key: ajax_object.review_api_key,
-//       nonce: nonce,
-//     },
-//     success: function (response, status, error) {
-//       const correctSign = $("#google_review_upload_form .correct-sign");
-//       const wrongSign = $("#google_review_upload_form .wrong-sign");
-//       wrongSign.removeClass("visible");
-//       correctSign.removeClass("visible");
-//       if (response.success === 1) {
-//         setTimeout(function () {
-//           correctSign.addClass("visible");
-//           toastr.success("", response.message);
-//           btnProcess_get_set.removeClass("spinning").html("GET & SET");
-//           btnProcess_get_set.prop("disabled", false).val("GET & SET");
-//           btnProcess.prop("disabled", false);
-//         }, 1500);
-//       } else {
-//         setTimeout(function () {
-//           wrongSign.addClass("visible");
-//           toastr.error("", response.message);
-//           btnProcess_get_set.removeClass("spinning").html("GET & SET");
-//           btnProcess_get_set.prop("disabled", false).val("GET & SET");
-//           btnProcess.prop("disabled", false);
-//         }, 1500);
-//       }
-//     },
-//     error: function (xhr, status, error) {
-//       var errorMessage = xhr.responseText;
-//       if (errorMessage.startsWith("Error")) {
-//         errorMessage = errorMessage
-//           .substring(errorMessage.indexOf("Error") + 6)
-//           .trim();
-//       }
-//       toastr.error(errorMessage || "An error occurred", "Error");
-//     },
-//     complete: function () { },
-//   });
-// }
-
-
 //UPLOAD REVIEWS
-// Assuming ".get" is the class of the button you want to trigger the form submission
 $("#google_review_upload_form button.upload_start").click(function (event) {
   check = true;
   Swal.fire({
@@ -1444,17 +861,11 @@ $("#google_review_upload_form button.upload_start").click(function (event) {
   $("#google_review_upload_form").submit();
 });
 
-
-
-
 function upload_process_box(check) {
   console.log('check = ' + check);
   let flagKey = 'upload';
-
   let current_job_id = FirmNameInput.attr('data-jobid');
-  // const firm_name = FirmNameInput.val();
   const nonce = $("#get_set_trigger_nonce").val();
-
   $.ajax({
     type: "POST",
     url: ajax_object.ajax_url,
@@ -1472,10 +883,6 @@ function upload_process_box(check) {
       nonce: nonce,
     },
     success: function (response, status, error) {
-
-      // console.log('heeeeeeeeeeeeee'+response);
-      // return false;
-
       setTimeout(function () {
         if (response.success === 1) {
           if (check) {
@@ -1493,13 +900,6 @@ function upload_process_box(check) {
       }, 2500);
     },
     error: function (xhr, status, error) {
-      // Swal.fire({
-      //   position: 'bottom-end',
-      //   icon: "error",
-      //   title: response.msg,
-      //   showConfirmButton: false,
-      //   timer: 3500
-      // });
       $('#processbar').hide();
     },
     complete: function () {
@@ -1509,9 +909,7 @@ function upload_process_box(check) {
       }, 3500);
     },
   });
-
 }
-
 
 //GMB call
 function response_upload_success(response, termslug) {
@@ -1533,9 +931,7 @@ function response_upload_success(response, termslug) {
       clearInterval(timerInterval);
     }
   }).then((result) => {
-    /* Read more about handling dismissals below */
     if (result.dismiss === Swal.DismissReason.timer) {
-      // let display_msg = "" + `<b>${$(FirmNameInput).val()} = 250 Reviews</b>` + " !";
       let display_msg = response;
       console.log("I was closed by the timer");
       Swal.fire({
@@ -1555,21 +951,12 @@ function response_upload_success(response, termslug) {
           window.location.href = newUrl;
         }, 100);
       });
-
-      // btnProcess_BUSINESS_START.hide();
-      // btnProcess_BUSINESS_CHECK.hide();
-      // btnProcess_BUSINESS_UPLOAD.addClass('visible');
-      // btnProcess_BUSINESS_START.prop("disabled", true);
-      // btnProcess_BUSINESS_CHECK.prop("disabled", true);      
     }
   });
   return true;
 }
 
-
-
 // generate token
-
 function setRandomFlag(rec, flag) {
   if (flag === 0 || flag === 1) {
     sessionStorage.setItem(`${rec}-flag`, flag);
@@ -1583,9 +970,6 @@ function getRandomFlag(rec) {
   console.log(`${rec}-flag retrieved : `, flag);
   return flag;
 }
-
-
-
 
 function error_notify() {
   Swal.fire({
@@ -1679,8 +1063,6 @@ function delete_review_start(id) {
   });
 }
 
-
-
 // RESET REVIEWS PROCESS
 function delete_reviews_success() {
   let timerInterval;
@@ -1724,21 +1106,6 @@ function delete_reviews_success() {
   return true;
 }
 
-
-
-
-$(document).ready(function () {
-  $('input[type="radio"][name="radio3"]').change(function () {
-    var selectedValue = $(this).val();
-    // alert("Selected value: " + selectedValue);
-  });
-});
-
-
-
-
-
-
 // status update
 $(document).on('click', 'button.check_start_status', function (e) {
   e.preventDefault();
@@ -1758,9 +1125,6 @@ $(document).on('click', 'button.check_start_status', function (e) {
     }
   });
 });
-
-
-
 
 //delete review
 function check_status_update() {
@@ -1989,22 +1353,18 @@ function check_failed(response) {
 
   function SetGlobals() {
     canvas = document.getElementById("canvas");
-    // console.log("Canvas element:", canvas); // Debug log
     if (!canvas) {
-        // console.error("Canvas element not found.");
-        return;
+      return;
     }
     ctx = canvas.getContext("2d");
-    // console.log("Canvas context:", ctx); // Debug log
     if (!ctx) {
-        // console.error("Failed to get 2D context from canvas.");
-        return;
+      return;
     }
     W = window.innerWidth;
     H = window.innerHeight;
     canvas.width = W;
     canvas.height = H;
-}
+  }
 
 
   function InitializeConfetti() {
@@ -2128,9 +1488,7 @@ function check_failed(response) {
       animationComplete = false;
       InitializeConfetti();
     }, 100);
-
   }
-
   window.requestAnimFrame = (function () {
     return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) {
       return window.setTimeout(callback, 1000 / 60);
@@ -2159,22 +1517,19 @@ $(document).ready(function () {
     }
   });
 });
-
-
 // upload celebration = END
 
 
-// check start status 
-
+// check start status
 $(document).ready(function () {
   const button = $('.check_start_status');
   let checkval = localStorage.getItem("checkval");
 
-  if (!checkval || checkval == '0') {    
+  if (!checkval || checkval == '0') {
     button.prop('disabled', false);
   } else if (checkval == '1') {
     countdown();
-    button.prop('disabled', true);    
+    button.prop('disabled', true);
   } else if (checkval == '2') {
     localStorage.removeItem("checkval");
   }
@@ -2210,40 +1565,35 @@ function countdown() {
   }, 1000);
 }
 
-
-
-
-
-
 // CRON START CLICKED 
 let recurrence = 0;
 let timeSlot = 0;
 let cron_switch = $("#cron_switch");
 
-$(cron_switch).change(function() {  
+$(cron_switch).change(function () {
   let is_checked = $(this).is(':checked');
   if (is_checked) {
     box_for_schedule(is_checked, recurrence);
-  } else {    
+  } else {
     fire_cron(recurrence, timeSlot, is_checked);
   }
 });
 
-function box_for_schedule(is_checked, selectedRecurrence){
+function box_for_schedule(is_checked, selectedRecurrence) {
   Swal.fire({
     title: "Recurrence",
     iconHtml: '<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"><i class="fa fa-cog fa-spin" style="color: rgb(140, 194, 19); font-size: 40px; text-shadow: rgb(0, 0, 0) 0px 0px 4px; box-sizing: content-box; line-height: 72px; text-align: center; width: 72px; height: 72px; display: inline-block; overflow: hidden; border-radius: 50%; border-color: rgb(255, 255, 255); border-style: solid; border-width: 1px;"></i>',
     input: "select",
-    inputOptions: {      
-        norepeat: "-- Select Recurrence --",
-        hourly: "Once Hourly (hourly)",
-        twicedaily: "Twice Daily (twicedaily)",
-        daily: "Once Daily (daily)",
-        weekly: "Once Weekly (weekly)",
+    inputOptions: {
+      norepeat: "-- Select Recurrence --",
+      hourly: "Once Hourly (hourly)",
+      twicedaily: "Twice Daily (twicedaily)",
+      daily: "Once Daily (daily)",
+      weekly: "Once Weekly (weekly)",
     },
     inputValue: selectedRecurrence || "norepeat",
-    customClass: {     
-      confirmButton: 'cron_confirm_btn',     
+    customClass: {
+      confirmButton: 'cron_confirm_btn',
     },
     showCancelButton: false,
     showCloseButton: true,
@@ -2258,21 +1608,21 @@ function box_for_schedule(is_checked, selectedRecurrence){
     didClose: () => {
       // location.reload();
     },
-    inputValidator: (value) => {      
+    inputValidator: (value) => {
       return new Promise((resolve) => {
         if (value != "norepeat") {
-          resolve();          
+          resolve();
         } else {
           resolve("You need to select Recurrence !");
         }
       });
     }
-  }).then((result) => {    
+  }).then((result) => {
     if (result.isConfirmed) {
-      recurrence = result.value;   
+      recurrence = result.value;
       show_time_slot_selection(is_checked, recurrence);
     }
-    else{
+    else {
       if (result.isDismissed) {
         location.reload();
       }
@@ -2313,12 +1663,14 @@ function show_time_slot_selection(is_checked, selectedRecurrence) {
     "3:00 PM": "15:00:00",
     "3:30 PM": "15:30:00",
     "4:00 PM": "16:00:00",
+    "4:45 PM": "16:45:00",
     "4:30 PM": "16:30:00",
     "5:00 PM": "17:00:00",
     "5:30 PM": "17:30:00",
     "6:00 PM": "18:00:00",
     "6:30 PM": "18:30:00",
     "7:00 PM": "19:00:00",
+    "7:46 PM": "19:46:00",
     "7:30 PM": "19:30:00",
     "8:00 PM": "20:00:00",
     "8:30 PM": "20:30:00",
@@ -2338,8 +1690,8 @@ function show_time_slot_selection(is_checked, selectedRecurrence) {
       ...Object.fromEntries(Object.entries(timeMapping).map(([key, value]) => [key, key]))
     },
     inputValue: timeSlot,
-    customClass: {     
-      confirmButton: 'cron_confirm_btn',     
+    customClass: {
+      confirmButton: 'cron_confirm_btn',
     },
     showCancelButton: true,
     showCloseButton: true,
@@ -2360,12 +1712,12 @@ function show_time_slot_selection(is_checked, selectedRecurrence) {
         }
       });
     }
-  }).then((result) => {    
+  }).then((result) => {
     if (result.isConfirmed) {
       const selectedTime = timeMapping[result.value];
       timeSlot = selectedTime;
       fire_cron(selectedRecurrence, timeSlot, is_checked);
-    } else if (result.dismiss === Swal.DismissReason.cancel) {      
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
       box_for_schedule(is_checked, selectedRecurrence);
     } else if (result.isDismissed) {
       location.reload();
@@ -2374,7 +1726,7 @@ function show_time_slot_selection(is_checked, selectedRecurrence) {
 }
 
 
-function fire_cron(recurrence, timeSlot, is_checked) {    
+function fire_cron(recurrence, timeSlot, is_checked) {
   $.ajax({
     type: "POST",
     url: ajax_object.ajax_url,
@@ -2399,21 +1751,17 @@ function fire_cron(recurrence, timeSlot, is_checked) {
           $('.toggle-sec').removeClass('process');
           $('#processbar').show();
           $('.toggle-sec#show_cron').hide();
-          setTimeout(function () {    
-            location.reload();            
-          }, 1500); 
-          notify_success_cron(response.msg);          
-        } else {
-          $('#processbar').hide(); 
-          setTimeout(function () {    
+          setTimeout(function () {
             location.reload();
-          }, 1500); 
-          notify_failed(response.msg);         
+          }, 1500);
+          notify_success_cron(response.msg);
+        } else {
+          $('#processbar').hide();
+          setTimeout(function () {
+            location.reload();
+          }, 1500);
+          notify_failed(response.msg);
         }
-        // if (is_checked == true) {
-        //   $('.toggle-sec#show_cron').show();
-        //   localStorage.setItem('testcron', 1);
-        // }              
       }, 600);
     },
     error: function (xhr, status, error) {
@@ -2423,11 +1771,3 @@ function fire_cron(recurrence, timeSlot, is_checked) {
     },
   });
 }
-
-
-
-
-
-// $(document).ready(function () {
-//   success_celebration();
-// });
