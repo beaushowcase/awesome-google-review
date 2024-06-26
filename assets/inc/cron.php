@@ -2,28 +2,32 @@
 
 date_default_timezone_set('Asia/Kolkata');
 
-$api_records = get_existing_api_key_data();
+define('HOURLY_SECONDS', 3600);
+define('TWICEDAILY_SECONDS', 43200);
+define('DAILY_SECONDS', 86400);
+define('WEEKLY_SECONDS', 604800);
 
+$api_records = get_existing_api_key_data();
 $api_record_recurrence = $api_records->recurrence;
 $api_record_timeslot = $api_records->timeslot;
 $timeslot_second = $api_records->timeslot_second;
 
-$selected_recurrence = 86400;
-if ($api_record_recurrence == 'hourly') {
-    $selected_recurrence = 3600;
-} else if ($api_record_recurrence == 'twicedaily') {
-    $selected_recurrence = 43200;
-} else if ($api_record_recurrence == 'weekly') {
-    $selected_recurrence = 604800;
-}
+$recurrence_intervals = [
+    'hourly' => HOURLY_SECONDS,
+    'twicedaily' => TWICEDAILY_SECONDS,
+    'daily' => DAILY_SECONDS,
+    'weekly' => WEEKLY_SECONDS
+];
+$selected_recurrence = $recurrence_intervals[$api_record_recurrence] ?? DAILY_SECONDS;
 
-add_filter('cron_schedules', 'my_custom_cron_intervals');
-function my_custom_cron_intervals($schedules)
+add_filter('cron_schedules', 'add_custom_cron_interval');
+function add_custom_cron_interval($schedules)
 {
-    $schedules[$api_record_recurrence] = array(
+    global $api_record_recurrence, $selected_recurrence;
+    $schedules[$api_record_recurrence] = [
         'interval' => $selected_recurrence,
-        'display' => __('Review Update ' . $api_record_recurrence . '', 'textdomain'),
-    );
+        'display' => sprintf('Review Update %s', $api_record_recurrence),
+    ];
     return $schedules;
 }
 
@@ -39,7 +43,7 @@ add_action('first_daily_data', 'my_first_function');
 function my_first_function()
 {
     first_update();
-    $api_records = get_existing_api_key_data();
+    global $api_records, $selected_recurrence;
     $timeslot_second = $api_records->timeslot_second;
     $scheduled_time_first = strtotime($timeslot_second);
     if ($scheduled_time_first < time()) {
@@ -58,224 +62,135 @@ function my_second_function()
 
 function first_update()
 {
-    cron_step_1(1);
+    update_cron_step(1);
 }
+
 function second_update()
 {
-    cron_step_2(2);
-    cron_step_3(3);
-    cron_step_4(4);
+    update_cron_step(2);
+    update_cron_step(3);
+    update_cron_step(4);
 }
-function cron_step_1($step)
+
+function update_cron_step($step)
 {
-
-    update_option('cron1',1);
-
-    $response = array(
+    update_option("cron{$step}", 1);
+    $response = [
         'success' => 0,
-        'data' => array('jobID' => ''),
+        'data' => ['jobID' => ''],
         'msg' => ''
-    );
-    $step1 = get_all_executed_firm_names($step);
-
-    // ptr($all_executed_firm_datas);exit;
-    global $wpdb;
+    ];
+    $step_data = get_all_executed_firm_names($step);
     $review_api_key = function_exists('get_existing_api_key') ? get_existing_api_key() : '';
 
-    foreach ($step1 as $firm_data) {
-        $firm_name = sanitize_text_field($firm_data['firm_name']);
-        $firm_name_jobID = sanitize_text_field($firm_data['jobID']);
-
-        if (!empty($firm_name)) {
-
-            $response_api_data = job_start_at_api($review_api_key, $firm_name);
-            $jobID = $response_api_data['data']['jobID'];
-            if ($response_api_data['success']) {
-                $table_name_data = $wpdb->prefix . 'jobdata';
-                if ($wpdb->last_error) {
-                    $response['msg'] = "Database Error: " . $wpdb->last_error;
-                } else {
-                    $data = array(
-                        'jobID' => $jobID,
-                        'jobID_json' => 1,
-                        'jobID_check_status' => 0,
-                        'jobID_check' => 0,
-                        'jobID_final' => 0
-                    );
-                    $data_to_update = array();
-                    foreach ($data as $column => $value) {
-                        $data_to_update[$column] = $value;
-                    }
-
-                    $where = array('jobID' => $firm_name_jobID);
-                    $updated = $wpdb->update($table_name_data, $data_to_update, $where);
-
-                    if ($updated !== false) {
-                        $response['data']['jobID'] = $firm_name_jobID;
-                        $response['success'] = 1;
-                        $response['msg'] = $response_api_data['msg'];
-                    } else {
-                        $response['msg'] = "Database Error: Failed to insert/update job data.";
-                    }
-                }
-            } else {
-                $response['msg'] = "API Error: " . $response_api_data['msg'];
-            }
+    foreach ($step_data as $firm_data) {
+        $result = process_firm_data($step, $firm_data, $review_api_key);
+        if ($result['success']) {
+            $response = $result;
+        } else {
+            $response['msg'] .= $result['msg'] . ' ';
         }
     }
     return $response;
 }
-function cron_step_2($step)
+
+function process_firm_data($step, $firm_data, $review_api_key)
 {
-    update_option('cron2',1);
-
-    $response = array(
-        'success' => 0,
-        'data' => array('jobID' => ''),
-        'msg' => ''
-    );
-    $step2 = get_all_executed_firm_names($step);
     global $wpdb;
-    $review_api_key = function_exists('get_existing_api_key') ? get_existing_api_key() : '';
+    $firm_name = sanitize_text_field($firm_data['firm_name']);
+    $firm_name_jobID = sanitize_text_field($firm_data['jobID']);
+    $term_id = sanitize_text_field($firm_data['term_id']);
 
-    foreach ($step2 as $firm_data) {
-        $firm_name = sanitize_text_field($firm_data['firm_name']);
-        $firm_name_jobID = sanitize_text_field($firm_data['jobID']);
-
-        if (!empty($firm_name)) {
-
-            $response_api_data = job_check_status_at_api($review_api_key, $firm_name_jobID);
-            $jobID = $response_api_data['data']['jobID'];
-
-            if ($response_api_data['success']) {
-                $table_name_data = $wpdb->prefix . 'jobdata';
-                if ($wpdb->last_error) {
-                    $response['msg'] = "Database Error: " . $wpdb->last_error;
-                } else {
-                    $data = array(
-                        'jobID' => $jobID,
-                        'jobID_json' => 1,
-                        'jobID_check_status' => 1,
-                        'jobID_check' => 0,
-                        'jobID_final' => 0
-                    );
-                    $data_to_update = array();
-                    foreach ($data as $column => $value) {
-                        $data_to_update[$column] = $value;
-                    }
-
-                    $where = array('jobID' => $firm_name_jobID);
-                    $updated = $wpdb->update($table_name_data, $data_to_update, $where);
-
-                    if ($updated !== false) {
-                        $response['data']['jobID'] = $firm_name_jobID;
-                        $response['success'] = 1;
-                        $response['msg'] = $response_api_data['msg'];
-                    } else {
-                        $response['msg'] = "Database Error: Failed to insert/update job data.";
-                    }
-                }
-            } else {
-                $response['msg'] = "API Error: " . $response_api_data['msg'];
-            }
-        }
+    if (empty($firm_name)) {
+        return handle_error("Empty firm name");
     }
-    return $response;
+
+    try {
+        switch ($step) {
+            case 1:
+                $response_api_data = job_start_at_api($review_api_key, $firm_name);
+                break;
+            case 2:
+                $response_api_data = job_check_status_at_api($review_api_key, $firm_name_jobID);
+                break;
+            case 3:
+                $response_api_data = job_check_at_api($review_api_key, $firm_name_jobID);
+                break;
+            case 4:
+                return process_step_4($firm_name, $firm_name_jobID, $review_api_key);
+            default:
+                return handle_error("Invalid step");
+        }
+
+        if (!$response_api_data['success']) {
+            return handle_error("API Error: " . $response_api_data['msg']);
+        }
+
+        $jobID = $response_api_data['data']['jobID'];
+        $table_name_data = $wpdb->prefix . 'jobdata';
+        
+        $data = [
+            'jobID' => $jobID,
+            'jobID_json' => 1,
+            'jobID_check_status' => $step >= 2 ? 1 : 0,
+            'jobID_check' => $step >= 3 ? 1 : 0,
+            'jobID_final' => 0
+        ];
+
+        $where = ['term_id' => $term_id];
+        $updated = $wpdb->update($table_name_data, $data, $where);
+
+        if ($updated === false) {
+            return handle_error("Database Error: Failed to update job data.");
+        }
+
+        return [
+            'success' => 1,
+            'data' => ['jobID' => $firm_name_jobID],
+            'msg' => $response_api_data['msg']
+        ];
+
+    } catch (Exception $e) {
+        return handle_error("Error: " . $e->getMessage());
+    }
 }
-function cron_step_3($step)
+
+function process_step_4($firm_name, $firm_name_jobID, $review_api_key)
 {
-    $response = array(
-        'success' => 0,
-        'data' => array('jobID' => ''),
-        'msg' => ''
-    );
-    $step3 = get_all_executed_firm_names($step);
-    global $wpdb;
-    $review_api_key = function_exists('get_existing_api_key') ? get_existing_api_key() : '';
-
-    foreach ($step3 as $firm_data) {
-        $firm_name = sanitize_text_field($firm_data['firm_name']);
-        $firm_name_jobID = sanitize_text_field($firm_data['jobID']);
-
-        if (!empty($firm_name)) {
-
-            $response_api_data = job_check_at_api($review_api_key, $firm_name_jobID);
-
-            if ($response_api_data['success']) {
-                $table_name_data = $wpdb->prefix . 'jobdata';
-                $jobID = $response_api_data['data']['jobID'];
-                if ($wpdb->last_error) {
-                    $response['msg'] = "Database Error: " . $wpdb->last_error;
-                } else {
-                    $data = array(
-                        'jobID' => $jobID,
-                        'jobID_json' => 1,
-                        'jobID_check_status' => 1,
-                        'jobID_check' => 1,
-                        'jobID_final' => 0
-                    );
-                    $data_to_update = array();
-                    foreach ($data as $column => $value) {
-                        $data_to_update[$column] = $value;
-                    }
-
-                    $where = array('jobID' => $firm_name_jobID);
-                    $updated = $wpdb->update($table_name_data, $data_to_update, $where);
-
-                    if ($updated !== false) {
-                        $response['data']['jobID'] = $firm_name_jobID;
-                        $response['success'] = 1;
-                        $response['msg'] = $response_api_data['msg'];
-                    } else {
-                        $response['msg'] = "Database Error: Failed to insert/update job data.";
-                    }
-                }
-            } else {
-                $response['msg'] = "API Error: " . $response_api_data['msg'];
-            }
-        }
+    $reviews_array = get_reviews_data($firm_name_jobID, $review_api_key);
+    if ($reviews_array['success'] == 0) {
+        return handle_error($reviews_array['message']);
     }
-    return $response;
+
+    $reviews_data = $reviews_array['reviews'];
+    $term_name = $reviews_data['firm_name'];
+    $term_slug = sanitize_title($term_name);
+
+    delete_reviews_data($term_slug);
+    $data_stored = store_data_into_reviews($firm_name_jobID, $reviews_array, $term_name);
+
+    if ($data_stored['status'] == 1) {
+        update_flag('jobID_final', 1, $firm_name_jobID);
+        update_flag('term_id', $data_stored['term_id'], $firm_name_jobID);
+        return [
+            'success' => 1,
+            'data' => ['jobID' => $firm_name_jobID],
+            'term_slug' => $term_slug,
+            'msg' => "Data uploaded successfully!"
+        ];
+    } else {
+        update_flag('jobID_final', 0, $firm_name_jobID);
+        return handle_error("Failed to store data.");
+    }
 }
-function cron_step_4($step)
+
+function handle_error($message)
 {
-    $response = array(
-        'success' => 0,
-        'data' => array('jobID' => ''),
-        'msg' => ''
-    );
-    $step4 = get_all_executed_firm_names($step);
-    global $wpdb;
-    $review_api_key = function_exists('get_existing_api_key') ? get_existing_api_key() : '';
-    foreach ($step4 as $firm_data) {
-        $firm_name = sanitize_text_field($firm_data['firm_name']);
-        $firm_name_jobID = sanitize_text_field($firm_data['jobID']);
-        if (!empty($firm_name)) {
-            $reviews_array = get_reviews_data($firm_name_jobID, $review_api_key);
-            if ($reviews_array['success'] == 0) {
-                $response['job_id'] = 0;
-                $response['message'] = $reviews_array['message'];
-            } else {
-                $reviews_data = $reviews_array['reviews'];
-                $response['job_id'] = $firm_name_jobID;
-                $response['data'] = $reviews_data['reviews'];
-                $term_name = $reviews_array['reviews']['firm_name'];
-                $term_slug = sanitize_title($reviews_array['reviews']['firm_name']);
-                delete_reviews_data($term_slug);
-                $data_stored = store_data_into_reviews($firm_name_jobID, $reviews_array, $term_name);
-
-                if ($data_stored['status'] == 1) {
-                    update_flag('jobID_final', 1, $firm_name_jobID);
-                    update_flag('term_id', $data_stored['term_id'], $firm_name_jobID);
-                    $response['term_slug'] = $term_slug;
-                    $response['message'] = "Data upload successfully!";
-                    $response['success'] = 1;
-                } else {
-                    update_flag('jobID_final', 0, $firm_name_jobID);
-                    $response['message'] = "Failed to store data.";
-                }
-            }
-        }
-    }
-    return $response;
+    error_log($message);
+    return ['success' => 0, 'msg' => $message];
 }
+
+// Assuming these functions are defined elsewhere in your codebase:
+// get_existing_api_key_data(), get_all_executed_firm_names(), job_start_at_api(), 
+// job_check_status_at_api(), job_check_at_api(), get_reviews_data(), delete_reviews_data(),
+// store_data_into_reviews(), update_flag()

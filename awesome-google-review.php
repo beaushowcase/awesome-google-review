@@ -1,13 +1,15 @@
 <?php
-/*
+/**
  * Plugin Name:       Awesome Google Review
  * Plugin URI:        https://beardog.digital/
  * Description:       Impresses with top-notch service and skilled professionals. A 5-star destination for grooming excellence!
- * Version:           1.6.5
+ * Version:           1.6.8
  * Requires PHP:      7.0
  * Author:            #beaubhavik
  * Author URI:        https://beardog.digital/
  * Text Domain:       awesome-google-review
+ * License:           GPL-2.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
 ini_set('display_errors', 0);
@@ -1205,9 +1207,6 @@ function store_data_into_reviews($current_job_id, $reviews_array, $term_name)
     }
 
     $success['term_id'] = $term_id;
-
-
-
     $reviews_array_data = $reviews_array['reviews']['reviews'];
 
     if ($term_id) {
@@ -1850,6 +1849,7 @@ function my_footer_shh()
     remove_filter('update_footer', 'core_update_footer');
 }
 
+// ptr(get_all_executed_firm_names(2));exit;
 
 function get_all_executed_firm_names($step)
 {
@@ -1857,10 +1857,7 @@ function get_all_executed_firm_names($step)
     $conditions = array();
     if ($step == 1) {
         $conditions = array(
-            'jobID_json' => 1,
-            'jobID_check_status' => 1,
-            'jobID_check' => 1,
-            'jobID_final' => 1,
+            'firm_name' => array('!=', ''),
             'term_id' => array('!=', 0)
         );
     }
@@ -2077,7 +2074,6 @@ add_action('wp_ajax_nopriv_cron_is_checked_ajax_action', 'cron_is_checked_ajax_a
 
 function cron_is_checked_ajax_action_function()
 {
-
     $response = array(
         'success' => 0,
         'msg' => ''
@@ -2090,7 +2086,7 @@ function cron_is_checked_ajax_action_function()
     $timeSlot_second = 0;
     if ($timeSlot != 0) {
         $dateTime = new DateTime($timeSlot);
-        $dateTime->modify('+1 minute');
+        $dateTime->modify('+3 minute');
         $timeSlot_second = $dateTime->format('H:i:s');
     }
 
@@ -2148,7 +2144,10 @@ function add_business_custom_columns($columns)
     $columns['run_cron'] = __('Run Cron', 'textdomain');
     return $columns;
 }
-add_filter('manage_edit-business_columns', 'add_business_custom_columns');
+
+if(get_api_key_status()){
+    add_filter('manage_edit-business_columns', 'add_business_custom_columns');
+}
 
 // Display content in the custom column
 function manage_business_custom_columns($content, $column_name, $term_id)
@@ -2163,20 +2162,22 @@ add_filter('manage_business_custom_column', 'manage_business_custom_columns', 10
 
 // Handle the cron job action and set admin notice
 function handle_run_business_cron()
-{
+{  
 
     if (!isset($_GET['term_id']) || !isset($_GET['_wpnonce'])) {
         wp_die(esc_html__('Invalid request', 'awesome-google-review'));
     }
 
     $term_id = intval($_GET['term_id']);
-    $nonce = $_GET['_wpnonce'];
+   
+    $nonce = $_GET['_wpnonce'];    
 
     if (!wp_verify_nonce($nonce, 'run_business_cron_' . $term_id)) {
         wp_die(esc_html__('Invalid nonce', 'awesome-google-review'));
     }
 
     $response = manual_cron_step_1($term_id);
+    
     $firm_name = $response['data']['firm_name'];
     $firm_name_jobID = $response['data']['firm_name_jobID'];
     $review_api_key = $response['review_api_key'];
@@ -2184,10 +2185,10 @@ function handle_run_business_cron()
     if (isset($response['success']) && $response['success'] == 1) {
         date_default_timezone_set('Asia/Kolkata');
 
-        set_transient('cron_success_message', sprintf(__('Cron job successfully executed. %s updated reviews will be uploaded automatically within 1 minute.', 'awesome-google-review'), '<span style="font-weight: bold;">' . $firm_name . '</span>'), 5);
+        set_transient('cron_success_message', sprintf(__('Cron job successfully executed. %s updated reviews will be uploaded automatically within <strong>3 minute.</strong>', 'awesome-google-review'), '<span style="font-weight: bold;">' . $firm_name . '</span>'), 5);
 
         if (!wp_next_scheduled('manual_cron_step_2_hook', array($term_id, $firm_name, $firm_name_jobID, $review_api_key))) {
-            wp_schedule_single_event(time() + 60, 'manual_cron_step_2_hook', array($term_id, $firm_name, $firm_name_jobID, $review_api_key));
+            wp_schedule_single_event(time() + 180, 'manual_cron_step_2_hook', array($term_id, $firm_name, $firm_name_jobID, $review_api_key));
         }
     }
 
@@ -2208,6 +2209,7 @@ add_action('admin_notices', function () {
 
 function manual_cron_step_1($term_id)
 {
+    
     global $wpdb;
     $response = array(
         'success' => 0,
@@ -2217,12 +2219,13 @@ function manual_cron_step_1($term_id)
     );
 
     $query = "SELECT firm_name, jobID FROM {$wpdb->prefix}jobdata WHERE term_id = {$term_id}";
+    
     $result = $wpdb->get_row($query, ARRAY_A);
-
+    
     $review_api_key = function_exists('get_existing_api_key') ? get_existing_api_key() : '';
-
+    
     $firm_name = sanitize_text_field($result['firm_name']);
-    $firm_name_jobID = sanitize_text_field($result['jobID']);
+    $firm_name_jobID = sanitize_text_field($result['jobID']);    
 
     if (!empty($firm_name)) {
         $response_api_data = job_start_at_api($review_api_key, $firm_name);

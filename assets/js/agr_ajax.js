@@ -192,8 +192,9 @@ function ApiKeySave(check) {
     url: ajax_object.ajax_url,
     dataType: "json",
     beforeSend: function () {
+      $('#processbar').show();
       $('#loader').removeClass('hidden');
-      btnProcess_API.addClass("spinning");
+      // btnProcess_API.addClass("spinning");
       btnProcess_API.prop("disabled", true);
       setRandomFlag(flagKey, 0);
     },
@@ -210,6 +211,7 @@ function ApiKeySave(check) {
             correctSign_API.addClass("visible");
             wrongSign_API.removeClass("visible");
             BUSINESS_BOX.removeClass("hidden");
+            $('#processbar').hide();
             // setRandomFlag(flagKey, 1);
           }
         } else {
@@ -218,6 +220,7 @@ function ApiKeySave(check) {
             correctSign_API.removeClass("visible");
             wrongSign_API.addClass("visible");
             BUSINESS_BOX.addClass("hidden");
+            $('#processbar').hide();
           }
         }
       }, 1500);
@@ -228,8 +231,9 @@ function ApiKeySave(check) {
     complete: function () {
       setTimeout(function () {
         $('#loader').addClass('hidden');
-        btnProcess_API.removeClass("spinning");
+        // btnProcess_API.removeClass("spinning");
         btnProcess_API.prop("disabled", false);
+        $('#processbar').hide();
         location.reload();
       }, 3000);
     },
@@ -1097,8 +1101,8 @@ function delete_reviews_success() {
         position: 'bottom-end',
       }).then(function () {
         setTimeout(function () {
-          window.location.href = admin_plugin_main_url;
-          // location.reload();
+          // window.location.href = admin_plugin_main_url;
+          location.reload();
         }, 100);
       });
     }
@@ -1631,8 +1635,9 @@ function box_for_schedule(is_checked, selectedRecurrence) {
 }
 
 function show_time_slot_selection(is_checked, selectedRecurrence) {
-  const timeMapping = {
+  const timeMapping = {    
     "1:00 AM": "01:00:00",
+    "1:20 AM": "01:20:00",
     "1:30 AM": "01:30:00",
     "2:00 AM": "02:00:00",
     "2:30 AM": "02:30:00",
@@ -1654,6 +1659,7 @@ function show_time_slot_selection(is_checked, selectedRecurrence) {
     "10:30 AM": "10:30:00",
     "11:00 AM": "11:00:00",
     "11:30 AM": "11:30:00",
+    "11:41 AM": "11:41:00",
     "12:00 PM": "12:00:00",
     "12:30 PM": "12:30:00",
     "1:00 PM": "13:00:00",
@@ -1662,13 +1668,13 @@ function show_time_slot_selection(is_checked, selectedRecurrence) {
     "2:30 PM": "14:30:00",
     "3:00 PM": "15:00:00",
     "3:30 PM": "15:30:00",
-    "4:00 PM": "16:00:00",   
+    "4:00 PM": "16:00:00",
     "4:30 PM": "16:30:00",
     "5:00 PM": "17:00:00",
     "5:30 PM": "17:30:00",
     "6:00 PM": "18:00:00",
     "6:30 PM": "18:30:00",
-    "7:00 PM": "19:00:00",   
+    "7:00 PM": "19:00:00",
     "7:30 PM": "19:30:00",
     "8:00 PM": "20:00:00",
     "8:30 PM": "20:30:00",
@@ -1677,7 +1683,8 @@ function show_time_slot_selection(is_checked, selectedRecurrence) {
     "10:00 PM": "22:00:00",
     "10:30 PM": "22:30:00",
     "11:00 PM": "23:00:00",
-    "11:30 PM": "23:30:00"
+    "11:30 PM": "23:30:00",
+    "12:28 AM": "00:28:00"
   };
 
   Swal.fire({
