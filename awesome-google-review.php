@@ -56,6 +56,20 @@ function remove_custom_tables()
 
 global $pagenow;
 
+// PLUGIN CHECKER = START
+require_once 'update-checker/update-checker.php';
+
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
+$myUpdateChecker = PucFactory::buildUpdateChecker(
+    'https://github.com/beaushowcase/awesome-google-review/',
+    __FILE__,
+    'awesome-google-review'
+);
+$myUpdateChecker->setBranch('main');
+$myUpdateChecker->getVcsApi()->enableReleaseAssets();
+// PLUGIN CHECKER = STOP
+
 // check cron enable disable query
 function check_cron_enable_or_disable()
 {
