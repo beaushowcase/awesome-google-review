@@ -1636,8 +1636,7 @@ function box_for_schedule(is_checked, selectedRecurrence) {
 
 function show_time_slot_selection(is_checked, selectedRecurrence) {
   const timeMapping = {    
-    "1:00 AM": "01:00:00",
-    "1:20 AM": "01:20:00",
+    "1:00 AM": "01:00:00",    
     "1:30 AM": "01:30:00",
     "2:00 AM": "02:00:00",
     "2:30 AM": "02:30:00",
@@ -1658,8 +1657,7 @@ function show_time_slot_selection(is_checked, selectedRecurrence) {
     "10:00 AM": "10:00:00",
     "10:30 AM": "10:30:00",
     "11:00 AM": "11:00:00",
-    "11:30 AM": "11:30:00",
-    "11:41 AM": "11:41:00",
+    "11:30 AM": "11:30:00",   
     "12:00 PM": "12:00:00",
     "12:30 PM": "12:30:00",
     "1:00 PM": "13:00:00",
@@ -1684,7 +1682,6 @@ function show_time_slot_selection(is_checked, selectedRecurrence) {
     "10:30 PM": "22:30:00",
     "11:00 PM": "23:00:00",
     "11:30 PM": "23:30:00",
-    "12:28 AM": "00:28:00"
   };
 
   Swal.fire({

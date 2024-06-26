@@ -189,8 +189,3 @@ function handle_error($message)
     error_log($message);
     return ['success' => 0, 'msg' => $message];
 }
-
-// Assuming these functions are defined elsewhere in your codebase:
-// get_existing_api_key_data(), get_all_executed_firm_names(), job_start_at_api(), 
-// job_check_status_at_api(), job_check_at_api(), get_reviews_data(), delete_reviews_data(),
-// store_data_into_reviews(), update_flag()
