@@ -1,0 +1,9 @@
+- API key is valid
+- Job 726 queued for scraping
+- Checked successful ! Now go ahead with GET
+- Google Reviews Successfully Extracted.
+- Data upload successfully!
+- Job 740 queued for scraping
+- Checked successful ! Now go ahead with GET
+- Google Reviews Successfully Extracted.
+- Data upload successfully!

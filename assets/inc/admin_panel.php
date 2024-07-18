@@ -177,11 +177,14 @@ function add_agr_google_review_post_type()
 
     $args = array(
         'labels' => $labels,
-        'public' => true,
-        'publicly_queryable' => true,
+        'public' => false,
+        'exclude_from_search' => true,
+        'show_in_admin_bar' => false,
+        'show_in_nav_menus' => false,
+        'publicly_queryable' => false,
+        'query_var' => true,
         'show_ui' => true,
         'show_in_menu' => true,
-        'query_var' => true,
         'rewrite' => array('slug' => 'google-reviews'),
         'capability_type' => 'post',
         'has_archive' => true,
@@ -194,16 +197,21 @@ function add_agr_google_review_post_type()
 
     register_post_type('agr_google_review', $args);
 
-    // Register 'Business' custom taxonomy
-    register_taxonomy(
-        'business',
-        'agr_google_review',
-        array(
-            'label' => __('Business'),
-            'rewrite' => array('slug' => 'business'),
-            'hierarchical' => true,
-        )
+    $taxonomy_args = array(
+        'labels' => array(
+            'name' => __('Business'),
+            'singular_name' => __('Business'),
+        ),
+        'public' => false,
+        'publicly_queryable' => false,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'show_admin_column' => true,
+        'hierarchical' => true,
+        'rewrite' => array('slug' => 'business'),
     );
+    
+    register_taxonomy('business', 'agr_google_review', $taxonomy_args);
 
     add_action('add_meta_boxes', 'add_agr_google_review_meta_box');
 
@@ -815,7 +823,7 @@ function custom_add_custom_columns($columns)
     $new_columns = array();
     foreach ($columns as $key => $value) {
         $new_columns[$key] = $value;
-        if ($key === 'title') {            
+        if ($key === 'title') {
             $new_columns['rating'] = '<span style="display: block; text-align: center;">Rating</span>';
             $new_columns['read_more'] = '<span style="display: block; text-align: center;">URL</span>';
             $new_columns['publish_date'] = '<span style="display: block; text-align: center;">Review Date</span>';

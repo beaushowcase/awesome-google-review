@@ -3,7 +3,7 @@
  * Plugin Name:       Awesome Google Review
  * Plugin URI:        https://beardog.digital/
  * Description:       Impresses with top-notch service and skilled professionals. A 5-star destination for grooming excellence!
- * Version:           1.6.9
+ * Version:           1.7
  * Requires PHP:      7.0
  * Author:            #beaubhavik
  * Author URI:        https://beardog.digital/
@@ -1483,7 +1483,7 @@ function job_check_status_at_api($review_api_key, $current_job_id)
 
 // Display all 5 start reviews by second arguments will be true, otherwise all reviews by term_id
 // usage : get_all_reviews_by_term($term_id,$review_flag = false)
-function get_all_reviews_by_term($term_id, $review_flag = false)
+function get_all_reviews_by_term($term_ids, $review_flag = false)
 {
     $args = array(
         'post_type' => 'agr_google_review',
@@ -1492,7 +1492,8 @@ function get_all_reviews_by_term($term_id, $review_flag = false)
             array(
                 'taxonomy' => 'business',
                 'field' => 'id',
-                'terms' => $term_id,
+                'terms' => $term_ids,
+                'operator' => 'IN', // Ensures the query matches any of the terms in the array
             ),
         ),
         'order' => 'ASC',
@@ -1521,10 +1522,9 @@ function get_all_reviews_by_term($term_id, $review_flag = false)
                 'publish_date' => $publish_date,
             );
 
-
             if ($review_flag && $review_flag == true) {
                 if ($rating == 5) {
-                    $review_type = '5 Start Reviews only';
+                    $review_type = '5 Star Reviews only';
                     $all_reviews[] = $review_data;
                 }
             } else {
@@ -1544,14 +1544,17 @@ function get_all_reviews_by_term($term_id, $review_flag = false)
 }
 
 
+
 add_shortcode('display', 'display_fun');
 function display_fun()
 {
-    $term_id = 42;
-    ptr(get_all_reviews_by_term($term_id));
+    $term_ids = array(31,32);    
+    if (function_exists('get_all_reviews_by_term')) {       
+        $all_reviews = get_all_reviews_by_term($term_ids, false);
+        ptr($all_reviews);
+    }
     exit;
 }
-
 
 //remove unused assets backend
 if ($pagenow == 'admin.php' && isset($_GET['page']) && ($_GET['page'] == 'awesome-google-review' || $_GET['page'] == 'delete-review' || $_GET['page'] == 'review-cron-job')) {
@@ -2008,3 +2011,24 @@ function manual_cron_step_4($term_id, $firm_name, $firm_name_jobID, $review_api_
 
     return $response;
 }
+
+
+//ADDITIONAL IMPLEMENTATION AS PER REQUIREMENTS
+//Remove canonical URLs
+function agr_remove_canonical_urls($canonical)
+{
+    if (is_singular('agr_google_review') || is_post_type_archive('agr_google_review')) {
+        $canonical = '';
+    }
+    return $canonical;
+}
+add_filter('wpseo_canonical', 'agr_remove_canonical_urls');
+
+//Prevent crawling
+function agr_prevent_crawling()
+{
+    if (is_singular('agr_google_review') || is_post_type_archive('agr_google_review')) {
+        echo '<meta name="robots" content="noindex, nofollow">';
+    }
+}
+add_action('wp_head', 'agr_prevent_crawling');
