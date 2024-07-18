@@ -22,14 +22,14 @@ function our_google_reviews_add_menu_page()
     );
 
     // Add submenu item
-    add_submenu_page(
-        'awesome-google-review', // Parent slug
-        'Cron Setting', // Page title
-        'Cron Setting', // Menu title
-        'manage_options', // Capability
-        'review-cron-job', // Menu slug
-        'cron_job_callback' // Callback function
-    );
+    // add_submenu_page(
+    //     'awesome-google-review', // Parent slug
+    //     'Cron Setting', // Page title
+    //     'Cron Setting', // Menu title
+    //     'manage_options', // Capability
+    //     'review-cron-job', // Menu slug
+    //     'cron_job_callback' // Callback function
+    // );
 }
 add_action('admin_menu', 'our_google_reviews_add_menu_page');
 
