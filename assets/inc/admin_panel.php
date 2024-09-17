@@ -291,6 +291,7 @@ function render_agr_google_review_meta_box($post)
     $url = get_post_meta($post->ID, 'url', true);
     $rating = get_post_meta($post->ID, 'rating', true);
     $text = get_post_meta($post->ID, 'text', true);
+    $text2 = get_post_meta($post->ID, 'text2', true);
     $publish_date = get_post_meta($post->ID, 'publish_date', true);
 
     // Output the second table for Place ID on the right side
@@ -305,7 +306,7 @@ function render_agr_google_review_meta_box($post)
     echo '<tr><th>' . esc_html__('Reviewer Picture URL:', 'awesome-google-review') . '</th><td><input readonly type="text" id="reviewer_picture_url" name="reviewer_picture_url" value="' . esc_url($reviewer_picture_url) . '" /></td></tr>';
     echo '<tr><th>' . esc_html__('Read More URL:', 'awesome-google-review') . '</th><td><input readonly type="text" id="url" name="url" value="' . esc_url($url) . '" /></td></tr>';
     echo '<tr><th>' . esc_html__('Rating:', 'awesome-google-review') . '</th><td><input readonly type="number" id="rating" name="rating" value="' . esc_attr($rating) . '" /></td></tr>';
-    echo '<tr><th>' . esc_html__('Description:', 'awesome-google-review') . '</th><td><textarea readonly id="text" name="text" rows="4" cols="23">' . esc_textarea($text) . '</textarea></td></tr>';
+    echo '<tr><th>' . esc_html__('Description:', 'awesome-google-review') . '</th><td><textarea readonly id="text" name="text" rows="4" cols="23">' . esc_textarea($text) . '</textarea></td><td><textarea id="text2" name="text2" rows="4" cols="23">' . esc_textarea($text2) . '</textarea></td></tr>';    
     echo '<tr><th>' . esc_html__('Publish Date:', 'awesome-google-review') . '</th><td><input readonly type="text" id="publish_date" name="publish_date" value="' . esc_attr($publish_date) . '" /></td></tr>';
     echo '</table>';
 }

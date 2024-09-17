@@ -1,9 +1,10 @@
 <?php
+
 /**
  * Plugin Name:       Awesome Google Review
  * Plugin URI:        https://beardog.digital/
  * Description:       Impresses with top-notch service and skilled professionals. A 5-star destination for grooming excellence!
- * Version:           1.7.1
+ * Version:           1.7.2
  * Requires PHP:      7.0
  * Author:            #beaubhavik
  * Author URI:        https://beardog.digital/
@@ -19,7 +20,7 @@ define('AGR_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 define('CUSTOM_HOST_URL', 'https://api.spiderdunia.com:3000');
 
-include_once (ABSPATH . 'wp-admin/includes/plugin.php');
+include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 
 register_deactivation_hook(__FILE__, 'agr_deactivation_cron_clear');
 
@@ -1045,6 +1046,24 @@ function store_data_into_reviews($current_job_id, $reviews_array, $term_name)
     return $success;
 }
 
+//when update the post
+add_action('save_post_agr_google_review', 'save_agr_google_review_meta', 10, 3);
+function save_agr_google_review_meta($post_id, $post, $update)
+{
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+    $meta_fields = array('job_id', 'post_review_id', 'reviewer_name', 'reviewer_picture_url','url','rating','text','text2','publish_date');
+    foreach ($meta_fields as $field) {        
+        if (isset($_POST[$field])) {
+            update_post_meta($post_id, $field, sanitize_textarea_field($_POST[$field]));
+        }
+    }
+}
+
 
 function get_post_id_by_meta($meta_key, $meta_value, $post_type = 'agr_google_review')
 {
@@ -1403,7 +1422,6 @@ function job_check_status_update_ajax_action_function()
                     $response['data']['jobID'] = $jobID;
                     $response['success'] = 0;
                     $response['msg'] = 'Check Again !';
-
                 } else {
                     $response['data']['jobID'] = $jobID;
                     $response['success'] = 0;
@@ -1513,6 +1531,9 @@ function get_all_reviews_by_term($term_ids, $review_flag = false)
             $reviewer_picture_url = get_post_meta($review_id, 'reviewer_picture_url', true);
             $url = get_post_meta($review_id, 'url', true);
             $text = get_post_meta($review_id, 'text', true);
+            if(get_post_meta($review_id, 'text2', true)){
+                $text = get_post_meta($review_id, 'text2', true);
+            }
             $publish_date = get_post_meta($review_id, 'publish_date', true);
             $review_data = array(
                 'reviewer_name' => $reviewer_name,
@@ -1548,8 +1569,8 @@ function get_all_reviews_by_term($term_ids, $review_flag = false)
 add_shortcode('display', 'display_fun');
 function display_fun()
 {
-    $term_ids = array(31,32);    
-    if (function_exists('get_all_reviews_by_term')) {       
+    $term_ids = array(31, 32);
+    if (function_exists('get_all_reviews_by_term')) {
         $all_reviews = get_all_reviews_by_term($term_ids, false);
         ptr($all_reviews);
     }
