@@ -19,12 +19,15 @@ Ensure that the Awesome Google Review plugin is active before using this code.
 Below is an example of how to use the function to get 5-star reviews by term ID.
 
 ```php
-$term_ids = array(31,32);  // Actual Term IDs of the business taxonomy
-
 // Check if the function get_all_reviews_by_term exists
+
+// $reviews = get_all_reviews_by_term(); // For all reviews
+// // OR
+// $reviews = get_all_reviews_by_term(true); // For 5-star reviews only
+
 if (function_exists('get_all_reviews_by_term')) {
     // Retrieve all 5-star reviews (true = 5 Star Reviews, false = All Reviews)
-    $all_reviews = get_all_reviews_by_term($term_ids, true);
+    $all_reviews = get_all_reviews_by_term(true);
 } else {
     echo "Please activate the Awesome Google Review plugin.";
 }
