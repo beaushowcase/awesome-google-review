@@ -21,13 +21,9 @@ Below is an example of how to use the function to get 5-star reviews by term ID.
 ```php
 // Check if the function get_all_reviews_by_term exists
 
-// $reviews = get_all_reviews_by_term(); // For all reviews
-// // OR
-// $reviews = get_all_reviews_by_term(true); // For 5-star reviews only
-
 if (function_exists('get_all_reviews_by_term')) {
-    // Retrieve all 5-star reviews (true = 5 Star Reviews, false = All Reviews)
-    $all_reviews = get_all_reviews_by_term(true);
+    //$google_reviews = get_all_reviews_by_term(); // For all reviews
+    $google_reviews = get_all_reviews_by_term(true); // For 5-star reviews only
 } else {
     echo "Please activate the Awesome Google Review plugin.";
 }
