@@ -4,7 +4,7 @@
  * Plugin Name:       Awesome Google Review
  * Plugin URI:        https://beardog.digital/
  * Description:       Impresses with top-notch service and skilled professionals. A 5-star destination for grooming excellence!
- * Version:           1.7.2
+ * Version:           1.7.3
  * Requires PHP:      7.0
  * Author:            #beaubhavik
  * Author URI:        https://beardog.digital/
@@ -1499,10 +1499,27 @@ function job_check_status_at_api($review_api_key, $current_job_id)
     return $api_response;
 }
 
-// Display all 5 start reviews by second arguments will be true, otherwise all reviews by term_id
-// usage : get_all_reviews_by_term($term_id,$review_flag = false)
-function get_all_reviews_by_term($term_ids, $review_flag = false)
+// $google_reviews = get_all_reviews_by_term(); // For all reviews
+// $google_reviews = get_all_reviews_by_term(true); // For 5-star reviews only
+function get_all_reviews_by_term($review_flag = false)
 {
+    // Get all terms from 'business' taxonomy
+    $terms = get_terms(array(
+        'taxonomy' => 'business',
+        'hide_empty' => true, // Set to false if you want to include terms with no posts
+        'fields' => 'ids' // Only retrieve term IDs
+    ));
+
+    // Check if terms were found and no errors occurred
+    if (is_wp_error($terms) || empty($terms)) {
+        return array(
+            'reviews_type' => 'All Reviews',
+            'total_posts' => 0,
+            'job_id' => '',
+            'all_reviews' => array(),
+        );
+    }
+
     $args = array(
         'post_type' => 'agr_google_review',
         'posts_per_page' => -1,
@@ -1510,17 +1527,19 @@ function get_all_reviews_by_term($term_ids, $review_flag = false)
             array(
                 'taxonomy' => 'business',
                 'field' => 'id',
-                'terms' => $term_ids,
-                'operator' => 'IN', // Ensures the query matches any of the terms in the array
+                'terms' => $terms,
+                'operator' => 'IN',
             ),
         ),
         'order' => 'ASC',
     );
+
     $reviews_query = new WP_Query($args);
     $total_posts = 0;
     $all_reviews = array();
     $job_id = '';
     $review_type = 'All Reviews';
+
     if ($reviews_query->have_posts()) {
         while ($reviews_query->have_posts()) {
             $reviews_query->the_post();
@@ -1531,9 +1550,11 @@ function get_all_reviews_by_term($term_ids, $review_flag = false)
             $reviewer_picture_url = get_post_meta($review_id, 'reviewer_picture_url', true);
             $url = get_post_meta($review_id, 'url', true);
             $text = get_post_meta($review_id, 'text', true);
+            
             if(get_post_meta($review_id, 'text2', true)){
                 $text = get_post_meta($review_id, 'text2', true);
             }
+            
             $publish_date = get_post_meta($review_id, 'publish_date', true);
             $review_data = array(
                 'reviewer_name' => $reviewer_name,
@@ -1569,9 +1590,8 @@ function get_all_reviews_by_term($term_ids, $review_flag = false)
 add_shortcode('display', 'display_fun');
 function display_fun()
 {
-    $term_ids = array(31, 32);
     if (function_exists('get_all_reviews_by_term')) {
-        $all_reviews = get_all_reviews_by_term($term_ids, false);
+        $all_reviews = get_all_reviews_by_term();
         ptr($all_reviews);
     }
     exit;

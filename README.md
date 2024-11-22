@@ -35,5 +35,3 @@ After scrapping reviews, access them through:
 ```shell
 /wp-admin/admin.php?page=awesome-google-review
 ```
-
-
