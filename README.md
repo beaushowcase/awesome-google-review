@@ -1,4 +1,4 @@
-# Scrapping Google Reviews by #beaubhavik 22
+# Scrapping Google Reviews by #beaubhavik
 
 ## Usage
 
