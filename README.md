@@ -12,15 +12,13 @@ Use your free API key:
 beau62e081f846bbb5f452e426de67d7
 ```
 
-### Display Reviews
+### Usage : Display Reviews
 
 Ensure that the Awesome Google Review plugin is active before using this code.
 
 Below is an example of how to use the function to get 5-star reviews by term ID.
 
 ```php
-// Check if the function get_all_reviews_by_term exists
-
 if (function_exists('get_all_reviews_by_term')) {
     //$google_reviews = get_all_reviews_by_term(); // For all reviews
     $google_reviews = get_all_reviews_by_term(true); // For 5-star reviews only
