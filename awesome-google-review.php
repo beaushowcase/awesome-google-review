@@ -4,7 +4,7 @@
  * Plugin Name:       Awesome Google Review
  * Plugin URI:        https://beardog.digital/
  * Description:       Impresses with top-notch service and skilled professionals. A 5-star destination for grooming excellence!
- * Version:           1.7.3
+ * Version:           1.7.4
  * Requires PHP:      7.0
  * Author:            #beaubhavik
  * Author URI:        https://beardog.digital/
@@ -1506,11 +1506,10 @@ function get_all_reviews_by_term($review_flag = false)
     // Get all terms from 'business' taxonomy
     $terms = get_terms(array(
         'taxonomy' => 'business',
-        'hide_empty' => true, // Set to false if you want to include terms with no posts
-        'fields' => 'ids' // Only retrieve term IDs
+        'hide_empty' => true,
+        'fields' => 'ids'
     ));
 
-    // Check if terms were found and no errors occurred
     if (is_wp_error($terms) || empty($terms)) {
         return array(
             'reviews_type' => 'All Reviews',
@@ -1546,21 +1545,29 @@ function get_all_reviews_by_term($review_flag = false)
             $review_id = get_the_ID();
             $rating = get_post_meta($review_id, 'rating', true);
             $job_id = get_post_meta($review_id, 'job_id', true);
+            
+            // Get both text fields
+            $text = get_post_meta($review_id, 'text', true);
+            $text2 = get_post_meta($review_id, 'text2', true);
+            
+            // Skip this review if both text fields are empty
+            if (empty($text) && empty($text2)) {
+                continue;
+            }
+            
+            // Use text2 if available, otherwise use text
+            $final_text = !empty($text2) ? $text2 : $text;
+            
             $reviewer_name = get_post_meta($review_id, 'reviewer_name', true);
             $reviewer_picture_url = get_post_meta($review_id, 'reviewer_picture_url', true);
             $url = get_post_meta($review_id, 'url', true);
-            $text = get_post_meta($review_id, 'text', true);
-            
-            if(get_post_meta($review_id, 'text2', true)){
-                $text = get_post_meta($review_id, 'text2', true);
-            }
-            
             $publish_date = get_post_meta($review_id, 'publish_date', true);
+
             $review_data = array(
                 'reviewer_name' => $reviewer_name,
                 'reviewer_picture_url' => $reviewer_picture_url,
                 'url' => $url,
-                'text' => $text,
+                'text' => $final_text,
                 'publish_date' => $publish_date,
             );
 
